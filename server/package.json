@@ -1,0 +1,16 @@
+{
+    "name": "@ocula/server",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "author": "Andrew Courtice <andrewcourtice@gmail.com>",
+    "engines": {
+        "node": "8"
+    },
+    "scripts": {
+        "build": "parcel build ./src/index.ts"
+    },
+    "peerDependencies": {
+        "firebase-admin": "^8.8.0",
+        "firebase-functions": "^3.3.0"
+    }
+}

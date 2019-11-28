@@ -1,0 +1,1 @@
+const thing = 5;
