@@ -1,0 +1,1 @@
+{"version":3,"sources":["worker.ts"],"names":[],"mappings":";AAAA,aAAA,IAAM,EAAQ","file":"worker.js","sourceRoot":"../src","sourcesContent":["const thing = 5;"]}

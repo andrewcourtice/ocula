@@ -1,24 +1,26 @@
 {
-    "name": "@ocula/ocula",
+    "name": "@ocula/app",
     "version": "1.0.0",
     "main": "index.js",
     "repository": "https://github.com/andrewcourtice/ocula.git",
     "author": "Andrew Courtice <andrewcourtice@gmail.com>",
     "license": "MIT",
     "private": true,
-    "workspaces": [
-        "client",
-        "server"
-    ],
     "scripts": {
-        "build:client": "cd client && yarn build",
-        "build:server": "cd server && yarn build",
-        "build": "yarn build:client && yarn build:server",
-        "start": "yarn build && firebase serve"
+        "start": "parcel ./src/index.html ./src/worker.ts --https",
+        "build": "parcel build ./src/index.html ./src/worker.ts --out-dir public"
+    },
+    "dependencies": {
+        "flex-layout-attribute": "^1.0.3",
+        "vue": "^2.6.10"
     },
     "devDependencies": {
+        "@now/node": "^1.2.0",
+        "@vue/component-compiler-utils": "^3.0.2",
         "parcel-bundler": "^1.12.4",
         "parcel-plugin-clean-dist": "^0.0.6",
-        "typescript": "^3.7.2"
+        "typescript": "^3.7.2",
+        "vue-hot-reload-api": "^2.3.4",
+        "vue-template-compiler": "^2.6.10"
     }
 }
