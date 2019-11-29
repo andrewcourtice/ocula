@@ -6,7 +6,7 @@ import {
 } from '@now/node';
 
 export default async function (request: NowRequest, response: NowResponse) {
-    const apiKey = process.env.API_KEY;
+    const apiKey = process.env.DARKSKY_API_KEY;
 
     const apiResponse = await fetch(`https://api.darksky.net/forecast/${apiKey}/37.8267,-122.4233`, {
         headers: {

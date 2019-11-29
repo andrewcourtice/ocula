@@ -1,5 +1,6 @@
 {
     "env": {
-        "API_KEY": "@api-key"
+        "DARKSKY_API_KEY": "@darksky-api-key",
+        "MAPBOX_API_KEY": "@mapbox-api-key"
     }
 }

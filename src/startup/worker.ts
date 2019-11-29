@@ -3,5 +3,7 @@ export default async function initialiseWorker() {
         return;
     }
 
-    return navigator.serviceWorker.register('worker' + '.js');
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/worker' + '.js');
+    });
 }

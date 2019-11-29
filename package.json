@@ -7,12 +7,17 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "start": "parcel ./src/index.html ./src/worker.ts --https",
-        "build": "parcel build ./src/index.html ./src/worker.ts --out-dir public"
+        "start": "parcel ./src/index.html --https",
+        "build": "parcel build ./src/index.html --out-dir public"
+    },
+    "cache": {
+        "strategy": "default",
+        "swDest": "worker.js"
     },
     "dependencies": {
         "flex-layout-attribute": "^1.0.3",
         "node-fetch": "^2.6.0",
+        "regenerator-runtime": "^0.13.3",
         "vue": "^2.6.10"
     },
     "devDependencies": {
@@ -20,6 +25,7 @@
         "@vue/component-compiler-utils": "^3.0.2",
         "parcel-bundler": "^1.12.4",
         "parcel-plugin-clean-dist": "^0.0.6",
+        "parcel-plugin-sw-cache": "^0.3.1",
         "typescript": "^3.7.2",
         "vue-hot-reload-api": "^2.3.4",
         "vue-template-compiler": "^2.6.10"
