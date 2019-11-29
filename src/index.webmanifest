@@ -2,9 +2,9 @@
     "short_name": "Ocula",
     "name": "Ocula",
     "description": "Weather forecast information",
-    "start_url": "/?source=pwa",
-    "background_color": "#3367D6",
     "display": "standalone",
-    "scope": "/",
-    "theme_color": "#3367D6"
+    "start_url": "/?source=pwa",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
+    "scope": "/"
 }

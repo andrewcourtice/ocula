@@ -18,14 +18,13 @@ export default async function (request: NowRequest, response: NowResponse) {
     } = request.query;
 
     const apiResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${apiKey}&types=locality`);
-
     const data: IGeocodeResponse = await apiResponse.json();
     
     const output = data.features.map(feature => ({
-        text: feature.text,
+        name: feature.text,
         latitude: feature.center[0],
         longitude: feature.center[1]
     }));
 
-    return response.json(output);
+    return response.json(output[0]);
 }
