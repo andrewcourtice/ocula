@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <h1>{{ location.name }}</h1>
+        <h1>{{ forecast.location }}</h1>
         <pre>
             <code>{{ forecast }}</code>
         </pre>
@@ -10,24 +10,20 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import forecastController from '../controllers/forecast';
+import weatherController from '../controllers/weather';
 
 export default Vue.extend({
 
     computed: {
 
-        location() {
-            return forecastController.location;
-        },
-
         forecast() {
-            return forecastController.current;
+            return weatherController.forecast;
         }
 
     },
 
     mounted() {
-        forecastController.loadForecast();
+        weatherController.loadForecast();
     }
 
 });

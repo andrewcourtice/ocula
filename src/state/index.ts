@@ -3,13 +3,16 @@ import MUTATIONS from './mutations';
 import SETTINGS from '../constants/settings';
 import LOCATIONS from '../constants/locations';
 
+import IAction from '../interfaces/action';
+import IState from '../interfaces/state';
+
 import {
-    reverseGeocode
-} from '../services/geocoding';
+    getLocation
+} from '../services/location';
 
 import {
     getForecast
-} from '../services/forecast';
+} from '../services/weather';
 
 function getSettings() {
     const settings = localStorage.getItem('ocula');
@@ -41,74 +44,55 @@ export default {
     devtools: true,
 
     state: {
-        forecast: {
-            location: {
-                name: 'Unknown',
-                latitude: 0,
-                longitude: 0
-            },
-            currently: {},
-            daily: [],
-            hourly: []
+        weather: {
+            forecast: {}
         },
         settings: getSettings()
     },
 
     mutations: {
 
-        [MUTATIONS.setLocation](state, payload) {
-            state.settings.location = payload;
+        [MUTATIONS.setLocation](state: IState, payload: number | string) {
+            state.settings.locationId = payload;
         },
         
-        [MUTATIONS.setForecast](state, payload) {
-            console.log(payload);
-            state.forecast = payload;
+        [MUTATIONS.setForecast](state: IState, payload: any) {
+            state.weather.forecast = payload;
         }
 
     },
 
     actions: {
 
-        async [ACTIONS.loadForecast]({ state, commit }) {
+        async [ACTIONS.loadForecast]({ state, commit }: IAction<IState>) {
             let {
-                units,
-                location
+                locationId
             } = state.settings;
 
-            if (!location || !(location.latitude && location.longitude)) {
-                location = LOCATIONS.follow;
+            if (!locationId) {
+                locationId = LOCATIONS.follow;
 
-                commit(MUTATIONS.setLocation, location);
+                commit(MUTATIONS.setLocation, locationId);
             }
 
-            if (location === LOCATIONS.follow) {
+            if (locationId === LOCATIONS.follow) {
                 const { 
                     latitude,
                     longitude
                 } = await getCurrentPosition();
 
-                const {
-                    name
-                } = await reverseGeocode(latitude, longitude);
+                const location = await getLocation(latitude, longitude);
 
-                location = {
-                    name,
-                    latitude,
-                    longitude
-                };
+                locationId = location.id;
             }
 
-            const {
-                latitude,
-                longitude
-            } = location;
+            if (!locationId) {
+                return;
+            }
 
-            const forecast = await getForecast(latitude, longitude, units);
+            const forecast = await getForecast(locationId as number);
 
-            commit(MUTATIONS.setForecast, {
-                location,
-                ...forecast
-            });
+            commit(MUTATIONS.setForecast, forecast);
         }
 
     }
