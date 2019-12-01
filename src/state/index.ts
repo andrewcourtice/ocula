@@ -1,5 +1,6 @@
 import ACTIONS from './actions';
 import MUTATIONS from './mutations';
+import GETTERS from './getters';
 import SETTINGS from '../constants/settings';
 import LOCATIONS from '../constants/locations';
 
@@ -44,10 +45,32 @@ export default {
     devtools: true,
 
     state: {
-        weather: {
-            forecast: {}
-        },
+        forecast: {},
         settings: getSettings()
+    },
+
+    getters: {
+
+        [GETTERS.location](state: IState) {           
+            return state.forecast.location || {};
+        },
+
+        forecast(state: IState) {
+            const forecasts = state.forecast.forecasts;   
+
+            if (!forecasts) {
+                return;
+            }
+
+            const {
+                weather,
+                temperature,
+                rainfall
+            } = forecasts;
+
+
+        }
+
     },
 
     mutations: {
@@ -57,14 +80,25 @@ export default {
         },
         
         [MUTATIONS.setForecast](state: IState, payload: any) {
-            state.weather.forecast = payload;
+            state.forecast = payload;
         }
 
     },
 
     actions: {
 
-        async [ACTIONS.loadForecast]({ state, commit }: IAction<IState>) {
+        async [ACTIONS.loadForecast]({ commit }: IAction<IState>, payload) {
+            const {
+                locationId,
+                days
+            } = payload;
+
+            const forecast = await getForecast(locationId, days);
+
+            commit(MUTATIONS.setForecast, forecast);
+        },
+
+        async [ACTIONS.load]({ state, commit, dispatch }: IAction<IState>) {
             let {
                 locationId
             } = state.settings;
@@ -90,9 +124,9 @@ export default {
                 return;
             }
 
-            const forecast = await getForecast(locationId as number);
-
-            commit(MUTATIONS.setForecast, forecast);
+            await Promise.all([
+                dispatch(ACTIONS.loadForecast, { locationId })
+            ]);
         }
 
     }

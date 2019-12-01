@@ -1,8 +1,6 @@
 import ISettings from './settings';
 
 export default interface IState {
-    weather: {
-        forecast: object
-    },
+    forecast: object,
     settings: ISettings
 };

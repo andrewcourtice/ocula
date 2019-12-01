@@ -1,9 +1,8 @@
 <template>
     <div class="home">
-        <h1>{{ forecast.location }}</h1>
-        <pre>
-            <code>{{ forecast }}</code>
-        </pre>
+        <card>
+            <strong>Brisbane</strong>
+        </card>
     </div>
 </template>
 
@@ -23,7 +22,7 @@ export default Vue.extend({
     },
 
     mounted() {
-        weatherController.loadForecast();
+        weatherController.load();
     }
 
 });

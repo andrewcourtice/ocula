@@ -5,11 +5,11 @@ import Controller from './_base/controller';
 export class WeatherController extends Controller {
 
     get forecast() {
-        return this.state.weather.forecast;
+        return this.state.forecast;
     }
 
-    async loadForecast() {
-        return this.dispatch(ACTIONS.loadForecast);
+    async load() {
+        return this.dispatch(ACTIONS.load);
     }
 
 }

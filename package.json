@@ -7,7 +7,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "start": "parcel ./src/index.html --https",
+        "start": "parcel ./src/index.html --out-dir public --https",
         "build": "parcel build ./src/index.html --out-dir public"
     },
     "cache": {
