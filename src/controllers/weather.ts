@@ -1,12 +1,13 @@
-import GETTERS from '../state/getters';
-import ACTIONS from '../state/actions';
+import MODULES from '../constants/modules';
+import GETTERS from '../state/weather/getters';
+import ACTIONS from '../state/weather/actions';
 
 import Controller from './_base/controller';
 
 export class WeatherController extends Controller {
 
-    get location() {
-        return this.getter(GETTERS.location);
+    constructor() {
+        super(MODULES.weather);
     }
 
     get forecast() {
@@ -17,8 +18,10 @@ export class WeatherController extends Controller {
         return this.getter(GETTERS.outlook);
     }
 
-    async load() {
-        return this.dispatch(ACTIONS.load);
+    async load(locationId) {
+        return this.dispatch(ACTIONS.loadForecast, {
+            locationId
+        });
     }
 
 }

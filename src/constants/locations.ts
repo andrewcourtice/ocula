@@ -1,3 +1,3 @@
 export default {
-    follow: 'follow'
+    current: 'current'
 };

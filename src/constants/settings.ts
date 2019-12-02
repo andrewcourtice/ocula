@@ -1,4 +1,4 @@
 export default {
-    locationId: null,
+    location: null,
     locations: []
 };

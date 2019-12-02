@@ -1,9 +1,14 @@
 <template>
     <div class="home">
         <card v-if="outlook">
-            <strong>Today</strong>
-            <div>{{ outlook.weather.precis }}</div>
-            <h1>{{ outlook.temperature.temperature }}</h1>
+            <span>Today</span>
+            <div layout="row center-left">
+                <i class="fas fa-cloud-sun fa-3x"></i>
+                <div style="margin-left: 1rem;">
+                    <div>{{ outlook.weather.precis }}</div>
+                    <h1>{{ outlook.temperature.temperature }}</h1>
+                </div>
+            </div>
         </card>
         <card v-if="forecast" style="margin-top: 2rem">
             <div v-for="day in forecast" :key="day.date" layout="row center-justify">
@@ -21,6 +26,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import locationController from '../controllers/location';
 import weatherController from '../controllers/weather';
 
 export default Vue.extend({
@@ -38,16 +44,12 @@ export default Vue.extend({
     },
 
     mounted() {
-        weatherController.load();
+        weatherController.load(locationController.id);
     }
 
 });
 </script>
 
 <style lang="scss">
-
-    .home {
-        padding: 2rem;
-    }
 
 </style>
