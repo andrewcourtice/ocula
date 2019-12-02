@@ -1,33 +1,44 @@
 <template>
     <div class="home">
-        <h1>{{ location.name }}</h1>
-        <pre>
-            <code>{{ forecast }}</code>
-        </pre>
+        <card v-if="outlook">
+            <strong>Today</strong>
+            <div>{{ outlook.weather.precis }}</div>
+            <h1>{{ outlook.temperature.temperature }}</h1>
+        </card>
+        <card v-if="forecast" style="margin-top: 2rem">
+            <div v-for="day in forecast" :key="day.date" layout="row center-justify">
+                <span>{{ day.date.getDate() }}</span>
+                <div layout="row center-right">
+                    <span>min {{ day.weather.entries[0].min }}</span>
+                    <span>&nbsp;&middot;&nbsp;</span>
+                    <span>max {{ day.weather.entries[0].max }}</span>
+                </div>
+            </div>
+        </card>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import forecastController from '../controllers/forecast';
+import weatherController from '../controllers/weather';
 
 export default Vue.extend({
 
     computed: {
 
-        location() {
-            return forecastController.location;
+        outlook() {
+            return weatherController.outlook;
         },
 
         forecast() {
-            return forecastController.current;
+            return weatherController.forecast;
         }
 
     },
 
     mounted() {
-        forecastController.loadForecast();
+        weatherController.load();
     }
 
 });

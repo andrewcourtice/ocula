@@ -5,18 +5,23 @@ import {
     NowResponse
 } from '@now/node';
 
+const FORECASTS = [
+    'weather',
+    'temperature',
+    'rainfall',
+    'wind'
+];
+
 export default async function (request: NowRequest, response: NowResponse) {
     const apiKey = process.env.WILLYWEATHER_API_KEY;
+    const forecasts = FORECASTS.join(',');
 
     const {
-        term
+        location,
+        days
     } = request.query;
 
-    if (!term) {
-        return response.statusCode = 500;
-    }
-
-    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/search.json?query=${term}`);
+    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${location}/weather.json?forecasts=${forecasts}&days=${days}`);
     const data = await apiResponse.json();
 
     return response.json(data);

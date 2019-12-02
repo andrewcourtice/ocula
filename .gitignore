@@ -1,8 +1,8 @@
 node_modules/
 jspm_packages/
 typings/
+public/
 
-.vscode
 .cache
 .env
 
