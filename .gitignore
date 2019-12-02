@@ -3,7 +3,6 @@ jspm_packages/
 typings/
 public/
 
-.vscode
 .cache
 .env
 
