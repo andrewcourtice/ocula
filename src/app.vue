@@ -4,9 +4,10 @@
             <div>
                 <i class="fas fa-map-marker-alt"></i>&nbsp;{{ location }}
             </div>
-            <i class="fas fa-sliders-h"></i>
+            <i class="fas fa-sliders-h" @click="openSettings"></i>
         </div>
-        <router-view v-if="!loading" />
+        <router-view v-if="!loading"></router-view>
+        <settings-sidebar></settings-sidebar>
     </div>
 </template>
 
@@ -14,6 +15,8 @@
 import LOCATIONS from './constants/locations';
 
 import Vue from 'vue';
+
+import SettingsSidebar from './components/sidebars/settings.vue';
 
 import settingsController from './controllers/settings';
 import locationController from './controllers/location';
@@ -34,6 +37,14 @@ export default Vue.extend({
 
     },
 
+    methods: {
+
+        openSettings() {
+            settingsController.openSettingsSidebar();
+        }
+
+    },
+
     async mounted() {
         const location = settingsController.location;
 
@@ -48,6 +59,10 @@ export default Vue.extend({
         } finally {
             this.loading = false;
         }
+    },
+
+    components: {
+        SettingsSidebar
     }
     
 });

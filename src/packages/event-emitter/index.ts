@@ -32,6 +32,10 @@ export class EventEmitter {
         }
 
         this.listeners[event] = listeners.filter(listener => listener !== handler);
+
+        if (this.listeners[event].length === 0) {
+            delete this.listeners[event];
+        }
     }
 
     once(event: string, handler: Function): IListener {

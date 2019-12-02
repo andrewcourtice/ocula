@@ -4,5 +4,9 @@
     --font__family: 'Work Sans', sans-serif;
     --font__colour: #333333;
 
+    --transition__timing: 250ms;
+    --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+
     --background__colour: #FBFBFD;
+    --foreground__colour: #FFFFFF;
 }

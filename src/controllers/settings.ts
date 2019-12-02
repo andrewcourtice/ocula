@@ -1,7 +1,10 @@
+import EVENTS from '../constants/events';
 import MODULES from '../constants/modules';
 import MUTATIONS from '../state/settings/mutations';
 
 import Controller from './_base/controller';
+
+import eventEmitter from '../packages/event-emitter/index';
 
 export class SettingsController extends Controller {
 
@@ -10,7 +13,6 @@ export class SettingsController extends Controller {
     }
 
     get location() {
-        console.log(this.state.settings);
         return this.state.settings.location;
     }
 
@@ -18,6 +20,10 @@ export class SettingsController extends Controller {
         this.commit(MUTATIONS.updateSettings, {
             location: value
         });
+    }
+
+    openSettingsSidebar() {
+        eventEmitter.emit(EVENTS.sidebars.settings);
     }
 
 }
