@@ -1,3 +1,5 @@
 export default {
-    location: 'location'
+    location: 'location',
+    forecast: 'forecast',
+    outlook: 'outlook'
 }

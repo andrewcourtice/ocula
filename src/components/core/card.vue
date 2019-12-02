@@ -16,6 +16,9 @@
 
     .card {
         border-radius: 0.5rem;
+        background-color: #FFFFFF;
+        box-shadow: 0 2px 8px 0 rgba(150, 150, 150, 0.1);
+        overflow: hidden;
     }
 
     .card__header,

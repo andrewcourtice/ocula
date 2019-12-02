@@ -8,6 +8,10 @@ export default class Controller {
         return store.state;
     }
 
+    getter(name: string) {
+        return store.getters[name];
+    }
+
     dispatch(name: string, payload: object = {}) {
         return store.dispatch(name, payload);
     }

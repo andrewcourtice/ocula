@@ -4,6 +4,7 @@ import GETTERS from './getters';
 import SETTINGS from '../constants/settings';
 import LOCATIONS from '../constants/locations';
 
+import IStore from '../interfaces/store';
 import IAction from '../interfaces/action';
 import IState from '../interfaces/state';
 
@@ -55,7 +56,7 @@ export default {
             return state.forecast.location || {};
         },
 
-        forecast(state: IState) {
+        [GETTERS.forecast](state: IState) {
             const forecasts = state.forecast.forecasts;   
 
             if (!forecasts) {
@@ -65,10 +66,46 @@ export default {
             const {
                 weather,
                 temperature,
-                rainfall
+                rainfall,
+                wind
             } = forecasts;
 
+            const length = weather.days.length;
 
+            return Array.from({ length }, (item, index) => {
+                const dayWeather = weather.days[index];
+                const date = new Date(dayWeather.dateTime);
+
+                return {
+                    date,
+                    weather: weather.days[index],
+                    temperature: temperature.days[index],
+                    rainfall: rainfall.days[index],
+                    wind: wind.days[index]
+                };
+            });
+        },
+
+        [GETTERS.outlook](state: IState, getters) {
+            const forecast = getters.forecast;
+
+            if (!forecast || forecast.length === 0) {
+                return;
+            }
+
+            const today = forecast[0];
+
+            return Object.keys(today).reduce((output, key) => {
+                const {
+                    entries
+                } = today[key];
+
+                if (entries && entries.length > 0) {
+                    output[key] = entries[0];
+                }
+
+                return output;
+            }, {});
         }
 
     },
@@ -87,7 +124,7 @@ export default {
 
     actions: {
 
-        async [ACTIONS.loadForecast]({ commit }: IAction<IState>, payload) {
+        async [ACTIONS.loadForecast]({ commit }, payload) {
             const {
                 locationId,
                 days
