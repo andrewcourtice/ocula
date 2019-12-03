@@ -6,3 +6,31 @@ h5,
 h6 {
     margin: 0;
 }
+
+a,
+.link {
+    text-decoration: none;
+}
+
+a {
+    color: var(--link__colour);
+
+    &:active {
+        color: var(--link__colour--hover);
+    }
+}
+
+.link {
+    color: inherit;
+}
+
+@media (hover: hover) {
+
+    a {
+
+        &:hover {
+            color: var(--link__colour--hover);
+        }
+    }
+
+}

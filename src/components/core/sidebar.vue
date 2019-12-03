@@ -84,10 +84,6 @@ export default Vue.extend({
     .sidebar-leave-to {
         opacity: 0;
 
-        & .sidebar__panel {
-            opacity: 0;
-        }
-
         & .sidebar__panel--left {
             transform: translateX(-100%);
         }
@@ -102,8 +98,7 @@ export default Vue.extend({
         transition: opacity var(--transition__timing) var(--transition__easing-quartic-out);
 
         & .sidebar__panel {
-            transition: opacity var(--transition__timing) var(--transition__easing-quartic-out),
-                        transform var(--transition__timing) var(--transition__easing-quartic-out);
+            transition: transform var(--transition__timing) var(--transition__easing-quartic-out);
         }
     }
 

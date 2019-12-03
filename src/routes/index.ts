@@ -1,8 +1,9 @@
-import Index from './index.vue';
+import error from './error/index';
+import weather from './weather/index';
+import settings from './settings/index';
 
 export default [
-    {
-        path: '/',
-        component: Index
-    }
+    ...error,
+    ...weather,
+    ...settings
 ];

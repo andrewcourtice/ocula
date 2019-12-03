@@ -2,11 +2,15 @@
     --font__size: 16px;
     --font__weight: 400;
     --font__family: 'Work Sans', sans-serif;
-    --font__colour: #333333;
+    --font__colour: #454555;
 
     --transition__timing: 250ms;
     --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
 
     --background__colour: #FBFBFD;
     --foreground__colour: #FFFFFF;
+    --foreground__colour--hover: #F5F5F5;
+
+    --link__colour: #1E90FF;
+    --link__colour--hover: darken(#1E90FF, 20%);
 }

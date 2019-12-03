@@ -1,18 +1,15 @@
 import eventEmitter from '../../packages/event-emitter/index';
 
-export default function(event: string, callback: (vm: any) => Function) {
-
-    let listener;
+export default function(event: string, method: string = 'open') {
 
     return {
 
-        beforeMount() {
-            listener = eventEmitter.on(event, (...args) => callback(this)(...args));
-            console.log(eventEmitter);
+        created() {
+            eventEmitter.on(event, this[method]);
         },
-
+        
         beforeDestroy() {
-            listener && listener.dispose();
+            eventEmitter.off(event, this[method]);
         }
 
     };

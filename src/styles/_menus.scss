@@ -1,0 +1,18 @@
+.menu {
+    display: block;
+}
+
+.menu-item {
+    padding: 1rem;
+}
+
+@media (hover: hover) {
+
+    .menu-item {
+
+        &:hover {
+            background-color: var(--foreground__colour--hover);
+        }
+    }
+
+}

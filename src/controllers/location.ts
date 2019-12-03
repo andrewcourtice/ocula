@@ -10,7 +10,6 @@ export class LocationController extends Controller {
     }
 
     get id() {
-        console.log(this.state);
         return this.state.location.id;
     }
     

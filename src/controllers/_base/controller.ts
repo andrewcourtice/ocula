@@ -2,28 +2,32 @@ import {
     store
 } from '../../startup/state';
 
+function path(...segments: Array<string | undefined>): string {
+    return segments.filter(segment => !!segment).join('/');
+}
+
 export default class Controller {
 
-    private module: string;
+    private module?: string;
 
-    constructor(module) {
+    constructor(module?: string) {
         this.module = module;
     }
 
     get state() {
-        return store.state[this.module];
+        return this.module ? store.state[this.module] : this.state;
     }
 
     getter(name: string) {
-        return store.getters[`${this.module}/${name}`];
+        return store.getters[path(this.module, name)];
     }
 
     commit(name: string, payload: any) {
-        return store.commit(`${this.module}/${name}`, payload);
+        return store.commit(path(this.module, name), payload);
     }
 
     dispatch(name: string, payload: object = {}) {
-        return store.dispatch(`${this.module}/${name}`, payload);
+        return store.dispatch(path(this.module, name), payload);
     }
 
 }

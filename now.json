@@ -1,7 +1,5 @@
 {
     "env": {
-        "DARKSKY_API_KEY": "@darksky-api-key",
-        "MAPBOX_API_KEY": "@mapbox-api-key",
         "WILLYWEATHER_API_KEY": "@willyweather-api-key"
     }
 }

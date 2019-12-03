@@ -1,5 +1,6 @@
 export default {
     sidebars: {
-        settings: 'sidebar:settings'
+        options: 'sidebar:options',
+        alerts: 'sidebar:alerts'
     }
 };

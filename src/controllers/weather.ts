@@ -1,8 +1,10 @@
+import EVENTS from '../constants/events';
 import MODULES from '../constants/modules';
-import GETTERS from '../state/weather/getters';
 import ACTIONS from '../state/weather/actions';
 
 import Controller from './_base/controller';
+
+import eventEmitter from '../packages/event-emitter/index';
 
 export class WeatherController extends Controller {
 
@@ -10,15 +12,29 @@ export class WeatherController extends Controller {
         super(MODULES.weather);
     }
 
-    get forecast() {
-        return this.getter(GETTERS.forecast);
-    }
-
     get outlook() {
-        return this.getter(GETTERS.outlook);
+        return this.state.outlook;
     }
 
-    async load(locationId) {
+    get forecast() {
+        return this.state.forecast;
+    }
+
+    get alerts() {
+        return this.state.alerts;
+    }
+
+    openAlertsSidebar() {
+        eventEmitter.emit(EVENTS.sidebars.alerts);
+    }
+
+    async loadOutlook(locationId) {
+        return this.dispatch(ACTIONS.loadOutlook, {
+            locationId
+        });
+    }
+
+    async loadForecast(locationId) {
         return this.dispatch(ACTIONS.loadForecast, {
             locationId
         });
