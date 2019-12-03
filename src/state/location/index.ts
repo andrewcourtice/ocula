@@ -11,7 +11,9 @@ import {
 
 async function getCurrentPosition() {
     const position: Position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true
+        });
     });
 
     if (position) {
