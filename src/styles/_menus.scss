@@ -3,7 +3,7 @@
 }
 
 .menu-item {
-    padding: 1rem;
+    padding: var(--spacing__x-small) var(--spacing__small);
 }
 
 @media (hover: hover) {

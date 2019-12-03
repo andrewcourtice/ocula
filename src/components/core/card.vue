@@ -16,7 +16,7 @@
 
     .card {
         border-radius: 0.5rem;
-        background-color: #FFFFFF;
+        background-color: var(--foreground__colour);
         box-shadow: 0 2px 8px 0 rgba(150, 150, 150, 0.1);
         overflow: hidden;
     }
@@ -24,7 +24,7 @@
     .card__header,
     .card__body,
     .card__footer {
-        padding: 2rem;
+        padding: var(--spacing__small);
     }
 
 </style>

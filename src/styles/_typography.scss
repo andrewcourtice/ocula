@@ -5,6 +5,7 @@ h4,
 h5,
 h6 {
     margin: 0;
+    font-weight: var(--font__weight--heavy);
 }
 
 a,
@@ -22,6 +23,37 @@ a {
 
 .link {
     color: inherit;
+}
+
+.text--meta {
+    color: var(--font__colour--meta);
+}
+
+.text--medium {
+    font-weight: var(--font__weight--medium);
+}
+
+strong,
+.text--heavy {
+    font-weight: var(--font__weight--heavy);
+}
+
+.text--left {
+    text-align: left;
+}
+
+.text--centre {
+    text-align: center;
+}
+
+.text--right {
+    text-align: right;
+}
+
+.text--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @media (hover: hover) {

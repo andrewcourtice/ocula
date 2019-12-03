@@ -1,5 +1,15 @@
+$spacings: (
+    xx-small: 0.25rem,
+    x-small: 0.5rem,
+    small: 1rem,
+    medium: 1.5rem,
+    large: 2rem,
+    x-large: 3rem,
+    xx-large: 4rem
+);
+
 :root {
-    --font__size: 16px;
+    --font__size: 14px;
     --font__size--small: 0.875rem;
     --font__size--x-small: 0.75rem;
     --font__size--large: 1.25rem;
@@ -12,7 +22,7 @@
     --font__family: 'DM Sans', sans-serif;
 
     --font__colour: #454555;
-    --font__colour--secondary: #9999AA;
+    --font__colour--meta: #9999AA;
 
     --transition__timing: 250ms;
     --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -23,4 +33,8 @@
 
     --link__colour: #1E90FF;
     --link__colour--hover: darken(#1E90FF, 20%);
+
+    @each $name, $value in $spacings {
+        --spacing__#{ $name }: #{ $value };
+    }
 }
