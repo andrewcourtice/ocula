@@ -1,5 +1,8 @@
 <template>
     <card class="weather-week-card">
+        <template #header>
+            <strong>7 Day Forecast</strong>
+        </template>
         <table>
             <tr v-for="day in weekOutlook" :key="day.dateTime">
                 <td>

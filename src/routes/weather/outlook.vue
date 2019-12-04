@@ -2,6 +2,8 @@
     <div class="weather-outlook" v-if="!loading">
         <today-card></today-card>
         <week-card></week-card>
+        <observations-card></observations-card>
+        <trends-card></trends-card>
     </div>
 </template>
 
@@ -11,6 +13,7 @@ import Vue from 'vue';
 import TodayCard from '../../components/weather/cards/today.vue';
 import WeekCard from '../../components/weather/cards/week.vue';
 import ObservationsCard from '../../components/weather/cards/observations.vue';
+import TrendsCard from '../../components/weather/cards/trends.vue';
 
 import locationController from '../../controllers/location';
 import weatherController from '../../controllers/weather';
@@ -44,7 +47,8 @@ export default Vue.extend({
     components: {
         TodayCard,
         WeekCard,
-        ObservationsCard
+        ObservationsCard,
+        TrendsCard
     }
 
 });
