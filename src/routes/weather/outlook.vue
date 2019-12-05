@@ -52,10 +52,6 @@ export default Vue.extend({
 
     },
 
-    mounted() {
-        this.load();
-    },
-
     activated() {
         this.load()
     },
