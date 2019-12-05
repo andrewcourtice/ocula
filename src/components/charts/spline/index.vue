@@ -45,7 +45,6 @@ export default Vue.extend({
     
     mounted() {
         const chart = new SplineChart(this.$el);
-        console.log(chart);
 
         this.chart = chart;
 

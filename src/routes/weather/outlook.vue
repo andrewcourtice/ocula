@@ -8,6 +8,8 @@
 </template>
 
 <script lang="ts">
+import EVENTS from '../../constants/events';
+
 import Vue from 'vue';
 
 import TodayCard from '../../components/weather/cards/today.vue';
@@ -18,7 +20,13 @@ import TrendsCard from '../../components/weather/cards/trends.vue';
 import locationController from '../../controllers/location';
 import weatherController from '../../controllers/weather';
 
+import subscriberMixin from '../../components/mixins/subscriber';
+
 export default Vue.extend({
+
+    mixins: [
+        subscriberMixin(EVENTS.application.visible, 'load')
+    ],
 
     data() {
         return {
@@ -28,7 +36,7 @@ export default Vue.extend({
 
     methods: {
 
-        async load() {
+        async load() {            
             this.loading = true;
     
             try {

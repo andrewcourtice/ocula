@@ -11,6 +11,8 @@ export default {
     namespaced: true,
 
     state: {
+        lastUpdated: null,
+
         outlook: {},
         forecast: {},
         alerts: []
@@ -30,7 +32,11 @@ export default {
 
     actions: {
 
-        async [ACTIONS.loadOutlook]({ commit }, payload) {
+        async [ACTIONS.loadOutlook]({ state, commit }, payload) {
+            if (state.lastUpdated && Date.now() - state.lastUpdated < 300000) {
+                return;
+            }
+            
             const {
                 locationId
             } = payload;
@@ -40,7 +46,8 @@ export default {
             commit(MUTATIONS.setOutlook, outlook);
         },
 
-        async [ACTIONS.loadForecast]({ commit }, payload) {
+        async [ACTIONS.loadForecast]({ state, commit }, payload) {
+
             const {
                 locationId
             } = payload;

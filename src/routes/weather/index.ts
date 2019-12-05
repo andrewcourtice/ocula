@@ -1,5 +1,4 @@
 import Index from './index.vue';
-import Outlook from './outlook.vue';
 
 export default [
     {
@@ -8,7 +7,7 @@ export default [
         children: [
             {
                 path: '',
-                component: Outlook
+                component: () => import('./outlook.vue')
             }
         ]
     },
@@ -18,7 +17,7 @@ export default [
         children: [
             {
                 path: 'outlook',
-                component: Outlook
+                component: () => import('./outlook.vue')
             }
         ]
     }

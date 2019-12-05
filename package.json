@@ -12,7 +12,17 @@
     },
     "cache": {
         "strategy": "default",
-        "swDest": "worker.js"
+        "swDest": "worker.js",
+        "runtimeCaching": [
+            {
+                "handler": "staleWhileRevalidate",
+                "urlPattern": ["^https:\/\/fonts\\.googleapis\\.com/"]
+            },
+            {
+                "handler": "staleWhileRevalidate",
+                "urlPattern": ["^https:\/\/kit\\.fontawesome\\.com/"]
+            }
+        ]
     },
     "dependencies": {
         "d3-array": "^2.4.0",
