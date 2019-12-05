@@ -24,6 +24,14 @@ export default Vue.extend({
                     bottom: 0,
                     left: 0,
                     right: 0
+                },
+                colours: {
+                    line: '#FF9900',
+                    gradient: {
+                        stop1: '#FF9900',
+                        stop2: '#FFCD32',
+                        stop3: '#FFE287',
+                    }
                 }
             }
         };

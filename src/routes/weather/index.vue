@@ -2,8 +2,8 @@
     <app-layout class="weather-layout">
         <template #header>
             <div layout="row center-justify">
-                <span style="margin-left: 1rem;">{{ location }}</span>
-                <i class="fas fa-bell" @click="openAlerts"></i>
+                <div class="text--centre" self="size-x1">{{ location }}</div>
+                <icon name="bell" @click.native="openAlerts"></icon>
             </div>
         </template>
         <router-view v-if="!loading"></router-view>

@@ -38,6 +38,15 @@ strong,
     font-weight: var(--font__weight--heavy);
 }
 
+small,
+.text--small {
+    font-size: var(--font__size--small);
+}
+
+.text--x-small {
+    font-size: var(--font__size--x-small);
+}
+
 .text--left {
     text-align: left;
 }

@@ -6,3 +6,9 @@ th,
 td {
     padding: var(--spacing__x-small) var(--spacing__small);
 }
+
+.table--fixed {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+}

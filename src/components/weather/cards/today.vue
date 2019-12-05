@@ -1,10 +1,18 @@
 <template>
     <card class="weather-today-card">
-        <div layout="row center-left">
-            <i class="fas fa-cloud-sun fa-3x"></i>
-            <div class="margin__left--small">
+        <div layout="row bottom-justify">
+            <div>
+                <icon name="cloud-sun" class="weather-today-card__icon"></icon>
+                <h1 class="margin__top--medium">{{ observations.temperature.temperature }}</h1>
+                <span>Feel like {{ observations.temperature.apparentTemperature }}</span>
+            </div>
+            <div>
+                <div>{{ currentOutlook.weather.min }} - {{ currentOutlook.weather.max }}</div>
                 <div>{{ currentOutlook.weather.precis }}</div>
-                <h1>{{ observations.temperature.temperature }}</h1>
+            </div>
+        </div>
+        <div layout="row center-left">
+            <div class="margin__left--small">
             </div>
         </div>
     </card>
@@ -31,3 +39,17 @@ export default Vue.extend({
 
 });
 </script>
+
+<style lang="scss">
+
+    .weather-today-card {
+        min-height: 8rem;
+        color: var(--font__colour--compliment);
+        background: linear-gradient(to top right, #47B1FA 30%, #78D0F5, #ffe7ab);
+    }
+
+    .weather-today-card__icon {
+        font-size: 3rem;
+    }
+
+</style>

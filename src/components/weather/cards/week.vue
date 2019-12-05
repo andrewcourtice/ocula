@@ -6,7 +6,7 @@
         <table>
             <tr v-for="day in weekOutlook" :key="day.dateTime">
                 <td>
-                    <i class="fas fa-cloud-sun"></i>
+                    <icon name="cloud-sun"></icon>
                 </td>
                 <td style="width: 100%">{{ formatDate(day.dateTime) }}</td>
                 <td class="text--meta">{{ day.min }}</td>
@@ -43,3 +43,14 @@ export default Vue.extend({
 
 });
 </script>
+
+<style lang="scss">
+
+    .weather-week-card {
+
+        & .card__body {
+            padding: 0;
+        }
+    }
+
+</style>

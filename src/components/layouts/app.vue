@@ -1,8 +1,8 @@
 <template>
     <div class="app-layout">
-        <div class="app-layout__top-bar" layout="row center-justify">
+        <div class="margin__bottom--small" layout="row center-justify">
             <div>
-                <i class="fas fa-bars" @click="openOptions"></i>
+                <icon name="bars" @click.native="openOptions"></icon>
             </div>
             <div v-if="$scopedSlots.header" self="size-x1">
                 <slot name="header"></slot>
@@ -39,8 +39,5 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .app-layout__top-bar {
-        margin-bottom: 2rem;
-    }
 
 </style>

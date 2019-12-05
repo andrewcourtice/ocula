@@ -10,10 +10,10 @@ $spacings: (
 
 :root {
     --font__size: 14px;
-    --font__size--small: 0.875rem;
-    --font__size--x-small: 0.75rem;
-    --font__size--large: 1.25rem;
-    --font__size--x-large: 1.5rem;
+    --font__size--small: 0.875em;
+    --font__size--x-small: 0.75em;
+    --font__size--large: 1.25em;
+    --font__size--x-large: 1.5em;
 
     --font__weight: 400;
     --font__weight--medium: 500;
@@ -23,6 +23,7 @@ $spacings: (
 
     --font__colour: #454555;
     --font__colour--meta: #9999AA;
+    --font__colour--compliment: #FFFFFF;
 
     --transition__timing: 250ms;
     --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
