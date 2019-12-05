@@ -1,8 +1,10 @@
+import MUTATIONS from '../state/mutations'
+
 import {
     Workbox
 } from 'workbox-window';
 
-export default async function initialiseWorker() {
+export default async function initialiseWorker(store) {
     if (!navigator.serviceWorker) {
         return;
     }
@@ -15,11 +17,7 @@ export default async function initialiseWorker() {
                 return;
             }
 
-            const response = window.confirm('An update to Ocula is available. Click OK to reload and update.');
-
-            if (response) {
-                window.location.reload();
-            }
+            store.commit(MUTATIONS.setUpdateReady);
         });
 
         workbox.register();

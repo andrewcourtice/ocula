@@ -12,6 +12,10 @@ document.addEventListener('visibilitychange', () => {
 
 export class ApplicationController extends Controller {
 
+    get updateReady() {
+        return this.state.updateReady;
+    }
+
     openOptionsSidebar() {
         eventEmitter.emit(EVENTS.sidebars.options);
     }

@@ -15,7 +15,7 @@ export default class Controller {
     }
 
     get state() {
-        return this.module ? store.state[this.module] : this.state;
+        return this.module ? store.state[this.module] : store.state;
     }
 
     getter(name: string) {

@@ -14,7 +14,7 @@ export default function start() {
     const router = initialiseRouter();
     const application = initialiseApplication(router, store);
 
-    initialiseWorker();
+    initialiseWorker(store);
 
     return {
         router,
