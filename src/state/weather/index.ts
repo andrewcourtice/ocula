@@ -22,6 +22,7 @@ export default {
 
         [MUTATIONS.setOutlook](state, payload: any) {
             state.outlook = payload;
+            state.lastUpdated = new Date();
         },
 
         [MUTATIONS.setForecast](state, payload: any) {
@@ -32,11 +33,7 @@ export default {
 
     actions: {
 
-        async [ACTIONS.loadOutlook]({ state, commit }, payload) {
-            if (state.lastUpdated && Date.now() - state.lastUpdated < 300000) {
-                return;
-            }
-            
+        async [ACTIONS.loadOutlook]({ commit }, payload) {            
             const {
                 locationId
             } = payload;
@@ -46,7 +43,7 @@ export default {
             commit(MUTATIONS.setOutlook, outlook);
         },
 
-        async [ACTIONS.loadForecast]({ state, commit }, payload) {
+        async [ACTIONS.loadForecast]({ commit }, payload) {
 
             const {
                 locationId

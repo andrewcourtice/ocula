@@ -36,7 +36,11 @@ export default Vue.extend({
 
     methods: {
 
-        async load() {            
+        async load() {        
+            if (!weatherController.shouldUpdate) {
+                return;
+            }
+
             this.loading = true;
     
             try {

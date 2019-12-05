@@ -12,6 +12,14 @@ export class WeatherController extends Controller {
         super(MODULES.weather);
     }
 
+    get lastUpdated() {
+        return this.state.lastUpdated;
+    }
+
+    get shouldUpdate() {
+        return !this.lastUpdated || (Date.now() - this.lastUpdated) > 300000;
+    }
+
     get outlook() {
         return this.state.outlook;
     }

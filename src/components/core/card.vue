@@ -17,7 +17,7 @@
     .card {
         border-radius: 0.5rem;
         background-color: var(--foreground__colour);
-        box-shadow: 0 2px 8px 0 rgba(150, 150, 150, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
 
