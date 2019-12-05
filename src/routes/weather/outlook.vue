@@ -56,6 +56,10 @@ export default Vue.extend({
         this.load();
     },
 
+    activated() {
+        this.load()
+    },
+
     components: {
         TodayCard,
         WeekCard,

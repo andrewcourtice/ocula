@@ -16,7 +16,9 @@
         <template v-else>
             <div class="text--centre" v-if="loading">Loading...</div>
             <template v-else>
-                <router-view v-if="location"></router-view>
+                <keep-alive v-if="location">
+                    <router-view></router-view>
+                </keep-alive>
                 <div v-else>
                     <h2>Unknown Location</h2>
                     <p>We had trouble loading your location</p>
