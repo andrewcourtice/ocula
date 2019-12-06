@@ -1,7 +1,7 @@
 {
     "short_name": "Ocula",
     "name": "Ocula",
-    "description": "Weather forecast information",
+    "description": "Weather forecast information app",
     "display": "standalone",
     "start_url": "/?source=pwa",
     "background_color": "#FFFFFF",
