@@ -1,4 +1,5 @@
 {
+    "version": 2,
     "env": {
         "WILLYWEATHER_API_KEY": "@willyweather-api-key"
     }

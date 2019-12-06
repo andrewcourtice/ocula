@@ -1,0 +1,9 @@
+{
+    "name": "@ocula/style",
+    "version": "1.0.0",
+    "main": "./src/index.scss",
+    "license": "MIT",
+    "dependencies": {
+        "flex-layout-attribute": "^1.0.3"
+    }
+}
