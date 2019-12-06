@@ -27,11 +27,11 @@ export default Vue.extend({
                     right: 0
                 },
                 colours: {
-                    line: '#FF9900',
+                    line: '#47B1FA',
                     gradient: {
-                        stop1: '#FF9900',
-                        stop2: '#FFCD32',
-                        stop3: '#FFE287',
+                        stop1: '#47B1FA',
+                        stop2: '#78D0F5',
+                        stop3: '#78D0F5',
                     }
                 }
             }
