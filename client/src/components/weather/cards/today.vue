@@ -1,5 +1,8 @@
 <template>
     <card class="weather-today-card">
+        <template #header>
+            <small>Updated {{ lastUpdated }} ago</small>
+        </template>
         <div layout="row bottom-justify">
             <div>
                 <icon name="cloud-sun" class="weather-today-card__icon"></icon>
@@ -23,9 +26,19 @@ import Vue from 'vue';
 
 import weatherController from '../../../controllers/weather';
 
+import {
+    dateFormatDistanceToNow
+} from '@ocula/utilities';
+
 export default Vue.extend({
     
     computed: {
+
+        lastUpdated() {
+            if (weatherController.lastUpdated) {
+                return dateFormatDistanceToNow(weatherController.lastUpdated);
+            }
+        },
 
         observations() {
             return weatherController.outlook.observations;

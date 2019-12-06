@@ -1,9 +1,9 @@
 import MUTATIONS from './mutations';
-
 import SETTINGS from '../../constants/settings';
+import STORAGE_KEYS from '../../constants/storage-keys';
 
 function getSettings() {
-    const settings = localStorage.getItem('ocula');
+    const settings = localStorage.getItem(STORAGE_KEYS.settings);
 
     if (!settings) {
         return SETTINGS;
@@ -28,7 +28,7 @@ export default {
                 ...payload
             };
 
-            localStorage.setItem('ocula', JSON.stringify(settings));
+            localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 
             state.settings = settings;
         }      

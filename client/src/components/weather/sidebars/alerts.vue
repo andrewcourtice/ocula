@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-import EVENTS from '../../constants/events';
+import EVENTS from '../../../constants/events';
 
 import Vue from 'vue';
 
-import subscriberMixin from '../mixins/subscriber';
+import subscriberMixin from '../../../components/core/mixins/subscriber';
 
 export default Vue.extend({
     

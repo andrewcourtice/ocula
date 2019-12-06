@@ -1,5 +1,5 @@
 <template>
-    <div class="weather-outlook" v-if="!loading">
+    <div class="weather-outlook" v-if="outlook">
         <today-card></today-card>
         <week-card></week-card>
         <observations-card></observations-card>
@@ -17,43 +17,31 @@ import WeekCard from '../../components/weather/cards/week.vue';
 import ObservationsCard from '../../components/weather/cards/observations.vue';
 import TrendsCard from '../../components/weather/cards/trends.vue';
 
-import locationController from '../../controllers/location';
 import weatherController from '../../controllers/weather';
+import settingsController from '../../controllers/settings';
 
-import subscriberMixin from '../../components/mixins/subscriber';
+import refreshable from './_base/refreshable';
 
 export default Vue.extend({
 
-    mixins: [
-        subscriberMixin(EVENTS.application.visible, 'load')
-    ],
+    extends: refreshable(),
 
-    data() {
-        return {
-            loading: true
-        };
-    },
+    computed: {
 
-    methods: {
-
-        async load() {        
-            if (!weatherController.shouldUpdate) {
-                return;
-            }
-
-            this.loading = true;
-    
-            try {
-                await weatherController.loadOutlook(locationController.id);
-            } finally {
-                this.loading = false;
-            }
+        outlook() {
+            return weatherController.outlook;
         }
 
     },
 
-    activated() {
-        this.load()
+    methods: {
+
+        async load(locationId: number) {    
+            const id = locationId || settingsController.location;
+
+            await weatherController.loadOutlook(id);
+        }
+
     },
 
     components: {

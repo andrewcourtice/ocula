@@ -1,5 +1,4 @@
 import './vendor';
-import './styles';
 
 import initialiseComponents from './components';
 import initialiseState from './state';

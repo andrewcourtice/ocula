@@ -1,7 +1,6 @@
 import Vue from 'vue';
-
-import components from '../components/core/index';
+import Components from '@ocula/components';
 
 export default function initialiseComponents() {
-    Object.keys(components).forEach(key => Vue.component(key, components[key]));
+    return Vue.use(Components);
 }

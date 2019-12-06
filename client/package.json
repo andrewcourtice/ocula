@@ -1,7 +1,7 @@
 {
     "name": "@ocula/client",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "./src/index.ts",
     "repository": "https://github.com/andrewcourtice/ocula.git",
     "author": "Andrew Courtice <andrewcourtice@gmail.com>",
     "license": "MIT",
@@ -9,11 +9,11 @@
         "build": "webpack"
     },
     "dependencies": {
-        "@ocula/d3": "1.0.0",
+        "@ocula/charts": "1.0.0",
+        "@ocula/components": "1.0.0",
         "@ocula/event-emitter": "1.0.0",
         "@ocula/utilities": "1.0.0",
         "core-js": "3.4.7",
-        "flex-layout-attribute": "^1.0.3",
         "regenerator-runtime": "^0.13.3",
         "vue": "^2.6.10",
         "vue-router": "^3.1.3",

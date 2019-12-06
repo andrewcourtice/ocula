@@ -12,6 +12,10 @@ export class WeatherController extends Controller {
         super(MODULES.weather);
     }
 
+    get loading() {
+        return this.state.loading;
+    }
+
     get lastUpdated() {
         return this.state.lastUpdated;
     }
@@ -20,12 +24,12 @@ export class WeatherController extends Controller {
         return !this.lastUpdated || (Date.now() - this.lastUpdated) > 300000;
     }
 
-    get outlook() {
-        return this.state.outlook;
+    get location() {
+        return this.state.location;
     }
 
-    get forecast() {
-        return this.state.forecast;
+    get outlook() {
+        return this.state.outlook;
     }
 
     get alerts() {
@@ -36,14 +40,18 @@ export class WeatherController extends Controller {
         eventEmitter.emit(EVENTS.sidebars.alerts);
     }
 
-    async loadOutlook(locationId) {
-        return this.dispatch(ACTIONS.loadOutlook, {
+    async loadLocation(locationId) {
+        await this.dispatch(ACTIONS.loadLocation, {
             locationId
         });
     }
 
-    async loadForecast(locationId) {
-        return this.dispatch(ACTIONS.loadForecast, {
+    async loadOutlook(locationId) {
+        if (!this.shouldUpdate) {
+            return;
+        }
+
+        return this.dispatch(ACTIONS.loadOutlook, {
             locationId
         });
     }

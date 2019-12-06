@@ -3,6 +3,9 @@ import path from 'path';
 import rules from './rules';
 import plugins from './plugins';
 
+import TerserPlugin from 'terser-webpack-plugin';
+import OptimiseCSSPlugin from 'optimize-css-assets-webpack-plugin';
+
 export default {
     entry: {
         app: './src/index.ts'
@@ -29,7 +32,11 @@ export default {
                     enforce: true
                 }
             }
-        }
+        },
+        minimizer: [
+            new TerserPlugin(),
+            new OptimiseCSSPlugin()
+        ]
     },
 
     resolve: {

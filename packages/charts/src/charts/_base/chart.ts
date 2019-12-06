@@ -1,4 +1,4 @@
-import * as d3 from '@ocula/d3';
+import * as d3 from '../../d3/index';
 
 export default abstract class Chart {
 

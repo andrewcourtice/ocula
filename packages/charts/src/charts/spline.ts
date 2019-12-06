@@ -1,6 +1,6 @@
-import Chart from '../_base/chart';
+import Chart from './_base/chart';
 
-import * as d3 from '@ocula/d3';
+import * as d3 from '../d3/index';
 
 interface ISplineItem {
     label: string,
@@ -23,7 +23,8 @@ const areaGenerator = d3.area<ISplinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y0(data => data.y0)
-    .y1(data => data.y1);
+    .y1(data => data.y1)
+    .curve(d3.curveBasis);
 
 export default class SplineChart extends Chart {
 

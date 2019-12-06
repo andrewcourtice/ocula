@@ -59,7 +59,7 @@ export default Vue.extend({
                         },
                         {
                             label: 'Max',
-                            value: current.weather.min
+                            value: current.weather.max
                         }
                     ]
                 },

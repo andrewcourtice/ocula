@@ -19,7 +19,7 @@ import Vue from 'vue';
 
 import OptionsSidebar from '../sidebars/options.vue';
 
-import applicationController from '../../controllers/application';
+import applicationController from '../../../controllers/application';
 
 export default Vue.extend({
 

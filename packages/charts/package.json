@@ -1,5 +1,5 @@
 {
-    "name": "@ocula/d3",
+    "name": "@ocula/charts",
     "version": "1.0.0",
     "main": "./src/index.ts",
     "license": "MIT",

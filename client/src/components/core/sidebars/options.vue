@@ -26,11 +26,11 @@
 </template>
 
 <script lang="ts">
-import EVENTS from '../../constants/events';
+import EVENTS from '../../../constants/events';
 
 import Vue from 'vue';
 
-import applicationController from '../../controllers/application';
+import applicationController from '../../../controllers/application';
 
 import subscriberMixin from '../mixins/subscriber';
 

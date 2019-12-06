@@ -29,7 +29,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import AppLayout from '../../components/layouts/app.vue';
+import AppLayout from '../../components/core/layouts/app.vue';
 
 export default Vue.extend({
     

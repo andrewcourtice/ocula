@@ -22,7 +22,7 @@ import Vue from 'vue';
 import weatherController from '../../../controllers/weather';
 
 import {
-    formatDate
+    dateFormat
 } from '@ocula/utilities';
 
 export default Vue.extend({
@@ -38,7 +38,7 @@ export default Vue.extend({
     methods: {
 
         formatDate(value) {
-            return formatDate(new Date(value), 'eeee');
+            return dateFormat(new Date(value), 'eeee');
         }
 
     }

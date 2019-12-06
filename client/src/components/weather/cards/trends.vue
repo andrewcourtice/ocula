@@ -1,61 +1,51 @@
 <template>
     <card class="weather-trends-card">
         <template #header>
-            <strong>Temperature</strong>
+            <div layout="row center-justify">
+                <strong>Trends</strong>
+                <div layout="row center-right">
+                    <span><input type="radio" name="chart" v-model="chart" :value="charts.temperature">Temp</span>
+                    <span><input type="radio" name="chart" v-model="chart" :value="charts.rainfall">Wind</span>
+                </div>
+            </div>
         </template>
-        <spline-chart :data="data" :options="options"></spline-chart>
+        <component :is="component"></component>
     </card>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import SplineChart from '../../charts/spline/index.vue';
+import TemperatureChart from '../charts/temperature.vue';
+import RainfallChart from '../charts/rainfall.vue';
 
 import weatherController from '../../../controllers/weather';
+
+const CHARTS = {
+    temperature: 'temperature',
+    rainfall: 'rainfall'
+}
+
+const CHART_MAP = {
+    [CHARTS.temperature]: TemperatureChart,
+    [CHARTS.rainfall]: RainfallChart
+};
 
 export default Vue.extend({
 
     data() {
         return {
-            options: {
-                padding: {
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0
-                },
-                colours: {
-                    line: '#FF9900',
-                    gradient: {
-                        stop1: '#FF9900',
-                        stop2: '#FFCD32',
-                        stop3: '#FFE287',
-                    }
-                }
-            }
+            chart: CHARTS.temperature,
+            charts: CHARTS
         };
     },
 
     computed: {
 
-        data() {
-            const temperature = weatherController.outlook.current.temperature;
-
-            if (!temperature) {
-                return [];
-            }
-
-            return temperature.map(entry => ({
-                label: entry.dateTime,
-                value: entry.temperature
-            }));
+        component() {
+            return CHART_MAP[this.chart];
         }
 
-    },
-    
-    components: {
-        SplineChart
     }
 
 });
