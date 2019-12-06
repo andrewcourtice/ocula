@@ -1,5 +1,5 @@
 <template>
-    <div class="temperature-chart"></div>
+    <div class="chart temperature-chart"></div>
 </template>
 
 <script lang="ts">
@@ -28,6 +28,7 @@ export default Vue.extend({
                 },
                 colours: {
                     line: '#FF9900',
+                    marker: '#FF9900',
                     gradient: {
                         stop1: '#FF9900',
                         stop2: '#FFCD32',
@@ -57,11 +58,3 @@ export default Vue.extend({
 
 });
 </script>
-
-<style lang="scss">
-
-    .temperature-chart {
-        min-height: 196px;
-    }
-
-</style>

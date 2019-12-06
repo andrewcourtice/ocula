@@ -52,6 +52,7 @@ export default Vue.extend({
 
         & .card__body {
             padding: 0;
+            padding-bottom: var(--spacing__x-small);
         }
     }
 

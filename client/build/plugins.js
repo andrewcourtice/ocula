@@ -36,7 +36,9 @@ let plugins = [
     ]),
 
     new WorkboxPlugin.GenerateSW({
-        swDest: 'worker.js'
+        swDest: 'worker.js',
+        clientsClaim: true,
+        skipWaiting: true
     })
 
 /*     new FaviconsWebpackPlugin({

@@ -1,6 +1,7 @@
 export default {
     application: {
-        visible: 'application:visible'
+        visible: 'application:visible',
+        resized: 'application:resized'
     },
     sidebars: {
         options: 'sidebar:options',

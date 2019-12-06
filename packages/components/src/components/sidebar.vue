@@ -83,7 +83,7 @@ export default Vue.extend({
 
     .sidebar-enter,
     .sidebar-leave-to {
-        opacity: 0.75;
+        background-color: transparent;
 
         & .sidebar__panel--left {
             transform: translateX(-100%);
@@ -96,7 +96,7 @@ export default Vue.extend({
 
     .sidebar-enter-active,
     .sidebar-leave-active {
-        transition: opacity var(--transition__timing) var(--transition__easing-quartic-out);
+        transition: background var(--transition__timing) var(--transition__easing-quartic-out);
 
         & .sidebar__panel {
             transition: transform var(--transition__timing) var(--transition__easing-quartic-out);

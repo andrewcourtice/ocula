@@ -1,5 +1,13 @@
+import EVENTS from '../../../../constants/events';
+
+import subscriberMixin from '../../../core/mixins/subscriber';
+
 export default function chart(Chart, dataProperty: string = 'data', optionsProperty: string = 'options') {
     return {
+
+        mixins: [
+            subscriberMixin(EVENTS.application.resized, 'render')
+        ],
 
         props: {
 

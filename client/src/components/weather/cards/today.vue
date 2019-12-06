@@ -1,7 +1,7 @@
 <template>
     <card class="weather-today-card">
         <template #header>
-            <small>Updated {{ lastUpdated }} ago</small>
+            <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
         </template>
         <div layout="row bottom-justify">
             <div>
@@ -9,7 +9,7 @@
                 <h1 class="margin__top--medium">{{ observations.temperature.temperature }}</h1>
                 <span>Feel like {{ observations.temperature.apparentTemperature }}</span>
             </div>
-            <div>
+            <div class="text--right">
                 <div>{{ currentOutlook.weather.min }} - {{ currentOutlook.weather.max }}</div>
                 <div>{{ currentOutlook.weather.precis }}</div>
             </div>
@@ -31,6 +31,12 @@ import {
 } from '@ocula/utilities';
 
 export default Vue.extend({
+
+    data() {
+        return {
+            lastUpdated: null
+        };
+    },
     
     computed: {
 
@@ -48,6 +54,14 @@ export default Vue.extend({
             return weatherController.outlook.current;
         }
 
+    },
+
+    mounted() {
+        setInterval(() => {
+            if (weatherController.lastUpdated) {
+                this.lastUpdated = dateFormatDistanceToNow(weatherController.lastUpdated);
+            }
+        }, 10000);
     }
 
 });

@@ -1,5 +1,5 @@
 <template>
-    <div class="chart rainfall-chart"></div>
+    <div class="chart wind-chart"></div>
 </template>
 
 <script lang="ts">
@@ -42,15 +42,15 @@ export default Vue.extend({
     computed: {
 
         data() {
-            const rainfall = weatherController.outlook.current.rainfallprobability;
+            const wind = weatherController.outlook.current.wind;
 
-            if (!rainfall) {
+            if (!wind) {
                 return [];
             }
 
-            return rainfall.map(entry => ({
+            return wind.map(entry => ({
                 label: entry.dateTime,
-                value: entry.probability
+                value: entry.speed
             }));
         }
 

@@ -4,7 +4,7 @@
             <div layout="row center-justify">
                 <div class="text--centre" self="size-x1">
                     <span v-if="loading">Updating...</span>
-                    <span v-else-if="location">{{ location.name }}</span>
+                    <strong v-else-if="location">{{ location.name }}</strong>
                 </div>
                 <icon name="bell" @click.native="openAlerts"></icon>
             </div>

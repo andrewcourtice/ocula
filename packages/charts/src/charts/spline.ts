@@ -17,14 +17,14 @@ const lineGenerator = d3.line<ISplinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y(data => data.y1)
-    .curve(d3.curveBasis);
+    .curve(d3.curveCatmullRom.alpha(1));
 
 const areaGenerator = d3.area<ISplinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y0(data => data.y0)
     .y1(data => data.y1)
-    .curve(d3.curveBasis);
+    .curve(d3.curveCatmullRom.alpha(1));
 
 export default class SplineChart extends Chart {
 
@@ -123,13 +123,13 @@ export default class SplineChart extends Chart {
             .attr('fill', 'none')
             .attr('d', lineGenerator);
     
-        this.markerGroup.selectAll('circle')
+        const markers = this.markerGroup.selectAll('circle')
             .data(data => data)
             .join('circle')
             .classed(classes.marker, true)
             .attr('cx', data => data.x)
             .attr('cy', data => data.y1)
-            .attr('r', 4)
+            .attr('r', 3)
             .attr('fill', colours.marker)
             .attr('stroke', '#FFFFFF')
             .attr('stroke-width', 2)
@@ -148,11 +148,22 @@ export default class SplineChart extends Chart {
 
         line.attr('stroke-dasharray', null);
 
-        return area.transition()
+        const areaTransition = area.transition()
             .duration(1000)
             .ease(d3.easePolyOut.exponent(4))
             .style('opacity', 1)
             .end();
+
+        const markerTransition = markers.transition()
+            .duration(1000)
+            .ease(d3.easePolyOut.exponent(4))
+            .style('opacity', 1)
+            .end();
+
+        return Promise.all([
+            areaTransition,
+            markerTransition
+        ]);
     }
     
     private async update() {

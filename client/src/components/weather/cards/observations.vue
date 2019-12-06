@@ -3,10 +3,13 @@
         <template #header>
             <strong>Observations</strong>
         </template>
-        <table class="table--fixed">
+        <table>
             <tr v-for="(group, key) in observations" :key="key">
-                <td class="text--truncate">
-                    <icon class="margin__right--small" :name="group.icon"></icon><strong>{{ group.label }}</strong>
+                <td class="text--centre padding__right--none">
+                    <icon :name="group.icon"></icon>
+                </td>
+                <td class="text--truncate" style="width: 100%">
+                    <strong>{{ group.label }}</strong>
                 </td>
                 <td v-for="value in group.values" :key="value.label">
                     <small class="text--truncate">
@@ -91,6 +94,7 @@ export default Vue.extend({
 
         & .card__body {
             padding: 0; 
+            padding-bottom: var(--spacing__x-small);
         }
     }
 
