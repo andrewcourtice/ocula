@@ -4,11 +4,11 @@
         "module": "esnext",
         "moduleResolution": "node",
         "jsx": "react",
-        "strict": true,
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": false
     },
     "exclude": [
+        "public",
         "dist",
         "node_modules"
     ]

@@ -1,0 +1,9 @@
+{
+    "name": "@ocula/utilities",
+    "version": "1.0.0",
+    "main": "./src/index.ts",
+    "license": "MIT",
+    "dependencies": {
+        "date-fns": "^2.8.1"
+    }
+}
