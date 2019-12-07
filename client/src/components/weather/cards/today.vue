@@ -40,12 +40,6 @@ export default Vue.extend({
     
     computed: {
 
-        lastUpdated() {
-            if (weatherController.lastUpdated) {
-                return dateFormatDistanceToNow(weatherController.lastUpdated);
-            }
-        },
-
         observations() {
             return weatherController.outlook.observations;
         },

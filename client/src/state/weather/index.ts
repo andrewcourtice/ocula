@@ -9,7 +9,8 @@ import {
 } from '../../services/location';
 
 import {
-    getOutlook
+    getOutlook,
+    getRadar
 } from '../../services/weather';
 
 function getOutlookData() {
@@ -50,12 +51,13 @@ export default {
 
         location: null,
         alerts: [],
-        outlook: getOutlookData()
+        outlook: getOutlookData(),
+        radar: null
     },
 
     mutations: {
 
-        [MUTATIONS.setLoading](state, payload) {
+        [MUTATIONS.setLoading](state, payload) { 
             state.loading = !!payload;
         },
 
@@ -71,6 +73,10 @@ export default {
             state.outlook = payload;
 
             localStorage.setItem(STORAGE_KEYS.outlook, JSON.stringify(payload));
+        },
+
+        [MUTATIONS.setRadar](state, payload) {
+            state.radar = payload;
         }
 
     },
@@ -125,6 +131,17 @@ export default {
                 commit(MUTATIONS.setLastUpdated);
                 commit(MUTATIONS.setLoading, false);
             }
+        },
+
+        async [ACTIONS.loadRadar]({ commit }, payload) {
+            const {
+                locationId,
+                width
+            } = payload;
+
+            const radar = await getRadar(locationId, width);
+
+            commit(MUTATIONS.setRadar, radar);
         }
 
     }

@@ -6,6 +6,10 @@ import plugins from './plugins';
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimiseCSSPlugin from 'optimize-css-assets-webpack-plugin';
 
+import getFilenameTemplate from './helpers/get-filename-template';
+
+const FILENAME_TEMPLATE = getFilenameTemplate();
+
 export default {
     entry: {
         app: './src/index.ts'
@@ -14,8 +18,8 @@ export default {
     output: {
         path: path.resolve(__dirname, '../../public'),
         publicPath: '/',
-        filename: '[name]-[chunkhash].js',
-        chunkFilename: '[name]-[chunkhash].js'
+        filename: FILENAME_TEMPLATE,
+        chunkFilename: FILENAME_TEMPLATE
     },
 
     mode: 'production',
@@ -61,6 +65,14 @@ export default {
     },
 
     devtool: 'source-map',
+
+    devServer: {
+        port: 7000,
+        noInfo: true,
+        historyApiFallback: true,
+        clientLogLevel: 'warning'
+    },
+
     stats: 'minimal',
 
     plugins

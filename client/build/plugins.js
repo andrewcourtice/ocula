@@ -5,6 +5,7 @@ import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import workboxConfig from './workbox';
+import getFilenameTemplate from './helpers/get-filename-template';
 
 import {
     CleanWebpackPlugin
@@ -18,14 +19,16 @@ import {
     BundleAnalyzerPlugin
 } from 'webpack-bundle-analyzer';
 
+const FILENAME_TEMPLATE = getFilenameTemplate('css');
+
 let plugins = [
     new CleanWebpackPlugin(),
 
     new VueLoaderPlugin(),
 
     new MiniCssExtractPlugin({
-        filename: '[name]-[chunkhash].css',
-        chunkFilename: '[name]-[chunkhash].css'
+        filename: FILENAME_TEMPLATE,
+        chunkFilename: FILENAME_TEMPLATE
     }),
 
     new HtmlWebpackPlugin({

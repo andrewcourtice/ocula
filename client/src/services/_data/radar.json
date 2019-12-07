@@ -1,0 +1,42 @@
+{
+    "name": "Sydney (Terrey Hills)",
+    "map": "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/151.21,-33.701,5/256x256?access_token=pk.eyJ1IjoiYW5kcmV3Y291cnRpY2UiLCJhIjoiY2szamNoZTFyMGhweDNla294czhud2Q5MCJ9.3RVALbgi5-zhx0l-Sir0Dw",
+    "images": [
+        {
+            "dateTime": "2019-12-07 00:00:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070000.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:06:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070006.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:12:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070012.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:18:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070018.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:24:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070024.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:30:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070030.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:36:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070036.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:42:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070042.png"
+        },
+        {
+            "dateTime": "2019-12-07 00:48:00",
+            "source": "https://cdnmaps.willyweather.com.au/radar/71-201912070048.png"
+        }
+    ]
+}

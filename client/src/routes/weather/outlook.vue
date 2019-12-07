@@ -4,6 +4,7 @@
         <week-card></week-card>
         <observations-card></observations-card>
         <trends-card></trends-card>
+        <radar-card v-if="location"></radar-card>
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import TodayCard from '../../components/weather/cards/today.vue';
 import WeekCard from '../../components/weather/cards/week.vue';
 import ObservationsCard from '../../components/weather/cards/observations.vue';
 import TrendsCard from '../../components/weather/cards/trends.vue';
+import RadarCard from '../../components/weather/cards/radar.vue';
 
 import weatherController from '../../controllers/weather';
 import settingsController from '../../controllers/settings';
@@ -27,6 +29,10 @@ export default Vue.extend({
     extends: refreshable(),
 
     computed: {
+
+        location() {
+            return weatherController.location;
+        },
 
         outlook() {
             return weatherController.outlook;
@@ -48,7 +54,8 @@ export default Vue.extend({
         TodayCard,
         WeekCard,
         ObservationsCard,
-        TrendsCard
+        TrendsCard,
+        RadarCard
     }
 
 });

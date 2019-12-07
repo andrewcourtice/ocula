@@ -32,6 +32,10 @@ export class WeatherController extends Controller {
         return this.state.outlook;
     }
 
+    get radar() {
+        return this.state.radar;
+    }
+
     get alerts() {
         return this.state.alerts;
     }
@@ -53,6 +57,13 @@ export class WeatherController extends Controller {
 
         return this.dispatch(ACTIONS.loadOutlook, {
             locationId
+        });
+    }
+
+    async loadRadar(locationId, width) {
+        return this.dispatch(ACTIONS.loadRadar, {
+            locationId,
+            width
         });
     }
 
