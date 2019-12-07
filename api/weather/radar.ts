@@ -37,8 +37,11 @@ async function getMapImage(width: number, latitude: number, longitude: number, b
 async function getRadarData(location) {
     const willyWeatherApiKey = process.env.WILLYWEATHER_API_KEY;
     const response = await fetch(`https://api.willyweather.com.au/v2/${willyWeatherApiKey}/locations/${location}/maps.json?mapTypes=regional-radar&offset=-60&limit=30`);
-    
-    return response.json();
+    const data = await response.json();
+
+    if (data && data.length >= 1) {
+        return data[0];
+    }
 }
 
 export default async function (request: NowRequest, response: NowResponse) {    
@@ -47,6 +50,12 @@ export default async function (request: NowRequest, response: NowResponse) {
         width
     } = request.query;
 
+    const radar = await getRadarData(location);
+
+    if (!radar) {
+        response.statusCode = 500;
+    }
+
     const {
         name,
         lat,
@@ -54,7 +63,7 @@ export default async function (request: NowRequest, response: NowResponse) {
         bounds,
         overlayPath,
         overlays
-    } = await getRadarData(location);
+    } = radar;
 
     const map = await getMapImage(+width, lat, lng, bounds);
 
