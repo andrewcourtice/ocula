@@ -4,6 +4,8 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import WorkboxPlugin from 'workbox-webpack-plugin';
 
+import workboxConfig from './workbox';
+
 import {
     CleanWebpackPlugin
 } from 'clean-webpack-plugin';
@@ -35,11 +37,7 @@ let plugins = [
         './src/static'
     ]),
 
-    new WorkboxPlugin.GenerateSW({
-        swDest: 'worker.js',
-        clientsClaim: true,
-        skipWaiting: true
-    })
+    new WorkboxPlugin.GenerateSW(workboxConfig)
 
 /*     new FaviconsWebpackPlugin({
         logo: './src/assets/icons/favicon.png'
@@ -52,7 +50,7 @@ if (process.env.INSIGHTS) {
 
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
-            reportFilename: 'report-builder-bundle-report.html'
+            reportFilename: 'ocula-bundle-report.html'
         })
 
     ]);

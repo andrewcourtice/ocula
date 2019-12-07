@@ -6,7 +6,8 @@
     "author": "Andrew Courtice <andrewcourtice@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack"
+        "build": "webpack",
+        "insights": "webpack --env.INSIGHTS=true"
     },
     "dependencies": {
         "@ocula/charts": "1.0.0",

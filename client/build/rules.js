@@ -21,7 +21,13 @@ export default [
     {
         test: /\.(ts|js)x?$/,
         loader: 'babel-loader',
-        exclude: file => /node_modules\/(?!@ocula)/.test(file) && !/\.vue\.(ts|js)x?/.test(file)
+        exclude: {
+            test: /node_modules/,
+            not: [
+                /@ocula/,
+                /.*\.vue\.(js|ts)$/
+            ]
+        }
     },
     {
         test: /\.css$/,
@@ -30,12 +36,22 @@ export default [
     {
         test: /\.scss$/,
         use: [].concat(CSS_LOADERS, 'sass-loader'),
-        exclude: /node_modules\/(?!@ocula)/
+        exclude: {
+            test: /node_modules/,
+            not: [
+                /@ocula/
+            ]
+        }
     },
     {
         test: /\.sass$/,
         use: [].concat(CSS_LOADERS, 'sass-loader?indentedSyntax'),
-        exclude: /node_modules\/(?!@ocula)/
+        exclude: {
+            test: /node_modules/,
+            not: [
+                /@ocula/
+            ]
+        }
     },
     {
         test: /\.(png|jpg|gif|woff|woff2|eot|ttf)$/,

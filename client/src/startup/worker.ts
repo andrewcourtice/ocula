@@ -10,7 +10,7 @@ export default async function initialiseWorker(store) {
     }
 
     window.addEventListener('load', () => {
-        const workbox = new Workbox('/worker' + '.js');
+        const workbox = new Workbox('/service-worker.js');
 
         workbox.addEventListener('installed', event => {
             if (!event.isUpdate) {
