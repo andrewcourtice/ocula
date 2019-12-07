@@ -1,5 +1,8 @@
 <template>
     <card class="weather-radar-card">
+        <template #header>
+            <strong>Radar</strong>
+        </template>
         <radar></radar>
     </card>
 </template>

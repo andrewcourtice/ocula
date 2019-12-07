@@ -3,22 +3,21 @@
         <template #header>
             <strong>Observations</strong>
         </template>
-        <table>
-            <tr v-for="(group, key) in observations" :key="key">
-                <td class="text--centre padding__right--none">
-                    <icon :name="group.icon"></icon>
-                </td>
-                <td class="text--truncate" style="width: 100%">
-                    <strong>{{ group.label }}</strong>
-                </td>
-                <td v-for="value in group.values" :key="value.label">
+        <div layout="rows top-center">
+            <div v-for="observation in observations" 
+                class="margin__bottom--small" 
+                layout="row center-left"
+                self="size-1of2"
+                :key="observation.label">
+                <icon :name="observation.icon"></icon>
+                <div class="margin__left--small">
                     <small class="text--truncate">
-                        <strong>{{ value.label }}</strong>
+                        <strong>{{ observation.label }}</strong>
                     </small>
-                    <div>{{ value.value }}</div>
-                </td>
-            </tr>
-        </table>
+                    <div>{{ observation.value }}</div>
+                </div>
+            </div>
+        </div>
     </card>
 </template>
 
@@ -37,50 +36,48 @@ export default Vue.extend({
                 current
             } = weatherController.outlook;
 
-            return {
-                rainfall: {
-                    label: 'Rainfall',
+            return [
+                {
+                    label: 'Chance of rain',
                     icon: 'tint',
-                    values: [
-                        {
-                            label: 'Chance',
-                            value: `${current.rainfall.probability}%`
-                        },
-                        {
-                            label: 'Since 9am',
-                            value: `${observations.rainfall.todayAmount}mm`
-                        }
-                    ]
+                    value: `${current.rainfall.probability}%`
                 },
-                temperature: {
-                    label: 'Temperature',
-                    icon: 'thermometer-half',
-                    values: [
-                        {
-                            label: 'Min',
-                            value: current.weather.min
-                        },
-                        {
-                            label: 'Max',
-                            value: current.weather.max
-                        }
-                    ]
+                {
+                    label: 'Rain today',
+                    icon: 'cloud-rain',
+                    value: `${observations.rainfall.todayAmount}mm`
                 },
-                wind: {
-                    label: 'Wind',
+                {
+                    label: 'Min temp',
+                    icon: 'temperature-low',
+                    value: current.weather.min
+                },
+                {
+                    label: 'Max temp',
+                    icon: 'temperature-high',
+                    value: current.weather.max
+                },
+                {
+                    label: 'Wind Speed',
                     icon: 'wind',
-                    values: [
-                        {
-                            label: 'Speed',
-                            value: `${observations.wind.speed}km/h`
-                        },
-                        {
-                            label: 'Direction',
-                            value: observations.wind.directionText
-                        }
-                    ]
+                    value: `${observations.wind.speed}km/h`
+                },
+                {
+                    label: 'Wind Direction',
+                    icon: 'compass',
+                    value: observations.wind.directionText
+                },
+                {
+                    label: 'Humidity',
+                    icon: 'water',
+                    value: `${observations.humidity.percentage}%`
+                },
+                {
+                    label: 'Pressure',
+                    icon: 'ruler-vertical',
+                    value: observations.wind.directionText
                 }
-            };
+            ];
         }
 
     }
@@ -93,8 +90,7 @@ export default Vue.extend({
     .weather-observations-card {
 
         & .card__body {
-            padding: 0; 
-            padding-bottom: var(--spacing__x-small);
+            padding-bottom: 0;
         }
     }
 

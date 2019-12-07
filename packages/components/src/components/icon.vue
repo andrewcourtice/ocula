@@ -44,7 +44,9 @@ export default Vue.extend({
 <style lang="scss">
 
     .icon {
-        font-size: 1rem;
+        min-width: 1em;
+        font-size: 1.25em;
+        text-align: center;
     }
 
 </style>

@@ -8,6 +8,7 @@ interface ISplineItem {
 };
 
 interface ISplinePoint extends ISplineItem {
+    hidden?: boolean,
     x: number,
     y0: number,
     y1: number
@@ -35,10 +36,12 @@ export default class SplineChart extends Chart {
 
     private lineGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
     private markerGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
+    private gridGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
 
     constructor(element: Element) {
         super(element);
 
+        this.gridGroup = this.canvas.append('g');
         this.lineGroup = this.canvas.append('g');
         this.markerGroup = this.canvas.append('g');
 
@@ -79,6 +82,7 @@ export default class SplineChart extends Chart {
             colours: {
                 line: '#000000',
                 marker: '#000000',
+                label: '#AAAAAA',
                 gradient: {
                     stop1: '#000000',
                     stop2: '#888888',
@@ -113,6 +117,7 @@ export default class SplineChart extends Chart {
         const area = this.lineGroup.append('path')
             .classed(classes.area, true)
             .style('fill', 'url(#gradient)')
+            .style('fill-opacity', 0.75)
             .style('opacity', 0)
             .attr('d', areaGenerator);
     
@@ -122,17 +127,37 @@ export default class SplineChart extends Chart {
             .attr('stroke-width', 2)
             .attr('fill', 'none')
             .attr('d', lineGenerator);
-    
-        const markers = this.markerGroup.selectAll('circle')
+
+        const markerGroups = this.markerGroup.selectAll(`.${classes.marker}`)
             .data(data => data)
-            .join('circle')
+            .join('g')
+            .filter(data => !data.hidden)
             .classed(classes.marker, true)
-            .attr('cx', data => data.x)
-            .attr('cy', data => data.y1)
+            .attr('transform', data => `translate(${data.x}, ${data.y1})`)
+            .style('opacity', 0);
+    
+        markerGroups.append('circle')
             .attr('r', 3)
             .attr('fill', colours.marker)
             .attr('stroke', '#FFFFFF')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 2);
+
+        markerGroups.append('text')
+            .text(data => data.value)
+            .attr('dy', -12)
+            .attr('fill', colours.label)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '0.75rem');
+
+        const gridLines = this.gridGroup.selectAll('line')
+            .data(data => data)
+            .join('line')
+            .attr('x1', data => data.x)
+            .attr('x2', data => data.x)
+            .attr('y1', data => data.y1)
+            .attr('y2', data => data.y0)
+            .attr('stroke', colours.line)
+            .attr('stroke-width', 1)
             .style('opacity', 0);
     
         const lineLength = line.node().getTotalLength();
@@ -154,7 +179,13 @@ export default class SplineChart extends Chart {
             .style('opacity', 1)
             .end();
 
-        const markerTransition = markers.transition()
+        const markerTransition = markerGroups.transition()
+            .duration(1000)
+            .ease(d3.easePolyOut.exponent(4))
+            .style('opacity', 1)
+            .end();
+
+        const gridTransition = gridLines.transition()
             .duration(1000)
             .ease(d3.easePolyOut.exponent(4))
             .style('opacity', 1)
@@ -162,7 +193,8 @@ export default class SplineChart extends Chart {
 
         return Promise.all([
             areaTransition,
-            markerTransition
+            markerTransition,
+            gridTransition
         ]);
     }
     
@@ -175,9 +207,15 @@ export default class SplineChart extends Chart {
 
         const area = this.lineGroup.select(`.${classes.area}`);
         const line = this.lineGroup.select(`.${classes.line}`);
+
+        const gridLines = this.gridGroup.selectAll('line')
+            .data(data => data);
     
         const markers = this.markerGroup.selectAll(`.${classes.marker}`)
             .data(data => data);
+
+        markers.select('text')
+            .text(data => data.value)
     
         const areaTransition = area.transition()
             .duration(timing)
@@ -190,16 +228,25 @@ export default class SplineChart extends Chart {
             .ease(d3.easePolyOut.exponent(4))
             .attr('d', lineGenerator)
             .end();
-    
-        markers.transition()
+        
+        const gridTransition = gridLines.transition()
             .duration(timing)
             .ease(d3.easePolyOut.exponent(4))
-            .attr('cx', data => data.x)
-            .attr('cy', data => data.y1);
+            .attr('x1', data => data.x)
+            .attr('x2', data => data.x)
+            .attr('y1', data => data.y1)
+            .attr('y2', data => data.y0)
+    
+        const markerTransition = markers.transition()
+            .duration(timing)
+            .ease(d3.easePolyOut.exponent(4))
+            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
     
         return Promise.all([
             areaTransition,
-            lineTransition
+            lineTransition,
+            markerTransition,
+            gridTransition
         ]);
     }
 
@@ -215,7 +262,8 @@ export default class SplineChart extends Chart {
     
         const xScale = d3.scalePoint()
             .domain(xDomain)
-            .range([0, this.width]);
+            .range([0, this.width])
+            .padding(1);
     
         const extent = d3.extent(data, item => item.value);
         const yDomain = [Math.min(extent[0], 0), Math.max(extent[1], 0)];
@@ -225,7 +273,8 @@ export default class SplineChart extends Chart {
             .domain(yDomain)
             .range([this.height - rangePadding, rangePadding]);
     
-        const points = data.map(({ label, value }) => ({
+        const points: ISplinePoint[] = data.map(({ label, value }, index) => ({
+            hidden: !!(index % 2),
             label,
             value,
             x: xScale(label) as number,
@@ -233,8 +282,30 @@ export default class SplineChart extends Chart {
             y1: yScale(value) as number
         }));
 
+        const firstPoint = points[0];
+        const lastPoint = points[points.length - 1];
+
+        points.unshift({
+            hidden: true,
+            label: '',
+            value: 0,
+            x: 0,
+            y0: firstPoint.y0,
+            y1: firstPoint.y1
+        });
+
+        points.push({
+            hidden: true,
+            label: '',
+            value: 0,
+            x: this.width,
+            y0: lastPoint.y0,
+            y1: lastPoint.y1
+        });
+
         this.lineGroup.datum(points);
         this.markerGroup.datum(points);
+        this.gridGroup.datum(points);
     }
 
     public async render(data: ISplineItem[], options) {

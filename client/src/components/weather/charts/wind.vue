@@ -13,6 +13,10 @@ import weatherController from '../../../controllers/weather';
 
 import chart from './_base/chart';
 
+import {
+    dateFormat
+} from '@ocula/utilities';
+
 export default Vue.extend({
 
     extends: chart(SplineChart),
@@ -29,6 +33,7 @@ export default Vue.extend({
                 colours: {
                     line: '#47B1FA',
                     marker: '#47B1FA',
+                    label: '#AAAAAA',
                     gradient: {
                         stop1: '#47B1FA',
                         stop2: '#78D0F5',
@@ -48,9 +53,9 @@ export default Vue.extend({
                 return [];
             }
 
-            return wind.map(entry => ({
-                label: entry.dateTime,
-                value: entry.speed
+            return wind.map(({ dateTime, speed }) => ({
+                label: dateFormat(new Date(dateTime), 'h aa'),
+                value: Math.round(speed)
             }));
         }
 
