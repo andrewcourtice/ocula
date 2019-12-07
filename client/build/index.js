@@ -22,7 +22,7 @@ export default {
         chunkFilename: FILENAME_TEMPLATE
     },
 
-    mode: 'development',
+    mode: 'production',
 
     optimization: {
         runtimeChunk: 'single',
