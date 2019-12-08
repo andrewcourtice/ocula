@@ -1,5 +1,9 @@
 import * as d3 from '../../d3/index';
 
+import {
+    objectMerge
+} from '@ocula/utilities';
+
 export default abstract class Chart {
 
     protected element: Element;
@@ -42,10 +46,7 @@ export default abstract class Chart {
     }
 
     protected bootstrap(options) {
-        this.options = {
-            ...this.defaultOptions,
-            ...options
-        };
+        this.options = objectMerge(this.defaultOptions, options);
 
         const {
             width,

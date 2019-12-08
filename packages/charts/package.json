@@ -4,6 +4,7 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "dependencies": {
+        "@ocula/utilities": "1.0.0",
         "d3-array": "^2.4.0",
         "d3-axis": "^1.0.12",
         "d3-ease": "^1.0.6",

@@ -4,11 +4,11 @@
             <strong>7 Day Forecast</strong>
         </template>
         <table>
-            <tr v-for="day in weekOutlook" :key="day.dateTime">
-                <td>
-                    <icon name="cloud-sun"></icon>
+            <tr v-for="day in weekOutlook" :key="day.label">
+                <td class="text--centre">
+                    <icon :name="day.icon"></icon>
                 </td>
-                <td style="width: 100%">{{ formatDate(day.dateTime) }}</td>
+                <td style="width: 100%">{{ day.label }}</td>
                 <td class="text--meta">{{ day.min }}</td>
                 <td class="text--meta">{{ day.max }}</td>
             </tr>
@@ -17,6 +17,8 @@
 </template>
 
 <script lang="ts">
+import PRECIS_ICON from '../../../constants/precis-icon';
+
 import Vue from 'vue';
 
 import weatherController from '../../../controllers/weather';
@@ -30,15 +32,26 @@ export default Vue.extend({
     computed: {
 
         weekOutlook() {
-            return weatherController.outlook.week;
-        }
+            const week = weatherController.outlook.week;
 
-    },
+            return week.map(day => {
+                const {
+                    min,
+                    max,
+                    dateTime,
+                    precisCode
+                } = day;
 
-    methods: {
+                const icon = PRECIS_ICON[precisCode];
+                const label = dateFormat(new Date(dateTime), 'eeee');
 
-        formatDate(value) {
-            return dateFormat(new Date(value), 'eeee');
+                return {
+                    icon,
+                    label,
+                    min,
+                    max
+                };
+            });
         }
 
     }

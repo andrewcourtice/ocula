@@ -2,14 +2,20 @@ import MUTATIONS from './mutations';
 import SETTINGS from '../../constants/settings';
 import STORAGE_KEYS from '../../constants/storage-keys';
 
+import {
+    objectMerge
+} from '@ocula/utilities';
+
 function getSettings() {
-    const settings = localStorage.getItem(STORAGE_KEYS.settings);
+    let settings = localStorage.getItem(STORAGE_KEYS.settings);
 
     if (!settings) {
         return SETTINGS;
     }
 
-    return JSON.parse(settings);
+    settings = JSON.parse(settings);
+
+    return objectMerge(SETTINGS, settings);
 }
 
 export default {
@@ -23,10 +29,7 @@ export default {
     mutations: {
 
         [MUTATIONS.updateSettings](state, payload) {
-            const settings = {
-                ...state.settings,
-                ...payload
-            };
+            const settings = objectMerge(state.settings, payload);
 
             localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 

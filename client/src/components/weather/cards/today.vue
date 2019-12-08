@@ -1,11 +1,11 @@
 <template>
-    <card class="weather-today-card">
+    <card class="weather-today-card" :style="cardStyles">
         <template #header>
             <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
         </template>
         <div layout="row bottom-justify">
             <div>
-                <icon name="cloud-sun" class="weather-today-card__icon"></icon>
+                <icon :name="icon" class="weather-today-card__icon"></icon>
                 <h1 class="margin__top--medium">{{ observations.temperature.temperature }}</h1>
                 <span>Feel like {{ observations.temperature.apparentTemperature }}</span>
             </div>
@@ -22,6 +22,9 @@
 </template>
 
 <script lang="ts">
+import PRECIS_ICON from '../../../constants/precis-icon';
+import PRECIS_BACKGROUND from '../../../constants/precis-background';
+
 import Vue from 'vue';
 
 import weatherController from '../../../controllers/weather';
@@ -46,6 +49,19 @@ export default Vue.extend({
 
         currentOutlook() {
             return weatherController.outlook.current;
+        },
+
+        cardStyles() {
+            const backgroundVariable = PRECIS_BACKGROUND[this.currentOutlook.weather.precisCode] || PRECIS_BACKGROUND.fine;
+            const background = `var(--background__weather--${backgroundVariable})`;
+            
+            return {
+                background
+            };
+        },
+
+        icon() {
+            return PRECIS_ICON[this.currentOutlook.weather.precisCode] || PRECIS_ICON.fine;
         }
 
     },
@@ -66,7 +82,7 @@ export default Vue.extend({
     .weather-today-card {
         min-height: 8rem;
         color: var(--font__colour--compliment);
-        background: linear-gradient(to top right, #47B1FA 30%, #78D0F5, #ffe7ab);
+        transition: background 1s var(--transition__easing-quartic-out);
     }
 
     .weather-today-card__icon {

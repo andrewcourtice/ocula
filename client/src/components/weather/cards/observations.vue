@@ -75,7 +75,7 @@ export default Vue.extend({
                 {
                     label: 'Pressure',
                     icon: 'ruler-vertical',
-                    value: observations.wind.directionText
+                    value: `${observations.pressure.pressure}kPa`
                 }
             ];
         }
