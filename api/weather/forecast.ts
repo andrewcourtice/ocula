@@ -1,28 +1,65 @@
+import FORECASTS from './_constants/forecasts';
+
 import fetch from 'node-fetch';
+
+import mapForecastData from './_helpers/map-forecast-data';
 
 import {
     NowRequest,
     NowResponse
 } from '@now/node';
 
-const FORECASTS = [
-    'weather',
-    'temperature',
-    'rainfall',
-    'wind'
-];
+async function getPrecis(apiKey, locationId) {
+    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${locationId}/weather.json?regionPrecis=true&days=7`);
+    const data = await apiResponse.json();
+
+    const {
+        days
+    } = data.regionPrecis;
+
+    const {
+        precis
+    } = mapForecastData({
+        [FORECASTS.precis]: { days }
+    }, days => days);
+
+    return precis;
+}
+
+async function getForecast(apiKey, locationId) {
+    const forecasts = [
+        FORECASTS.weather
+    ];
+
+    const forecastQuery = forecasts.join(',')
+
+    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${locationId}/weather.json?forecasts=${forecastQuery}&days=7`);
+    const data = await apiResponse.json();
+
+    const {
+        weather
+    } = mapForecastData(data.forecasts, days => days);
+
+    return weather;
+}
 
 export default async function (request: NowRequest, response: NowResponse) {
     const apiKey = process.env.WILLYWEATHER_API_KEY;
-    const forecasts = FORECASTS.join(',');
-
+    
     const {
-        location,
-        days
+        location
     } = request.query;
 
-    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${location}/weather.json?forecasts=${forecasts}&days=${days}`);
-    const data = await apiResponse.json();
+    const [
+        precis,
+        forecast
+    ] = await Promise.all([
+        getPrecis(apiKey, location),
+        getForecast(apiKey, location)
+    ])
 
-    return response.json(data);
+    return response.json({
+        precis,
+        forecast
+    });
 }

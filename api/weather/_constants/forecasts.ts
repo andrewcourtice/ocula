@@ -1,7 +1,11 @@
 export default {
-    weather: 'weather',
-    temperature: 'temperature',
     rainfall: 'rainfall',
     rainfallProbability: 'rainfallprobability',
-    wind: 'wind'
+    sunriseSunset: 'sunrisesunset',
+    temperature: 'temperature',
+    tides: 'tides',
+    uv: 'uv',
+    weather: 'weather',
+    wind: 'wind',
+    precis: 'precis'
 };
