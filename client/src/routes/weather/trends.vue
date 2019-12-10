@@ -80,6 +80,10 @@ export default Vue.extend({
         & .card:not(:last-child) {
             margin-bottom: var(--spacing__small);
         }
+
+        & .card__body {
+            padding: 0;
+        }
     }
 
 </style>
