@@ -1,4 +1,7 @@
 import Index from './index.vue';
+import Outlook from './outlook.vue';
+import Trends from './trends.vue';
+import Forecast from './forecast.vue';
 
 export default [
     {
@@ -7,7 +10,7 @@ export default [
         children: [
             {
                 path: '',
-                component: () => import(/* webpackChunkName: 'outlook' */ './outlook.vue')
+                component: Outlook
             }
         ]
     },
@@ -17,7 +20,15 @@ export default [
         children: [
             {
                 path: 'outlook',
-                component: () => import(/* webpackChunkName: 'outlook' */ './outlook.vue')
+                component: Outlook
+            },
+            {
+                path: 'trends',
+                component: Trends
+            },
+            {
+                path: 'forecast',
+                component: Forecast
             }
         ]
     }

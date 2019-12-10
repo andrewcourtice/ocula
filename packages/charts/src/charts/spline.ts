@@ -29,6 +29,7 @@ const areaGenerator = d3.area<ISplinePoint>()
 
 export default class SplineChart extends Chart {
 
+    private gradientId: string;
     private gradient: d3.Selection<SVGLinearGradientElement, unknown, null, undefined>;
     private gradientStop1: d3.Selection<SVGStopElement, unknown, null, undefined>;
     private gradientStop2: d3.Selection<SVGStopElement, unknown, null, undefined>;
@@ -45,9 +46,11 @@ export default class SplineChart extends Chart {
         this.lineGroup = this.canvas.append('g');
         this.markerGroup = this.canvas.append('g');
 
+        this.gradientId = `chart-${this.id}-gradient`;
+
         this.gradient = this.svg.append('defs')
             .append('linearGradient')
-            .attr('id', 'gradient')
+            .attr('id', this.gradientId)
             .attr('x1', '0%')
             .attr('x2', '0%')
             .attr('y1', '0%')
@@ -116,7 +119,7 @@ export default class SplineChart extends Chart {
 
         const area = this.lineGroup.append('path')
             .classed(classes.area, true)
-            .style('fill', 'url(#gradient)')
+            .style('fill', `url(#${this.gradientId})`)
             .style('fill-opacity', 0.75)
             .style('opacity', 0)
             .attr('d', areaGenerator);

@@ -1,6 +1,7 @@
 export default {
     loadLocation: 'loadLocation',
-    loadOutlook: 'loadOutlook',
+    loadToday: 'loadToday',
+    loadTrends: 'loadTrends',
+    loadForecast: 'loadForecast',
     loadRadar: 'loadRadar',
-    loadForecast: 'loadForecast'
 };

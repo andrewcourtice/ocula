@@ -12,32 +12,32 @@ export class WeatherController extends Controller {
         super(MODULES.weather);
     }
 
-    get loading() {
-        return this.state.loading;
-    }
-
-    get lastUpdated() {
-        return this.state.lastUpdated;
-    }
-
-    get shouldUpdate() {
-        return !this.lastUpdated || (Date.now() - this.lastUpdated) > 300000;
+    get data() {
+        return this.state.data;
     }
 
     get location() {
-        return this.state.location;
+        return this.data.location;
     }
 
-    get outlook() {
-        return this.state.outlook;
+    get today() {
+        return this.data.today;
+    }
+
+    get trends() {
+        return this.data.trends;
+    }
+
+    get forecast() {
+        return this.data.forecast;
     }
 
     get radar() {
-        return this.state.radar;
+        return this.data.radar;
     }
 
-    get alerts() {
-        return this.state.alerts;
+    get warnings() {
+        return this.data.warnings;
     }
 
     openAlertsSidebar() {
@@ -45,17 +45,25 @@ export class WeatherController extends Controller {
     }
 
     async loadLocation(locationId) {
-        await this.dispatch(ACTIONS.loadLocation, {
+        return this.dispatch(ACTIONS.loadLocation, {
             locationId
         });
     }
 
-    async loadOutlook(locationId) {
-        if (!this.shouldUpdate) {
-            return;
-        }
+    async loadToday(locationId) {
+        return this.dispatch(ACTIONS.loadToday, {
+            locationId
+        });
+    }
 
-        return this.dispatch(ACTIONS.loadOutlook, {
+    async loadTrends(locationId) {
+        return this.dispatch(ACTIONS.loadTrends, {
+            locationId
+        });
+    }
+
+    async loadForecast(locationId) {
+        return this.dispatch(ACTIONS.loadForecast, {
             locationId
         });
     }

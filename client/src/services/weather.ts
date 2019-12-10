@@ -10,6 +10,24 @@ export async function getOutlook(locationId: number) {
     return response.json();
 }
 
+export async function getToday(locationId: number) {
+    const response = await fetch(`/api/weather/today?location=${locationId}`);
+
+    return response.json();
+}
+
+export async function getTrends(locationId: number) {
+    const response = await fetch(`/api/weather/trends?location=${locationId}`);
+
+    return response.json();
+}
+
+export async function getForecast(locationId: number) {
+    const response = await fetch(`/api/weather/forecast?location=${locationId}`);
+
+    return response.json();
+}
+
 export async function getRadar(locationId: number, width: number = 256) {
     if (IS_LOCAL) {
         return import(/* webpackChunkName: 'mock-data' */ './_data/radar.json');
@@ -17,11 +35,5 @@ export async function getRadar(locationId: number, width: number = 256) {
 
     const response = await fetch(`/api/weather/radar?location=${locationId}&width=${width}`);
     
-    return response.json();
-}
-
-export async function getForecast(locationId: number) {
-    const response = await fetch(`/api/weather/forecast?location=${locationId}`);
-
     return response.json();
 }

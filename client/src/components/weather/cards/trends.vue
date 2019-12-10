@@ -1,26 +1,22 @@
 <template>
-    <card class="weather-trends-card">
+    <card class="weather-trends-card" v-if="trends">
         <template #header>
             <div layout="row center-justify">
                 <strong>Trends</strong>
                 <div layout="row center-right">
-                    <label for="temp-chart-option">
-                        <input type="radio" id="temp-chart-option" name="chart" v-model="chart" :value="charts.temperature">Temp
-                    </label>
-                    <label for="rainfall-chart-option" class="margin__left--x-small">
-                        <input type="radio" id="rainfall-chart-option" name="chart" v-model="chart" :value="charts.rainfall">Rain
-                    </label>
-                    <label for="wind-chart-option" class="margin__left--x-small">
-                        <input type="radio" id="wind-chart-option" name="chart" v-model="chart" :value="charts.wind">Wind
+                    <label v-for="(value, key) in trends" :key="key" :for="key" @click.stop>
+                        <input type="radio" :id="key" name="trend" v-model="currentTrend" :value="key"><span>{{ value.label }}</span>
                     </label>
                 </div>
             </div>
         </template>
-        <component :is="component"></component>
+        <component :is="trend.component" :value="trend.data"></component>
     </card>
 </template>
 
 <script lang="ts">
+import TRENDS from '../../../constants/trends';
+
 import Vue from 'vue';
 
 import TemperatureChart from '../charts/temperature.vue';
@@ -29,31 +25,44 @@ import WindChart from '../charts/wind.vue';
 
 import weatherController from '../../../controllers/weather';
 
-const CHARTS = {
-    temperature: 'temperature',
-    rainfall: 'rainfall',
-    wind: 'wind'
-};
-
-const CHART_MAP = {
-    [CHARTS.temperature]: TemperatureChart,
-    [CHARTS.rainfall]: RainfallChart,
-    [CHARTS.wind]: WindChart
-};
-
 export default Vue.extend({
 
     data() {
         return {
-            chart: CHARTS.temperature,
-            charts: CHARTS
+            currentTrend: TRENDS.temperature
         };
     },
 
     computed: {
 
-        component() {
-            return CHART_MAP[this.chart];
+        trends() {
+            const trends = weatherController.trends;
+
+            if (!trends) {
+                return;
+            }
+
+            return {
+                [TRENDS.temperature]: {
+                    label: 'Temp',
+                    data: trends[TRENDS.temperature],
+                    component: TemperatureChart
+                },
+                [TRENDS.rainfall]: {
+                    label: 'Rain',
+                    data: trends[TRENDS.rainfall],
+                    component: RainfallChart
+                },
+                [TRENDS.wind]: {
+                    label: 'Wind',
+                    data: trends[TRENDS.wind],
+                    component: WindChart
+                }
+            }
+        },
+
+        trend() {
+            return this.trends[this.currentTrend];
         }
 
     }

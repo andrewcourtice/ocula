@@ -1,3 +1,4 @@
+import STATE from './state';
 import ACTIONS from './actions';
 import MUTATIONS from './mutations';
 import LOCATIONS from '../../constants/locations';
@@ -9,18 +10,35 @@ import {
 } from '../../services/location';
 
 import {
-    getOutlook,
+    getToday,
+    getTrends,
+    getForecast,
     getRadar
 } from '../../services/weather';
 
-function getOutlookData() {
-    const settings = localStorage.getItem(STORAGE_KEYS.outlook);
+import {
+    objectMerge
+} from '@ocula/utilities';
 
-    if (!settings) {
-        return null;
+const DATA = {
+    [STATE.location]: null,
+    [STATE.today]: null,
+    [STATE.trends]: null,
+    [STATE.forecast]: null,
+    [STATE.radar]: null,
+    [STATE.warnings]: null
+};
+
+function getData() {
+    let data = localStorage.getItem(STORAGE_KEYS.data);
+
+    if (!data) {
+        return DATA;
     }
 
-    return JSON.parse(settings);
+    data = JSON.parse(data);
+
+    return objectMerge(DATA, data);
 }
 
 async function getCurrentPosition() {
@@ -46,37 +64,24 @@ export default {
     namespaced: true,
 
     state: {
-        loading: false,
-        lastUpdated: null,
-
-        location: null,
-        alerts: [],
-        outlook: getOutlookData(),
-        radar: null
+        data: getData()
     },
 
     mutations: {
 
-        [MUTATIONS.setLoading](state, payload) { 
-            state.loading = !!payload;
-        },
+        [MUTATIONS.setData](state, payload) {
+            const {
+                key,
+                value
+            } = payload;
 
-        [MUTATIONS.setLastUpdated](state) {
-            state.lastUpdated = new Date();
-        },
+            if (!key) {
+                return;
+            }
 
-        [MUTATIONS.setLocation](state, payload) {
-            state.location = payload;
-        },
-
-        [MUTATIONS.setOutlook](state, payload) {
-            state.outlook = payload;
-
-            localStorage.setItem(STORAGE_KEYS.outlook, JSON.stringify(payload));
-        },
-
-        [MUTATIONS.setRadar](state, payload) {
-            state.radar = payload;
+            state.data[key] = value;
+            
+            localStorage.setItem(STORAGE_KEYS.data, JSON.stringify(state.data));
         }
 
     },
@@ -106,31 +111,51 @@ export default {
                 location = await getLocationById(locationId);
             }
 
-            commit(MUTATIONS.setLocation, location);
+            commit(MUTATIONS.setData, {
+                key: STATE.location,
+                value: location
+            });
 
             return location;
         },
 
-        async [ACTIONS.loadOutlook]({ commit, dispatch }, payload) {            
+        async [ACTIONS.loadToday]({ commit }, payload) {
             const {
                 locationId
             } = payload;
 
-            if (!locationId) {
-                throw new Error('LocationId is required');
-            }
+            const value = await getToday(locationId);
 
-            commit(MUTATIONS.setLoading, true);
+            commit(MUTATIONS.setData, {
+                value,
+                key: STATE.today,
+            });        
+        },
 
-            try {
-                const location = await dispatch(ACTIONS.loadLocation, payload);
-                const outlook = await getOutlook(location.id);
-    
-                commit(MUTATIONS.setOutlook, outlook);
-            } finally {
-                commit(MUTATIONS.setLastUpdated);
-                commit(MUTATIONS.setLoading, false);
-            }
+        async [ACTIONS.loadTrends]({ commit }, payload) {
+            const {
+                locationId
+            } = payload;
+
+            const value = await getTrends(locationId);
+
+            commit(MUTATIONS.setData, {
+                value,
+                key: STATE.trends,
+            });
+        },
+
+        async [ACTIONS.loadForecast]({ commit }, payload) {
+            const {
+                locationId
+            } = payload;
+
+            const value = await getForecast(locationId);
+
+            commit(MUTATIONS.setData, {
+                value,
+                key: STATE.forecast,
+            });
         },
 
         async [ACTIONS.loadRadar]({ commit }, payload) {
@@ -139,9 +164,12 @@ export default {
                 width
             } = payload;
 
-            const radar = await getRadar(locationId, width);
+            const value = await getRadar(locationId, width);
 
-            commit(MUTATIONS.setRadar, radar);
+            commit(MUTATIONS.setData, {
+                value,
+                key: STATE.radar,
+            });
         }
 
     }

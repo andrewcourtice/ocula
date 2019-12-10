@@ -1,20 +1,21 @@
 <template>
-    <div class="weather-outlook" v-if="outlook">
+    <div class="weather-outlook">
         <today-card></today-card>
-        <week-card></week-card>
+        <router-link to="/weather/forecast" class="link">
+            <forecast-card></forecast-card>
+        </router-link>
         <observations-card></observations-card>
-        <trends-card></trends-card>
-        <radar-card v-if="location"></radar-card>
+        <router-link to="/weather/trends" class="link">
+            <trends-card></trends-card>
+        </router-link>
     </div>
 </template>
 
 <script lang="ts">
-import EVENTS from '../../constants/events';
-
 import Vue from 'vue';
 
 import TodayCard from '../../components/weather/cards/today.vue';
-import WeekCard from '../../components/weather/cards/week.vue';
+import ForecastCard from '../../components/weather/cards/forecast.vue';
 import ObservationsCard from '../../components/weather/cards/observations.vue';
 import TrendsCard from '../../components/weather/cards/trends.vue';
 import RadarCard from '../../components/weather/cards/radar.vue';
@@ -28,31 +29,21 @@ export default Vue.extend({
 
     extends: refreshable(),
 
-    computed: {
-
-        location() {
-            return weatherController.location;
-        },
-
-        outlook() {
-            return weatherController.outlook;
-        }
-
-    },
-
     methods: {
 
         async load(locationId: number) {    
-            const id = locationId || settingsController.location;
-
-            await weatherController.loadOutlook(id);
+            await Promise.all([
+                weatherController.loadToday(locationId),
+                weatherController.loadTrends(locationId),
+                weatherController.loadForecast(locationId)
+            ]);
         }
 
     },
 
     components: {
         TodayCard,
-        WeekCard,
+        ForecastCard,
         ObservationsCard,
         TrendsCard,
         RadarCard

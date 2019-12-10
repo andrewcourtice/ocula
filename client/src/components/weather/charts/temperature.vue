@@ -47,13 +47,7 @@ export default Vue.extend({
     computed: {
 
         data() {
-            const temperature = weatherController.outlook.current.temperature;
-
-            if (!temperature) {
-                return [];
-            }
-
-            return temperature.map(({ dateTime, temperature }) => ({
+            return this.value.map(({ dateTime, temperature }) => ({
                 label: dateFormat(new Date(dateTime), 'h aa'),
                 value: Math.round(temperature)
             }));

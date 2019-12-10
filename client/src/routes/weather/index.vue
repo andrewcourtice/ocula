@@ -3,8 +3,7 @@
         <template #header>
             <div layout="row center-justify">
                 <div class="text--centre" self="size-x1">
-                    <span v-if="loading">Updating...</span>
-                    <strong v-else-if="location">{{ location.name }}</strong>
+                    <strong v-if="location">{{ location.name }}</strong>
                 </div>
                 <icon name="bell" @click.native="openAlerts"></icon>
             </div>
@@ -37,10 +36,6 @@ import weatherController from '../../controllers/weather';
 export default Vue.extend({
 
     computed: {
-
-        loading() {
-            return weatherController.loading;
-        },
 
         locationId() {
             return settingsController.location;

@@ -11,6 +11,11 @@ export default function chart(Chart, dataProperty: string = 'data', optionsPrope
 
         props: {
 
+            value: {
+                type: Array,
+                default: () => []
+            },
+
             autoRender: {
                 type: Boolean,
                 default: true
