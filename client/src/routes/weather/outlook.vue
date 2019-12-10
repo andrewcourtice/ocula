@@ -56,7 +56,7 @@ export default Vue.extend({
 
     .weather-outlook {
 
-        & .card:not(:last-child) {
+        & .card {
             margin-bottom: var(--spacing__small);
         }
     }

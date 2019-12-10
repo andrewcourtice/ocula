@@ -5,13 +5,11 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import chart from './_base/chart';
+
 import {
     SplineChart
 } from '@ocula/charts';
-
-import weatherController from '../../../controllers/weather';
-
-import chart from './_base/chart';
 
 export default Vue.extend({
 

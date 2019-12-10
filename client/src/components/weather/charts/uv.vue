@@ -1,5 +1,5 @@
 <template>
-    <div class="chart temperature-chart"></div>
+    <div class="chart uv-chart"></div>
 </template>
 
 <script lang="ts">
@@ -45,9 +45,9 @@ export default Vue.extend({
     computed: {
 
         data() {
-            return this.value.map(({ dateTime, temperature }) => ({
+            return this.value.map(({ dateTime, index }) => ({
                 label: dateFormat(new Date(dateTime), 'h aa'),
-                value: Math.round(temperature)
+                value: index
             }));
         }
 

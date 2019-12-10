@@ -17,6 +17,7 @@ import Vue from 'vue';
 import TemperatureChart from '../../components/weather/charts/temperature.vue';
 import RainfallChart from '../../components/weather/charts/rainfall.vue';
 import WindChart from '../../components/weather/charts/wind.vue';
+import UvChart from '../../components/weather/charts/uv.vue';
 
 import weatherController from '../../controllers/weather';
 
@@ -50,6 +51,11 @@ export default Vue.extend({
                     label: 'Wind',
                     data: trends[TRENDS.wind],
                     component: WindChart
+                },
+                [TRENDS.uv]: {
+                    label: 'UV Index',
+                    data: trends[TRENDS.uv],
+                    component: UvChart
                 }
             };
         }
