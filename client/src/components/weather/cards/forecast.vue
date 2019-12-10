@@ -1,10 +1,10 @@
 <template>
-    <card class="weather-week-card">
+    <card class="weather-week-card" v-if="forecast">
         <template #header>
             <strong>7 Day Forecast</strong>
         </template>
         <table>
-            <tr v-for="day in weekOutlook" :key="day.label">
+            <tr v-for="day in forecast" :key="day.label">
                 <td class="text--centre">
                     <icon :name="day.icon"></icon>
                 </td>
@@ -31,19 +31,21 @@ export default Vue.extend({
 
     computed: {
 
-        weekOutlook() {
-            const week = weatherController.outlook.week;
+        forecast() {
+            const forecast = weatherController.forecast;
 
-            return week.map(day => {
+            if (!forecast) {
+                return;
+            }
+
+            return forecast.map(day => {
+                const icon = PRECIS_ICON[day.precis.code];
+                const label = dateFormat(new Date(day.dateTime), 'eeee');
+
                 const {
                     min,
-                    max,
-                    dateTime,
-                    precisCode
-                } = day;
-
-                const icon = PRECIS_ICON[precisCode];
-                const label = dateFormat(new Date(dateTime), 'eeee');
+                    max
+                } = day.temperature;
 
                 return {
                     icon,

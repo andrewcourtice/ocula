@@ -41,7 +41,7 @@ $spacings: (
 
     // background theming
     --background__weather--clear: linear-gradient(to top right, #47B1FA 30%, #78D0F5, #ffe7ab);
-    --background__weather--partly-cloudy: linear-gradient(to top right, #777777 30%, #DDDDDD, #ffe7ab);
-    --background__weather--cloudy: linear-gradient(to top right, #777777 30%, #BBBBBB, #EEEEEE);
+    --background__weather--partly-cloudy: linear-gradient(to top right, #777777 50%, #AAAAAA, #ffe7ab);
+    --background__weather--cloudy: linear-gradient(to top right, #777777 50%, #999999, #CCCCCC);
     --background__weather--smog: linear-gradient(to top right, #6D5541 30%, #A78162, #DDAC84);
 }

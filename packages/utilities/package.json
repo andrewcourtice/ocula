@@ -5,7 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "date-fns": "^2.8.1",
-        "lodash": "^4.17.15"
+        "lodash": "^4.17.15",
+        "nanoid": "^2.1.7"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.149"

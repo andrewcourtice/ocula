@@ -1,5 +1,5 @@
 <template>
-    <card class="weather-observations-card" layout="columns top-stretch">
+    <card class="weather-observations-card" layout="columns top-stretch" v-if="today">
         <template #header>
             <strong>Observations</strong>
         </template>
@@ -30,52 +30,51 @@ export default Vue.extend({
     
     computed: {
 
-        observations() {
-            const {
-                observations,
-                current
-            } = weatherController.outlook;
+        today() {
+            return weatherController.today;
+        },
 
+        observations() {
             return [
                 {
                     label: 'Chance of rain',
                     icon: 'tint',
-                    value: `${current.rainfall.probability}%`
+                    value: `${this.today.rainfall.probability}%`
                 },
                 {
                     label: 'Rain today',
                     icon: 'cloud-rain',
-                    value: `${observations.rainfall.todayAmount}mm`
+                    value: `${this.today.rainfall.today}mm`
                 },
                 {
                     label: 'Min temp',
                     icon: 'temperature-low',
-                    value: current.weather.min
+                    value: this.today.temperature.min
                 },
                 {
                     label: 'Max temp',
                     icon: 'temperature-high',
-                    value: current.weather.max
+                    value: this.today.temperature.max
                 },
                 {
                     label: 'Wind Speed',
                     icon: 'wind',
-                    value: `${observations.wind.speed}km/h`
+                    value: `${this.today.wind.speed}km/h`
                 },
                 {
                     label: 'Wind Direction',
                     icon: 'compass',
-                    value: observations.wind.directionText
+                    value: this.today.wind.direction
                 },
                 {
                     label: 'Humidity',
                     icon: 'water',
-                    value: `${observations.humidity.percentage}%`
+                    value: `${this.today.humidity}%`
                 },
                 {
                     label: 'Pressure',
                     icon: 'ruler-vertical',
-                    value: `${observations.pressure.pressure}kPa`
+                    value: `${this.today.pressure}kPa`
                 }
             ];
         }

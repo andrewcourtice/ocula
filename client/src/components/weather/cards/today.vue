@@ -1,17 +1,14 @@
 <template>
-    <card class="weather-today-card" :style="cardStyles">
-        <template #header>
-            <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
-        </template>
+    <card class="weather-today-card" :style="cardStyles" v-if="today">
         <div layout="row bottom-justify">
             <div>
                 <icon :name="icon" class="weather-today-card__icon"></icon>
-                <h1 class="margin__top--medium">{{ observations.temperature.temperature }}</h1>
-                <span>Feel like {{ observations.temperature.apparentTemperature }}</span>
+                <h1 class="margin__top--medium">{{ temperature.current }}</h1>
+                <span>Feel like {{ temperature.apparent }}</span>
             </div>
             <div class="text--right">
-                <div>{{ currentOutlook.weather.min }} - {{ currentOutlook.weather.max }}</div>
-                <div>{{ currentOutlook.weather.precis }}</div>
+                <div>{{ temperature.min }} - {{ temperature.max }}</div>
+                <div>{{ precis.summary }}</div>
             </div>
         </div>
         <div layout="row center-left">
@@ -34,25 +31,23 @@ import {
 } from '@ocula/utilities';
 
 export default Vue.extend({
-
-    data() {
-        return {
-            lastUpdated: null
-        };
-    },
     
     computed: {
 
-        observations() {
-            return weatherController.outlook.observations;
+        today() {
+            return weatherController.today;
         },
 
-        currentOutlook() {
-            return weatherController.outlook.current;
+        precis() {
+            return this.today.precis;
+        },
+
+        temperature() {
+            return this.today.temperature;
         },
 
         cardStyles() {
-            const backgroundVariable = PRECIS_BACKGROUND[this.currentOutlook.weather.precisCode] || PRECIS_BACKGROUND.fine;
+            const backgroundVariable = PRECIS_BACKGROUND[this.precis.code] || PRECIS_BACKGROUND.fine;
             const background = `var(--background__weather--${backgroundVariable})`;
             
             return {
@@ -61,17 +56,9 @@ export default Vue.extend({
         },
 
         icon() {
-            return PRECIS_ICON[this.currentOutlook.weather.precisCode] || PRECIS_ICON.fine;
+            return PRECIS_ICON[this.precis.code] || PRECIS_ICON.fine;
         }
 
-    },
-
-    mounted() {
-        setInterval(() => {
-            if (weatherController.lastUpdated) {
-                this.lastUpdated = dateFormatDistanceToNow(weatherController.lastUpdated);
-            }
-        }, 10000);
     }
 
 });

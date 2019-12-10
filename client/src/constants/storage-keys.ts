@@ -1,4 +1,4 @@
 export default {
-    settings: 'ocula:settings',
-    outlook: 'ocula:outlook'
+    data: 'ocula:data',
+    settings: 'ocula:settings'
 };

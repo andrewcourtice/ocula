@@ -56,10 +56,33 @@ export default async function (request: NowRequest, response: NowResponse) {
     ] = await Promise.all([
         getPrecis(apiKey, location),
         getForecast(apiKey, location)
-    ])
+    ]);
 
-    return response.json({
-        precis,
-        forecast
+    const output = forecast.map((forecastItem, index) => {
+        const precisDescription = precis[index];
+        const precisDescriptions = precisDescription.map(item => item.precis);
+
+        const {
+            dateTime,
+            precisCode,
+            min,
+            max,
+            precis: precisSummary,
+        } = forecastItem
+
+        return {
+            dateTime,
+            temperature: {
+                min,
+                max
+            },
+            precis: {
+                code: precisCode,
+                summary: precisSummary,
+                descriptions: precisDescriptions
+            }
+        };
     });
+
+    return response.json(output);
 }

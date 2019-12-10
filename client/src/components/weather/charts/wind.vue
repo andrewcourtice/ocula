@@ -47,13 +47,7 @@ export default Vue.extend({
     computed: {
 
         data() {
-            const wind = weatherController.outlook.current.wind;
-
-            if (!wind) {
-                return [];
-            }
-
-            return wind.map(({ dateTime, speed }) => ({
+            return this.value.map(({ dateTime, speed }) => ({
                 label: dateFormat(new Date(dateTime), 'h aa'),
                 value: Math.round(speed)
             }));

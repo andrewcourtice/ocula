@@ -8,3 +8,5 @@ export { default as numberMinBy } from './number/min-by';
 export { default as numberMaxBy } from './number/max-by';
 
 export { default as objectMerge } from './object/merge';
+
+export { default as stringUniqueId } from './string/unique-id';

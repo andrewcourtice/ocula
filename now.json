@@ -3,5 +3,11 @@
     "env": {
         "WILLYWEATHER_API_KEY": "@willyweather-api-key",
         "MAPBOX_API_KEY": "@mapbox-api-key"
-    }
+    },
+    "rewrites": [
+        { 
+            "source": "/.*",
+            "destination": "/index.html"
+        }
+    ]
 }

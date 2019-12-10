@@ -1,11 +1,13 @@
 import * as d3 from '../../d3/index';
 
 import {
-    objectMerge
+    objectMerge,
+    stringUniqueId
 } from '@ocula/utilities';
 
 export default abstract class Chart {
 
+    protected id: string;
     protected element: Element;
     protected options: any;
 
@@ -16,6 +18,7 @@ export default abstract class Chart {
     protected canvas: d3.Selection<SVGGElement, unknown, null, undefined>;
 
     constructor(element: Element) {
+        this.id = stringUniqueId();
         this.element = element;
 
         this.width = 0;
@@ -23,6 +26,7 @@ export default abstract class Chart {
         
         this.svg = d3.select(this.element)
             .append('svg')
+            .attr('id', `chart-${this.id}`)
             .attr('width', '100%')
             .attr('height', '100%')
             .style('display', 'block');

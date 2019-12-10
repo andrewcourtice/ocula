@@ -42,13 +42,7 @@ export default Vue.extend({
     computed: {
 
         data() {
-            const rainfall = weatherController.outlook.current.rainfallprobability;
-
-            if (!rainfall) {
-                return [];
-            }
-
-            return rainfall.map(entry => ({
+            return this.value.map(entry => ({
                 label: entry.dateTime,
                 value: entry.probability
             }));
