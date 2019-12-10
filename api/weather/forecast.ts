@@ -58,9 +58,12 @@ export default async function (request: NowRequest, response: NowResponse) {
         getForecast(apiKey, location)
     ]);
 
-    const output = forecast.map((forecastItem, index) => {
-        const precisDescription = precis[index];
-        const precisDescriptions = precisDescription.map(item => item.precis);
+    const length = Math.min(forecast.length, precis.length);
+
+    const output = Array.from({ length }, (value, index) => {
+        const forecastItem = forecast[index];
+        const precisItem = precis[index];
+        const precisDescription = precisItem.map(item => item.precis);
 
         const {
             dateTime,
@@ -79,7 +82,7 @@ export default async function (request: NowRequest, response: NowResponse) {
             precis: {
                 code: precisCode,
                 summary: precisSummary,
-                descriptions: precisDescriptions
+                descriptions: precisDescription
             }
         };
     });
