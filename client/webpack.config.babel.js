@@ -1,1 +1,1 @@
-module.exports = require('./build/index');
+module.exports = env => require(`./build/${env}`);
