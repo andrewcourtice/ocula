@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import mapLocation from './_helpers/map-location';
 
 import {
     NowRequest,
@@ -6,18 +7,22 @@ import {
 } from '@now/node';
 
 export default async function (request: NowRequest, response: NowResponse) {
-    const apiKey = process.env.WILLYWEATHER_API_KEY;
-
     const {
         query
     } = request.query;
 
-    if (!query) {
-        return response.statusCode = 500;
+    const apiKey = process.env.MAPBOX_API_KEY;
+    const apiResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${apiKey}&types=locality,place&limit=10&autocomplete=true`);
+    
+    const {
+        features
+    } = await apiResponse.json();
+
+    if (!features || features.length < 1) {
+        response.statusCode = 500;
     }
 
-    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/search.json?query=${query}`);
-    const data = await apiResponse.json();
+    const output = features.map(mapLocation);
 
-    return response.json(data);
+    return response.json(output);
 }
