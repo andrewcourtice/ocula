@@ -2,7 +2,7 @@
     <div class="app-layout">
         <div class="margin__bottom--small" layout="row center-justify">
             <div class="app-layout__menu">
-                <icon name="bars" @click.native="openOptions"></icon>
+                <icon name="menu" @click.native="openOptions"></icon>
                 <div class="app-layout__menu-dot" v-show="updateReady"></div>
             </div>
             <div v-if="$scopedSlots.header" self="size-x1">

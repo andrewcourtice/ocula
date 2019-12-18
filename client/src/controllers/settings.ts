@@ -1,13 +1,8 @@
-import MODULES from '../constants/modules';
-import MUTATIONS from '../state/settings/mutations';
+import MUTATIONS from '../state/mutations';
 
 import Controller from './_base/controller';
 
 export class SettingsController extends Controller {
-
-    constructor() {
-        super(MODULES.settings);
-    }
 
     get location() {
         return this.state.settings.location;

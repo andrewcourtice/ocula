@@ -1,82 +1,87 @@
 <template>
-    <div class="weather-forecast" v-if="forecast">
-        <card class="weather-forecast-card" v-for="day in forecast" :key="day.date">
-            <template #header>
-                <strong>{{ day.date }}</strong>
-            </template>
-            <div layout="row center-left">
-                <icon :name="day.icon" class="weather-forecast-card__icon"></icon>
-                <div class="padding__left--small">
-                    <div>{{ day.summary }}</div>
-                    <small>{{ day.min }} - {{ day.max }}</small>
+    <div class="weather-forecast">
+        <section class="weather-forecast__section" v-if="current">
+            <div class="weather-forecast__section-header">Today</div>
+            <card class="weather-forecast__today-card">
+                <div layout="row center-left">
+                    <icon class="weather-forecast__icon" name="cloud-drizzle"></icon>
+                    <h1 class="weather-forecast__temperature">{{ Math.round(current.temperature) }}</h1>
                 </div>
-            </div>
-            <div class="margin__top--small" v-for="description in day.descriptions" :key="description">{{ description }}</div>
-        </card>
+                <div class="text--meta" layout="row center-justify">
+                    <div>{{ current.summary }}</div>
+                    <div layout="rows center-justify">
+                        <svg class="weather-forecast__icon">
+                            <use xlink:href="feather-sprite.svg#cloud-drizzle"/>
+                        </svg>
+                    </div>
+                </div>
+            </card>  
+        </section>
+        <section class="weather-forecast__section margin__top--medium" v-if="daily">
+            <div class="weather-forecast__section-header">Coming Up</div>
+            <card class="weather-forecast__day-card">
+                <div class="menu">
+                    <div class="menu-item" layout="row center-justify" v-for="day in daily" :key="day.time">
+                        <icon name="cloud-drizzle"></icon>
+                        <div self="size-x1">Some day</div>
+                        <div layout="row center-right">
+                            <div>{{ Math.round(day.temperatureMin) }}</div>
+                            <span>&nbsp;&dash;&nbsp;</span>
+                            <div>{{ Math.round(day.temperatureMax) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </card>  
+        </section>
+        <section class="weather-forecast__section margin__top--medium" v-if="hourly">
+            <div class="weather-forecast__section-header">Trends</div>
+            <card class="weather-forecast__day-card">
+                <temperature-chart :value="hourly"></temperature-chart>
+            </card>  
+        </section>
     </div>
 </template>
 
 <script lang="ts">
-import TRENDS from '../../constants/trends';
-import PRECIS_ICON from '../../constants/precis-icon';
-
 import Vue from 'vue';
 
+import TemperatureChart from '../../components/weather/charts/temperature';
+
 import weatherController from '../../controllers/weather';
-
-import refreshable from './_base/refreshable';
-
-import {
-    dateFormat
-} from '@ocula/utilities';
+import settingsController from '../../controllers/settings';
 
 export default Vue.extend({
 
-    extends: refreshable(),
-
     computed: {
 
-        forecast() {
-            const forecast = weatherController.forecast;
+        current() {
+            return weatherController.current;
+        },
 
-            if (!forecast) {
-                return;
-            }
+        daily() {
+            return weatherController.daily.data;
+        },
 
-            return forecast.map(({ dateTime, temperature, precis }) => {
-                const {
-                    min,
-                    max
-                } = temperature;
-
-                const {
-                    code,
-                    summary,
-                    descriptions
-                } = precis;
-
-                const date = dateFormat(new Date(dateTime), 'eeee, eo MMM');
-                const icon = PRECIS_ICON[precis.code];
-
-                return {
-                    icon,
-                    date,
-                    min,
-                    max,
-                    summary,
-                    descriptions
-                };
-            });
+        hourly() {
+            return weatherController.hourly.data;
         }
 
     },
 
     methods: {
 
-        async load(locationId: number) {    
-            await weatherController.loadForecast(locationId);
+        async load() {    
+            return weatherController.load();
         }
 
+    },
+
+    activated() {
+        this.load();
+    },
+
+    components: {
+        TemperatureChart
     }
 
 });
@@ -84,15 +89,24 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .weather-forecast-card {
-        
-        &:not(:last-child) {
-            margin-bottom: var(--spacing__small);
-        }
+    .weather-forecast__section-header {
+        font-weight: var(--font__weight--medium);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: var(--spacing__x-small);
     }
 
-    .weather-forecast-card__icon {
-        font-size: 2em;
+    .weather-forecast__icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .weather-forecast__temperature {
+        margin: 0;
+        margin-left: var(--spacing__small);
+        font-size: 48px;
+        font-weight: 400;
+        line-height: 1;
     }
 
 </style>

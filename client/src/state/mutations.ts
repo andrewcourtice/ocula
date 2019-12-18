@@ -1,3 +1,7 @@
 export default {
-    setUpdateReady: 'setUpdateReady'
+    setUpdateReady: 'setUpdateReady',
+    setLoading: 'setLoading',
+    setLocation: 'setLocation',
+    setForecast: 'setForecast',
+    updateSettings: 'updateSettings'
 };

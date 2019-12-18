@@ -3,7 +3,7 @@
         <template #header>
             <div layout="row center-justify">
                 <div class="text--centre" self="size-x1">
-                    <strong v-if="location">{{ location.name }}</strong>
+                    <strong v-if="location">{{ location.shortName }}</strong>
                 </div>
                 <icon name="bell" @click.native="openAlerts"></icon>
             </div>
