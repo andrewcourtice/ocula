@@ -1,11 +1,8 @@
 <template>
     <app-layout class="weather-layout">
         <template #header>
-            <div layout="row center-justify">
-                <div class="text--centre" self="size-x1">
-                    <strong v-if="location">{{ location.name }}</strong>
-                </div>
-                <icon name="bell" @click.native="openAlerts"></icon>
+            <div layout="row center-left" v-if="location">
+                <icon name="map-pin" /><span class="margin__left--x-small">{{ location.shortName }}</span>
             </div>
         </template>
         <div v-if="!locationId">
@@ -66,3 +63,11 @@ export default Vue.extend({
     
 });
 </script>
+
+<style lang="scss">
+
+    .weather-layout {
+        padding: var(--spacing__large);
+    }
+
+</style>

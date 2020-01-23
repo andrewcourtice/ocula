@@ -1,22 +1,15 @@
 <template>
-    <i class="icon" :class="iconClass"></i>
+    <svg class="icon">
+        <use v-bind:xlink:href="href"/>
+    </svg>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-const TYPE_MAP = {
-    solid: 'fas',
-    regular: 'far'
-};
-
 export default Vue.extend({
     
     props: {
-
-        type: {
-            type: String
-        },
 
         name: {
             type: String
@@ -26,14 +19,8 @@ export default Vue.extend({
 
     computed: {
 
-        iconClass() {
-            const type = TYPE_MAP[this.type] || TYPE_MAP.solid;
-            const name = `fa-${this.name}`
-
-            return [
-                type,
-                name
-            ];
+        href() {
+            return `feather-sprite.svg#${this.name}`;
         }
 
     }
@@ -44,9 +31,13 @@ export default Vue.extend({
 <style lang="scss">
 
     .icon {
-        min-width: 1em;
-        font-size: 1.25em;
-        text-align: center;
+        width: 1.5em;
+        height: 1.5em;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 
 </style>

@@ -1,6 +1,4 @@
 import Index from './index.vue';
-import Outlook from './outlook.vue';
-import Trends from './trends.vue';
 import Forecast from './forecast.vue';
 
 export default [
@@ -10,7 +8,7 @@ export default [
         children: [
             {
                 path: '',
-                component: Outlook
+                component: Forecast
             }
         ]
     },
@@ -18,14 +16,6 @@ export default [
         path: '/weather',
         component: Index,
         children: [
-            {
-                path: 'outlook',
-                component: Outlook
-            },
-            {
-                path: 'trends',
-                component: Trends
-            },
             {
                 path: 'forecast',
                 component: Forecast

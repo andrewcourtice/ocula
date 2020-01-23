@@ -1,91 +1,39 @@
-import FORECASTS from './_constants/forecasts';
-
 import fetch from 'node-fetch';
-
-import mapForecastData from './_helpers/map-forecast-data';
 
 import {
     NowRequest,
     NowResponse
 } from '@now/node';
 
-async function getPrecis(apiKey, locationId) {
-    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${locationId}/weather.json?regionPrecis=true&days=7`);
-    const data = await apiResponse.json();
-
-    const {
-        days
-    } = data.regionPrecis;
-
-    const {
-        precis
-    } = mapForecastData({
-        [FORECASTS.precis]: { days }
-    }, days => days);
-
-    return precis;
-}
-
-async function getForecast(apiKey, locationId) {
-    const forecasts = [
-        FORECASTS.weather
-    ];
-
-    const forecastQuery = forecasts.join(',')
-
-    const apiResponse = await fetch(`https://api.willyweather.com.au/v2/${apiKey}/locations/${locationId}/weather.json?forecasts=${forecastQuery}&days=7`);
-    const data = await apiResponse.json();
-
-    const {
-        weather
-    } = mapForecastData(data.forecasts, days => days);
-
-    return weather;
-}
-
 export default async function (request: NowRequest, response: NowResponse) {
-    const apiKey = process.env.WILLYWEATHER_API_KEY;
-    
-    const {
-        location
+    let {
+        latitude,
+        longitude,
+        units
     } = request.query;
 
-    const [
-        precis,
-        forecast
-    ] = await Promise.all([
-        getPrecis(apiKey, location),
-        getForecast(apiKey, location)
+    units = units || 'si';
+
+    const apiKey = process.env.DARKSKY_API_KEY;
+
+    const responses = await Promise.all([
+        fetch(`https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude}?exclude=minutely,flags&units=${units}`),
+        fetch('https://tilecache.rainviewer.com/api/maps.json')
     ]);
 
-    const length = Math.min(forecast.length, precis.length);
+    const [
+        forecast,
+        timestamps
+    ] = await Promise.all(responses.map(response => response.json()));
 
-    const output = Array.from({ length }, (value, index) => {
-        const forecastItem = forecast[index];
-        const precisItem = precis[index];
-        const precisDescription = precisItem.map(item => item.precis);
+    const latestTimestamp = timestamps[timestamps.length - 1];
 
-        const {
-            dateTime,
-            precisCode,
-            min,
-            max,
-            precis: precisSummary,
-        } = forecastItem
+    const radar = {
+        tileURL: `https://tilecache.rainviewer.com/v2/radar/${latestTimestamp}/256/{z}/{x}/{y}/2/0_0.png`
+    };
 
-        return {
-            dateTime,
-            temperature: {
-                min,
-                max
-            },
-            precis: {
-                code: precisCode,
-                summary: precisSummary,
-                descriptions: precisDescription
-            }
-        };
+    return response.json({
+        ...forecast,
+        radar
     });
-
-    return response.json(output);
 }

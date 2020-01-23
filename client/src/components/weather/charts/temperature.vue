@@ -12,7 +12,8 @@ import {
 } from '@ocula/charts';
 
 import {
-    dateFormat
+    dateFormat,
+    dateFromUnix
 } from '@ocula/utilities';
 
 export default Vue.extend({
@@ -45,8 +46,8 @@ export default Vue.extend({
     computed: {
 
         data() {
-            return this.value.map(({ dateTime, temperature }) => ({
-                label: dateFormat(new Date(dateTime), 'h aa'),
+            return this.value.map(({ time, temperature }) => ({
+                label: time,
                 value: Math.round(temperature)
             }));
         }

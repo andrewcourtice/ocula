@@ -1,15 +1,5 @@
 <template>
-    <div class="radar">
-        <template v-if="radar">
-            <img :src="radar.map" :alt="radar.name" class="radar__map">
-            <img v-for="(image, index) in radar.images" 
-                v-show="isImageActive(index)" 
-                class="radar__image"
-                :key="image.dateTime" 
-                :src="image.source" 
-                :alt="radar.name">
-        </template>
-    </div>
+    <div class="radar"></div>
 </template>
 
 <script lang="ts">
@@ -17,24 +7,17 @@ import Vue from 'vue';
 
 import weatherController from '../../../controllers/weather';
 
+import mapboxgl from 'mapbox-gl';
+
+mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
+
 export default Vue.extend({
 
-    props: {
-
-        locationId: {
-            type: Number
-        }
-
-    },
-
-    data() {
-        return {
-            loading: true,
-            currentImage: 0
-        };
-    },
-   
     computed: {
+
+        location() {
+            return weatherController.location;
+        },
 
         radar() {
             return weatherController.radar;
@@ -42,44 +25,42 @@ export default Vue.extend({
 
     },
 
-    methods: {
-
-        startCarousel() {
-            const count = this.radar.images.length - 1;
-
-            setInterval(() => {
-                if (this.currentImage >= count) {
-                    this.currentImage = 0;
-                }
-
-                this.currentImage++;
-            }, 500);
-        },
-
-        async load() {
-            const locationId = this.locationId || weatherController.location.id;
-            const width = this.$el.clientWidth;
-
-            this.loading = true;
-
-            try {
-                await weatherController.loadRadar(locationId, width);
-                await this.$nextTick();
-
-                this.startCarousel();
-            } finally {
-                this.loading = false;
-            }
-        },
-
-        isImageActive(index) {
-            return index === this.currentImage;
-        }
-
-    },
-
     mounted() {
-        this.load();
+        const {
+            latitude,
+            longitude
+        } = this.location;
+
+        const map = new mapboxgl.Map({
+            container: this.$el,
+            style: 'mapbox://styles/mapbox/light-v10',
+            zoom: 6,
+            center: [
+                longitude,
+                latitude
+            ]
+        });
+
+        map.on('load', () => {
+            
+            const layers = map.getStyle().layers;
+            const firstLayer = layers.find(layer => layer.type === 'symbol');
+
+            map.addSource('raster-tile', {
+                type: 'raster',
+                tiles: [this.radar.tileURL],
+                tileSize: 256
+            });
+
+            map.addLayer({
+                id: "simple-tiles",
+                type: "raster",
+                source: 'raster-tile',
+                minzoom: 0,
+                maxzoom: 22
+            }, firstLayer.id);
+
+        });
     }
 
 });
@@ -89,23 +70,15 @@ export default Vue.extend({
 
     .radar {
         position: relative;
+        width: 100%;
+        border-radius: 3px;
         overflow: hidden;
-    }
 
-    .radar__map,
-    .radar__image {
-        display: block;
-    }
-
-    .radar__map {
-        width: 100%;
-    }
-
-    .radar__image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+        &::after {
+            display: block;
+            content: ' ';
+            padding-bottom: 100%;
+        }
     }
 
 </style>

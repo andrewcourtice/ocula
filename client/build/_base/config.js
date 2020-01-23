@@ -14,6 +14,7 @@ import {
 } from 'vue-loader';
 
 import workboxConfig from './workbox';
+import webpack from 'webpack';
 
 export default {
 
@@ -77,6 +78,8 @@ export default {
     },
 
     plugins: [
+        new webpack.EnvironmentPlugin('MAPBOX_API_KEY'),
+        
         new CleanWebpackPlugin(),
     
         new VueLoaderPlugin(),

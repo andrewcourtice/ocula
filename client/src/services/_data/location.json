@@ -1,12 +1,7 @@
 {
-    "id": 7048,
-    "name": "Bridgeman Downs",
-    "region": "Brisbane",
-    "state": "QLD",
-    "postcode": "4035",
-    "timeZone": "Australia/Brisbane",
-    "lat": -27.355,
-    "lng": 152.994,
-    "typeId": 20,
-    "distance": 1.4
+    "id": "place.15734669613559250",
+    "shortName": "San Francisco",
+    "longName": "San Francisco, California, United States",
+    "latitude": 37.7648,
+    "longitude": -122.463
 }
