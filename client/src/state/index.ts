@@ -63,6 +63,7 @@ export default {
         loading: false,
         updateReady: false,
 
+        lastUpdated: null,
         location: null,
         forecast: getData(),
         settings: getSettings()
@@ -76,6 +77,10 @@ export default {
 
         [MUTATIONS.setLoading](state, payload) {
             state.loading = !!payload;
+        },
+
+        [MUTATIONS.setLastUpdated](state) {
+            state.lastUpdated = new Date();
         },
 
         [MUTATIONS.setLocation](state, payload) {
@@ -157,6 +162,8 @@ export default {
                     latitude,
                     longitude
                 });
+
+                commit(MUTATIONS.setLastUpdated);
             } finally {
                 commit(MUTATIONS.setLoading, false);
             }

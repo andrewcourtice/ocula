@@ -11,6 +11,10 @@ export class WeatherController extends Controller {
         return this.state.loading;
     }
 
+    get lastUpdated() {
+        return this.state.lastUpdated;
+    }
+
     get location() {
         return this.state.location;
     }

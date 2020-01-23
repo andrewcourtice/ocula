@@ -1,10 +1,12 @@
-import GLOBAL from '../../../constants/global';
 import EVENTS from '../../../constants/events';
 
 import subscriberMixin from '../../../components/core/mixins/subscriber';
 
 import weatherController from '../../../controllers/weather';
-import settingsController from '../../../controllers/settings';
+
+import {
+    dateFormatDistanceToNow
+} from '@ocula/utilities';
 
 export default {
 
@@ -17,6 +19,14 @@ export default {
 
         isLoading() {
             return weatherController.isLoading;
+        },
+
+        lastUpdated() {
+            const lastUpdated = weatherController.lastUpdated;
+
+            if (lastUpdated) {
+                return dateFormatDistanceToNow(lastUpdated);
+            }
         }
 
     },

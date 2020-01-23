@@ -1,9 +1,9 @@
 <template>
     <div class="weather-forecast">
-        <header class="weather-forecast__current" v-if="current">
-            <h1 class="weather-forecast__temperature">{{ Math.round(current.temperature) }}</h1>
+        <header class="weather-forecast__header" v-if="current">
+            <h1 class="weather-forecast__temperature">{{ current.temperature }}</h1>
             <div class="margin__top--small" layout="row center-left">
-                <icon name="cloud-lightning"/><span class="margin__left--x-small">{{ current.summary }}</span>
+                <icon :name="current.icon"/><span class="margin__left--x-small">{{ current.summary }}</span>
             </div>
         </header>
         <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
@@ -23,6 +23,12 @@
             <h2 class="weather-forecast__section-title">Radar</h2>
             <radar />
         </section>
+        <footer class="weather-forecast__footer text--centre">
+            <img class="weather-forecast__attribution" src="https://darksky.net/dev/img/attribution/poweredby.png" alt="Powered by Dark Sky">
+            <p v-if="lastUpdated">
+                <small class="text--meta">Updated {{ lastUpdated }} ago</small>
+            </p>
+        </footer>
     </div>
 </template>
 
@@ -54,7 +60,38 @@ export default Vue.extend({
         },
 
         current() {
-            return weatherController.current;
+            const current = weatherController.current;
+            const daily = weatherController.daily;
+
+            if (!current) {
+                return;
+            }
+
+            let {
+                icon,
+                summary,
+                temperature
+            } = current;
+
+            let min = 'n/a';
+            let max = 'n/a';
+
+            if (daily && daily.data) {
+                const today = daily.data[0];
+                min = Math.round(today.temperatureMin);
+                max = Math.round(today.temperatureMax);
+            } 
+
+            icon = ICON[icon];
+            temperature = Math.round(temperature);
+
+            return {
+                icon,
+                summary,
+                temperature,
+                min,
+                max
+            };
         },
 
         daily() {
@@ -102,7 +139,8 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .weather-forecast__section {
+    .weather-forecast__section,
+    .weather-forecast__footer {
         margin-top: var(--spacing__large);
     }
 
@@ -133,6 +171,12 @@ export default Vue.extend({
 
     .weather-forecast__day-max {
         padding-right: 0
+    }
+
+    .weather-forecast__attribution {
+        display: inline-block;
+        width: 100%;
+        max-width: 128px;
     }
 
 </style>
