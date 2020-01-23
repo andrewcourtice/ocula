@@ -15,18 +15,17 @@ export default {
         subscriberMixin(EVENTS.weather.locationChanged, 'refresh')
     ],
 
+    data() {
+        return {
+            lastUpdated: null,
+            intervalHandle: null
+        };
+    },
+
     computed: {
 
         isLoading() {
             return weatherController.isLoading;
-        },
-
-        lastUpdated() {
-            const lastUpdated = weatherController.lastUpdated;
-
-            if (lastUpdated) {
-                return dateFormatDistanceToNow(lastUpdated);
-            }
         }
 
     },
@@ -34,13 +33,26 @@ export default {
     methods: {
 
         async refresh(locationId) {
-            weatherController.load();
+            return weatherController.load();
         }
 
     },
 
     activated() {
+        console.log('activated');
         this.refresh();
+
+        this.intervalHandle = window.setInterval(() => {
+            const lastUpdated = weatherController.lastUpdated;
+
+            if (lastUpdated) {
+                this.lastUpdated = dateFormatDistanceToNow(lastUpdated);
+            }
+        }, 1000);
+    },
+
+    deactivated() {
+        window.clearInterval(this.intervalHandle);
     }
 
 };
