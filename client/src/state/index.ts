@@ -28,6 +28,16 @@ function getSettings() {
     return objectMerge(SETTINGS, settings);
 }
 
+function getData() {
+    let data = localStorage.getItem(STORAGE_KEYS.data);
+
+    if (!data) {
+        return {};
+    }
+
+    return JSON.parse(data);
+}
+
 async function getCurrentPosition() {
     const position: Position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
@@ -53,8 +63,9 @@ export default {
         loading: false,
         updateReady: false,
 
-        settings: getSettings(),
-        forecast: {}
+        location: null,
+        forecast: getData(),
+        settings: getSettings()
     },
 
     mutations: {
@@ -72,6 +83,8 @@ export default {
         },
 
         [MUTATIONS.setForecast](state, payload) {
+            localStorage.setItem(STORAGE_KEYS.data, JSON.stringify(payload));
+
             state.forecast = payload;
         },
 

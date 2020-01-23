@@ -6,62 +6,31 @@ import subscriberMixin from '../../../components/core/mixins/subscriber';
 import weatherController from '../../../controllers/weather';
 import settingsController from '../../../controllers/settings';
 
-export default function refreshable(method: string = 'load') {
+export default {
 
-    return {
+    mixins: [
+        subscriberMixin(EVENTS.application.visible, 'refresh'),
+        subscriberMixin(EVENTS.weather.locationChanged, 'refresh')
+    ],
 
-        data() {
-            return {
-                loading: false,
-                lastUpdated: null
-            };
-        },
+    computed: {
 
-        mixins: [
-            subscriberMixin(EVENTS.application.visible, 'refresh'),
-            subscriberMixin(EVENTS.weather.locationChanged, 'refresh')
-        ],
-
-        computed: {
-
-            canRefresh() {
-                return !this.lastUpdated || Date.now() - this.lastUpdated > GLOBAL.updateThreshold;
-            }
-
-        },
-
-        methods: {
-
-            async refresh(locationId) {
-                if (!this.canRefresh) {
-                    return;
-                }
-                
-                const location = locationId || settingsController.location;
-
-                this.loading = true;
-
-                try {
-                    const {
-                        id
-                    } = await weatherController.loadLocation(location);
-
-                    if (method in this) {
-                        await this[method](id);
-                    }
-
-                    this.lastUpdated = new Date();
-                } finally {
-                    this.loading = false;
-                }
-            }
-
-        },
-
-        activated() {
-            this.refresh();
+        isLoading() {
+            return weatherController.isLoading;
         }
-    
-    };
 
-}
+    },
+
+    methods: {
+
+        async refresh(locationId) {
+            weatherController.load();
+        }
+
+    },
+
+    activated() {
+        this.refresh();
+    }
+
+};

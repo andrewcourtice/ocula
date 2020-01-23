@@ -27,6 +27,10 @@ export class WeatherController extends Controller {
         return this.state.forecast.hourly;
     }
 
+    get radar() {
+        return this.state.forecast.radar;
+    }
+
     get alerts() {
         return this.state.forecast.alerts;
     }

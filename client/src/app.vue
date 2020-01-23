@@ -12,7 +12,7 @@
         width: 100%;
         max-width: 720px;
         margin: 0 auto;
-        padding: var(--spacing__large);
+        padding: 0;
         user-select: none;
     }
 

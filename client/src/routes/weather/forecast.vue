@@ -1,87 +1,100 @@
 <template>
     <div class="weather-forecast">
-        <section class="weather-forecast__section" v-if="current">
-            <div class="weather-forecast__section-header">Today</div>
-            <card class="weather-forecast__today-card">
-                <div layout="row center-left">
-                    <icon class="weather-forecast__icon" name="cloud-drizzle"></icon>
-                    <h1 class="weather-forecast__temperature">{{ Math.round(current.temperature) }}</h1>
-                </div>
-                <div class="text--meta" layout="row center-justify">
-                    <div>{{ current.summary }}</div>
-                    <div layout="rows center-justify">
-                        <svg class="weather-forecast__icon">
-                            <use xlink:href="feather-sprite.svg#cloud-drizzle"/>
-                        </svg>
-                    </div>
-                </div>
-            </card>  
+        <header class="weather-forecast__current" v-if="current">
+            <h1 class="weather-forecast__temperature">{{ Math.round(current.temperature) }}</h1>
+            <div class="margin__top--small" layout="row center-left">
+                <icon name="cloud-lightning"/><span class="margin__left--x-small">{{ current.summary }}</span>
+            </div>
+        </header>
+        <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
+            <h2 class="weather-forecast__section-title">Coming Up</h2>
+            <table class="weather-forecast__days">
+                <tr class="weather-forecast__day" v-for="day in daily" :key="day.key">
+                    <td class="weather-forecast__day-icon">
+                        <icon :name="day.icon"/>
+                    </td>
+                    <td class="weather-forecast__day-label text--truncate">{{ day.label }}</td>
+                    <td class="weather-forecast__day-min">{{ day.min }}</td>
+                    <td class="weather-forecast__day-max">{{ day.max }}</td>
+                </tr>
+            </table>
         </section>
-        <section class="weather-forecast__section margin__top--medium" v-if="daily">
-            <div class="weather-forecast__section-header">Coming Up</div>
-            <card class="weather-forecast__day-card">
-                <div class="menu">
-                    <div class="menu-item" layout="row center-justify" v-for="day in daily" :key="day.time">
-                        <icon name="cloud-drizzle"></icon>
-                        <div self="size-x1">Some day</div>
-                        <div layout="row center-right">
-                            <div>{{ Math.round(day.temperatureMin) }}</div>
-                            <span>&nbsp;&dash;&nbsp;</span>
-                            <div>{{ Math.round(day.temperatureMax) }}</div>
-                        </div>
-                    </div>
-                </div>
-            </card>  
-        </section>
-        <section class="weather-forecast__section margin__top--medium" v-if="hourly">
-            <div class="weather-forecast__section-header">Trends</div>
-            <card class="weather-forecast__day-card">
-                <temperature-chart :value="hourly"></temperature-chart>
-            </card>  
+        <section class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
+            <h2 class="weather-forecast__section-title">Radar</h2>
+            <radar />
         </section>
     </div>
 </template>
 
 <script lang="ts">
+import ICON from '../../constants/icon';
+
 import Vue from 'vue';
 
-import TemperatureChart from '../../components/weather/charts/temperature';
+import Radar from '../../components/weather/core/radar.vue';
+
+import refreshable from './_base/refreshable';
 
 import weatherController from '../../controllers/weather';
 import settingsController from '../../controllers/settings';
 
+import {
+    dateFormat,
+    dateFromUnix
+} from '@ocula/utilities';
+
 export default Vue.extend({
 
+    extends: refreshable,
+
     computed: {
+
+        location() {
+            return weatherController.location
+        },
 
         current() {
             return weatherController.current;
         },
 
         daily() {
-            return weatherController.daily.data;
+            const {
+                data
+            } = weatherController.daily;
+
+            return data.map(day => {
+                let {
+                    time,
+                    icon,
+                    temperatureMin,
+                    temperatureMax,
+                } = day;
+
+                const date = dateFromUnix(time);
+                const label = dateFormat(date, 'EEEE, d MMM');
+                const min = Math.round(temperatureMin);
+                const max = Math.round(temperatureMax);
+
+                icon = ICON[icon]; 
+
+                return {
+                    icon,
+                    label,
+                    min,
+                    max,
+                    key: time
+                };
+            });
         },
 
-        hourly() {
-            return weatherController.hourly.data;
+        radar() {
+            return weatherController.radar;
         }
 
-    },
-
-    methods: {
-
-        async load() {    
-            return weatherController.load();
-        }
-
-    },
-
-    activated() {
-        this.load();
     },
 
     components: {
-        TemperatureChart
+        Radar
     }
 
 });
@@ -89,24 +102,37 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .weather-forecast__section-header {
-        font-weight: var(--font__weight--medium);
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        margin-bottom: var(--spacing__x-small);
+    .weather-forecast__section {
+        margin-top: var(--spacing__large);
     }
 
-    .weather-forecast__icon {
-        width: 48px;
-        height: 48px;
+    .weather-forecast__section-title {
+        margin-bottom: var(--spacing__small);
+        color: var(--font__colour--meta);
+        font-size: var(--font__size);
+        font-weight: var(--font__weight--medium);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .weather-forecast__temperature {
-        margin: 0;
-        margin-left: var(--spacing__small);
-        font-size: 48px;
-        font-weight: 400;
-        line-height: 1;
+        font-size: 3rem;
+    }
+
+    .weather-forecast__days {
+        width: 100%;
+    }
+
+    .weather-forecast__day-label {
+        width: 100%;
+    }
+
+    .weather-forecast__day-icon {
+        padding-left: 0
+    }
+
+    .weather-forecast__day-max {
+        padding-right: 0
     }
 
 </style>

@@ -3,18 +3,18 @@
         <div class="menu">
             <router-link to="/" class="link">
                 <div class="menu-item" layout="row center-left">
-                    <icon name="cloud-sun-rain" class="margin__right--small"></icon>
+                    <icon name="cloud-drizzle" class="margin__right--small"></icon>
                     <strong>Weather</strong>
                 </div>            
             </router-link>
             <router-link to="/settings" class="link">
                 <div class="menu-item" layout="row center-left">
-                    <icon name="cog" class="margin__right--small"></icon>
+                    <icon name="settings" class="margin__right--small"></icon>
                     <strong>Settings</strong>
                 </div>
             </router-link>
             <div class="menu-item" layout="row center-left" v-if="updateReady" @click="update">
-                <icon name="sync" class="margin__right--small"></icon>
+                <icon name="refresh-cw" class="margin__right--small"></icon>
                 <div>
                     <strong>Update available</strong>
                     <br>

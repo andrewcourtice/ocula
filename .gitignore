@@ -5,6 +5,7 @@ public/
 
 .cache
 .env
+.env.build
 
 logs
 *.log
