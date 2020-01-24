@@ -1,8 +1,10 @@
+import GETTERS from './getters';
 import MUTATIONS from './mutations';
 import ACTIONS from './actions';
 import SETTINGS from '../constants/settings';
 import LOCATIONS from '../constants/locations';
 import STORAGE_KEYS from '../constants/storage-keys';
+import ICON from '../constants/icon';
 
 import {
     getLocation
@@ -13,7 +15,7 @@ import {
 } from '../services/weather';
 
 import {
-    objectMerge
+    objectMerge, dateFromUnix, dateFormat
 } from '@ocula/utilities';
 
 function getSettings() {
@@ -56,6 +58,47 @@ async function getCurrentPosition() {
     };
 }
 
+function mapDayData(day) {
+    let {
+        time,
+        icon,
+        temperatureMin,
+        temperatureMax,
+        humidity,
+        precipProbability,
+        precipType,
+        pressure,
+        summary,
+        sunriseTime,
+        sunsetTime,
+        uvIndex,
+        windSpeed
+    } = day;
+
+    time = dateFromUnix(time);
+    icon = ICON[icon];
+    temperatureMin = Math.round(temperatureMin);
+    temperatureMax = Math.round(temperatureMax);
+    sunriseTime = dateFromUnix(sunriseTime);
+    sunsetTime = dateFromUnix(sunsetTime);
+
+    return {
+        time,
+        icon,
+        temperatureMin,
+        temperatureMax,
+        humidity,
+        precipProbability,
+        precipType,
+        pressure,
+        summary,
+        sunriseTime,
+        sunsetTime,
+        uvIndex,
+        windSpeed
+    }; 
+}
+
 export default {
     devtools: true,
 
@@ -67,6 +110,77 @@ export default {
         location: null,
         forecast: getData(),
         settings: getSettings()
+    },
+
+    getters: {
+
+        [GETTERS.current](state) {
+            const current = state.forecast.currently;
+
+            if (!current) {
+                return;
+            }
+
+            let {
+                icon,
+                summary,
+                temperature
+            } = current;
+
+            icon = ICON[icon];
+            temperature = Math.round(temperature);
+
+            return {
+                icon,
+                summary,
+                temperature
+            };
+        },
+
+        [GETTERS.daily](state) {
+            const daily = state.forecast.daily;
+
+            if (!daily || !daily.data) {
+                return;
+            }
+
+            return daily.data.map(mapDayData);  
+        },
+
+        [GETTERS.hourly](state) {
+            const hourly = state.forecast.hourly;
+
+            if (!hourly || !hourly.data) {
+                return;
+            }
+
+            return hourly.data.map(hour => {
+                let {
+                    time,
+                    icon,
+                    humidity,
+                    precipProbability,
+                    temperature,
+                    uvIndex,
+                    windSpeed
+                } = hour;
+
+                time = dateFromUnix(time);
+                icon = ICON[icon];
+                temperature = Math.round(temperature);
+
+                return {
+                    time,
+                    icon,
+                    humidity,
+                    precipProbability,
+                    temperature,
+                    uvIndex,
+                    windSpeed 
+                };
+            });
+        }
+
     },
 
     mutations: {

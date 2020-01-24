@@ -1,5 +1,5 @@
 <template>
-    <svg class="icon">
+    <svg class="icon" :class="className">
         <use v-bind:xlink:href="href"/>
     </svg>
 </template>
@@ -18,6 +18,10 @@ export default Vue.extend({
     },
 
     computed: {
+
+        className() {
+            return `icon--${this.name}`;
+        },
 
         href() {
             return `feather-sprite.svg#${this.name}`;

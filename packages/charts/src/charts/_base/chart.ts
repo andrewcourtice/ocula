@@ -71,7 +71,7 @@ export default abstract class Chart {
             .attr('viewBox', `0 0 ${width} ${height}`);
 
         this.canvas.classed(this.options.classes.canvas, true)
-            .attr('transform', `translate(${top}, ${left})`);
+            .attr('transform', `translate(${left}, ${top})`);
     }
 
 }

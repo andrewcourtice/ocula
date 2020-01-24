@@ -2,7 +2,7 @@
     <app-layout class="weather-layout">
         <template #header>
             <div layout="row center-left" v-if="location">
-                <icon name="map-pin" /><span class="margin__left--x-small">{{ location.shortName }}</span>
+                <icon name="map-pin"/><span class="margin__left--x-small">{{ isLoading ? 'Updating...' : location.shortName }}</span>
             </div>
         </template>
         <div v-if="!locationId">
@@ -33,6 +33,10 @@ import weatherController from '../../controllers/weather';
 export default Vue.extend({
 
     computed: {
+
+        isLoading() {
+            return weatherController.isLoading;
+        },
 
         locationId() {
             return settingsController.location;

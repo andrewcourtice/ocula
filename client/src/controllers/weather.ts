@@ -1,4 +1,5 @@
 import EVENTS from '../constants/events';
+import GETTERS from '../state/getters';
 import ACTIONS from '../state/actions';
 
 import Controller from './_base/controller';
@@ -20,15 +21,15 @@ export class WeatherController extends Controller {
     }
 
     get current() {
-        return this.state.forecast.currently;
+        return this.getter(GETTERS.current);
     }
 
     get daily() {
-        return this.state.forecast.daily;
+        return this.getter(GETTERS.daily);
     }
 
     get hourly() {
-        return this.state.forecast.hourly;
+        return this.getter(GETTERS.hourly);
     }
 
     get radar() {

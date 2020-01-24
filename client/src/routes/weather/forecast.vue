@@ -9,13 +9,13 @@
         <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
             <h2 class="weather-forecast__section-title">Coming Up</h2>
             <table class="weather-forecast__days">
-                <tr class="weather-forecast__day" v-for="day in daily" :key="day.key">
+                <tr class="weather-forecast__day" v-for="day in daily" :key="day.time">
                     <td class="weather-forecast__day-icon">
                         <icon :name="day.icon"/>
                     </td>
-                    <td class="weather-forecast__day-label text--truncate">{{ day.label }}</td>
-                    <td class="weather-forecast__day-min">{{ day.min }}</td>
-                    <td class="weather-forecast__day-max">{{ day.max }}</td>
+                    <td class="weather-forecast__day-label text--truncate">{{ formatDay(day.time) }}</td>
+                    <td class="weather-forecast__day-min">{{ day.temperatureMin }}</td>
+                    <td class="weather-forecast__day-max">{{ day.temperatureMax }}</td>
                 </tr>
             </table>
         </section>
@@ -29,14 +29,14 @@
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Temp Min</strong>
-                        <div>{{ today.temperatureMin }}</div>
+                        <div>{{ today.temperatureMin }}&deg;C</div>
                     </td>
                     <td class="weather-forecast__observation-icon">
                         <icon name="thermometer"/>
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Temp Max</strong>
-                        <div>{{ today.temperatureMax }}</div>
+                        <div>{{ today.temperatureMax }}&deg;C</div>
                     </td>
                 </tr>
                 <tr>
@@ -45,14 +45,14 @@
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Precipitation</strong>
-                        <div>{{ today.precipitation }}</div>
+                        <div>{{ getPrecipitationSummary(today.precipProbability, today.precipType) }}</div>
                     </td>
                     <td class="weather-forecast__observation-icon">
                         <icon name="droplet"/>
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Humidity</strong>
-                        <div>{{ today.humidity }}</div>
+                        <div>{{ formatPercentage(today.humidity) }}</div>
                     </td>
                 </tr>
                 <tr>
@@ -61,14 +61,51 @@
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Sunrise</strong>
-                        <div>{{ today.sunriseTime }}</div>
+                        <div>{{ formatTime(today.sunriseTime) }}</div>
                     </td>
                     <td class="weather-forecast__observation-icon">
                         <icon name="sunset"/>
                     </td>
                     <td class="weather-forecast__observation-details">
                         <strong>Sunset</strong>
-                        <div>{{ today.sunsetTime }}</div>
+                        <div>{{ formatTime(today.sunsetTime) }}</div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        <section class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
+            <h2 class="weather-forecast__section-title">Trends</h2>
+            <table class="weather-forecast__trends">
+                <tr>
+                    <td>
+                        <strong>Temperature</strong>
+                    </td>
+                    <td>
+                        <strong>Precipitation</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.temperature"/>
+                    </td>
+                    <td>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.precipitation"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>UV Index</strong>
+                    </td>
+                    <td>
+                        <strong>Wind Speed</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex"/>
+                    </td>
+                    <td>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed"/>
                     </td>
                 </tr>
             </table>
@@ -92,6 +129,7 @@ import ICON from '../../constants/icon';
 import Vue from 'vue';
 
 import Radar from '../../components/weather/core/radar.vue';
+import SparklineChart from '../../components/core/charts/sparkline.vue';
 
 import refreshable from './_base/refreshable';
 
@@ -107,6 +145,41 @@ export default Vue.extend({
 
     extends: refreshable,
 
+    data() {
+        return {
+            trendsOptions: {
+                temperature: {
+                    xSelector: hour => hour.time,
+                    ySelector: hour => hour.temperature,
+                    colours: {
+                        line: '#FF9900'
+                    }
+                },
+                precipitation: {
+                    xSelector: hour => hour.time,
+                    ySelector: hour => hour.precipProbability,
+                    colours: {
+                        line: '#47B1FA'
+                    }
+                },
+                uvIndex: {
+                    xSelector: hour => hour.time,
+                    ySelector: hour => hour.uvIndex,
+                    colours: {
+                        line: '#FF9900'
+                    }
+                },
+                windSpeed: {
+                    xSelector: hour => hour.time,
+                    ySelector: hour => hour.windSpeed,
+                    colours: {
+                        line: '#47B1FA'
+                    }
+                }
+            }
+        }
+    },
+
     computed: {
 
         location() {
@@ -114,100 +187,23 @@ export default Vue.extend({
         },
 
         current() {
-            const current = weatherController.current;
-
-            if (!current) {
-                return;
-            }
-
-            let {
-                icon,
-                summary,
-                temperature
-            } = current;
-
-            icon = ICON[icon];
-            temperature = Math.round(temperature);
-
-            return {
-                icon,
-                summary,
-                temperature
-            };
+            return weatherController.current;
         },
 
         daily() {
-            const {
-                data
-            } = weatherController.daily;
-
-            return data.map(day => {
-                let {
-                    time,
-                    icon,
-                    temperatureMin,
-                    temperatureMax,
-                } = day;
-
-                const date = dateFromUnix(time);
-                const label = dateFormat(date, 'EEEE, d MMM');
-                const min = Math.round(temperatureMin);
-                const max = Math.round(temperatureMax);
-
-                icon = ICON[icon]; 
-
-                return {
-                    icon,
-                    label,
-                    min,
-                    max,
-                    key: time
-                };
-            });
+            return weatherController.daily;
         },
 
         today() {
-            const {
-                data
-            } = weatherController.daily;
-
-            if (!data) {
+            if (!this.daily) {
                 return;
             }
 
-            let {
-                temperatureMin,
-                temperatureMax,
-                humidity,
-                precipProbability,
-                precipType,
-                pressure,
-                summary,
-                sunriseTime,
-                sunsetTime,
-                uvIndex,
-                windSpeed
-            } = data[0];
+            return this.daily[0];
+        },
 
-            temperatureMin = Math.round(temperatureMin);
-            temperatureMax = Math.round(temperatureMax);
-            sunriseTime = dateFormat(dateFromUnix(sunriseTime), 'h:mm a');
-            sunsetTime = dateFormat(dateFromUnix(sunsetTime), 'h:mm a');
-
-            const precipitation = `${precipProbability * 100}% chance of ${precipType}`;
-
-            return {
-                temperatureMin,
-                temperatureMax,
-                humidity,
-                precipitation,
-                pressure,
-                summary,
-                sunriseTime,
-                sunsetTime,
-                uvIndex,
-                windSpeed
-            };
+        hourly() {
+            return weatherController.hourly;
         },
 
         radar() {
@@ -216,8 +212,29 @@ export default Vue.extend({
 
     },
 
+    methods: {
+
+        formatDay(date) {
+            return dateFormat(date, 'EEEE, d MMM');
+        },
+
+        formatTime(date) {
+            return dateFormat(date, 'h:mm a');
+        },
+
+        formatPercentage(value) {
+            return `${Math.round(value * 100)}%`;
+        },
+
+        getPrecipitationSummary(probability, type) {
+            return `${this.formatPercentage(probability)} chance of ${type}`;
+        }
+
+    },
+
     components: {
-        Radar
+        Radar,
+        SparklineChart
     }
 
 });
@@ -244,21 +261,24 @@ export default Vue.extend({
     }
 
     .weather-forecast__days,
-    .weather-forecast__observations {
+    .weather-forecast__observations,
+    .weather-forecast__trends {
         width: 100%;
+
+        & tr {
+
+            & td:first-child {
+                padding-left: 0;
+            }
+
+            & td:last-child {
+                padding-left: 0;
+            }
+        }
     }
 
     .weather-forecast__day-label {
         width: 100%;
-    }
-
-    .weather-forecast__day-icon,
-    .weather-forecast__observation-icon {
-        padding-left: 0
-    }
-
-    .weather-forecast__day-max {
-        padding-right: 0
     }
 
     .weather-forecast__day-min,
