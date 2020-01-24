@@ -86,10 +86,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.temperature"/>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.temperature" ref="trends"/>
                     </td>
                     <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.precipitation"/>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.precipitation" ref="trends"/>
                     </td>
                 </tr>
                 <tr>
@@ -102,10 +102,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex"/>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex" ref="trends"/>
                     </td>
                     <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed"/>
+                        <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed" ref="trends"/>
                     </td>
                 </tr>
             </table>
@@ -272,7 +272,7 @@ export default Vue.extend({
             }
 
             & td:last-child {
-                padding-left: 0;
+                padding-right: 0;
             }
         }
     }
@@ -283,6 +283,7 @@ export default Vue.extend({
 
     .weather-forecast__day-min,
     .weather-forecast__day-max {
+        text-align: center;
         color: var(--font__colour--meta);
     }
 

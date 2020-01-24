@@ -10,6 +10,7 @@ export default abstract class Chart {
     protected id: string;
     protected element: Element;
     protected options: any;
+    protected rendering: boolean;
 
     protected width: number;
     protected height: number;
@@ -72,6 +73,10 @@ export default abstract class Chart {
 
         this.canvas.classed(this.options.classes.canvas, true)
             .attr('transform', `translate(${left}, ${top})`);
+    }
+
+    protected reset() {
+        this.canvas.selectAll('*').remove();
     }
 
 }

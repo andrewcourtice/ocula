@@ -159,10 +159,20 @@ export default class Sparkline extends Chart {
     }
 
     public async render<T>(data: T[], options) {
+        if (this.rendering) {
+            this.reset();
+        }
+        
+        this.rendering = true;
+
         this.bootstrap(options);
         this.calculate<T>(data);
 
-        return this.draw();
+        try {
+            await this.draw();
+        } finally {
+            this.rendering = false;
+        }
     }
 
 }

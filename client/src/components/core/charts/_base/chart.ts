@@ -23,13 +23,19 @@ export default function chart(Chart) {
             autoRender: {
                 type: Boolean,
                 default: true
+            },
+
+            autoUpdate: {
+                type: Boolean,
+                default: true
             }
 
         },
 
         data() {
             return {
-                chart: null
+                chart: null,
+                updateWatch: null
             };
         },
     
@@ -39,7 +45,7 @@ export default function chart(Chart) {
                 if (!this.chart) {
                     return;
                 }
-    
+                console.log('rendered');
                 return this.chart.render(this.data, this.options);
             }
     
@@ -53,6 +59,15 @@ export default function chart(Chart) {
             if (this.autoRender) {
                 this.render();
             }
+
+            if (this.autoUpdate) {
+                this.updateWatch = this.$watch('data', this.render);
+            }
+        },
+
+        beforeDestroy() {
+            this.updateWatch && this.updateWatch();
         }
+
     };
 }
