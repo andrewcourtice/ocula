@@ -45,7 +45,7 @@ export default function chart(Chart) {
                 if (!this.chart) {
                     return;
                 }
-                console.log('rendered');
+
                 return this.chart.render(this.data, this.options);
             }
     
