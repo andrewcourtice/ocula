@@ -1,5 +1,6 @@
 import Index from './index.vue';
 import Forecast from './forecast.vue';
+import Radar from './radar.vue';
 
 export default [
     {
@@ -19,6 +20,10 @@ export default [
             {
                 path: 'forecast',
                 component: Forecast
+            },
+            {
+                path: 'radar',
+                component: Radar
             }
         ]
     }

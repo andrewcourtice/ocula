@@ -5,41 +5,129 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import weatherController from '../../../controllers/weather';
-
 import mapboxgl from 'mapbox-gl';
+
+const STYLE = {
+    light: 'light-v10',
+    dark: 'dark-v10',
+    streets: 'streets-v10'
+};
 
 mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
 
 export default Vue.extend({
 
-    computed: {
+    props: {
 
-        location() {
-            return weatherController.location;
+        latitude: {
+            type: Number
         },
 
-        radar() {
-            return weatherController.radar;
+        longitude: {
+            type: Number
+        },
+
+        zoom: {
+            type: Number,
+            default: 6
+        },
+
+        style: {
+            type: String,
+            default: 'light',
+            validator: value => value in STYLE
+        },
+
+        timestamps: {
+            type: Array
+        },
+
+        carouselEnabled: {
+            type: Boolean,
+            default: false
+        },
+
+        carouselInterval: {
+            type: Number,
+            default: 3000
+        }
+
+    },
+
+    data() {
+        return {
+            map: null,
+            index: 0,
+            intervalHandle: null
+        };
+    },
+
+    methods: {
+
+        getTileUrl(index) {
+            const timestamp = this.timestamps[index] || this.timestamps[0];
+            return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/2/0_0.png`;
+        },
+
+        startCarousel() {
+            this.index = 0;
+
+            setInterval(() => {
+                if (this.index === this.timestamps.length - 1) {
+                    this.index = 0;
+                }
+
+                const source = this.map.getSource('raster-tile');
+
+                source.tiles = [this.getTileUrl(this.index)];
+
+                this.map.style.sourceCaches['raster-tile'].clearTiles()
+                this.map.style.sourceCaches['raster-tile'].update(this.map.transform);
+                this.map.triggerRepaint();
+
+                this.index++;
+            }, this.carouselInterval);
+        },
+
+        stopCarousel() {
+            this.intervalHandle && window.clearInterval(this.intervalHandle);
+        },
+
+        updateLocation() {
+            if (!this.map) {
+                return;
+            }
+
+            this.map.easeTo({
+                zoom: this.zoom,
+                center: [
+                    this.longitude,
+                    this.latitude
+                ]
+            });
         }
 
     },
 
     mounted() {
-        const {
-            latitude,
-            longitude
-        } = this.location;
 
         const map = new mapboxgl.Map({
             container: this.$el,
-            style: 'mapbox://styles/mapbox/light-v10',
-            zoom: 6,
+            style: `mapbox://styles/mapbox/${STYLE[this.style]}`,
+            zoom: this.zoom,
             center: [
-                longitude,
-                latitude
+                this.longitude,
+                this.latitude
             ]
         });
+
+        this.map = map;
+
+        if (!this.timestamps) {
+            return;
+        }
+        
+        const latestTimestamp = this.timestamps[this.timestamps.length - 1];
 
         map.on('load', () => {
             
@@ -48,7 +136,7 @@ export default Vue.extend({
 
             map.addSource('raster-tile', {
                 type: 'raster',
-                tiles: [this.radar.tileURL],
+                tiles: [this.getTileUrl(latestTimestamp)],
                 tileSize: 256
             });
 
@@ -60,7 +148,31 @@ export default Vue.extend({
                 maxzoom: 22
             }, firstLayer.id);
 
+            if (this.carouselEnabled) {
+                this.startCarousel();
+            }
+
         });
+    },
+
+    watch: {
+
+        latitude() {
+            this.updateLocation();
+        },
+
+        longitude() {
+            this.updateLocation();
+        },
+
+        zoom() {
+            this.updateLocation();
+        },
+
+        carouselEnabled(value) {
+            value ? this.startCarousel() : this.stopCarousel();
+        }
+
     }
 
 });

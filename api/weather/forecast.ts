@@ -26,14 +26,10 @@ export default async function (request: NowRequest, response: NowResponse) {
         timestamps
     ] = await Promise.all(responses.map(response => response.json()));
 
-    const latestTimestamp = timestamps[timestamps.length - 1];
-
-    const radar = {
-        tileURL: `https://tilecache.rainviewer.com/v2/radar/${latestTimestamp}/256/{z}/{x}/{y}/2/0_0.png`
-    };
-
     return response.json({
         ...forecast,
-        radar
+        radar: {
+            timestamps
+        }
     });
 }

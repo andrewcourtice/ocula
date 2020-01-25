@@ -112,7 +112,11 @@
         </section>
         <section class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
             <h2 class="weather-forecast__section-title">Radar</h2>
-            <radar />
+            <radar class="weather-forecast__radar"
+                :latitude="location.latitude" 
+                :longitude="location.longitude"
+                :timestamps="radar.timestamps">
+            </radar>
         </section>
         <footer class="weather-forecast__footer text--centre">
             <img class="weather-forecast__attribution" src="https://darksky.net/dev/img/attribution/poweredby.png" alt="Powered by Dark Sky">
