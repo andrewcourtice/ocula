@@ -115,7 +115,8 @@
             <radar class="weather-forecast__radar"
                 :latitude="location.latitude" 
                 :longitude="location.longitude"
-                :timestamps="radar.timestamps">
+                :timestamps="radar.timestamps"
+                carousel-enabled>
             </radar>
         </section>
         <footer class="weather-forecast__footer text--centre">
