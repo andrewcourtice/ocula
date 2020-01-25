@@ -12,7 +12,7 @@ export default async function (request: NowRequest, response: NowResponse) {
     } = request.query;
 
     const apiKey = process.env.MAPBOX_API_KEY;
-    const apiResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${apiKey}&types=locality,place&limit=10&autocomplete=true`);
+    const apiResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${apiKey}&types=locality,place&limit=5&autocomplete=true`);
     
     const {
         features

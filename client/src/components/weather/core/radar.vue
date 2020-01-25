@@ -42,6 +42,11 @@ export default Vue.extend({
             type: Array
         },
 
+        interactive: {
+            type: Boolean,
+            default: false
+        },
+
         carouselEnabled: {
             type: Boolean,
             default: false
@@ -115,6 +120,7 @@ export default Vue.extend({
             container: this.$el,
             style: `mapbox://styles/mapbox/${STYLE[this.style]}`,
             zoom: this.zoom,
+            interactive: this.interactive,
             center: [
                 this.longitude,
                 this.latitude
@@ -183,7 +189,7 @@ export default Vue.extend({
     .radar {
         position: relative;
         width: 100%;
-        border-radius: 3px;
+        border-radius: var(--border__radius);
         overflow: hidden;
 
         &::after {

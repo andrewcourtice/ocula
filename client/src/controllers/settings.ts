@@ -10,12 +10,6 @@ import {
     searchLocations
 } from '../services/location';
 
-import {
-    functionDebounce
-} from '@ocula/utilities';
-
-const debouncedLocationSearch = functionDebounce(searchLocations, 500);
-
 export class SettingsController extends Controller {
 
     get location() {
@@ -41,7 +35,7 @@ export class SettingsController extends Controller {
     }
 
     async searchLocations(query: string) {
-        return debouncedLocationSearch(query);
+        return searchLocations(query);
     }
 
 }

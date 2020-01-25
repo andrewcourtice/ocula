@@ -1,9 +1,15 @@
 <template>
     <modal class="location-modal" ref="modal">
-        <input type="text" v-model="search" v-focus>
-        <div class="menu">
-            <div class="menu-item" @click="setCurrentLocation"><icon name="navigation" class="margin__right--x-small"/> Current Location</div>
-            <div class="menu-item text--truncate" v-for="location in locations" :key="location.id" @click="setLocation(location)">{{ location.longName }}</div>
+        <input type="text" class="location-modal__search" placeholder="Search for a location..." v-model="search" v-focus>
+        <div class="menu margin__top--medium">
+            <div class="menu-item" layout="row center-left" @click="setCurrentLocation">
+                <icon name="navigation" class="margin__right--small"/>
+                <div class="text--truncate" self="size-x1">Current Location</div>
+            </div>
+            <div class="menu-item" layout="row center-left" v-for="location in locations" :key="location.id" @click="setLocation(location)">
+                <icon name="map" class="margin__right--small"/>
+                <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
+            </div>
         </div>
     </modal>
 </template>
@@ -16,6 +22,10 @@ import Vue from 'vue';
 import subscriberMixin from '../../core/mixins/subscriber';
 
 import settingsController from '../../../controllers/settings';
+
+import {
+    functionDebounce
+} from '@ocula/utilities';
 
 export default Vue.extend({
 
@@ -67,12 +77,23 @@ export default Vue.extend({
             this.close();
         },
 
-        async searchLocations(query) {
+        searchLocations: functionDebounce(async function(query) {
             this.locations = await settingsController.searchLocations(query);
-            this.$forceUpdate();
-        }
+        }, 500, {
+            leading: true,
+            trailing: true
+        })
 
     }
 
 });
 </script>
+
+<style lang="scss">
+
+    .location-modal__search {
+        display: block;
+        width: 100%;
+    }
+
+</style>

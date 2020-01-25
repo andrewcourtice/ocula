@@ -61,6 +61,7 @@ export default Vue.extend({
         max-height: 100%;
         padding: var(--spacing__medium);
         background-color: var(--background__colour);
+        border-radius: var(--border__radius);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
