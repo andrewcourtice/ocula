@@ -32,14 +32,13 @@ export default {
 
     methods: {
 
-        async refresh(locationId) {
+        async refresh() {
             return weatherController.load();
         }
 
     },
 
     activated() {
-        console.log('activated');
         this.refresh();
 
         this.intervalHandle = window.setInterval(() => {

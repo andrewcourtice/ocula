@@ -1,8 +1,8 @@
 <template>
     <app-layout class="weather-layout">
         <template #header>
-            <div layout="row center-left" v-if="location">
-                <icon name="map-pin"/><span class="margin__left--x-small">{{ isLoading ? 'Updating...' : location.shortName }}</span>
+            <div layout="row center-left" @click="updateLocation">
+                <icon name="map-pin"/><span class="margin__left--x-small" v-if="location">{{ isLoading ? 'Updating...' : location.shortName }}</span>
             </div>
         </template>
         <div v-if="!locationId">
@@ -15,7 +15,7 @@
         <keep-alive v-else>
             <router-view></router-view>
         </keep-alive>
-        <alerts-sidebar></alerts-sidebar>
+        <location-modal />
     </app-layout>
 </template>
 
@@ -25,7 +25,7 @@ import LOCATIONS from '../../constants/locations';
 import Vue from 'vue';
 
 import AppLayout from '../../components/core/layouts/app.vue';
-import AlertsSidebar from '../../components/weather/sidebars/alerts.vue';
+import LocationModal from '../../components/core/modals/location.vue';
 
 import settingsController from '../../controllers/settings';
 import weatherController from '../../controllers/weather';
@@ -55,14 +55,18 @@ export default Vue.extend({
         },
 
         setCurrentLocation() {
-            settingsController.location = LOCATIONS.current;
+            settingsController.setCurrentLocation();
+        },
+
+        updateLocation() {
+            settingsController.updateLocation();
         }
 
     },
 
     components: {
         AppLayout,
-        AlertsSidebar
+        LocationModal
     }
     
 });

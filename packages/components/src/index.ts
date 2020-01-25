@@ -1,5 +1,6 @@
 import '@ocula/style/src/index.scss';
 
+import directives from './directives/index';
 import components from './components/index';
 
 function register(Vue, registrar, dictionary) {
@@ -9,6 +10,7 @@ function register(Vue, registrar, dictionary) {
 export default {
 
     install(Vue) {
+        register(Vue, 'directive', directives);
         register(Vue, 'component', components);
     }
 
