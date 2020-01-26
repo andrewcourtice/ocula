@@ -14,6 +14,11 @@
                         <icon :name="day.icon"/>
                     </td>
                     <td class="weather-forecast__day-label text--truncate">{{ formatDay(day.time) }}</td>
+                    <td class="weather-forecast__day-rain">
+                        <small>
+                            <icon name="umbrella" v-show="day.precipProbability > 0.25"/>
+                        </small>
+                    </td>
                     <td class="weather-forecast__day-min">{{ day.temperatureMin }}</td>
                     <td class="weather-forecast__day-max">{{ day.temperatureMax }}</td>
                 </tr>
@@ -286,6 +291,10 @@ export default Vue.extend({
 
     .weather-forecast__day-label {
         width: 100%;
+    }
+
+    .weather-forecast__day-rain {
+        color: #47B1FA;
     }
 
     .weather-forecast__day-min,
