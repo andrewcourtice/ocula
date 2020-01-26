@@ -24,7 +24,7 @@ export default Vue.extend({
         },
 
         href() {
-            return `feather-sprite.svg#${this.name}`;
+            return `/feather-sprite.svg#${this.name}`;
         }
 
     }
@@ -42,6 +42,7 @@ export default Vue.extend({
         stroke-width: 2;
         stroke-linecap: round;
         stroke-linejoin: round;
+        vertical-align: middle;
     }
 
 </style>

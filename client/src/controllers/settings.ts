@@ -17,6 +17,7 @@ export class SettingsController extends Controller {
     }
 
     set location(value) {
+        this.commit(MUTATIONS.clearLastUpdated);
         this.commit(MUTATIONS.updateSettings, {
             location: value
         });

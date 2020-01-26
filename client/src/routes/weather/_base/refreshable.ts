@@ -1,3 +1,4 @@
+import GLOBAL from '../../../constants/global';
 import EVENTS from '../../../constants/events';
 
 import subscriberMixin from '../../../components/core/mixins/subscriber';
@@ -33,6 +34,12 @@ export default {
     methods: {
 
         async refresh() {
+            const lastUpdated = weatherController.lastUpdated;
+
+            if (lastUpdated && Date.now() - lastUpdated < GLOBAL.updateThreshold) {
+                return;
+            }
+
             return weatherController.load();
         }
 

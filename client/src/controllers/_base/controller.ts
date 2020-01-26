@@ -22,7 +22,7 @@ export default class Controller {
         return store.getters[path(this.module, name)];
     }
 
-    commit(name: string, payload: any) {
+    commit(name: string, payload?: any) {
         return store.commit(path(this.module, name), payload);
     }
 

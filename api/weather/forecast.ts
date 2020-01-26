@@ -12,7 +12,7 @@ export default async function (request: NowRequest, response: NowResponse) {
         units
     } = request.query;
 
-    units = units || 'si';
+    units = units || 'auto';
 
     const apiKey = process.env.DARKSKY_API_KEY;
 

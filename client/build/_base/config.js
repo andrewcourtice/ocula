@@ -89,14 +89,25 @@ export default {
             template: './src/index.html'
         }),
     
+        new FaviconsWebpackPlugin({
+            logo: './src/assets/images/favicon.png',
+            favicons: {
+                appName: 'Ocula',
+                appShortName: 'Ocula',
+                appDescription: 'The open-source, progressive weather app',
+                developerName: 'Andrew Courtice',
+                display: 'standalone',
+                background: '#FFFFFF',
+                theme_color: '#FFFFFF',
+                start_url: '/?source=pwa',
+                scope: '/'
+            }
+        }),
+
         new CopyWebpackPlugin([
             './src/static'
         ]),
     
         new WorkboxPlugin.GenerateSW(workboxConfig)
-    
-    /*     new FaviconsWebpackPlugin({
-            logo: './src/assets/icons/favicon.png'
-        }), */
     ]
 };

@@ -5,7 +5,7 @@
                 <slot name="header"></slot>
             </div>
             <div class="app-layout__menu">
-                <icon name="settings" @click.native="openOptions"></icon>
+                <icon name="menu" @click.native="openOptions"></icon>
                 <div class="app-layout__menu-dot" v-show="updateReady"></div>
             </div>
         </div>

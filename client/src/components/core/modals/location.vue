@@ -1,6 +1,6 @@
 <template>
     <modal class="location-modal" ref="modal">
-        <input type="text" class="location-modal__search" placeholder="Search for a location..." v-model="search" v-focus>
+        <search-box class="location-modal__search" placeholder="Search for a location..." v-model="search" v-focus />
         <div class="menu margin__top--medium">
             <div class="menu-item" layout="row center-left" @click="setCurrentLocation">
                 <icon name="navigation" class="margin__right--small"/>
@@ -60,6 +60,9 @@ export default Vue.extend({
     methods: {
 
         open(resolve, reject) {
+            this.query = '';
+            this.locations = [];
+
             this.$refs.modal.open();
         },
 
@@ -92,7 +95,6 @@ export default Vue.extend({
 <style lang="scss">
 
     .location-modal__search {
-        display: block;
         width: 100%;
     }
 

@@ -5,7 +5,7 @@
                 <icon name="map-pin"/><span class="margin__left--x-small" v-if="location">{{ isLoading ? 'Updating...' : location.shortName }}</span>
             </div>
         </template>
-        <div v-if="!locationId">
+        <div v-if="!settingsLocation">
             <div class="text--centre">
                 <h2>No Location</h2>
                 <p>No location set. Type in the box above to set a location or tap the button below to use your current position</p>
@@ -38,12 +38,12 @@ export default Vue.extend({
             return weatherController.isLoading;
         },
 
-        locationId() {
-            return settingsController.location;
-        },
-
         location() {
             return weatherController.location;
+        },
+
+        settingsLocation() {
+            return settingsController.location;
         }
 
     },

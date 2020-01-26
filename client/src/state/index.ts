@@ -197,6 +197,10 @@ export default {
             state.lastUpdated = new Date();
         },
 
+        [MUTATIONS.clearLastUpdated](state) {
+            state.lastUpdated = null;
+        },
+
         [MUTATIONS.setLocation](state, payload) {
             state.location = payload;
         },
