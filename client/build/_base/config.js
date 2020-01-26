@@ -64,7 +64,7 @@ export default {
                 }
             },
             {
-                test: /\.(png|jpg|gif|woff|woff2|eot|ttf)$/,
+                test: /\.(png|jpg|gif|svg|woff|woff2|eot|ttf)$/,
                 loader: 'url-loader',
                 options: {
                     limit: 8192

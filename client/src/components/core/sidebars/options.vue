@@ -1,5 +1,9 @@
 <template>
     <sidebar class="options-sidebar" ref="sidebar">
+        <div class="options-sidebar__branding">
+            <img class="options-sidebar__branding-logo" :src="$options.staticData.logo" alt="Ocula">
+            <h1 class="options-sidebar__branding-title">Ocula</h1>
+        </div>
         <div class="menu">
             <router-link to="/" class="link">
                 <div class="menu-item" layout="row center-left">
@@ -18,7 +22,7 @@
                 <div>
                     <strong>Update available</strong>
                     <br>
-                    <small>Tap here to update</small>
+                    <small class="text--meta">Tap here to update</small>
                 </div>
             </div>
         </div>
@@ -34,11 +38,18 @@ import applicationController from '../../../controllers/application';
 
 import subscriberMixin from '../mixins/subscriber';
 
+import logo from '../../../assets/images/ocula-192.svg';
+
 export default Vue.extend({
     
     mixins: [
         subscriberMixin(EVENTS.sidebars.options)
     ],
+
+    // @ts-ignore
+    staticData: {
+        logo
+    },
 
     computed: {
 
@@ -74,6 +85,23 @@ export default Vue.extend({
         & .menu-item {
             padding: 1rem 2rem;
         }
+    }
+
+    .options-sidebar__branding {
+        padding: var(--spacing__large) var(--spacing__small);
+        text-align: center;
+    }
+
+    .options-sidebar__branding-logo {
+        width: 96px;
+    }
+
+    .options-sidebar__branding-title {
+        margin-top: var(--spacing__small);
+        font-size: var(--font__size--large);
+        font-weight: var(--font__weight--medium);
+        text-transform: uppercase;
+        letter-spacing: 4px;
     }
 
 </style>

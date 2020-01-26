@@ -3,7 +3,7 @@
         <header class="weather-forecast__header" v-if="current">
             <h1 class="weather-forecast__temperature">{{ current.temperature }}&deg;C</h1>
             <div class="margin__top--small" layout="row center-left">
-                <icon :name="current.icon"/><span class="margin__left--x-small">{{ current.summary }}</span>
+                <icon :name="current.icon"/><span class="margin__left--small">{{ current.summary }}</span>
             </div>
         </header>
         <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">

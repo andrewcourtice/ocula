@@ -1,7 +1,7 @@
 <template>
     <modal class="location-modal" ref="modal">
         <search-box class="location-modal__search" placeholder="Search for a location..." v-model="search" v-focus />
-        <div class="menu margin__top--medium">
+        <div class="menu margin__top--small">
             <div class="menu-item" layout="row center-left" @click="setCurrentLocation">
                 <icon name="navigation" class="margin__right--small"/>
                 <div class="text--truncate" self="size-x1">Current Location</div>
@@ -82,10 +82,7 @@ export default Vue.extend({
 
         searchLocations: functionDebounce(async function(query) {
             this.locations = await settingsController.searchLocations(query);
-        }, 500, {
-            leading: true,
-            trailing: true
-        })
+        }, 500)
 
     }
 
@@ -94,8 +91,16 @@ export default Vue.extend({
 
 <style lang="scss">
 
+    .location-modal {
+
+        & .modal__body {
+            padding: var(--spacing__small);
+        }
+    }
+
     .location-modal__search {
         width: 100%;
+        border: none;
     }
 
 </style>

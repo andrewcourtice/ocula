@@ -43,16 +43,19 @@ export default Vue.extend({
 
     .search-box {
         display: inline-flex;
-        padding-left: var(--spacing__small);
+        padding: var(--spacing__x-small) var(--spacing__small);
         border: 1px solid var(--border__colour);
         border-radius: var(--border__radius);
 
         & .search-box__input {
             width: 100%;
+            padding: 0;
             border: none;
         }
     }
 
-
+    .search-box__icon {
+        margin-right: var(--spacing__small);
+    }
 
 </style>
