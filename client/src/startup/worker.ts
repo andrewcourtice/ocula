@@ -1,5 +1,6 @@
 import EVENTS from '../constants/events';
-import MUTATIONS from '../state/mutations'
+import STORAGE_KEYS from '../constants/storage-keys';
+import MUTATIONS from '../state/mutations';
 
 import eventEmitter from '@ocula/event-emitter';
 
@@ -19,6 +20,9 @@ export default async function initialiseWorker(store) {
             if (!event.isUpdate) {
                 return;
             }
+            
+            // Clear any saved data
+            localStorage.removeItem(STORAGE_KEYS.data);
 
             store.commit(MUTATIONS.setUpdateReady);
             eventEmitter.emit(EVENTS.application.updateReady);

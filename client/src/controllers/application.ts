@@ -4,6 +4,8 @@ import Controller from './_base/controller';
 
 import eventEmitter from '@ocula/event-emitter';
 
+import logo from '../assets/images/favicon.png';
+
 import {
     functionDebounce
 } from '@ocula/utilities';
@@ -34,11 +36,10 @@ export class ApplicationController extends Controller {
 
         eventEmitter.on(EVENTS.application.updateReady, async () => {
             const notification = await notify('Update Available', {
-                icon: '../assets/favicon.png',
-                badge: '../assets/favicon.png',
+                icon: logo,
+                badge: logo,
                 body: 'An update to Ocula is available. Tap here to update now.',
-                requireInteraction: true,
-                renotify: true
+                requireInteraction: true
             });
 
             notification.onclick = () => {
