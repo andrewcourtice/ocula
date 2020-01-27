@@ -90,7 +90,7 @@ export default {
         }),
     
         new FaviconsWebpackPlugin({
-            logo: './src/assets/images/favicon.png',
+            logo: './src/assets/images/ocula-512.svg',
             favicons: {
                 appName: 'Ocula',
                 appShortName: 'Ocula',

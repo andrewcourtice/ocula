@@ -4,7 +4,7 @@ import Controller from './_base/controller';
 
 import eventEmitter from '@ocula/event-emitter';
 
-import logo from '../assets/images/favicon.png';
+import logo from '../assets/images/ocula-192.png';
 
 import {
     functionDebounce
