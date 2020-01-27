@@ -1,7 +1,8 @@
 export default {
     application: {
         visible: 'application:visible',
-        resized: 'application:resized'
+        resized: 'application:resized',
+        updateReady: 'application:update-ready'
     },
     sidebars: {
         options: 'sidebar:options',

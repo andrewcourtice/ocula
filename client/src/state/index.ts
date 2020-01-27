@@ -15,7 +15,8 @@ import {
 } from '../services/weather';
 
 import {
-    objectMerge, dateFromUnix, dateFormat
+    objectMerge,
+    dateFromUnix
 } from '@ocula/utilities';
 
 function getSettings() {
@@ -33,11 +34,45 @@ function getSettings() {
 function getData() {
     let data = localStorage.getItem(STORAGE_KEYS.data);
 
-    if (!data) {
-        return {};
+    if (data) {
+        return JSON.parse(data);
     }
 
-    return JSON.parse(data);
+    return {
+        location: null,
+        forecast: {}
+    };
+}
+
+function storeData(state) {
+    const {
+        location,
+        forecast
+    } = state;
+
+    localStorage.setItem(STORAGE_KEYS.data, JSON.stringify({
+        location,
+        forecast
+    }));
+}
+
+function getState() {
+    const settings = getSettings();
+
+    const {
+        location,
+        forecast
+    } = getData();
+
+    return {
+        settings,
+        location,
+        forecast,
+
+        loading: false,
+        updateReady: false,
+        lastUpdated: null
+    };
 }
 
 async function getCurrentPosition() {
@@ -102,15 +137,7 @@ function mapDayData(day) {
 export default {
     devtools: true,
 
-    state: {
-        loading: false,
-        updateReady: false,
-
-        lastUpdated: null,
-        location: null,
-        forecast: getData(),
-        settings: getSettings()
-    },
+    state: getState(),
 
     getters: {
 
@@ -203,12 +230,12 @@ export default {
 
         [MUTATIONS.setLocation](state, payload) {
             state.location = payload;
+            storeData(state);
         },
 
         [MUTATIONS.setForecast](state, payload) {
-            localStorage.setItem(STORAGE_KEYS.data, JSON.stringify(payload));
-
             state.forecast = payload;
+            storeData(state);
         },
 
         [MUTATIONS.updateSettings](state, payload) {

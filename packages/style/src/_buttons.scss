@@ -1,0 +1,34 @@
+button,
+.button {
+    display: inline-block;
+    padding: var(--spacing__x-small) var(--spacing__medium);
+    font: inherit;
+    font-weight: var(--font__weight--heavy);
+    border: none;
+    border-radius: var(--border__radius);
+    background-color: #EEEEEE;
+    cursor: pointer;
+    transition: background var(--transition__timing) var(--transition__easing-quartic-out);
+
+    &:hover {
+        background-color: darken(#EEEEEE, 10%);
+    }
+}
+
+.button--primary {
+    color: var(--foreground__colour);
+    background-color: var(--colour__primary);
+
+    &:hover {
+        background-color: var(--colour__primary);
+    }
+}
+
+.button--secondary {
+    color: var(--foreground__colour);
+    background-color: var(--colour__secondary);
+
+    &:hover {
+        background-color: var(--colour__secondary);
+    }
+}

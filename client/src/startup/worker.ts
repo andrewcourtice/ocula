@@ -1,4 +1,7 @@
+import EVENTS from '../constants/events';
 import MUTATIONS from '../state/mutations'
+
+import eventEmitter from '@ocula/event-emitter';
 
 import {
     Workbox
@@ -18,6 +21,7 @@ export default async function initialiseWorker(store) {
             }
 
             store.commit(MUTATIONS.setUpdateReady);
+            eventEmitter.emit(EVENTS.application.updateReady);
         });
 
         workbox.register();
