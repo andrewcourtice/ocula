@@ -8,112 +8,86 @@
         </header>
         <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
             <h2 class="weather-forecast__section-title">Coming Up</h2>
-            <table class="weather-forecast__days">
-                <tr class="weather-forecast__day" v-for="day in daily" :key="day.time">
-                    <td class="weather-forecast__day-icon">
+            <div class="weather-forecast__days">
+                <template class="weather-forecast__day" v-for="day in daily">
+                    <div class="weather-forecast__day-icon" :key="getTemplateKey(day.time, 'icon')">
                         <icon :name="day.icon"/>
-                    </td>
-                    <td class="weather-forecast__day-label text--truncate">{{ formatDay(day.time) }}</td>
-                    <td class="weather-forecast__day-rain">
+                    </div>
+                    <div class="weather-forecast__day-label text--truncate" :key="getTemplateKey(day.time, 'label')">
+                        <span>{{ formatDay(day.time) }}</span>
+                        <br>
+                        <small class="text--meta">{{ day.summary }}</small>
+                    </div>
+                    <div class="weather-forecast__day-rain" :key="getTemplateKey(day.time, 'precip')">
                         <small>
                             <icon name="umbrella" v-show="day.precipProbability > 0.25"/>
                         </small>
-                    </td>
-                    <td class="weather-forecast__day-min">{{ day.temperatureMin }}</td>
-                    <td class="weather-forecast__day-max">{{ day.temperatureMax }}</td>
-                </tr>
-            </table>
+                    </div>
+                    <div class="weather-forecast__day-min" :key="getTemplateKey(day.time, 'min')">{{ day.temperatureMin }}</div>
+                    <div class="weather-forecast__day-max" :key="getTemplateKey(day.time, 'max')">{{ day.temperatureMax }}</div>
+                </template>
+            </div>
         </section>
         <section class="weather-forecast__section">
             <h2 class="weather-forecast__section-title">Observations</h2>
             <p>{{ today.summary }}</p>
-            <table class="weather-forecast__observations">
-                <tr>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="thermometer"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Temp Min</strong>
-                        <div>{{ today.temperatureMin }}&deg;C</div>
-                    </td>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="thermometer"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Temp Max</strong>
-                        <div>{{ today.temperatureMax }}&deg;C</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="umbrella"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Precipitation</strong>
-                        <div>{{ getPrecipitationSummary(today.precipProbability, today.precipType) }}</div>
-                    </td>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="droplet"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Humidity</strong>
-                        <div>{{ formatPercentage(today.humidity) }}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="sunrise"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Sunrise</strong>
-                        <div>{{ formatTime(today.sunriseTime) }}</div>
-                    </td>
-                    <td class="weather-forecast__observation-icon">
-                        <icon name="sunset"/>
-                    </td>
-                    <td class="weather-forecast__observation-details">
-                        <strong>Sunset</strong>
-                        <div>{{ formatTime(today.sunsetTime) }}</div>
-                    </td>
-                </tr>
-            </table>
+            <div class="weather-forecast__observations">
+                <div class="weather-forecast__observation-icon">
+                    <icon name="thermometer"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Temp Min</strong>
+                    <div>{{ today.temperatureMin }}&deg;C</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="thermometer"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Temp Max</strong>
+                    <div>{{ today.temperatureMax }}&deg;C</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="umbrella"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Precipitation</strong>
+                    <div>{{ getPrecipitationSummary(today.precipProbability, today.precipType) }}</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="droplet"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Humidity</strong>
+                    <div>{{ formatPercentage(today.humidity) }}</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="sunrise"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Sunrise</strong>
+                    <div>{{ formatTime(today.sunriseTime) }}</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="sunset"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Sunset</strong>
+                    <div>{{ formatTime(today.sunsetTime) }}</div>
+                </div>
+            </div>
         </section>
         <section class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
             <h2 class="weather-forecast__section-title">Trends</h2>
-            <table class="weather-forecast__trends">
-                <tr>
-                    <td>
-                        <strong>Temperature</strong>
-                    </td>
-                    <td>
-                        <strong>Precipitation</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.temperature" ref="trends"/>
-                    </td>
-                    <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.precipitation" ref="trends"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>UV Index</strong>
-                    </td>
-                    <td>
-                        <strong>Wind Speed</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex" ref="trends"/>
-                    </td>
-                    <td>
-                        <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed" ref="trends"/>
-                    </td>
-                </tr>
-            </table>
+            <div class="weather-forecast__trends">
+                <strong>Temperature</strong>
+                <strong>Precipitation</strong>
+                <sparkline-chart :data="hourly" :options="trendsOptions.temperature"/>
+                <sparkline-chart :data="hourly" :options="trendsOptions.precipitation"/>
+                <strong>UV Index</strong>
+                <strong>Wind Speed</strong>
+                <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex"/>
+                <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed"/>
+            </div>
         </section>
         <section class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
             <h2 class="weather-forecast__section-title">Radar</h2>
@@ -226,6 +200,10 @@ export default Vue.extend({
 
     methods: {
 
+        getTemplateKey(id, area) {
+            return `${id}-${area}`;
+        },
+
         formatDay(date) {
             return dateFormat(date, 'EEEE, d MMM');
         },
@@ -275,22 +253,21 @@ export default Vue.extend({
     .weather-forecast__days,
     .weather-forecast__observations,
     .weather-forecast__trends {
-        width: 100%;
-
-        & tr {
-
-            & td:first-child {
-                padding-left: 0;
-            }
-
-            & td:last-child {
-                padding-right: 0;
-            }
-        }
+        display: grid;
+        grid-gap: var(--spacing__small);
+        align-items: center;
     }
 
-    .weather-forecast__day-label {
-        width: 100%;
+    .weather-forecast__observations {
+        grid-template-columns: auto 1fr auto 1fr;
+    }
+
+    .weather-forecast__days {
+        grid-template-columns: auto 1fr auto auto auto;
+    }
+
+    .weather-forecast__trends {
+        grid-template-columns: 1fr 1fr;
     }
 
     .weather-forecast__day-rain {
@@ -301,10 +278,6 @@ export default Vue.extend({
     .weather-forecast__day-max {
         text-align: center;
         color: var(--font__colour--meta);
-    }
-
-    .weather-forecast__observation-details {
-        width: 50%;
     }
 
     .weather-forecast__attribution {

@@ -1,10 +1,10 @@
-import GETTERS from './getters';
-import MUTATIONS from './mutations';
-import ACTIONS from './actions';
-import SETTINGS from '../constants/settings';
+import GLOBAL from '../constants/global';
 import LOCATIONS from '../constants/locations';
 import STORAGE_KEYS from '../constants/storage-keys';
 import ICON from '../constants/icon';
+import GETTERS from './getters';
+import MUTATIONS from './mutations';
+import ACTIONS from './actions';
 
 import {
     getLocation
@@ -15,46 +15,24 @@ import {
 } from '../services/weather';
 
 import {
+    getSettings,
+    getData,
+    storeData
+} from './helpers/storage';
+
+import {
+    getPosition
+} from './helpers/location';
+
+import {
+    mapDayData,
+    mapHourData
+} from './helpers/data';
+
+import {
     objectMerge,
     dateFromUnix
 } from '@ocula/utilities';
-
-function getSettings() {
-    let settings = localStorage.getItem(STORAGE_KEYS.settings);
-
-    if (!settings) {
-        return SETTINGS;
-    }
-
-    settings = JSON.parse(settings);
-
-    return objectMerge(SETTINGS, settings);
-}
-
-function getData() {
-    let data = localStorage.getItem(STORAGE_KEYS.data);
-
-    if (data) {
-        return JSON.parse(data);
-    }
-
-    return {
-        location: null,
-        forecast: {}
-    };
-}
-
-function storeData(state) {
-    const {
-        location,
-        forecast
-    } = state;
-
-    localStorage.setItem(STORAGE_KEYS.data, JSON.stringify({
-        location,
-        forecast
-    }));
-}
 
 function getState() {
     const settings = getSettings();
@@ -73,65 +51,6 @@ function getState() {
         updateReady: false,
         lastUpdated: null
     };
-}
-
-async function getCurrentPosition() {
-    const position: Position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-            maximumAge: 0,
-            enableHighAccuracy: true
-        });
-    });
-
-    if (position) {
-        return position.coords;
-    }
-
-    return {
-        latitude: 0,
-        longitude: 0,
-    };
-}
-
-function mapDayData(day) {
-    let {
-        time,
-        icon,
-        temperatureMin,
-        temperatureMax,
-        humidity,
-        precipProbability,
-        precipType,
-        pressure,
-        summary,
-        sunriseTime,
-        sunsetTime,
-        uvIndex,
-        windSpeed
-    } = day;
-
-    time = dateFromUnix(time);
-    icon = ICON[icon];
-    temperatureMin = Math.round(temperatureMin);
-    temperatureMax = Math.round(temperatureMax);
-    sunriseTime = dateFromUnix(sunriseTime);
-    sunsetTime = dateFromUnix(sunsetTime);
-
-    return {
-        time,
-        icon,
-        temperatureMin,
-        temperatureMax,
-        humidity,
-        precipProbability,
-        precipType,
-        pressure,
-        summary,
-        sunriseTime,
-        sunsetTime,
-        uvIndex,
-        windSpeed
-    }; 
 }
 
 export default {
@@ -181,31 +100,7 @@ export default {
                 return;
             }
 
-            return hourly.data.map(hour => {
-                let {
-                    time,
-                    icon,
-                    humidity,
-                    precipProbability,
-                    temperature,
-                    uvIndex,
-                    windSpeed
-                } = hour;
-
-                time = dateFromUnix(time);
-                icon = ICON[icon];
-                temperature = Math.round(temperature);
-
-                return {
-                    time,
-                    icon,
-                    humidity,
-                    precipProbability,
-                    temperature,
-                    uvIndex,
-                    windSpeed 
-                };
-            });
+            return hourly.data.map(mapHourData);
         }
 
     },
@@ -251,6 +146,12 @@ export default {
     actions: {
 
         async [ACTIONS.loadLocation]({ state, commit }) {
+            const lastUpdated = state.lastUpdated;
+
+            if (lastUpdated && Date.now() - lastUpdated < GLOBAL.updateThreshold) {
+                return;
+            }
+
             const {
                 location
             } = state.settings;
@@ -262,7 +163,7 @@ export default {
                 ({
                     latitude,
                     longitude
-                } = await getCurrentPosition());
+                } = await getPosition());
             } else {
                 ({
                     latitude,
