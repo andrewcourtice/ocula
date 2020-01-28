@@ -6,10 +6,18 @@
                 <icon name="navigation" class="margin__right--small"/>
                 <div class="text--truncate" self="size-x1">Current Location</div>
             </div>
-            <div class="menu-item" layout="row center-left" v-for="location in locations" :key="location.id" @click="setLocation(location)">
-                <icon name="map" class="margin__right--small"/>
-                <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
-            </div>
+            <template v-if="query">
+                <div class="menu-item" layout="row center-left" v-for="location in locations" :key="location.id" @click="setLocation(location, true)">
+                    <icon name="map" class="margin__right--small"/>
+                    <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
+                </div>
+            </template>
+            <template v-else>
+                <div class="menu-item" layout="row center-left" v-for="location in savedLocations" :key="location.id" @click="setLocation(location)">
+                    <icon name="star" class="margin__right--small"/>
+                    <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
+                </div>
+            </template>
         </div>
     </modal>
 </template>
@@ -53,6 +61,10 @@ export default Vue.extend({
                     this.searchLocations(value);
                 }
             }
+        },
+
+        savedLocations() {
+            return settingsController.locations;
         }
 
     },
@@ -75,8 +87,13 @@ export default Vue.extend({
             this.close();
         },
 
-        setLocation(location) {
+        setLocation(location, addLocation: boolean) {
             settingsController.location = location;
+
+            if (addLocation) {
+                settingsController.addLocation(location);
+            }
+
             this.close();
         },
 

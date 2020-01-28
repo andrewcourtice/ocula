@@ -25,16 +25,20 @@ import {
 } from './helpers/location';
 
 import {
+    mapCurrentData,
     mapDayData,
     mapHourData
 } from './helpers/data';
 
 import {
-    objectMerge,
-    dateFromUnix
+    objectMerge
 } from '@ocula/utilities';
 
-function getState() {
+import {
+    IState
+} from '../interfaces/state';
+
+function getState(): IState {
     const settings = getSettings();
 
     const {
@@ -60,30 +64,15 @@ export default {
 
     getters: {
 
-        [GETTERS.current](state) {
+        [GETTERS.current](state: IState) {
             const current = state.forecast.currently;
 
-            if (!current) {
-                return;
+            if (current) {
+                return mapCurrentData(current);
             }
-
-            let {
-                icon,
-                summary,
-                temperature
-            } = current;
-
-            icon = ICON[icon];
-            temperature = Math.round(temperature);
-
-            return {
-                icon,
-                summary,
-                temperature
-            };
         },
 
-        [GETTERS.daily](state) {
+        [GETTERS.daily](state: IState) {
             const daily = state.forecast.daily;
 
             if (!daily || !daily.data) {
@@ -93,7 +82,7 @@ export default {
             return daily.data.map(mapDayData);  
         },
 
-        [GETTERS.hourly](state) {
+        [GETTERS.hourly](state: IState) {
             const hourly = state.forecast.hourly;
 
             if (!hourly || !hourly.data) {

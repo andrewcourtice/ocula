@@ -10,16 +10,28 @@ import {
     searchLocations
 } from '../services/location';
 
-export class SettingsController extends Controller {
+import {
+    ILocation
+} from '../interfaces/location';
+
+import {
+    IState
+} from '../interfaces/state';
+
+export class SettingsController extends Controller<IState> {
 
     get location() {
         return this.state.settings.location;
     }
 
-    set location(value) {
+    get locations() {
+        return this.state.settings.locations;
+    }
+
+    set location(location: ILocation | string) {
         this.commit(MUTATIONS.clearLastUpdated);
         this.commit(MUTATIONS.updateSettings, {
-            location: value
+            location
         });
 
         eventEmitter.emit(EVENTS.weather.locationChanged);
@@ -29,13 +41,32 @@ export class SettingsController extends Controller {
         this.location = LOCATIONS.current;
     }
 
+    addLocation(location: ILocation): void {
+        const locations = this.locations;
+        const isAlreadyAdded = locations.some(({ id }) => location.id === id);
+
+        if (!isAlreadyAdded) {
+            this.commit(MUTATIONS.updateSettings, {
+                locations: [].concat(locations, location)
+            });
+        }
+    }
+
+    removeLocation(location: ILocation): void {
+        const locations = this.locations.filter(({ id }) => id !== location.id);
+
+        this.commit(MUTATIONS.updateSettings, {
+            locations
+        });
+    }
+
     async updateLocation() {
         const location = await new Promise((resolve, reject) => {
             eventEmitter.emit(EVENTS.modals.location, resolve, reject);
         });
     }
 
-    async searchLocations(query: string) {
+    async searchLocations(query: string): Promise<ILocation[]> {
         return searchLocations(query);
     }
 

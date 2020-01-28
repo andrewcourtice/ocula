@@ -4,21 +4,30 @@ import {
     dateFromUnix
 } from "@ocula/utilities";
 
+export function mapCurrentData(current) {
+    let {
+        icon,
+        temperature,
+    } = current;
+
+    icon = ICON[icon];
+    temperature = Math.round(temperature);
+
+    return {
+        ...current,
+        icon,
+        temperature
+    };
+}
+
 export function mapDayData(day) {
     let {
         time,
         icon,
         temperatureMin,
         temperatureMax,
-        humidity,
-        precipProbability,
-        precipType,
-        pressure,
-        summary,
         sunriseTime,
-        sunsetTime,
-        uvIndex,
-        windSpeed
+        sunsetTime
     } = day;
 
     time = dateFromUnix(time);
@@ -29,19 +38,13 @@ export function mapDayData(day) {
     sunsetTime = dateFromUnix(sunsetTime);
 
     return {
+        ...day,
         time,
         icon,
         temperatureMin,
         temperatureMax,
-        humidity,
-        precipProbability,
-        precipType,
-        pressure,
-        summary,
         sunriseTime,
-        sunsetTime,
-        uvIndex,
-        windSpeed
+        sunsetTime
     }; 
 }
 
@@ -49,11 +52,7 @@ export function mapHourData(hour) {
     let {
         time,
         icon,
-        humidity,
-        precipProbability,
-        temperature,
-        uvIndex,
-        windSpeed
+        temperature
     } = hour;
 
     time = dateFromUnix(time);
@@ -61,12 +60,9 @@ export function mapHourData(hour) {
     temperature = Math.round(temperature);
 
     return {
+        ...hour,
         time,
         icon,
-        humidity,
-        precipProbability,
-        temperature,
-        uvIndex,
-        windSpeed 
+        temperature
     };    
 }

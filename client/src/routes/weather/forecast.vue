@@ -46,20 +46,22 @@
                     <strong>Temp Max</strong>
                     <div>{{ today.temperatureMax }}&deg;C</div>
                 </div>
+
                 <div class="weather-forecast__observation-icon">
                     <icon name="umbrella"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Precipitation</strong>
-                    <div>{{ getPrecipitationSummary(today.precipProbability, today.precipType) }}</div>
+                    <div>{{ getPrecipitationSummary(current.precipProbability, current.precipType) }}</div>
                 </div>
                 <div class="weather-forecast__observation-icon">
                     <icon name="droplet"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Humidity</strong>
-                    <div>{{ formatPercentage(today.humidity) }}</div>
+                    <div>{{ formatPercentage(current.humidity) }}</div>
                 </div>
+
                 <div class="weather-forecast__observation-icon">
                     <icon name="sunrise"/>
                 </div>
@@ -73,6 +75,21 @@
                 <div class="weather-forecast__observation-details">
                     <strong>Sunset</strong>
                     <div>{{ formatTime(today.sunsetTime) }}</div>
+                </div>
+
+                <div class="weather-forecast__observation-icon">
+                    <icon name="wind"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Wind Speed</strong>
+                    <div>{{ current.windSpeed }}km/h</div>
+                </div>
+                <div class="weather-forecast__observation-icon">
+                    <icon name="compass"/>
+                </div>
+                <div class="weather-forecast__observation-details">
+                    <strong>Wind Direction</strong>
+                    <div>{{ current.windBearing }}&deg;</div>
                 </div>
             </div>
         </section>

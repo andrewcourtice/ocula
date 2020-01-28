@@ -1,4 +1,8 @@
-export default interface ISettings {
-    locationId?: number | string,
-    locations: object[]
+import {
+    ILocation
+} from './location';
+
+export interface ISettings {
+    location?: ILocation | string,
+    locations?: ILocation[] 
 };

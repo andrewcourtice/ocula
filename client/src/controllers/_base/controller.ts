@@ -6,7 +6,7 @@ function path(...segments: Array<string | undefined>): string {
     return segments.filter(segment => !!segment).join('/');
 }
 
-export default class Controller {
+export default class Controller<T = any> {
 
     private module?: string;
 
@@ -14,7 +14,7 @@ export default class Controller {
         this.module = module;
     }
 
-    get state() {
+    get state(): T {
         return this.module ? store.state[this.module] : store.state;
     }
 
