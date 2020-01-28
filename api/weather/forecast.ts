@@ -17,7 +17,7 @@ export default async function (request: NowRequest, response: NowResponse) {
     const apiKey = process.env.DARKSKY_API_KEY;
 
     const responses = await Promise.all([
-        fetch(`https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude}?exclude=minutely,flags&units=${units}`),
+        fetch(`https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude}?exclude=minutely&units=${units}`),
         fetch('https://tilecache.rainviewer.com/api/maps.json')
     ]);
 

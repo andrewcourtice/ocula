@@ -1,5 +1,7 @@
 export default {
     auto: 'auto',
-    metric: 'si',
-    imperial: 'us'
+    si: 'si',
+    us: 'us',
+    ca: 'ca',
+    uk2: 'uk2'
 };
