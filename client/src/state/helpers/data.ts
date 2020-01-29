@@ -1,68 +1,19 @@
-import ICON from '../../constants/icon';
+export function formatDataPoint(dataPoint, unitFormats) {
+    const formatted = Object.keys(dataPoint).reduce((output, key) => {
+        let value = dataPoint[key];
+        const format = unitFormats[key];
 
-import {
-    dateFromUnix
-} from "@ocula/utilities";
+        if (format) {
+            value = typeof format === 'string' ? `${value} ${format}` : format(value) || value; 
+        }
 
-export function mapCurrentData(current) {
-    let {
-        icon,
-        temperature,
-    } = current;
+        output[key] = value;
 
-    icon = ICON[icon];
-    temperature = Math.round(temperature);
+        return output;
+    }, {});
 
     return {
-        ...current,
-        icon,
-        temperature
+        formatted,
+        raw: dataPoint
     };
-}
-
-export function mapDayData(day) {
-    let {
-        time,
-        icon,
-        temperatureMin,
-        temperatureMax,
-        sunriseTime,
-        sunsetTime
-    } = day;
-
-    time = dateFromUnix(time);
-    icon = ICON[icon];
-    temperatureMin = Math.round(temperatureMin);
-    temperatureMax = Math.round(temperatureMax);
-    sunriseTime = dateFromUnix(sunriseTime);
-    sunsetTime = dateFromUnix(sunsetTime);
-
-    return {
-        ...day,
-        time,
-        icon,
-        temperatureMin,
-        temperatureMax,
-        sunriseTime,
-        sunsetTime
-    }; 
-}
-
-export function mapHourData(hour) {
-    let {
-        time,
-        icon,
-        temperature
-    } = hour;
-
-    time = dateFromUnix(time);
-    icon = ICON[icon];
-    temperature = Math.round(temperature);
-
-    return {
-        ...hour,
-        time,
-        icon,
-        temperature
-    };    
 }

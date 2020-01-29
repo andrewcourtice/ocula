@@ -1,50 +1,50 @@
 <template>
     <div class="weather-forecast">
         <header class="weather-forecast__header" v-if="current">
-            <h1 class="weather-forecast__temperature">{{ current.temperature }}&deg;C</h1>
+            <h1 class="weather-forecast__temperature">{{ current.formatted.temperature }}</h1>
             <div class="margin__top--small" layout="row center-left">
-                <icon :name="current.icon"/><span class="margin__left--small">{{ current.summary }}</span>
+                <icon :name="current.formatted.icon"/><span class="margin__left--small">{{ current.formatted.summary }}</span>
             </div>
         </header>
         <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
             <h2 class="weather-forecast__section-title">Coming Up</h2>
             <div class="weather-forecast__days">
-                <template class="weather-forecast__day" v-for="day in daily">
-                    <div class="weather-forecast__day-icon" :key="getTemplateKey(day.time, 'icon')">
-                        <icon :name="day.icon"/>
+                <template class="weather-forecast__day" v-for="{ raw, formatted } in daily">
+                    <div class="weather-forecast__day-icon" :key="getTemplateKey(raw.time, 'icon')">
+                        <icon :name="formatted.icon"/>
                     </div>
-                    <div class="weather-forecast__day-label text--truncate" :key="getTemplateKey(day.time, 'label')">
-                        <span>{{ formatDay(day.time) }}</span>
+                    <div class="weather-forecast__day-label text--truncate" :key="getTemplateKey(raw.time, 'label')">
+                        <span>{{ formatDay(raw.time) }}</span>
                         <br>
-                        <small class="text--meta">{{ day.summary }}</small>
+                        <small class="text--meta">{{ formatted.summary }}</small>
                     </div>
-                    <div class="weather-forecast__day-rain" :key="getTemplateKey(day.time, 'precip')">
+                    <div class="weather-forecast__day-rain" :key="getTemplateKey(raw.time, 'precip')">
                         <small>
-                            <icon name="umbrella" v-show="day.precipProbability > 0.25"/>
+                            <icon name="umbrella" v-show="raw.precipProbability > 0.25"/>
                         </small>
                     </div>
-                    <div class="weather-forecast__day-min" :key="getTemplateKey(day.time, 'min')">{{ day.temperatureMin }}</div>
-                    <div class="weather-forecast__day-max" :key="getTemplateKey(day.time, 'max')">{{ day.temperatureMax }}</div>
+                    <div class="weather-forecast__day-min" :key="getTemplateKey(raw.time, 'min')">{{ Math.round(raw.temperatureMin) }}</div>
+                    <div class="weather-forecast__day-max" :key="getTemplateKey(raw.time, 'max')">{{ Math.round(raw.temperatureMax) }}</div>
                 </template>
             </div>
         </section>
-        <section class="weather-forecast__section">
+        <section class="weather-forecast__section" v-if="today">
             <h2 class="weather-forecast__section-title">Observations</h2>
-            <p>{{ today.summary }}</p>
+            <p>{{ today.formatted.summary }}</p>
             <div class="weather-forecast__observations">
                 <div class="weather-forecast__observation-icon">
                     <icon name="thermometer"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Temp Min</strong>
-                    <div>{{ today.temperatureMin }}&deg;C</div>
+                    <div>{{ today.formatted.temperatureMin }}</div>
                 </div>
                 <div class="weather-forecast__observation-icon">
                     <icon name="thermometer"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Temp Max</strong>
-                    <div>{{ today.temperatureMax }}&deg;C</div>
+                    <div>{{ today.formatted.temperatureMax }}</div>
                 </div>
 
                 <div class="weather-forecast__observation-icon">
@@ -52,14 +52,15 @@
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Precipitation</strong>
-                    <div>{{ getPrecipitationSummary(current.precipProbability, current.precipType) }}</div>
+                    <div v-if="current.raw.precipProbability > 0">{{ current.formatted.precipProbability }} chance of {{ current.formatted.precipType }}</div>
+                    <div v-else>n/a</div>
                 </div>
                 <div class="weather-forecast__observation-icon">
                     <icon name="droplet"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Humidity</strong>
-                    <div>{{ formatPercentage(current.humidity) }}</div>
+                    <div>{{ current.formatted.humidity }}</div>
                 </div>
 
                 <div class="weather-forecast__observation-icon">
@@ -67,14 +68,14 @@
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Sunrise</strong>
-                    <div>{{ formatTime(today.sunriseTime) }}</div>
+                    <div>{{ formatTime(today.formatted.sunriseTime) }}</div>
                 </div>
                 <div class="weather-forecast__observation-icon">
                     <icon name="sunset"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Sunset</strong>
-                    <div>{{ formatTime(today.sunsetTime) }}</div>
+                    <div>{{ formatTime(today.formatted.sunsetTime) }}</div>
                 </div>
 
                 <div class="weather-forecast__observation-icon">
@@ -82,14 +83,14 @@
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Wind Speed</strong>
-                    <div>{{ current.windSpeed }}km/h</div>
+                    <div>{{ current.formatted.windSpeed }}</div>
                 </div>
                 <div class="weather-forecast__observation-icon">
                     <icon name="compass"/>
                 </div>
                 <div class="weather-forecast__observation-details">
                     <strong>Wind Direction</strong>
-                    <div>{{ current.windBearing }}&deg;</div>
+                    <div>{{ current.formatted.windBearing }}</div>
                 </div>
             </div>
         </section>
@@ -140,8 +141,7 @@ import weatherController from '../../controllers/weather';
 import settingsController from '../../controllers/settings';
 
 import {
-    dateFormat,
-    dateFromUnix
+    dateFormat
 } from '@ocula/utilities';
 
 export default Vue.extend({
@@ -152,29 +152,29 @@ export default Vue.extend({
         return {
             trendsOptions: {
                 temperature: {
-                    xSelector: hour => hour.time,
-                    ySelector: hour => hour.temperature,
+                    xSelector: ({ raw }) => raw.time,
+                    ySelector: ({ raw }) => raw.temperature,
                     colours: {
                         line: '#FF9900'
                     }
                 },
                 precipitation: {
-                    xSelector: hour => hour.time,
-                    ySelector: hour => hour.precipProbability,
+                    xSelector: ({ raw }) => raw.time,
+                    ySelector: ({ raw }) => raw.precipProbability,
                     colours: {
                         line: '#47B1FA'
                     }
                 },
                 uvIndex: {
-                    xSelector: hour => hour.time,
-                    ySelector: hour => hour.uvIndex,
+                    xSelector: ({ raw }) => raw.time,
+                    ySelector: ({ raw }) => raw.uvIndex,
                     colours: {
                         line: '#FF9900'
                     }
                 },
                 windSpeed: {
-                    xSelector: hour => hour.time,
-                    ySelector: hour => hour.windSpeed,
+                    xSelector: ({ raw }) => raw.time,
+                    ySelector: ({ raw }) => raw.windSpeed,
                     colours: {
                         line: '#47B1FA'
                     }
@@ -227,14 +227,6 @@ export default Vue.extend({
 
         formatTime(date) {
             return dateFormat(date, 'h:mm a');
-        },
-
-        formatPercentage(value) {
-            return `${Math.round(value * 100)}%`;
-        },
-
-        getPrecipitationSummary(probability, type) {
-            return `${this.formatPercentage(probability)} chance of ${type}`;
         }
 
     },

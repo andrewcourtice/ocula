@@ -1,19 +1,17 @@
 <template>
-    <div class="radar"></div>
+    <div class="radar">
+        <loader class="radar__loader" v-if="loading" />
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-
-import mapboxgl from 'mapbox-gl';
 
 const STYLE = {
     light: 'light-v10',
     dark: 'dark-v10',
     streets: 'streets-v10'
 };
-
-mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
 
 export default Vue.extend({
 
@@ -61,6 +59,8 @@ export default Vue.extend({
 
     data() {
         return {
+            loading: true,
+
             map: null,
             index: 0,
             intervalHandle: null
@@ -110,11 +110,27 @@ export default Vue.extend({
                     this.latitude
                 ]
             });
+        },
+
+        async loadMapbox() {
+            this.loading = true;
+
+            try {
+                const mapboxModule = await import(/* webpackChunkName: 'mapbox' */ 'mapbox-gl');
+                const mapboxgl = mapboxModule.default;
+
+                mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
+
+                return mapboxgl;
+            } finally {
+                this.loading = false;
+            }
         }
 
     },
 
-    mounted() {
+    async mounted() {
+        const mapboxgl = await this.loadMapbox();
 
         const map = new mapboxgl.Map({
             container: this.$el,
@@ -197,6 +213,14 @@ export default Vue.extend({
             content: ' ';
             padding-bottom: 100%;
         }
+    }
+
+    .radar__loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
     }
 
 </style>

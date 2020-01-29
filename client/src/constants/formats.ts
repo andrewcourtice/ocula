@@ -1,32 +1,38 @@
+import ICON from './icon';
+
 import {
-    dateFormat
+    dateFromUnix
 } from '@ocula/utilities';
 
 export default {
     distance: {
-        Millimeters: 'mm',
-        Centimetres: 'cm',
-        Kilometres: 'km',
+        millimeters: 'mm',
+        centimetres: 'cm',
+        kilometres: 'km',
         miles: 'mi',
         inches: 'in'
     },
     speed: {
-        MillimetresPerHour: 'mm/h',
-        KilometresPerHour: 'km/h',
-        MetresPerSecond: 'm/s',
-        MilesPerHour: 'mi/h'
+        millimetresPerHour: 'mm/h',
+        kilometresPerHour: 'km/h',
+        metresPerSecond: 'm/s',
+        inchesPerHour: 'mi/h',
+        milesPerHour: 'mi/h'
     },
     temperature: {
-        celcius: '°C',
-        fahrenheit: '°F',
+        celcius: value => `${Math.round(value)}°C`,
+        fahrenheit: value => `${Math.round(value)}°F`,
     },
     pressure: {
-        Hectopascals: 'hPa',
-        Millibars: 'bar'
+        hectopascals: 'hPa',
+        millibars: 'bar'
+    },
+    direction: {
+        bearing: '°'
     },
     general: {
-        percentage: value => `${Math.round(value * 100)}%`,
-        date: value => dateFormat(value, 'EEEE, d MMM'),
-        time: value => dateFormat(value, 'h:mm a')
+        datetime: dateFromUnix,
+        icon: value => ICON[value],
+        percentage: value => `${Math.round(value * 100)}%`
     }
 };

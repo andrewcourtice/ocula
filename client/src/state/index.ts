@@ -1,10 +1,13 @@
 import GLOBAL from '../constants/global';
 import LOCATIONS from '../constants/locations';
 import STORAGE_KEYS from '../constants/storage-keys';
-import ICON from '../constants/icon';
 import GETTERS from './getters';
 import MUTATIONS from './mutations';
 import ACTIONS from './actions';
+
+import UNIT_FORMATS, {
+    DEFAULT_UNIT_FORMAT
+} from '../constants/unit-formats';
 
 import {
     getLocation
@@ -25,9 +28,7 @@ import {
 } from './helpers/location';
 
 import {
-    mapCurrentData,
-    mapDayData,
-    mapHourData
+    formatDataPoint
 } from './helpers/data';
 
 import {
@@ -64,32 +65,49 @@ export default {
 
     getters: {
 
-        [GETTERS.current](state: IState) {
+        [GETTERS.formats](state: IState) {
+            const flags = state.forecast.flags;
+
+            if (!flags || !flags.units || !UNIT_FORMATS[flags.units]) {
+                return DEFAULT_UNIT_FORMAT;
+            }
+
+            return {
+                ...DEFAULT_UNIT_FORMAT,
+                ...UNIT_FORMATS[flags.units]
+            };
+        },
+
+        [GETTERS.current](state: IState, getters) {
             const current = state.forecast.currently;
 
             if (current) {
-                return mapCurrentData(current);
+                return formatDataPoint(current, getters[GETTERS.formats]);
             }
         },
 
-        [GETTERS.daily](state: IState) {
+        [GETTERS.daily](state: IState, getters) {
             const daily = state.forecast.daily;
 
             if (!daily || !daily.data) {
                 return;
             }
 
-            return daily.data.map(mapDayData);  
+            const unitFormats = getters[GETTERS.formats];
+
+            return daily.data.map(day => formatDataPoint(day, unitFormats));  
         },
 
-        [GETTERS.hourly](state: IState) {
+        [GETTERS.hourly](state: IState, getters) {
             const hourly = state.forecast.hourly;
 
             if (!hourly || !hourly.data) {
                 return;
             }
 
-            return hourly.data.map(mapHourData);
+            const unitFormats = getters[GETTERS.formats];
+
+            return hourly.data.map(hour => formatDataPoint(hour, unitFormats));
         }
 
     },
