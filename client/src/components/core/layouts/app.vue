@@ -48,6 +48,10 @@ export default Vue.extend({
 
 <style lang="scss">
 
+    .app-layout {
+        padding: var(--spacing__large);
+    }
+
     .app-layout__menu {
         position: relative;
     }

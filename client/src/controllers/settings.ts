@@ -53,6 +53,7 @@ export class SettingsController extends Controller<IState> {
     }
 
     removeLocation(location: ILocation): void {
+        console.log(location);
         const locations = this.locations.filter(({ id }) => id !== location.id);
 
         this.commit(MUTATIONS.updateSettings, {

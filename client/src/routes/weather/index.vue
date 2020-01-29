@@ -2,7 +2,7 @@
     <app-layout class="weather-layout">
         <template #header>
             <div layout="row center-left" v-if="location" @click="updateLocation">
-                <icon name="map-pin"/><span class="margin__left--x-small">{{ isLoading ? 'Updating...' : location.shortName }}</span>
+                <icon name="map-pin"/><span class="margin__left--small">{{ isLoading ? 'Updating...' : location.shortName }}</span>
             </div>
         </template>
         <div v-if="!settingsLocation">
@@ -63,11 +63,3 @@ export default Vue.extend({
     
 });
 </script>
-
-<style lang="scss">
-
-    .weather-layout {
-        padding: var(--spacing__large);
-    }
-
-</style>

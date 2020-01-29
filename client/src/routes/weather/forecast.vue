@@ -18,11 +18,6 @@
                         <br>
                         <small class="text--meta">{{ formatted.summary }}</small>
                     </div>
-                    <div class="weather-forecast__day-rain" :key="getTemplateKey(raw.time, 'precip')">
-                        <small>
-                            <icon name="umbrella" v-show="raw.precipProbability > 0.25"/>
-                        </small>
-                    </div>
                     <div class="weather-forecast__day-min" :key="getTemplateKey(raw.time, 'min')">{{ Math.round(raw.temperatureMin) }}</div>
                     <div class="weather-forecast__day-max" :key="getTemplateKey(raw.time, 'max')">{{ Math.round(raw.temperatureMax) }}</div>
                 </template>
@@ -272,21 +267,25 @@ export default Vue.extend({
     }
 
     .weather-forecast__days {
-        grid-template-columns: auto 1fr auto auto auto;
+        grid-template-columns: auto 1fr auto auto;
     }
 
     .weather-forecast__trends {
         grid-template-columns: 1fr 1fr;
     }
 
-    .weather-forecast__day-rain {
-        color: #47B1FA;
-    }
-
     .weather-forecast__day-min,
     .weather-forecast__day-max {
         text-align: center;
-        color: var(--font__colour--meta);
+        opacity: 0.75;
+    }
+
+    .weather-forecast__day-min {
+        color: dodgerblue;
+    }
+
+    .weather-forecast__day-max {
+        color: red;
     }
 
     .weather-forecast__attribution {

@@ -1,11 +1,10 @@
 <template>
     <div class="search-box" layout="row center-justify">
-        <div>
-            <icon name="search" class="search-box__icon"/>
-        </div>
+        <icon name="search" class="margin__right--small"/>
         <div self="size-x1">
             <input type="text" class="search-box__input" v-model="content" v-bind="$attrs">
         </div>
+        <loader class="margin__left--small" v-show="loading"/>
     </div>
 </template>
 
@@ -18,6 +17,11 @@ export default Vue.extend({
 
         value: {
             type: null
+        },
+
+        loading: {
+            type: Boolean,
+            default: false
         }
 
     },
@@ -52,10 +56,6 @@ export default Vue.extend({
             padding: 0;
             border: none;
         }
-    }
-
-    .search-box__icon {
-        margin-right: var(--spacing__small);
     }
 
 </style>

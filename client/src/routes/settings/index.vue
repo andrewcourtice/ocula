@@ -1,28 +1,13 @@
 <template>
-    <app-layout>
+    <app-layout class="settings">
         <template #header>
-            <strong style="margin-left: 1rem;">Settings</strong>
+            <div layout="row center-left">
+                <icon name="settings"/><span class="margin__left--small">Settings</span>
+            </div>
         </template>
-        <card>
-            <template #header>
-                <strong>General</strong>
-            </template>
-            <div class="menu">
-                <div class="menu-item">Units</div>
-                <div class="menu-item">Locations</div>
-                <div class="menu-item">Alerts</div>
-            </div>
-        </card>
-        <card style="margin-top: 1rem;">
-            <template #header>
-                <strong>Theme</strong>
-            </template>
-            <div class="menu">
-                <div class="menu-item">Units</div>
-                <div class="menu-item">Locations</div>
-                <div class="menu-item">Alerts</div>
-            </div>
-        </card>
+        <section>
+
+        </section>
     </app-layout>
 </template>
 

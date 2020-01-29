@@ -141,7 +141,10 @@ export default {
         },
 
         [MUTATIONS.updateSettings](state, payload) {
-            const settings = objectMerge(state.settings, payload);
+            const settings = {
+                ...state.settings,
+                ...payload
+            };
 
             localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 

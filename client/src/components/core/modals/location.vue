@@ -1,6 +1,6 @@
 <template>
     <modal class="location-modal" ref="modal">
-        <search-box class="location-modal__search" placeholder="Search for a location..." v-model="search" v-focus />
+        <search-box class="location-modal__search" placeholder="Search for a location..." :loading="loading" v-model="search" v-focus />
         <div class="menu margin__top--small">
             <div class="menu-item" layout="row center-left" @click="setCurrentLocation">
                 <icon name="navigation" class="margin__right--small"/>
@@ -13,9 +13,12 @@
                 </div>
             </template>
             <template v-else>
-                <div class="menu-item" layout="row center-left" v-for="location in savedLocations" :key="location.id" @click="setLocation(location)">
+                <div class="menu-item" layout="row center-justify" v-for="location in savedLocations" :key="location.id" @click="setLocation(location)">
                     <icon name="star" class="margin__right--small"/>
                     <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
+                    <div @click.stop="removeLocation(location)">
+                        <icon name="trash-2" class="margin__left--small"/>
+                    </div>
                 </div>
             </template>
         </div>
@@ -44,7 +47,8 @@ export default Vue.extend({
     data() {
         return {
             query: '',
-            locations: []
+            locations: [],
+            loading: false
         };
     },
 
@@ -57,7 +61,7 @@ export default Vue.extend({
             set(value: string) {
                 this.query = value;
 
-                if (value && value.length > 2) {
+                if (value && value.length > 0) {
                     this.searchLocations(value);
                 }
             }
@@ -97,8 +101,18 @@ export default Vue.extend({
             this.close();
         },
 
+        removeLocation(location) {
+            settingsController.removeLocation(location);
+        },
+
         searchLocations: functionDebounce(async function(query) {
-            this.locations = await settingsController.searchLocations(query);
+            this.loading = true;
+
+            try {
+                this.locations = await settingsController.searchLocations(query);
+            } finally {
+                this.loading = false;
+            }
         }, 500)
 
     }
