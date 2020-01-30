@@ -19,8 +19,7 @@ import {
 
 import {
     getSettings,
-    getData,
-    storeData
+    getData
 } from './helpers/storage';
 
 import {
@@ -32,10 +31,6 @@ import {
 } from './helpers/data';
 
 import {
-    objectMerge
-} from '@ocula/utilities';
-
-import {
     IState
 } from '../interfaces/state';
 
@@ -44,17 +39,18 @@ function getState(): IState {
 
     const {
         location,
-        forecast
+        forecast,
+        lastUpdated
     } = getData();
 
     return {
         settings,
         location,
         forecast,
+        lastUpdated,
 
         loading: false,
         updateReady: false,
-        lastUpdated: null
     };
 }
 
@@ -132,12 +128,24 @@ export default {
 
         [MUTATIONS.setLocation](state, payload) {
             state.location = payload;
-            storeData(state);
         },
 
         [MUTATIONS.setForecast](state, payload) {
             state.forecast = payload;
-            storeData(state);
+        },
+        
+        [MUTATIONS.updateData](state) {
+            const {
+                location,
+                forecast,
+                lastUpdated
+            } = state;
+        
+            localStorage.setItem(STORAGE_KEYS.data, JSON.stringify({
+                location,
+                forecast,
+                lastUpdated
+            }));
         },
 
         [MUTATIONS.updateSettings](state, payload) {
@@ -220,6 +228,7 @@ export default {
                 });
 
                 commit(MUTATIONS.setLastUpdated);
+                commit(MUTATIONS.updateData);
             } finally {
                 commit(MUTATIONS.setLoading, false);
             }

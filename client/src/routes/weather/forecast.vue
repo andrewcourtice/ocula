@@ -14,7 +14,7 @@
                         <icon :name="formatted.icon"/>
                     </div>
                     <div class="weather-forecast__day-label text--truncate" :key="getTemplateKey(raw.time, 'label')">
-                        <span>{{ formatDay(raw.time) }}</span>
+                        <span>{{ formatDay(formatted.time) }}</span>
                         <br>
                         <small class="text--meta">{{ formatted.summary }}</small>
                     </div>

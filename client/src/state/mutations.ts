@@ -5,5 +5,6 @@ export default {
     clearLastUpdated: 'clearLastUpdated',
     setLocation: 'setLocation',
     setForecast: 'setForecast',
-    updateSettings: 'updateSettings'
+    updateSettings: 'updateSettings',
+    updateData: 'updateData'
 };
