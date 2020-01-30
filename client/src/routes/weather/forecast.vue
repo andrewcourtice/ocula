@@ -277,7 +277,7 @@ export default Vue.extend({
     .weather-forecast__day-min,
     .weather-forecast__day-max {
         text-align: center;
-        opacity: 0.75;
+        opacity: 0.5;
     }
 
     .weather-forecast__day-min {

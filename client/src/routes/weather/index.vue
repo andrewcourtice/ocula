@@ -2,7 +2,7 @@
     <app-layout class="weather-layout">
         <template #header>
             <div layout="row center-left" v-if="location" @click="updateLocation">
-                <icon name="map-pin"/><span class="margin__left--small">{{ isLoading ? 'Updating...' : location.shortName }}</span>
+                <icon name="map-pin"/><strong class="margin__left--small">{{ isLoading ? 'Updating...' : location.shortName }}</strong>
             </div>
         </template>
         <div v-if="!settingsLocation">

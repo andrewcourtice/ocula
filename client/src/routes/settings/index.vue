@@ -2,7 +2,7 @@
     <app-layout class="settings">
         <template #header>
             <div layout="row center-left">
-                <icon name="settings"/><span class="margin__left--small">Settings</span>
+                <icon name="settings"/><strong class="margin__left--small">Settings</strong>
             </div>
         </template>
         <section>
