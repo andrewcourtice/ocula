@@ -18,6 +18,10 @@ import {
     IState
 } from '../interfaces/state';
 
+import {
+    ISettings
+} from '../interfaces/settings';
+
 export class SettingsController extends Controller<IState> {
 
     get data() {
@@ -34,11 +38,16 @@ export class SettingsController extends Controller<IState> {
 
     set location(location: ILocation | string) {
         this.commit(MUTATIONS.clearLastUpdated);
-        this.commit(MUTATIONS.updateSettings, {
+        
+        this.updateSettings({
             location
         });
 
         eventEmitter.emit(EVENTS.weather.locationChanged);
+    }
+
+    updateSettings(settings: Partial<ISettings>): void {
+        this.commit(MUTATIONS.updateSettings, settings);
     }
 
     setCurrentLocation() {

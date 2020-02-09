@@ -5,12 +5,21 @@
                 <icon name="settings"/><strong class="margin__left--small">Settings</strong>
             </div>
         </template>
-        <section>
-            <div>{{ settings.units }}</div>
+        <block title="Units" class="margin__top--large">
             <select v-model="settings.units" name="units" id="units">
                 <option v-for="(value, key) in units" :key="key" :value="key">{{ value }}</option>
             </select>
-        </section>
+        </block>
+        <block title="Locations">
+            <div class="menu">
+                <div class="menu-item" v-for="location in settings.locations" :key="location.id" layout="row center-justify">
+                    <div>{{ location.shortName }}</div>
+                    <div @click.stop="removeLocation(location)">
+                        <icon name="trash-2" class="margin__left--small"/>
+                    </div>
+                </div>
+            </div>
+        </block>
     </app-layout>
 </template>
 
@@ -40,6 +49,25 @@ export default Vue.extend({
             units: UNIT_MAP,
             settings: objectCloneLazy(settingsController.data)
         };
+    },
+
+    methods: {
+
+        removeLocation(location) {
+            settingsController.removeLocation(location);
+        }
+
+    },
+
+    watch: {
+
+        settings: {
+            deep: true,
+            handler(value) {
+                settingsController.updateSettings(value);
+            }
+        }
+
     },
     
     components: {

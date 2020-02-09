@@ -5,13 +5,13 @@
             <h1 class="options-sidebar__branding-title">Ocula</h1>
         </div>
         <div class="menu">
-            <router-link to="/" class="link">
+            <router-link to="/" class="link" @click.native="close">
                 <div class="menu-item" layout="row center-left">
                     <icon name="cloud-drizzle" class="margin__right--small"></icon>
                     <strong>Weather</strong>
                 </div>            
             </router-link>
-            <router-link to="/settings" class="link">
+            <router-link to="/settings" class="link" @click.native="close">
                 <div class="menu-item" layout="row center-left">
                     <icon name="settings" class="margin__right--small"></icon>
                     <strong>Settings</strong>

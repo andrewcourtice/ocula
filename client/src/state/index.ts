@@ -200,13 +200,17 @@ export default {
             return response;
         },
 
-        async [ACTIONS.loadForecast]({ commit }, payload) {
+        async [ACTIONS.loadForecast]({ state, commit }, payload) {
             const {
                 latitude,
                 longitude
             } = payload;
 
-            const forecast = await getForecast(latitude, longitude);
+            const {
+                units
+            } = state.settings;
+
+            const forecast = await getForecast(latitude, longitude, units);
 
             commit(MUTATIONS.setForecast, forecast);
 

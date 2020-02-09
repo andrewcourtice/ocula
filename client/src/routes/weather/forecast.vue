@@ -6,8 +6,7 @@
                 <icon :name="current.formatted.icon"/><span class="margin__left--small">{{ current.formatted.summary }}</span>
             </div>
         </header>
-        <section class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
-            <h2 class="weather-forecast__section-title">Coming Up</h2>
+        <block title="Coming Up" class="weather-forecast__section weather-forecast__section--daily" v-if="daily">
             <div class="weather-forecast__days">
                 <template class="weather-forecast__day" v-for="{ raw, formatted } in daily">
                     <div class="weather-forecast__day-icon" :key="getTemplateKey(raw.time, 'icon')">
@@ -22,9 +21,8 @@
                     <div class="weather-forecast__day-max" :key="getTemplateKey(raw.time, 'max')">{{ Math.round(raw.temperatureMax) }}</div>
                 </template>
             </div>
-        </section>
-        <section class="weather-forecast__section" v-if="today">
-            <h2 class="weather-forecast__section-title">Observations</h2>
+        </block>
+        <block title="Observations" class="weather-forecast__section" v-if="today">
             <p>{{ today.formatted.summary }}</p>
             <div class="weather-forecast__observations">
                 <div class="weather-forecast__observation-icon">
@@ -88,9 +86,8 @@
                     <div>{{ current.formatted.windBearing }}</div>
                 </div>
             </div>
-        </section>
-        <section class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
-            <h2 class="weather-forecast__section-title">Trends</h2>
+        </block>
+        <block title="Trends" class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
             <div class="weather-forecast__trends">
                 <strong>Temperature</strong>
                 <strong>Precipitation</strong>
@@ -101,9 +98,8 @@
                 <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex"/>
                 <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed"/>
             </div>
-        </section>
-        <section class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
-            <h2 class="weather-forecast__section-title">Radar</h2>
+        </block>
+        <block title="Radar" class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
             <router-link to="/weather/radar">
                 <radar class="weather-forecast__radar"
                     :latitude="location.latitude" 
@@ -112,7 +108,7 @@
                     carousel-enabled>
                 </radar>
             </router-link>
-        </section>
+        </block>
         <footer class="weather-forecast__footer text--centre">
             <img class="weather-forecast__attribution" src="https://darksky.net/dev/img/attribution/poweredby.png" alt="Powered by Dark Sky">
             <p v-if="lastUpdated">
@@ -236,18 +232,12 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .weather-forecast__section,
-    .weather-forecast__footer {
-        margin-top: var(--spacing__large);
+    .weather-forecast__header {
+        margin-bottom: var(--spacing__large);
     }
 
-    .weather-forecast__section-title {
-        margin-bottom: var(--spacing__small);
-        color: var(--font__colour--meta);
-        font-size: var(--font__size);
-        font-weight: var(--font__weight--medium);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+    .weather-forecast__footer {
+        margin-top: var(--spacing__large);
     }
 
     .weather-forecast__temperature {
