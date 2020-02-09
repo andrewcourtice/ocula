@@ -20,12 +20,16 @@ import {
 
 export class SettingsController extends Controller<IState> {
 
+    get data() {
+        return this.state.settings;
+    }
+
     get location() {
-        return this.state.settings.location;
+        return this.data.location;
     }
 
     get locations() {
-        return this.state.settings.locations;
+        return this.data.locations;
     }
 
     set location(location: ILocation | string) {

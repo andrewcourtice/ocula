@@ -99,6 +99,7 @@ export default {
                 display: 'standalone',
                 background: '#FFFFFF',
                 theme_color: '#FFFFFF',
+                appleStatusBarStyle: 'default',
                 start_url: '/?source=pwa',
                 scope: '/'
             }
