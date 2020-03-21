@@ -88,24 +88,21 @@
             </div>
         </block>
         <block title="Trends" class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
-            <div class="weather-forecast__trends">
-                <strong>Temperature</strong>
-                <strong>Precipitation</strong>
-                <sparkline-chart :data="hourly" :options="trendsOptions.temperature"/>
-                <sparkline-chart :data="hourly" :options="trendsOptions.precipitation"/>
-                <strong>UV Index</strong>
-                <strong>Wind Speed</strong>
-                <sparkline-chart :data="hourly" :options="trendsOptions.uvIndex"/>
-                <sparkline-chart :data="hourly" :options="trendsOptions.windSpeed"/>
-            </div>
+            <template #header>
+                <div layout="row center-right">
+                    <div class="margin__left--x-small" v-for="(value, key) in trendOptions" :key="key" @click="trendType = key">
+                        <icon :name="value.icon"/>
+                    </div>
+                </div>
+            </template>
+            <trend-chart :type="trendType" :data="hourly"/>
         </block>
         <block title="Radar" class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
             <router-link to="/weather/radar">
                 <radar class="weather-forecast__radar"
                     :latitude="location.latitude" 
                     :longitude="location.longitude"
-                    :timestamps="radar.timestamps"
-                    carousel-enabled>
+                    :timestamps="radar.timestamps">
                 </radar>
             </router-link>
         </block>
@@ -120,11 +117,12 @@
 
 <script lang="ts">
 import ICON from '../../constants/icon';
+import TRENDS from '../../constants/trends';
 
 import Vue from 'vue';
 
+import TrendChart from '../../components/weather/core/trend-chart.vue';
 import Radar from '../../components/weather/core/radar.vue';
-import SparklineChart from '../../components/core/charts/sparkline.vue';
 
 import refreshable from './_base/refreshable';
 
@@ -132,8 +130,25 @@ import weatherController from '../../controllers/weather';
 import settingsController from '../../controllers/settings';
 
 import {
-    dateFormat
+    dateFromUnix,
+    dateFormat,
+    objectMerge
 } from '@ocula/utilities';
+
+const TREND_OPTIONS = {
+    [TRENDS.temperature]: {
+        icon: 'thermometer'
+    },
+    [TRENDS.rainfall]: {
+        icon: 'umbrella'
+    },
+    [TRENDS.uv]: {
+        icon: 'sun'
+    },
+    [TRENDS.wind]: {
+        icon: 'wind'
+    }
+};
 
 export default Vue.extend({
 
@@ -141,36 +156,8 @@ export default Vue.extend({
 
     data() {
         return {
-            trendsOptions: {
-                temperature: {
-                    xSelector: ({ raw }) => raw.time,
-                    ySelector: ({ raw }) => raw.temperature,
-                    colours: {
-                        line: '#FF9900'
-                    }
-                },
-                precipitation: {
-                    xSelector: ({ raw }) => raw.time,
-                    ySelector: ({ raw }) => raw.precipProbability,
-                    colours: {
-                        line: '#47B1FA'
-                    }
-                },
-                uvIndex: {
-                    xSelector: ({ raw }) => raw.time,
-                    ySelector: ({ raw }) => raw.uvIndex,
-                    colours: {
-                        line: '#FF9900'
-                    }
-                },
-                windSpeed: {
-                    xSelector: ({ raw }) => raw.time,
-                    ySelector: ({ raw }) => raw.windSpeed,
-                    colours: {
-                        line: '#47B1FA'
-                    }
-                }
-            }
+            trendOptions: TREND_OPTIONS,
+            trendType: TRENDS.temperature
         }
     },
 
@@ -223,8 +210,8 @@ export default Vue.extend({
     },
 
     components: {
-        Radar,
-        SparklineChart
+        TrendChart,
+        Radar
     }
 
 });

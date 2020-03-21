@@ -61,7 +61,10 @@ export default function chart(Chart) {
             }
 
             if (this.autoUpdate) {
-                this.updateWatch = this.$watch('data', this.render);
+                const dataWatcher = this.$watch('data', this.render);
+                const optionsWatcher = this.$watch('options', this.render);
+
+                this.updateWatch = () => dataWatcher() && optionsWatcher();
             }
         },
 

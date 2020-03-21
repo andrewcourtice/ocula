@@ -1,14 +1,15 @@
+import SCALE from '../constants/scale';
+
 import Chart from './_base/chart';
+
+import {
+    getScale
+} from '../scales/index';
 
 import * as d3 from '../d3/index';
 
-interface ISplineItem {
-    label: string,
-    value: number
-};
-
-interface ISplinePoint extends ISplineItem {
-    hidden?: boolean,
+interface ISplinePoint {
+    value: number,
     x: number,
     y0: number,
     y1: number
@@ -27,52 +28,46 @@ const areaGenerator = d3.area<ISplinePoint>()
     .y1(data => data.y1)
     .curve(d3.curveCatmullRom.alpha(1));
 
-export default class SplineChart extends Chart {
-
-    private gradientId: string;
-    private gradient: d3.Selection<SVGLinearGradientElement, unknown, null, undefined>;
-    private gradientStop1: d3.Selection<SVGStopElement, unknown, null, undefined>;
-    private gradientStop2: d3.Selection<SVGStopElement, unknown, null, undefined>;
-    private gradientStop3: d3.Selection<SVGStopElement, unknown, null, undefined>;
+export default class Spline extends Chart {
 
     private lineGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
     private markerGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
-    private gridGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
+    private axisGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
+    private xAxis: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
+    private yAxis: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
 
     constructor(element: Element) {
         super(element);
 
-        this.gridGroup = this.canvas.append('g');
         this.lineGroup = this.canvas.append('g');
         this.markerGroup = this.canvas.append('g');
-
-        this.gradientId = `chart-${this.id}-gradient`;
-
-        this.gradient = this.svg.append('defs')
-            .append('linearGradient')
-            .attr('id', this.gradientId)
-            .attr('x1', '0%')
-            .attr('x2', '0%')
-            .attr('y1', '0%')
-            .attr('y2', '100%');
-
-        this.gradientStop1 = this.gradient.append('stop')
-            .attr('offset', '0%')
-            .style('stop-opacity', 1);
-
-        this.gradientStop2 = this.gradient.append('stop')
-            .attr('offset', '35%')
-            .style('stop-opacity', 1);
-
-        this.gradientStop3 = this.gradient.append('stop')
-            .attr('offset', '90%')
-            .style('stop-opacity', 1);
+        this.axisGroup = this.canvas.append('g');
+        this.xAxis = this.axisGroup.append('g');
+        this.yAxis = this.axisGroup.append('g');
     }
 
     protected get defaultOptions() {
         return {
             ...super.defaultOptions,
 
+            scales: {
+                x: {
+                    type: SCALE.point,
+                    value: item => item.x,
+                    format: value => value
+                },
+                y: {
+                    type: SCALE.linear,
+                    value: item => item.y,
+                    format: value => value
+                }
+            },
+            padding: {
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0
+            },
             classes: {
                 svg: 'spline-chart__svg',
                 canvas: 'spline-chart__canvas',
@@ -85,12 +80,9 @@ export default class SplineChart extends Chart {
             colours: {
                 line: '#000000',
                 marker: '#000000',
-                label: '#AAAAAA',
-                gradient: {
-                    stop1: '#000000',
-                    stop2: '#888888',
-                    stop3: '#EEEEEE',
-                }
+                axis: '#000000',
+                tick: '#000000',
+                label: '#000000'
             }
         };
     }
@@ -100,222 +92,197 @@ export default class SplineChart extends Chart {
 
         const {
             classes,
-            colours
+            padding
         } = this.options;
 
         this.lineGroup.classed(classes.lineGroup, true);
         this.markerGroup.classed(classes.markerGroup, true);
 
-        this.gradientStop1.style('stop-color', colours.gradient.stop1);
-        this.gradientStop2.style('stop-color', colours.gradient.stop2);
-        this.gradientStop3.style('stop-color', colours.gradient.stop3);
+        this.xAxis.attr('transform', `translate(0, ${padding.top + this.height - 1})`);
+    }
+
+    protected reset() {
+        this.lineGroup.selectAll('*').remove();
+        this.markerGroup.selectAll('*').remove();
     }
 
     private async enter() {
         const {
             classes,
-            colours
+            colours,
+            animation
         } = this.options;
 
         const area = this.lineGroup.append('path')
             .classed(classes.area, true)
-            .style('fill', `url(#${this.gradientId})`)
-            .style('fill-opacity', 0.75)
+            .attr('fill', colours.line)
+            .attr('fill-opacity', 0.5)
             .style('opacity', 0)
             .attr('d', areaGenerator);
-    
+
         const line = this.lineGroup.append('path')
             .classed(classes.line, true)
-            .attr('stroke', colours.line)
             .attr('stroke-width', 2)
+            .attr('stroke', colours.line)
             .attr('fill', 'none')
             .attr('d', lineGenerator);
 
-        const markerGroups = this.markerGroup.selectAll(`.${classes.marker}`)
-            .data(data => data)
-            .join('g')
-            .filter(data => !data.hidden)
-            .classed(classes.marker, true)
-            .attr('transform', data => `translate(${data.x}, ${data.y1})`)
-            .style('opacity', 0);
-    
-        markerGroups.append('circle')
-            .attr('r', 3)
-            .attr('fill', colours.marker)
-            .attr('stroke', '#FFFFFF')
-            .attr('stroke-width', 2);
-
-        markerGroups.append('text')
-            .text(data => data.value)
-            .attr('dy', -12)
-            .attr('fill', colours.label)
-            .attr('text-anchor', 'middle')
-            .style('font-size', '0.75rem');
-
-        const gridLines = this.gridGroup.selectAll('line')
-            .data(data => data)
-            .join('line')
-            .attr('x1', data => data.x)
-            .attr('x2', data => data.x)
-            .attr('y1', data => data.y1)
-            .attr('y2', data => data.y0)
-            .attr('stroke', colours.line)
-            .attr('stroke-width', 1)
-            .style('opacity', 0);
-    
         const lineLength = line.node().getTotalLength();
-    
+
         line.attr('stroke-dasharray', lineLength)
             .attr('stroke-dashoffset', lineLength);
-        
+    
         await line.transition()
-            .duration(1000)
+            .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('stroke-dashoffset', 0)
             .end();
 
         line.attr('stroke-dasharray', null);
 
-        const areaTransition = area.transition()
-            .duration(1000)
+        return area.transition()
+            .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .style('opacity', 1)
             .end();
-
-        const markerTransition = markerGroups.transition()
-            .duration(1000)
-            .ease(d3.easePolyOut.exponent(4))
-            .style('opacity', 1)
-            .end();
-
-        const gridTransition = gridLines.transition()
-            .duration(1000)
-            .ease(d3.easePolyOut.exponent(4))
-            .style('opacity', 1)
-            .end();
-
-        return Promise.all([
-            areaTransition,
-            markerTransition,
-            gridTransition
-        ]);
     }
-    
+
     private async update() {
         const {
-            classes
+            classes,
+            colours,
+            animation
         } = this.options;
 
-        const timing = 1000;
-
-        const area = this.lineGroup.select(`.${classes.area}`);
         const line = this.lineGroup.select(`.${classes.line}`);
+        const area = this.lineGroup.select(`.${classes.area}`);
 
-        const gridLines = this.gridGroup.selectAll('line')
-            .data(data => data);
-    
-        const markers = this.markerGroup.selectAll(`.${classes.marker}`)
-            .data(data => data);
-
-        markers.select('text')
-            .text(data => data.value)
-    
         const areaTransition = area.transition()
-            .duration(timing)
+            .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('d', areaGenerator)
+            .attr('fill', colours.line)
             .end();
-    
+            
         const lineTransition = line.transition()
-            .duration(timing)
+            .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('d', lineGenerator)
+            .attr('stroke', colours.line)
             .end();
-        
-        const gridTransition = gridLines.transition()
-            .duration(timing)
-            .ease(d3.easePolyOut.exponent(4))
-            .attr('x1', data => data.x)
-            .attr('x2', data => data.x)
-            .attr('y1', data => data.y1)
-            .attr('y2', data => data.y0)
-    
-        const markerTransition = markers.transition()
-            .duration(timing)
-            .ease(d3.easePolyOut.exponent(4))
-            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
-    
+
         return Promise.all([
-            areaTransition,
             lineTransition,
-            markerTransition,
-            gridTransition
+            areaTransition
         ]);
+    }
+
+    private drawAxes() {
+        function styleAxis(group, axis) {
+            group.call(axis);
+
+            if (colours.axis === false) {
+                group.select('.domain').remove();
+            }
+
+            group.select('.domain')
+                .attr('stroke', colours.axis);
+
+            group.selectAll('.tick line')
+                .attr('stroke', colours.tick);
+
+            group.selectAll('.tick text')
+                .attr('fill', colours.label);
+        }
+
+        const {
+            colours
+        } = this.options;
+
+        const {
+            xAxis,
+            yAxis
+        } = this.axisGroup.datum();
+    
+        styleAxis(this.xAxis, xAxis);
+        styleAxis(this.yAxis, yAxis);
     }
 
     private async draw() {
+        this.drawAxes();
+
         const path = this.lineGroup.select('path');
         const action = path.empty() ? this.enter : this.update;
-    
+
         return action.call(this);
     }
 
-    private calculate(data: ISplineItem[]) {
-        const xDomain = data.map(item => item.label);
-    
-        const xScale = d3.scalePoint()
-            .domain(xDomain)
-            .range([0, this.width])
-            .padding(1);
-    
-        const extent = d3.extent(data, item => item.value);
-        const yDomain = [Math.min(extent[0], 0), Math.max(extent[1], 0)];
-        const rangePadding = this.height / 5;
-    
-        const yScale = d3.scaleLinear()
-            .domain(yDomain)
-            .range([this.height - rangePadding, rangePadding]);
-    
-        const points: ISplinePoint[] = data.map(({ label, value }, index) => ({
-            hidden: !!(index % 2),
-            label,
-            value,
-            x: xScale(label) as number,
-            y0: this.height,
-            y1: yScale(value) as number
-        }));
+    private getAxis(axisType, scale, options) {
+        const {
+            ticks,
+            format
+        } = options;
 
-        const firstPoint = points[0];
-        const lastPoint = points[points.length - 1];
+        const axis = axisType(scale)
+            .tickFormat(format);
 
-        points.unshift({
-            hidden: true,
-            label: '',
-            value: 0,
-            x: 0,
-            y0: firstPoint.y0,
-            y1: firstPoint.y1
+        if (ticks && typeof ticks === 'number') {
+            axis.ticks(ticks);
+        }
+
+        if (ticks && typeof ticks === 'function') {
+            axis.tickValues(ticks(scale.domain()));
+        }
+
+        return axis;
+    }
+    
+    private calculate<T>(data: T[]) {
+        const {
+            x: xOptions,
+            y: yOptions
+        } = this.options.scales;
+    
+        const xScale = getScale(data, xOptions, [0, this.width]);
+        const yScale = getScale(data, yOptions, [this.height - 2, 2]);
+
+        const xAxis = this.getAxis(d3.axisTop, xScale, xOptions);
+        const yAxis = this.getAxis(d3.axisRight, yScale, yOptions);
+    
+        const points = data.map(item => {
+            const xValue = xOptions.value(item);
+            const yValue = yOptions.value(item);
+    
+            return {
+                x: xScale(xValue),
+                y0: yScale(0),
+                y1: yScale(yValue)
+            };
         });
 
-        points.push({
-            hidden: true,
-            label: '',
-            value: 0,
-            x: this.width,
-            y0: lastPoint.y0,
-            y1: lastPoint.y1
+        this.axisGroup.datum({
+            xAxis,
+            yAxis
         });
-
+        
         this.lineGroup.datum(points);
-        this.markerGroup.datum(points);
-        this.gridGroup.datum(points);
     }
 
-    public async render(data: ISplineItem[], options) {
-        this.bootstrap(options);
-        this.calculate(data);
+    public async render<T>(data: T[], options) {
+        if (this.rendering) {
+            this.reset();
+        }
+        
+        this.rendering = true;
 
-        return this.draw();
+        this.bootstrap(options);
+        this.calculate<T>(data);
+
+        try {
+            await this.draw();
+        } finally {
+            this.rendering = false;
+        }
     }
 
 }

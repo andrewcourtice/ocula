@@ -1,24 +1,24 @@
 <template>
-    <div class="sparkline-chart"></div>
+    <div class="spline-chart"></div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 import {
-    SparklineChart
+    SplineChart
 } from '@ocula/charts';
 
 import chart from './_base/chart';
 
-export default chart(SparklineChart);
+export default chart(SplineChart);
 </script>
 
 <style lang="scss">
 
-    .sparkline-chart {
+    .spline-chart {
         width: 100%;
-        height: 48px;
+        height: 128px;
     }
 
 </style>

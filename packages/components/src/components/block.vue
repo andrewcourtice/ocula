@@ -1,8 +1,11 @@
 <template>
     <section class="block">
-        <h2 class="block__title">
-            <slot name="title">{{ title }}</slot>
-        </h2>
+        <div class="block__header" layout="row center-justify">
+            <h2 class="block__title">
+                <slot name="title">{{ title }}</slot>
+            </h2>
+            <slot name="header"></slot>
+        </div>
         <slot></slot>
     </section>
 </template>

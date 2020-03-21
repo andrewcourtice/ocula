@@ -46,6 +46,9 @@ export default abstract class Chart {
                 bottom: 10,
                 left: 10,
                 right: 10
+            },
+            animation: {
+                duration: 1000
             }
         };
     }
