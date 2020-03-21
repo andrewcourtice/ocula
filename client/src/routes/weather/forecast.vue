@@ -23,7 +23,7 @@
             </div>
         </block>
         <block title="Observations" class="weather-forecast__section" v-if="today">
-            <p>{{ today.formatted.summary }}</p>
+            <div class="margin__bottom--small">{{ today.formatted.summary }}</div>
             <div class="weather-forecast__observations">
                 <div class="weather-forecast__observation-icon">
                     <icon name="thermometer"/>
@@ -88,13 +88,19 @@
             </div>
         </block>
         <block title="Trends" class="weather-forecast__section weather-forecast__section--trends" v-if="hourly">
-            <template #header>
-                <div layout="row center-right">
-                    <div class="margin__left--x-small" v-for="(value, key) in trendOptions" :key="key" @click="trendType = key">
-                        <icon :name="value.icon"/>
-                    </div>
+            <div class="weather-forecast__trend-options" layout="rows center-spread">
+                <div class="weather-forecast__trend-option"
+                    layout="rows center-center sm-column"
+                    self="size-x1"
+                    v-for="(value, key) in trendOptions"
+                    :key="key"
+                    :class="getTrendOptionClass(key)"
+                    @click="trendType = key">
+                    <icon :name="value.icon"/>
+                    <div class="margin__left--x-small" self="sm-hide"></div>
+                    <div class="text--truncate">{{ value.label }}</div>
                 </div>
-            </template>
+            </div>
             <trend-chart :type="trendType" :data="hourly"/>
         </block>
         <block title="Radar" class="weather-forecast__section weather-forecast__section--radar" v-if="location && radar">
@@ -137,16 +143,20 @@ import {
 
 const TREND_OPTIONS = {
     [TRENDS.temperature]: {
-        icon: 'thermometer'
+        icon: 'thermometer',
+        label: 'Temperature'
     },
     [TRENDS.rainfall]: {
-        icon: 'umbrella'
+        icon: 'umbrella',
+        label: 'Rainfall'
     },
     [TRENDS.uv]: {
-        icon: 'sun'
+        icon: 'sun',
+        label: 'UV Index'
     },
     [TRENDS.wind]: {
-        icon: 'wind'
+        icon: 'wind',
+        label: 'Wind'
     }
 };
 
@@ -205,6 +215,12 @@ export default Vue.extend({
 
         formatTime(date) {
             return dateFormat(date, 'h:mm a');
+        },
+
+        getTrendOptionClass(type) {
+            return {
+                'weather-forecast__trend-option--active': type === this.trendType
+            };
         }
 
     },
@@ -232,8 +248,7 @@ export default Vue.extend({
     }
 
     .weather-forecast__days,
-    .weather-forecast__observations,
-    .weather-forecast__trends {
+    .weather-forecast__observations {
         display: grid;
         grid-gap: var(--spacing__small);
         align-items: center;
@@ -245,10 +260,6 @@ export default Vue.extend({
 
     .weather-forecast__days {
         grid-template-columns: auto 1fr auto auto;
-    }
-
-    .weather-forecast__trends {
-        grid-template-columns: 1fr 1fr;
     }
 
     .weather-forecast__day-min,
@@ -263,6 +274,14 @@ export default Vue.extend({
 
     .weather-forecast__day-max {
         color: red;
+    }
+
+    .weather-forecast__trend-option {
+        color: var(--font__colour--meta);
+    }
+
+    .weather-forecast__trend-option--active {
+        color: inherit;
     }
 
     .weather-forecast__attribution {

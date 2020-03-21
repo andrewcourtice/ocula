@@ -39,9 +39,10 @@ export default class Spline extends Chart {
     constructor(element: Element) {
         super(element);
 
+        this.axisGroup = this.canvas.append('g');
         this.lineGroup = this.canvas.append('g');
         this.markerGroup = this.canvas.append('g');
-        this.axisGroup = this.canvas.append('g');
+
         this.xAxis = this.axisGroup.append('g');
         this.yAxis = this.axisGroup.append('g');
     }
@@ -63,8 +64,8 @@ export default class Spline extends Chart {
                 }
             },
             padding: {
-                top: 0,
-                bottom: 0,
+                top: 16,
+                bottom: 16,
                 left: 0,
                 right: 0
             },
@@ -98,7 +99,7 @@ export default class Spline extends Chart {
         this.lineGroup.classed(classes.lineGroup, true);
         this.markerGroup.classed(classes.markerGroup, true);
 
-        this.xAxis.attr('transform', `translate(0, ${padding.top + this.height - 1})`);
+        this.xAxis.attr('transform', `translate(0, ${padding.top + this.height})`);
     }
 
     protected reset() {
@@ -178,6 +179,15 @@ export default class Spline extends Chart {
     }
 
     private drawAxes() {
+        const {
+            colours
+        } = this.options;
+        
+        const {
+            xAxis,
+            yAxis
+        } = this.axisGroup.datum();
+        
         function styleAxis(group, axis) {
             group.call(axis);
 
@@ -195,17 +205,14 @@ export default class Spline extends Chart {
                 .attr('fill', colours.label);
         }
 
-        const {
-            colours
-        } = this.options;
-
-        const {
-            xAxis,
-            yAxis
-        } = this.axisGroup.datum();
-    
         styleAxis(this.xAxis, xAxis);
         styleAxis(this.yAxis, yAxis);
+
+        const yScale = yAxis.scale();
+        const yMin = yScale.domain()[0];
+        const translation = yScale(yMin);
+
+        this.xAxis.attr('transform', `translate(0, ${translation})`);
     }
 
     private async draw() {
@@ -220,7 +227,8 @@ export default class Spline extends Chart {
     private getAxis(axisType, scale, options) {
         const {
             ticks,
-            format
+            format,
+            size
         } = options;
 
         const axis = axisType(scale)
@@ -232,6 +240,10 @@ export default class Spline extends Chart {
 
         if (ticks && typeof ticks === 'function') {
             axis.tickValues(ticks(scale.domain()));
+        }
+
+        if (size > 0) {
+            axis.tickSize(size);
         }
 
         return axis;
@@ -246,9 +258,9 @@ export default class Spline extends Chart {
         const xScale = getScale(data, xOptions, [0, this.width]);
         const yScale = getScale(data, yOptions, [this.height - 2, 2]);
 
-        const xAxis = this.getAxis(d3.axisTop, xScale, xOptions);
+        const xAxis = this.getAxis(d3.axisBottom, xScale, xOptions);
         const yAxis = this.getAxis(d3.axisRight, yScale, yOptions);
-    
+
         const points = data.map(item => {
             const xValue = xOptions.value(item);
             const yValue = yOptions.value(item);

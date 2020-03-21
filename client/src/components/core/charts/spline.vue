@@ -18,7 +18,7 @@ export default chart(SplineChart);
 
     .spline-chart {
         width: 100%;
-        height: 128px;
+        height: 196px;
     }
 
 </style>
