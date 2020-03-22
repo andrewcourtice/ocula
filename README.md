@@ -27,10 +27,10 @@ I set out to create Ocula as a replacement for my favourite weather app - Pocket
 ## Philosophy
 The goal of this project is to satisfy the following:
 
-- Must be open-source and freely available to all
-- Must be ad-free, subscription-free and any revenue generated to be used for ongoing maintenance costs
-- Must be built entirely using free (or freemium) services/assets (including hosting, api's, graphics etc.)
-- Must be fast, lightweight, accessible and beautiful
+- Must be open-source and freely available to all.
+- Must be ad-free, subscription-free and any revenue generated to be used for ongoing maintenance costs.
+- Must be built entirely using free (or freemium) services/assets (including hosting, api's, graphics etc.).
+- Must be fast, lightweight, accessible and beautiful.
 
 It is my hope that by satisfying the above conditions Ocula can be a weather app for all to enjoy without being bombarded with ads and signups. 
 
@@ -75,7 +75,7 @@ MAPBOX_API_KEY=your-darksky-api-key
 6. Enjoy!
 
 ## Donating
-Please consider donating to the ongoing development of this project by visiting my Patreon page.
+Please consider donating to the ongoing development of this project by visiting my [Patreon page](https://www.patreon.com/ocula).
 
 ## Credits
 - Logo designed by [Ethan Roxburgh](https://github.com/ethanroxburgh).
