@@ -4,6 +4,7 @@
     "main": "index.js",
     "repository": "https://github.com/andrewcourtice/ocula.git",
     "author": "Andrew Courtice <andrewcourtice@gmail.com>",
+    "description": "The free and open-source progressive weather app",
     "license": "MIT",
     "private": true,
     "workspaces": [
