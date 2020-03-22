@@ -78,7 +78,8 @@ MAPBOX_API_KEY=your-darksky-api-key
 Please consider donating to the ongoing development of this project by visiting my [Patreon page](https://www.patreon.com/ocula).
 
 ## Credits
-- Logo designed by [Ethan Roxburgh](https://github.com/ethanroxburgh).
 - Weather forecast provided by [DarkSky](https://darksky.net/).
 - Precipitation map tiles provided by [RainViewer](https://www.rainviewer.com/).
 - Maps and geocoding services provided by [MapBox](https://www.mapbox.com/).
+- Logo designed by [Ethan Roxburgh](https://github.com/ethanroxburgh).
+- Icons provided by [Feather Icons](https://feathericons.com/).
