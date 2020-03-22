@@ -2,7 +2,7 @@
     "name": "@ocula/api",
     "version": "1.0.0",
     "repository": "https://github.com/andrewcourtice/ocula.git",
-    "author": "Andrew Courtice <andrewcourtice@gmail.com>",
+    "author": "Andrew Courtice",
     "license": "MIT",
     "dependencies": {
         "@now/node": "^1.4.1",

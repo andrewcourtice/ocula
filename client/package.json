@@ -1,14 +1,15 @@
 {
     "name": "@ocula/client",
-    "version": "1.1.0",
+    "title": "Ocula",
+    "version": "0.5.1",
     "main": "./src/index.ts",
     "repository": "https://github.com/andrewcourtice/ocula.git",
-    "author": "Andrew Courtice <andrewcourtice@gmail.com>",
+    "author": "Andrew Courtice",
     "description": "The free and open-source progressive weather app",
     "license": "MIT",
     "scripts": {
         "dev": "webpack --env=development",
-        "build": "yarn version --minor && webpack --env=production",
+        "build": "webpack --env=production",
         "start": "webpack-dev-server --env=development",
         "insights": "webpack --env=insights"
     },
