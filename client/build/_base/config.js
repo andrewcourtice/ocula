@@ -78,7 +78,10 @@ export default {
     },
 
     plugins: [
-        new webpack.EnvironmentPlugin('MAPBOX_API_KEY'),
+        new webpack.EnvironmentPlugin([
+            'MAPBOX_API_KEY',
+            'GA_TRACKING_ID'
+        ]),
         
         new CleanWebpackPlugin(),
     
@@ -86,7 +89,7 @@ export default {
     
         new HtmlWebpackPlugin({
             title: 'Ocula',
-            template: './src/index.html'
+            template: './src/index.ejs'
         }),
     
         new FaviconsWebpackPlugin({
