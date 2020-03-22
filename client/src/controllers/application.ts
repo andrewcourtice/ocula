@@ -53,8 +53,8 @@ export class ApplicationController extends Controller {
         return this.state.updateReady;
     }
 
-    openOptionsSidebar() {
-        eventEmitter.emit(EVENTS.sidebars.options);
+    openNavigationSidebar() {
+        eventEmitter.emit(EVENTS.sidebars.navigation);
     }
 
     async notify(title: string, options?: NotificationOptions): Promise<Notification> {

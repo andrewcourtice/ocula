@@ -10,14 +10,14 @@
             </div>
         </div>
         <slot></slot>
-        <options-sidebar></options-sidebar>
+        <navigation-sidebar></navigation-sidebar>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import OptionsSidebar from '../sidebars/options.vue';
+import NavigationSidebar from '../sidebars/navigation.vue';
 
 import applicationController from '../../../controllers/application';
 
@@ -34,13 +34,13 @@ export default Vue.extend({
     methods: {
 
         openOptions() {
-            applicationController.openOptionsSidebar();
+            applicationController.openNavigationSidebar();
         }
 
     },
     
     components: {
-        OptionsSidebar
+        NavigationSidebar
     }
 
 });

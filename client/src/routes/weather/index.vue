@@ -1,5 +1,5 @@
 <template>
-    <app-layout class="weather-layout">
+    <app-layout class="weather-route">
         <template #header>
             <div layout="row center-left" v-if="location" @click="updateLocation">
                 <icon name="map-pin"/><strong class="margin__left--small">{{ isLoading ? 'Updating...' : location.shortName }}</strong>

@@ -1,6 +1,6 @@
 <template>
-    <div class="weather-radar">
-        <radar class="weather-radar__radar"
+    <div class="weather-radar-route">
+        <radar class="weather-radar-route__radar"
             v-if="location && radar"
             :latitude="location.latitude" 
             :longitude="location.longitude"

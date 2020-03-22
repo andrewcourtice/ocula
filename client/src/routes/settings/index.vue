@@ -1,5 +1,5 @@
 <template>
-    <app-layout class="settings">
+    <app-layout class="settings-route">
         <template #header>
             <div layout="row center-left">
                 <icon name="settings"/><strong class="margin__left--small">Settings</strong>

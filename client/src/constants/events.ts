@@ -5,7 +5,7 @@ export default {
         updateReady: 'application:update-ready'
     },
     sidebars: {
-        options: 'sidebar:options',
+        navigation: 'sidebar:navigation',
         alerts: 'sidebar:alerts'
     },
     modals: {

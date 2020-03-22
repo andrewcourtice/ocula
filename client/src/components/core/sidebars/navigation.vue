@@ -1,8 +1,8 @@
 <template>
-    <sidebar class="options-sidebar" ref="sidebar">
-        <div class="options-sidebar__branding">
-            <img class="options-sidebar__branding-logo" :src="$options.staticData.logo" alt="Ocula">
-            <h1 class="options-sidebar__branding-title">Ocula</h1>
+    <sidebar class="navigation-sidebar" ref="sidebar">
+        <div class="navigation-sidebar__branding">
+            <img class="navigation-sidebar__branding-logo" :src="$options.staticData.logo" alt="Ocula">
+            <h1 class="navigation-sidebar__branding-title">Ocula</h1>
         </div>
         <div class="menu">
             <router-link to="/" class="link" @click.native="close">
@@ -15,6 +15,12 @@
                 <div class="menu-item" layout="row center-left">
                     <icon name="settings" class="margin__right--small"></icon>
                     <strong>Settings</strong>
+                </div>
+            </router-link>
+            <router-link to="/about" class="link" @click.native="close">
+                <div class="menu-item" layout="row center-left">
+                    <icon name="info" class="margin__right--small"></icon>
+                    <strong>About</strong>
                 </div>
             </router-link>
             <div class="menu-item" layout="row center-left" v-if="updateReady" @click="update">
@@ -43,7 +49,7 @@ import logo from '../../../assets/images/ocula-192.svg';
 export default Vue.extend({
     
     mixins: [
-        subscriberMixin(EVENTS.sidebars.options)
+        subscriberMixin(EVENTS.sidebars.navigation)
     ],
 
     // @ts-ignore
@@ -80,23 +86,23 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .options-sidebar {
+    .navigation-sidebar {
 
         & .menu-item {
-            padding: 1rem 2rem;
+            padding: var(--spacing__small) var(--spacing__large);
         }
     }
 
-    .options-sidebar__branding {
+    .navigation-sidebar__branding {
         padding: var(--spacing__large) var(--spacing__small);
         text-align: center;
     }
 
-    .options-sidebar__branding-logo {
+    .navigation-sidebar__branding-logo {
         width: 96px;
     }
 
-    .options-sidebar__branding-title {
+    .navigation-sidebar__branding-title {
         margin-top: var(--spacing__small);
         font-size: var(--font__size--large);
         font-weight: var(--font__weight--medium);

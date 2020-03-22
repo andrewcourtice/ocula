@@ -5,7 +5,8 @@
         "moduleResolution": "node",
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "resolveJsonModule": true
     },
     "exclude": [
         "public",
