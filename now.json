@@ -2,11 +2,13 @@
     "version": 2,
     "env": {
         "DARKSKY_API_KEY": "@darksky-api-key",
-        "MAPBOX_API_KEY": "@mapbox-api-key"
+        "MAPBOX_API_KEY": "@mapbox-api-key",
+        "GA_TRACKING_ID": "@ga-tracking-id"
     },
     "build": {
         "env": {
-            "MAPBOX_API_KEY": "@mapbox-api-key"
+            "MAPBOX_API_KEY": "@mapbox-api-key",
+            "GA_TRACKING_ID": "@ga-tracking-id"
         }
     }
 }
