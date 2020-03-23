@@ -3,12 +3,14 @@
     "env": {
         "DARKSKY_API_KEY": "@darksky-api-key",
         "MAPBOX_API_KEY": "@mapbox-api-key",
-        "GA_TRACKING_ID": "@ga-tracking-id"
+        "GA_TRACKING_ID": "@ga-tracking-id",
+        "SENTRY_DSN": "@sentry-dsn"
     },
     "build": {
         "env": {
             "MAPBOX_API_KEY": "@mapbox-api-key",
-            "GA_TRACKING_ID": "@ga-tracking-id"
+            "GA_TRACKING_ID": "@ga-tracking-id",
+            "SENTRY_DSN": "@sentry-dsn"
         }
     }
 }

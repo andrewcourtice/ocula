@@ -80,7 +80,8 @@ export default {
     plugins: [
         new webpack.EnvironmentPlugin([
             'MAPBOX_API_KEY',
-            'GA_TRACKING_ID'
+            'GA_TRACKING_ID',
+            'SENTRY_DSN'
         ]),
         
         new CleanWebpackPlugin(),

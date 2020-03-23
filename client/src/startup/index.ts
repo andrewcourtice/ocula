@@ -4,6 +4,7 @@ import initialiseComponents from './components';
 import initialiseState from './state';
 import initialiseRouter from './router';
 import initialiseApplication from './application';
+import initialiseLogging from './logging';
 import initialiseWorker from './worker';
 
 export default function start() {
@@ -13,6 +14,7 @@ export default function start() {
     const router = initialiseRouter();
     const application = initialiseApplication(router, store);
 
+    initialiseLogging();
     initialiseWorker(store);
 
     return {

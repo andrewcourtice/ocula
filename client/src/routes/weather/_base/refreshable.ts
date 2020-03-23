@@ -44,10 +44,16 @@ export default {
         this.intervalHandle = window.setInterval(() => {
             const lastUpdated = weatherController.lastUpdated;
 
-            if (lastUpdated) {
-                this.lastUpdated = dateFormatDistanceToNow(lastUpdated);
+            if (!lastUpdated) {
+                return;
             }
-        }, 1000);
+
+            try {
+                this.lastUpdated = dateFormatDistanceToNow(lastUpdated);
+            } catch (error) {
+                this.lastUpdated = 'unknown';
+            }
+        }, 5000);
     },
 
     deactivated() {
