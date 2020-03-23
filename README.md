@@ -25,9 +25,9 @@ Ocula is a weather app built entirely using modern web standards in an attempt t
 I set out to create Ocula as a replacement for my favourite weather app - Pocket Weather, which was unfortunately shut down at the end of 2019 due to high maintenance costs. If you're anything like me (or for some reason, most Australians) then you may appreciate a good weather app.
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/11718453/77266786-3f66ba00-6cec-11ea-9b3d-cc9638e8c31f.png" width="320" />
-    <img src="https://user-images.githubusercontent.com/11718453/77266791-4392d780-6cec-11ea-8fda-520d5f506877.png" width="320" />
-    <img src="https://user-images.githubusercontent.com/11718453/77266793-468dc800-6cec-11ea-913f-22e0de7b954c.png" width="320" />
+    <img src="https://user-images.githubusercontent.com/11718453/77266786-3f66ba00-6cec-11ea-9b3d-cc9638e8c31f.png" width="256" />
+    <img src="https://user-images.githubusercontent.com/11718453/77266791-4392d780-6cec-11ea-8fda-520d5f506877.png" width="256" />
+    <img src="https://user-images.githubusercontent.com/11718453/77266793-468dc800-6cec-11ea-913f-22e0de7b954c.png" width="256" />
 </p>
 
 ## Philosophy
