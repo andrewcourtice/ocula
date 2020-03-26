@@ -3319,10 +3319,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.11.0.tgz#ec2b44977465b9dcb370021d5e6c019b19f36d06"
-  integrity sha512-8P1cDi8ebZyDxUyUprBXwidoEtiQAawYPGvpfb+Dg0G6JrQ+VozwOmm91xYC0vAv1+0VmLehEPb+isg4BGUFfA==
+date-fns@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.11.1.tgz#197b8be1bbf5c5e6fe8bea817f0fe111820e7a12"
+  integrity sha512-3RdUoinZ43URd2MJcquzBbDQo+J87cSzB8NkXdZiN5ia1UNyep0oCyitfiL88+R7clGTeq/RniXAc16gWyAu1w==
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -9311,11 +9311,6 @@ workbox-cacheable-response@^5.1.2:
   dependencies:
     workbox-core "^5.1.2"
 
-workbox-core@^5.1.1, workbox-core@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.2.tgz#c0df3f74df780f63fc1568eabd64f1c4beae2de6"
-  integrity sha512-w9DBIEE5+mgja5KRWr1ilk4g9YrmXmylb4wqHx/77XxwK3OD+a44RXNWUCrzxgixRDyfyt7TSc9Iqb0GZkoBxg==
-
 workbox-core@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.2.tgz#c0df3f74df780f63fc1568eabd64f1c4beae2de6"
@@ -9398,13 +9393,6 @@ workbox-webpack-plugin@^5.1.2:
     upath "^1.1.2"
     webpack-sources "^1.3.0"
     workbox-build "^5.1.2"
-
-workbox-window@^5.1.1, workbox-window@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/workbox-window/-/workbox-window-5.1.2.tgz#dfcecac28919960beb83ba54c206295d1b31ffd1"
-  integrity sha512-8eS3VSQYmUvJiBRJL+fz1mDXDrNobVgOiAQ+f0eutMlBUQEArP5Fd6Ig+h8j2KWtntAKJbgyhhb1cYouJSDQyQ==
-  dependencies:
-    workbox-core "^5.1.2"
 
 workbox-window@^5.1.2:
   version "5.1.2"
