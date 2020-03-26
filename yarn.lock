@@ -9265,10 +9265,10 @@ workbox-cacheable-response@^5.1.1:
   dependencies:
     workbox-core "^5.1.1"
 
-workbox-core@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.1.tgz#2837765aa40a0d82ea58abcaf549938ae552f256"
-  integrity sha512-9eP2SecpDpcs+8ZDja0fYx4IJV9+G5qa+q5/kheaxFY6sYlGjOVf+v7JaAVXeZmUSCTOwHY3qRFA4P5WU4vjCw==
+workbox-core@^5.1.1, workbox-core@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.2.tgz#c0df3f74df780f63fc1568eabd64f1c4beae2de6"
+  integrity sha512-w9DBIEE5+mgja5KRWr1ilk4g9YrmXmylb4wqHx/77XxwK3OD+a44RXNWUCrzxgixRDyfyt7TSc9Iqb0GZkoBxg==
 
 workbox-expiration@^5.1.1:
   version "5.1.1"
@@ -9348,12 +9348,12 @@ workbox-webpack-plugin@^5.1.1:
     webpack-sources "^1.3.0"
     workbox-build "^5.1.1"
 
-workbox-window@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/workbox-window/-/workbox-window-5.1.1.tgz#aef8da6d657444e31f02a1df6a31d21db4645777"
-  integrity sha512-/9WPtkrxM6DI6mbTvz3fFac57SuxuG5QwwEZHct1C+kGfUfpU5LvS+zzQgBOZSQeJZfRbUPH0kTR66uM+x10Ww==
+workbox-window@^5.1.1, workbox-window@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/workbox-window/-/workbox-window-5.1.2.tgz#dfcecac28919960beb83ba54c206295d1b31ffd1"
+  integrity sha512-8eS3VSQYmUvJiBRJL+fz1mDXDrNobVgOiAQ+f0eutMlBUQEArP5Fd6Ig+h8j2KWtntAKJbgyhhb1cYouJSDQyQ==
   dependencies:
-    workbox-core "^5.1.1"
+    workbox-core "^5.1.2"
 
 worker-farm@^1.7.0:
   version "1.7.0"
