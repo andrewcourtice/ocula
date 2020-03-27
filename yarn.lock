@@ -6023,10 +6023,10 @@ nan@^2.12.1, nan@^2.13.2, nan@^2.14.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
-nanoid@^2.1.11:
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
-  integrity sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==
+nanoid@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.0.0.tgz#760f6d7e076935d086aa3c790e0272cab41abbcb"
+  integrity sha512-5lU+F2QpTW1JLwlXxnu2/jkpTipIuYZL3Za6TQzM16HYDzZQqlthbXYSW0H2KzZu1UQPGHDPbCl1TS3xOKfqEQ==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -9311,11 +9311,6 @@ workbox-cacheable-response@^5.1.2:
   dependencies:
     workbox-core "^5.1.2"
 
-workbox-core@^5.1.1, workbox-core@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.2.tgz#c0df3f74df780f63fc1568eabd64f1c4beae2de6"
-  integrity sha512-w9DBIEE5+mgja5KRWr1ilk4g9YrmXmylb4wqHx/77XxwK3OD+a44RXNWUCrzxgixRDyfyt7TSc9Iqb0GZkoBxg==
-
 workbox-core@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/workbox-core/-/workbox-core-5.1.2.tgz#c0df3f74df780f63fc1568eabd64f1c4beae2de6"
@@ -9398,13 +9393,6 @@ workbox-webpack-plugin@^5.1.2:
     upath "^1.1.2"
     webpack-sources "^1.3.0"
     workbox-build "^5.1.2"
-
-workbox-window@^5.1.1, workbox-window@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/workbox-window/-/workbox-window-5.1.2.tgz#dfcecac28919960beb83ba54c206295d1b31ffd1"
-  integrity sha512-8eS3VSQYmUvJiBRJL+fz1mDXDrNobVgOiAQ+f0eutMlBUQEArP5Fd6Ig+h8j2KWtntAKJbgyhhb1cYouJSDQyQ==
-  dependencies:
-    workbox-core "^5.1.2"
 
 workbox-window@^5.1.2:
   version "5.1.2"
