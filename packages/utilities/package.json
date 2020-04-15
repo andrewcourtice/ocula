@@ -4,7 +4,7 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "dependencies": {
-        "date-fns": "^2.11.1",
+        "date-fns": "^2.12.0",
         "lodash": "^4.17.15",
         "nanoid": "^2.1.11"
     },
