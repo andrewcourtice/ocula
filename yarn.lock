@@ -1232,13 +1232,13 @@
     "@sentry/utils" "5.15.4"
     tslib "^1.9.3"
 
-"@sentry/integrations@^5.15.0":
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.15.0.tgz#02ae2737b066aee08426cb4df22c700685505ea1"
-  integrity sha512-50OLHL26EMOCeyVlwLk9P7YocaUF02RYuCD3BPofTswgXSDe61Qy3ntT/RuOTiUV1sjmpc4FjDBJdtp/miFfOg==
+"@sentry/integrations@^5.19.1":
+  version "5.19.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.19.1.tgz#9c6680eceff95b9fb66ad18c2cf9fa2e9f0181b5"
+  integrity sha512-JMiYtHh6m50eMC8BHkcZZjl6/Nx2JVivhkLx6EGsbgNTpGlsODhrRt+kgRKFhPWhEjKlcjx+l6tmq90NbfLusg==
   dependencies:
-    "@sentry/types" "5.15.0"
-    "@sentry/utils" "5.15.0"
+    "@sentry/types" "5.19.1"
+    "@sentry/utils" "5.19.1"
     tslib "^1.9.3"
 
 "@sentry/minimal@5.15.4":
@@ -1250,23 +1250,15 @@
     "@sentry/types" "5.15.4"
     tslib "^1.9.3"
 
-"@sentry/types@5.15.0":
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.15.0.tgz#7bc101b2f1a433b0086f1ac7e00b830691814c80"
-  integrity sha512-MC96wUAHhzRuH3xo4Qd+EXTOap8+d+SWbAdLBukScxuwhOSY/HNRh1TW17CuAu7s1oXa7xxO2ZCdyamSZinIiQ==
-
 "@sentry/types@5.15.4":
   version "5.15.4"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.15.4.tgz#37f30e35b06e8e12ad1101f1beec3e9b88ca1aab"
   integrity sha512-quPHPpeAuwID48HLPmqBiyXE3xEiZLZ5D3CEbU3c3YuvvAg8qmfOOTI6z4Z3Eedi7flvYpnx3n7N3dXIEz30Eg==
 
-"@sentry/utils@5.15.0":
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.15.0.tgz#3577c1bae0c18b53d7500538b8b6894f74ad9dd5"
-  integrity sha512-td+wSBdVUPO3mEPcEHZwJiVEQ0+wplJCHBvM1PHqwQd+miB2mQAaiSkzdAAHzUpTeqPBI3rzjWPn59WkCcVF5Q==
-  dependencies:
-    "@sentry/types" "5.15.0"
-    tslib "^1.9.3"
+"@sentry/types@5.19.1":
+  version "5.19.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.19.1.tgz#8762f668d3fc2416fbde31d15d13009544caeb54"
+  integrity sha512-M5MhTLnjqYFwxMwcFPBpBgYQqI9hCvtVuj/A+NvcBHpe7VWOXdn/Sys+zD6C76DWGFYQdw3OWCsZimP24dL8mA==
 
 "@sentry/utils@5.15.4":
   version "5.15.4"
@@ -1274,6 +1266,14 @@
   integrity sha512-lO8SLBjrUDGADl0LOkd55R5oL510d/1SaI08/IBHZCxCUwI4TiYo5EPECq8mrj3XGfgCyq9osw33bymRlIDuSQ==
   dependencies:
     "@sentry/types" "5.15.4"
+    tslib "^1.9.3"
+
+"@sentry/utils@5.19.1":
+  version "5.19.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.19.1.tgz#e1134db40e4bb9732251e515721cec7ee94d4d9c"
+  integrity sha512-neUiNBnZSHjWTZWy2QV02EHTx1C2L3DBPzRXlh0ca5xrI7LMBLmhkHlhebn1E5ky3PW1teqZTgmh0jZoL99TEA==
+  dependencies:
+    "@sentry/types" "5.19.1"
     tslib "^1.9.3"
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
