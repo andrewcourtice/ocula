@@ -4,7 +4,7 @@ import mapLocation from './_helpers/map-location';
 import {
     NowRequest,
     NowResponse
-} from '@now/node';
+} from '@vercel/node';
 
 export default async function (request: NowRequest, response: NowResponse) {
     const {
