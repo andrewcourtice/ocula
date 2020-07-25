@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import {
     NowRequest,
     NowResponse
-} from '@now/node';
+} from '@vercel/node';
 
 export default async function (request: NowRequest, response: NowResponse) {
     let {
