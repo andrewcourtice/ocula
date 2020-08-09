@@ -5,9 +5,10 @@ import GETTERS from './getters';
 import MUTATIONS from './mutations';
 import ACTIONS from './actions';
 
-import UNIT_FORMATS, {
-    DEFAULT_UNIT_FORMAT
-} from '../constants/unit-formats';
+import UNITS from '../constants/units';
+import FORMATS from '../constants/formats';
+
+import formatData from '../helpers/format-data';
 
 import {
     getLocation
@@ -61,49 +62,14 @@ export default {
 
     getters: {
 
-        [GETTERS.formats](state: IState) {
-            const flags = state.forecast.flags;
+        [GETTERS.data](state) {
+            const {
+                units
+            } = state.settings;
 
-            if (!flags || !flags.units || !UNIT_FORMATS[flags.units]) {
-                return DEFAULT_UNIT_FORMAT;
-            }
+            const format = FORMATS[units] || FORMATS[UNITS.metric];
 
-            return {
-                ...DEFAULT_UNIT_FORMAT,
-                ...UNIT_FORMATS[flags.units]
-            };
-        },
-
-        [GETTERS.current](state: IState, getters) {
-            const current = state.forecast.currently;
-
-            if (current) {
-                return formatDataPoint(current, getters[GETTERS.formats]);
-            }
-        },
-
-        [GETTERS.daily](state: IState, getters) {
-            const daily = state.forecast.daily;
-
-            if (!daily || !daily.data) {
-                return;
-            }
-
-            const unitFormats = getters[GETTERS.formats];
-
-            return daily.data.map(day => formatDataPoint(day, unitFormats));  
-        },
-
-        [GETTERS.hourly](state: IState, getters) {
-            const hourly = state.forecast.hourly;
-
-            if (!hourly || !hourly.data) {
-                return;
-            }
-
-            const unitFormats = getters[GETTERS.formats];
-
-            return hourly.data.map(hour => formatDataPoint(hour, unitFormats));
+            return formatData(state.forecast, format);
         }
 
     },

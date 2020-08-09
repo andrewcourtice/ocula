@@ -3,7 +3,7 @@ import {
 } from './location';
 
 export interface ISettings {
-    units: String,
+    units: string,
     location?: ILocation | string,
     locations?: ILocation[] 
 };

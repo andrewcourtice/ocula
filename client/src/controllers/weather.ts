@@ -20,24 +20,8 @@ export class WeatherController extends Controller {
         return this.state.location;
     }
 
-    get current() {
-        return this.getter(GETTERS.current);
-    }
-
-    get daily() {
-        return this.getter(GETTERS.daily);
-    }
-
-    get hourly() {
-        return this.getter(GETTERS.hourly);
-    }
-
-    get radar() {
-        return this.state.forecast.radar;
-    }
-
-    get alerts() {
-        return this.state.forecast.alerts;
+    get data() {
+        return this.getter(GETTERS.data);
     }
 
     openAlertsSidebar() {

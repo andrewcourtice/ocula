@@ -1,28 +1,28 @@
 <template>
-    <div class="weather-forecast-route">
-        <header class="weather-forecast-route__header" v-if="current">
-            <h1 class="weather-forecast-route__temperature">{{ current.formatted.temperature }}</h1>
+    <div class="weather-forecast-route" v-if="location && data">
+        <header class="weather-forecast-route__header">
+            <h1 class="weather-forecast-route__temperature">{{ data.formatted.current.temp }}</h1>
             <div class="margin__top--small" layout="row center-left">
-                <icon :name="current.formatted.icon"/><span class="margin__left--small">{{ current.formatted.summary }}</span>
+                <icon :name="data.formatted.current.icon"/><span class="margin__left--small">{{ data.formatted.current.summary }}</span>
             </div>
         </header>
-        <block title="Coming Up" class="weather-forecast-route__section weather-forecast-route__section--daily" v-if="daily">
+        <block title="Coming Up" class="weather-forecast-route__section weather-forecast-route__section--daily">
             <div class="weather-forecast-route__days">
-                <template class="weather-forecast-route__day" v-for="{ raw, formatted } in daily">
-                    <div class="weather-forecast-route__day-icon" :key="getTemplateKey(raw.time, 'icon')">
-                        <icon :name="formatted.icon"/>
+                <template class="weather-forecast-route__day" v-for="(day, index) in data.formatted.daily">
+                    <div class="weather-forecast-route__day-icon" :key="getTemplateKey(data.raw.daily[index].dt, 'icon')">
+                        <icon :name="day.icon"/>
                     </div>
-                    <div class="weather-forecast-route__day-label text--truncate" :key="getTemplateKey(raw.time, 'label')">
-                        <span>{{ formatDay(formatted.time) }}</span>
+                    <div class="weather-forecast-route__day-label text--truncate" :key="getTemplateKey(data.raw.daily[index].dt, 'label')">
+                        <span>{{ formatDay(day.dt) }}</span>
                         <br>
-                        <small class="text--meta">{{ formatted.summary }}</small>
+                        <small class="text--meta">{{ day.summary }}</small>
                     </div>
-                    <div class="weather-forecast-route__day-min" :key="getTemplateKey(raw.time, 'min')">{{ Math.round(raw.temperatureMin) }}</div>
-                    <div class="weather-forecast-route__day-max" :key="getTemplateKey(raw.time, 'max')">{{ Math.round(raw.temperatureMax) }}</div>
+                    <div class="weather-forecast-route__day-min" :key="getTemplateKey(data.raw.daily[index].dt, 'min')">{{ Math.round(data.raw.daily[index].temp.min) }}</div>
+                    <div class="weather-forecast-route__day-max" :key="getTemplateKey(data.raw.daily[index].dt, 'max')">{{ Math.round(data.raw.daily[index].temp.max) }}</div>
                 </template>
             </div>
         </block>
-        <block title="Observations" class="weather-forecast-route__section" v-if="today">
+        <!-- <block title="Observations" class="weather-forecast-route__section" v-if="today">
             <div class="margin__bottom--small">{{ today.formatted.summary }}</div>
             <div class="weather-forecast-route__observations">
                 <div class="weather-forecast-route__observation-icon">
@@ -86,8 +86,8 @@
                     <div>{{ current.formatted.windBearing }}</div>
                 </div>
             </div>
-        </block>
-        <block title="Trends" class="weather-forecast-route__section weather-forecast-route__section--trends" v-if="hourly">
+        </block> -->
+        <!-- <block title="Trends" class="weather-forecast-route__section weather-forecast-route__section--trends" v-if="hourly">
             <div class="weather-forecast-route__trend-options" layout="rows center-spread">
                 <div class="weather-forecast-route__trend-option"
                     layout="rows center-center sm-column"
@@ -102,13 +102,13 @@
                 </div>
             </div>
             <trend-chart :type="trendType" :data="hourly"/>
-        </block>
-        <block title="Radar" class="weather-forecast-route__section weather-forecast-route__section--radar" v-if="location && radar">
+        </block> -->
+        <block title="Radar" class="weather-forecast-route__section weather-forecast-route__section--radar">
             <router-link to="/weather/radar">
                 <radar class="weather-forecast-route__radar"
                     :latitude="location.latitude" 
                     :longitude="location.longitude"
-                    :timestamps="radar.timestamps">
+                    :timestamps="data.raw.radar.timestamps">
                 </radar>
             </router-link>
         </block>
@@ -177,28 +177,11 @@ export default Vue.extend({
             return weatherController.location
         },
 
-        current() {
-            return weatherController.current;
-        },
-
-        daily() {
-            return weatherController.daily;
-        },
-
-        today() {
-            if (!this.daily) {
-                return;
-            }
-
-            return this.daily[0];
-        },
-
-        hourly() {
-            return weatherController.hourly;
-        },
-
-        radar() {
-            return weatherController.radar;
+        data() {
+            return weatherController.data || {
+                raw: {},
+                formatted: {}
+            };
         }
 
     },
