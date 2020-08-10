@@ -26,7 +26,7 @@
 <script lang="ts">
 import UNITS from '../../constants/units';
 
-import Vue from 'vue';
+
 
 import AppLayout from '../../components/core/layouts/app.vue';
 
@@ -42,7 +42,7 @@ const UNIT_MAP = {
     [UNITS.us]: 'Imperial'
 };
 
-export default Vue.extend({
+export default {
 
     data() {
         return {
@@ -74,5 +74,5 @@ export default Vue.extend({
         AppLayout
     }
 
-});
+};
 </script>

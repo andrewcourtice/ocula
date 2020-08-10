@@ -5,6 +5,11 @@ import subscriberMixin from '../../../components/core/mixins/subscriber';
 import weatherController from '../../../controllers/weather';
 
 import {
+    state,
+    load
+} from '../../../state_new/index';
+
+import {
     dateFormatDistanceToNow
 } from '@ocula/utilities';
 
@@ -33,6 +38,12 @@ export default {
     methods: {
 
         async refresh() {
+            await load();
+
+            console.log(state);
+
+            state.updateReady = true;
+
             return weatherController.load();
         }
 

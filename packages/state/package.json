@@ -1,11 +1,8 @@
 {
-    "name": "@ocula/components",
+    "name": "@ocula/state",
     "version": "1.0.0",
     "main": "./src/index.ts",
     "license": "MIT",
-    "dependencies": {
-        "@ocula/style": "1.0.0"
-    },
     "peerDependencies": {
         "vue": "3.0.0-rc.5"
     }

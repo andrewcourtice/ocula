@@ -28,8 +28,6 @@
 <script lang="ts">
 import EVENTS from '../../../constants/events';
 
-import Vue from 'vue';
-
 import subscriberMixin from '../../core/mixins/subscriber';
 
 import settingsController from '../../../controllers/settings';
@@ -38,7 +36,7 @@ import {
     functionDebounce
 } from '@ocula/utilities';
 
-export default Vue.extend({
+export default {
 
     mixins: [
         subscriberMixin(EVENTS.modals.location)
@@ -117,7 +115,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

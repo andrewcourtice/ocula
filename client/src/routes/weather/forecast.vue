@@ -125,7 +125,7 @@
 import ICON from '../../constants/icon';
 import TRENDS from '../../constants/trends';
 
-import Vue from 'vue';
+
 
 import TrendChart from '../../components/weather/core/trend-chart.vue';
 import Radar from '../../components/weather/core/radar.vue';
@@ -160,7 +160,7 @@ const TREND_OPTIONS = {
     }
 };
 
-export default Vue.extend({
+export default {
 
     extends: refreshable,
 
@@ -213,7 +213,7 @@ export default Vue.extend({
         Radar
     }
 
-});
+};
 </script>
 
 <style lang="scss">

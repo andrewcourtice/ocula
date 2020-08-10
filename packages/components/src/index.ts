@@ -3,15 +3,21 @@ import '@ocula/style/src/index.scss';
 import directives from './directives/index';
 import components from './components/index';
 
-function register(Vue, registrar, dictionary) {
-    Object.keys(dictionary).forEach(key => Vue[registrar].call(Vue, key, dictionary[key]));
+import type {
+    App
+} from 'vue';
+
+type Registrar = 'directive' | 'component';
+
+function register(application: App, registrar: Registrar, dictionary: Record<string, any>): void {
+    Object.keys(dictionary).forEach(key => application[registrar].call(application, key, dictionary[key]));
 }
 
 export default {
 
-    install(Vue) {
-        register(Vue, 'directive', directives);
-        register(Vue, 'component', components);
+    install(application: App) {
+        register(application, 'directive', directives);
+        register(application, 'component', components);
     }
 
 };

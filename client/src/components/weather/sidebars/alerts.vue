@@ -15,11 +15,9 @@
 <script lang="ts">
 import EVENTS from '../../../constants/events';
 
-import Vue from 'vue';
-
 import subscriberMixin from '../../../components/core/mixins/subscriber';
 
-export default Vue.extend({
+export default {
     
     mixins: [
         subscriberMixin(EVENTS.sidebars.alerts)
@@ -37,7 +35,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

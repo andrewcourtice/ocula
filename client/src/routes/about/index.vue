@@ -43,14 +43,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+
 
 import AppLayout from '../../components/core/layouts/app.vue';
 
 import manifest from '../../../package.json';
 import logo from '../../assets/images/ocula-192.svg';
 
-export default Vue.extend({
+export default {
 
     data() {
         return manifest;
@@ -65,7 +65,7 @@ export default Vue.extend({
         AppLayout
     }
 
-});
+};
 </script>
 
 <style lang="scss">

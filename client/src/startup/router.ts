@@ -1,13 +1,17 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
 import routes from '../routes/index';
 
-export default function initialiseRouter() {
-    Vue.use(VueRouter);
+import {
+    createRouter,
+    createWebHistory
+} from 'vue-router';
 
-    const router = new VueRouter({
-        mode: 'history',
+import type {
+    App
+} from 'vue';
+
+export default function initialiseRouter(application: App) {
+    const router = createRouter({
+        history: createWebHistory(),
         routes
     });
 
@@ -16,6 +20,8 @@ export default function initialiseRouter() {
             'page_path': to.path
         }));
     }
+
+    application.use(router);
 
     return router;
 }

@@ -9,13 +9,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+export default {
     
     props: {
 
-        value: {
+        modelValue: {
             type: null
         },
 
@@ -30,16 +28,16 @@ export default Vue.extend({
 
         content: {
             get() {
-                return this.value;
+                return this.modelValue;
             },
             set(value) {
-                this.$emit('input', value);
+                this.$emit('update:modelValue', value);
             }
         }
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

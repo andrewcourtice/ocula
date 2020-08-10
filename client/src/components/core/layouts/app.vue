@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+
 
 import NavigationSidebar from '../sidebars/navigation.vue';
 
 import applicationController from '../../../controllers/application';
 
-export default Vue.extend({
+export default {
 
     computed: {
 
@@ -43,7 +43,7 @@ export default Vue.extend({
         NavigationSidebar
     }
 
-});
+};
 </script>
 
 <style lang="scss">

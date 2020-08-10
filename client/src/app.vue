@@ -1,8 +1,10 @@
 <template>
     <div class="app">
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
+        <router-view #default="{ Component }">
+            <keep-alive>
+                <component :is="Component"></component>
+            </keep-alive>
+        </router-view>
     </div>
 </template>
 

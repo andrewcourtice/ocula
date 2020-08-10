@@ -38,15 +38,13 @@
 <script lang="ts">
 import EVENTS from '../../../constants/events';
 
-import Vue from 'vue';
-
 import applicationController from '../../../controllers/application';
 
 import subscriberMixin from '../mixins/subscriber';
 
 import logo from '../../../assets/images/ocula-192.svg';
 
-export default Vue.extend({
+export default {
     
     mixins: [
         subscriberMixin(EVENTS.sidebars.navigation)
@@ -81,7 +79,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

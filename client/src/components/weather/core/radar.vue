@@ -5,15 +5,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
 const STYLE = {
     light: 'light-v10',
     dark: 'dark-v10',
     streets: 'streets-v10'
 };
 
-export default Vue.extend({
+export default {
 
     props: {
 
@@ -197,7 +195,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

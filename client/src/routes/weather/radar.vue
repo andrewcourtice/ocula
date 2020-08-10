@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+
 
 import Radar from '../../components/weather/core/radar.vue';
 
@@ -19,7 +19,7 @@ import refreshable from './_base/refreshable';
 
 import weatherController from '../../controllers/weather';
 
-export default Vue.extend({
+export default {
     
     extends: refreshable,
 
@@ -39,5 +39,5 @@ export default Vue.extend({
         Radar
     }
 
-});
+};
 </script>

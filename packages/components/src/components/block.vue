@@ -10,10 +10,8 @@
     </section>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+<script lang="ts" setup="props">
+export default {
     
     props: {
 
@@ -23,7 +21,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">

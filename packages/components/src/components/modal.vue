@@ -9,9 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+export default {
 
     props: {
 
@@ -40,7 +38,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">
@@ -66,7 +64,7 @@ export default Vue.extend({
         -webkit-overflow-scrolling: touch;
     }
 
-    .modal-enter,
+    .modal-enter-from,
     .modal-leave-to {
         opacity: 0;
 

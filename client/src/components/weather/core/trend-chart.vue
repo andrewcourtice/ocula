@@ -5,8 +5,6 @@
 <script lang="ts">
 import TRENDS from '../../../constants/trends';
 
-import Vue from 'vue';
-
 import SplineChart from '../../core/charts/spline.vue';
 
 import {
@@ -76,7 +74,7 @@ const OPTIONS = {
     }
 }
 
-export default Vue.extend({
+export default {
     
     props: {
 
@@ -102,5 +100,5 @@ export default Vue.extend({
         SplineChart
     }
 
-});
+};
 </script>

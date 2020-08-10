@@ -1,16 +1,9 @@
-import Vue from 'vue';
+import {
+    createApp
+} from 'vue';
 
 import App from '../app.vue';
 
-export default function initialiseApplication(router, store) {
-    Vue.config.devtools = true;
-    
-    return new Vue({
-        el: '#app',
-        router,
-        store,
-        render(createElement) {
-            return createElement(App);
-        }
-    });
+export default function initialiseApplication() {
+    return createApp(App);
 }

@@ -13,7 +13,7 @@ export default [
         ]
     },
     {
-        path: '*',
+        path: '/:catchAll(.*)',
         redirect: '/error/not-found'
     }
 ]

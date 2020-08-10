@@ -9,9 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+export default {
 
     props: {
 
@@ -48,7 +46,7 @@ export default Vue.extend({
 
     }
 
-});
+};
 </script>
 
 <style lang="scss">
@@ -81,7 +79,7 @@ export default Vue.extend({
         right: 0;
     }
 
-    .sidebar-enter,
+    .sidebar-enter-from,
     .sidebar-leave-to {
         background-color: transparent;
 

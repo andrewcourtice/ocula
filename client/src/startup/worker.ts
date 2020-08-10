@@ -8,7 +8,11 @@ import {
     Workbox
 } from 'workbox-window';
 
-export default async function initialiseWorker(store) {
+import type {
+    Store
+} from 'vuex';
+
+export default async function initialiseWorker(store: Store<any>) {
     if (!navigator.serviceWorker) {
         return;
     }

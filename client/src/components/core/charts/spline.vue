@@ -3,8 +3,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-
 import {
     SplineChart
 } from '@ocula/charts';

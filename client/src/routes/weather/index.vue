@@ -12,9 +12,11 @@
                 <button class="button button--primary" @click="updateLocation">Set Location</button>
             </div>
         </div>
-        <keep-alive v-else>
-            <router-view></router-view>
-        </keep-alive>
+        <router-view #default="{ Component }" v-else>
+            <keep-alive>
+                <component :is="Component"></component>
+            </keep-alive>
+        </router-view>
         <location-modal />
     </app-layout>
 </template>
@@ -22,7 +24,7 @@
 <script lang="ts">
 import LOCATIONS from '../../constants/locations';
 
-import Vue from 'vue';
+
 
 import AppLayout from '../../components/core/layouts/app.vue';
 import LocationModal from '../../components/core/modals/location.vue';
@@ -30,7 +32,7 @@ import LocationModal from '../../components/core/modals/location.vue';
 import settingsController from '../../controllers/settings';
 import weatherController from '../../controllers/weather';
 
-export default Vue.extend({
+export default {
 
     computed: {
 
@@ -61,5 +63,5 @@ export default Vue.extend({
         LocationModal
     }
     
-});
+};
 </script>
