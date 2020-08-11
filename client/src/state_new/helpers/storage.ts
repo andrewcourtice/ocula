@@ -7,12 +7,9 @@ import {
 } from '@ocula/utilities';
 
 import type {
-    IState
-} from '../../interfaces/state';
-
-import type {
-    ISettings
-} from '../../interfaces/settings';
+    ISettings,
+    IStoredData
+} from '../../interfaces/storage';
 
 export function getSettings() {
     let settings = localStorage.getItem(STORAGE_KEYS.settings);
@@ -38,11 +35,11 @@ export function getData() {
     return objectMerge(DATA, data);
 }
 
-export function setSettings(settings: ISettings): void {
+export function saveSettings(settings: ISettings): void {
     localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 }
 
-export function setData({ lastUpdated, location, forecast }: IState): void {
+export function saveData({ lastUpdated, location, forecast }: IStoredData): void {
     localStorage.setItem(STORAGE_KEYS.data, JSON.stringify({
         location,
         forecast,

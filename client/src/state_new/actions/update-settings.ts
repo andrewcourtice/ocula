@@ -4,12 +4,12 @@ import {
 } from '../store/index';
 
 import {
-    setSettings
+    saveSettings
 } from '../helpers/storage';
 
 import type {
     ISettings
-} from '../../interfaces/settings';
+} from '../../interfaces/storage';
 
 export default function updateSettings(value: Partial<ISettings>) {
     const settings = {
@@ -17,7 +17,7 @@ export default function updateSettings(value: Partial<ISettings>) {
         ...value
     };
 
-    setSettings(settings);
+    saveSettings(settings);
 
     mutate(state => state.settings = settings);
 }

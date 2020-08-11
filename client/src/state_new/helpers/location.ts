@@ -1,4 +1,8 @@
-export async function getPosition() {
+import type {
+    ICoordinate
+} from '../../interfaces/location';
+
+export async function getPosition(): Promise<ICoordinate> {
     const position: Position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
             maximumAge: 0,

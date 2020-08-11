@@ -1,10 +1,14 @@
-import {
+import type {
     ISettings
-} from './settings';
+} from './storage';
 
-import {
+import type {
     ILocation
 } from './location';
+
+import type {
+    IForecast
+} from './weather';
 
 export interface IState {
     loading: boolean,
@@ -12,5 +16,5 @@ export interface IState {
     lastUpdated: Date,
     settings: ISettings,
     location: ILocation,
-    forecast: any
+    forecast: IForecast
 };

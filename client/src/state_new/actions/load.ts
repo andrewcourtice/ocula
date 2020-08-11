@@ -7,7 +7,7 @@ import {
 } from '../store/index';
 
 import {
-    setData
+    saveData
 } from '../helpers/storage';
 
 export default async function load() {
@@ -22,8 +22,20 @@ export default async function load() {
         await loadForecast(latitude, longitude);
         
         mutate(state => state.lastUpdated = new Date());
-        setData(state);
+
+        const {
+            lastUpdated,
+            location,
+            forecast
+        } = state;
+
+        saveData({
+            lastUpdated,
+            location,
+            forecast
+        });
+
     } finally {
-        mutate(state => state.loading = true);
+        mutate(state => state.loading = false);
     }
 }

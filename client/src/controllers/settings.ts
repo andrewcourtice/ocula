@@ -20,7 +20,7 @@ import {
 
 import {
     ISettings
-} from '../interfaces/settings';
+} from '../interfaces/storage';
 
 export class SettingsController extends Controller<IState> {
 
