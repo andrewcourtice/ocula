@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 
+import camelCaseKeys from '../_helpers/camel-case-keys';
+
 import {
     NowRequest,
     NowResponse
@@ -17,14 +19,16 @@ export default async function (request: NowRequest, response: NowResponse) {
     const apiKey = process.env.OWM_API_KEY;
 
     const responses = await Promise.all([
-        fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${latitude}&lon=${longitude}&units=${units}`),
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${latitude}&lon=${longitude}&units=${units}&exclude=minutely`),
         fetch('https://tilecache.rainviewer.com/api/maps.json')
     ]);
 
-    const [
+    let [
         forecast,
         timestamps
     ] = await Promise.all(responses.map(response => response.json()));
+
+    forecast = camelCaseKeys(forecast);
 
     return response.json({
         ...forecast,

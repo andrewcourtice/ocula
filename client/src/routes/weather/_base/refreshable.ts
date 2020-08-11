@@ -6,6 +6,7 @@ import weatherController from '../../../controllers/weather';
 
 import {
     state,
+    forecast,
     load
 } from '../../../state_new/index';
 
@@ -40,7 +41,7 @@ export default {
         async refresh() {
             await load();
 
-            console.log(state);
+            console.log(forecast.value);
 
             state.updateReady = true;
 

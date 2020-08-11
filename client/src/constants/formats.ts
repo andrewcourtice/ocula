@@ -1,5 +1,5 @@
 import UNITS from './units';
-import FORMATS from './formatters';
+import FORMATTERS from './formatters';
 
 const {
     general,
@@ -7,148 +7,167 @@ const {
     distance,
     speed,
     pressure,
-    direction,
-    iteration
-} = FORMATS;
+    direction
+} = FORMATTERS;
 
 export default {
     [UNITS.metric]: {
-        current: iteration.object({
+        current: {
             dt: general.datetime,
             sunrise: general.datetime,
             sunset: general.datetime,
             temp: temperature.celcius,
-            feels_like: temperature.celcius,
+            feelsLike: temperature.celcius,
             pressure: pressure.hectopascals,
             humidity: general.percentage,
-            dew_point: temperature.celcius,
-    
+            dewPoint: temperature.celcius,
+
             clouds: general.percentage,
             visibility: distance.kilometres,
-            wind_speed: speed.kilometresPerHour,
-            wind_deg: direction.bearing,
-    
-            weather: iteration.array({
-                icon: general.icon
-            })
-        }),
-    
-        daily: iteration.array({
-            dt: general.datetime,
-            sunrise: general.datetime,
-            sunset: general.datetime,
-            temp: iteration.object({
-                day: temperature.celcius,
-                min: temperature.celcius,
-                max: temperature.celcius,
-                night: temperature.celcius,
-                eve: temperature.celcius,
-                morn: temperature.celcius
-            }),
-            feels_like: iteration.object({
-                day: temperature.celcius,
-                night: temperature.celcius,
-                eve: temperature.celcius,
-                morn: temperature.celcius
-            }),
-            pressure: pressure.hectopascals,
-            humidity: general.percentage,
-            dew_point: temperature.celcius,
-            wind_speed: speed.kilometresPerHour,
-            wind_deg: direction.bearing,
-            weather: iteration.array({
-                icon: general.icon
-            }),
-            clouds: general.percentage,
-            rain: distance.millimeters,
-            pop: general.percentage
-        }),
-    
-        hourly: iteration.array({
-            dt: general.datetime,
-            temp: temperature.celcius,
-            feels_like: temperature.celcius,
-            pressure: pressure.hectopascals,
-            humidity: general.percentage,
-            dew_point: temperature.celcius,
-            clouds: general.percentage,
-            visibility: distance.kilometres,
-            wind_speed: speed.kilometresPerHour,
-            wind_deg: direction.bearing,
-            pop: general.percentage,
-            weather: iteration.array({
-                icon: general.icon
-            })
-        })
+            windSpeed: speed.kilometresPerHour,
+            windDeg: direction.bearing,
+
+            weather: [
+                {
+                    icon: general.icon
+                }
+            ]
+        },
+
+        daily: [
+            {
+                dt: general.datetime,
+                sunrise: general.datetime,
+                sunset: general.datetime,
+                temp: {
+                    day: temperature.celcius,
+                    min: temperature.celcius,
+                    max: temperature.celcius,
+                    night: temperature.celcius,
+                    eve: temperature.celcius,
+                    morn: temperature.celcius
+                },
+                feelsLike: {
+                    day: temperature.celcius,
+                    night: temperature.celcius,
+                    eve: temperature.celcius,
+                    morn: temperature.celcius
+                },
+                pressure: pressure.hectopascals,
+                humidity: general.percentage,
+                dewPoint: temperature.celcius,
+                windSpeed: speed.kilometresPerHour,
+                windDeg: direction.bearing,
+                weather: [
+                    {
+                        icon: general.icon
+                    }
+                ],
+                clouds: general.percentage,
+                rain: distance.millimeters,
+                pop: general.percentage
+            }
+        ],
+
+        hourly: [
+            {
+                dt: general.datetime,
+                temp: temperature.celcius,
+                feelsLike: temperature.celcius,
+                pressure: pressure.hectopascals,
+                humidity: general.percentage,
+                dewPoint: temperature.celcius,
+                clouds: general.percentage,
+                visibility: distance.kilometres,
+                windSpeed: speed.kilometresPerHour,
+                windDeg: direction.bearing,
+                pop: general.percentage,
+                weather: [
+                    {
+                        icon: general.icon
+                    }
+                ],
+            }
+        ]
     },
     [UNITS.imperial]: {
-        current: iteration.object({
+        current: {
             dt: general.datetime,
             sunrise: general.datetime,
             sunset: general.datetime,
             temp: temperature.fahrenheit,
-            feels_like: temperature.fahrenheit,
+            feelsLike: temperature.fahrenheit,
             pressure: pressure.millibars,
             humidity: general.percentage,
-            dew_point: temperature.fahrenheit,
-    
+            dewPoint: temperature.fahrenheit,
+
             clouds: general.percentage,
             visibility: distance.miles,
-            wind_speed: speed.milesPerHour,
-            wind_deg: direction.bearing,
-    
-            weather: iteration.array({
-                icon: general.icon
-            })
-        }),
+            windSpeed: speed.milesPerHour,
+            windDeg: direction.bearing,
 
-        daily: iteration.array({
-            dt: general.datetime,
-            sunrise: general.datetime,
-            sunset: general.datetime,
-            temp: iteration.object({
-                day: temperature.fahrenheit,
-                min: temperature.fahrenheit,
-                max: temperature.fahrenheit,
-                night: temperature.fahrenheit,
-                eve: temperature.fahrenheit,
-                morn: temperature.fahrenheit
-            }),
-            feels_like: iteration.object({
-                day: temperature.fahrenheit,
-                night: temperature.fahrenheit,
-                eve: temperature.fahrenheit,
-                morn: temperature.fahrenheit
-            }),
-            pressure: pressure.millibars,
-            humidity: general.percentage,
-            dew_point: temperature.fahrenheit,
-            wind_speed: speed.milesPerHour,
-            wind_deg: direction.bearing,
-            weather: iteration.array({
-                icon: general.icon
-            }),
-            clouds: general.percentage,
-            rain: distance.inches,
-            pop: general.percentage
-        }),
+            weather: [
+                {
+                    icon: general.icon
+                }
+            ]
+        },
 
-        hourly: iteration.array({
-            dt: general.datetime,
-            temp: temperature.fahrenheit,
-            feels_like: temperature.fahrenheit,
-            pressure: pressure.millibars,
-            humidity: general.percentage,
-            dew_point: temperature.fahrenheit,
-            clouds: general.percentage,
-            visibility: distance.miles,
-            wind_speed: speed.milesPerHour,
-            wind_deg: direction.bearing,
-            pop: general.percentage,
-            weather: iteration.array({
-                icon: general.icon
-            })
-        })
+        daily: [
+            {
+                dt: general.datetime,
+                sunrise: general.datetime,
+                sunset: general.datetime,
+                temp: {
+                    day: temperature.fahrenheit,
+                    min: temperature.fahrenheit,
+                    max: temperature.fahrenheit,
+                    night: temperature.fahrenheit,
+                    eve: temperature.fahrenheit,
+                    morn: temperature.fahrenheit
+                },
+                feelsLike: {
+                    day: temperature.fahrenheit,
+                    night: temperature.fahrenheit,
+                    eve: temperature.fahrenheit,
+                    morn: temperature.fahrenheit
+                },
+                pressure: pressure.millibars,
+                humidity: general.percentage,
+                dewPoint: temperature.fahrenheit,
+                windSpeed: speed.milesPerHour,
+                windDeg: direction.bearing,
+                weather: [
+                    {
+                        icon: general.icon
+                    }
+                ],
+                clouds: general.percentage,
+                rain: distance.inches,
+                pop: general.percentage
+            }
+        ],
+
+        hourly: [
+            {
+                dt: general.datetime,
+                temp: temperature.fahrenheit,
+                feelsLike: temperature.fahrenheit,
+                pressure: pressure.millibars,
+                humidity: general.percentage,
+                dewPoint: temperature.fahrenheit,
+                clouds: general.percentage,
+                visibility: distance.miles,
+                windSpeed: speed.milesPerHour,
+                windDeg: direction.bearing,
+                pop: general.percentage,
+                weather: [
+                    {
+                        icon: general.icon
+                    }
+                ]
+            }
+        ]
 
     }
 }
