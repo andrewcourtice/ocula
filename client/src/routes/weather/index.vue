@@ -4,16 +4,22 @@
 
 <script lang="ts">
 import {
-    defineComponent
+    defineComponent,
+    onActivated,
+    onBeforeMount
 } from 'vue';
 
 import {
-    state
+    state,
+    update
 } from '../../store/index';
 
 export default defineComponent({
     
     setup() {
+        onBeforeMount(update);
+        onActivated(update);
+
         return {
             state
         }

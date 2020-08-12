@@ -1,9 +1,11 @@
+import setLoading from '../mutations/set-loading';
+import setLastUpdated from '../mutations/set-last-updated';
+
 import loadLocation from './load-location';
 import loadForecast from './load-forecast';
 
 import {
-    state,
-    mutate
+    state
 } from '../store';
 
 import {
@@ -11,7 +13,7 @@ import {
 } from '../helpers/storage';
 
 export default async function load() {
-    mutate(state => state.loading = true);
+    setLoading(true);
     
     try {
         const {
@@ -21,21 +23,20 @@ export default async function load() {
         
         await loadForecast(latitude, longitude);
         
-        mutate(state => state.lastUpdated = new Date());
-
+        setLastUpdated();
+        
         const {
             lastUpdated,
             location,
             forecast
         } = state;
-
+        
         saveData({
             lastUpdated,
             location,
             forecast
         });
-
     } finally {
-        mutate(state => state.loading = false);
+        setLoading(false);
     }
 }

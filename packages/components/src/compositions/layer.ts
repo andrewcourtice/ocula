@@ -41,6 +41,17 @@ export default function(id: string, { emit }: SetupContext) {
         isOpen.value = false;
     }
 
+    function cancel(payload: any) {
+        emit('cancel', payload);
+
+        if (promise) {
+            promise.reject(payload);
+            promise = null;
+        }
+
+        isOpen.value = false;
+    }
+
     let listeners = [] as IListener[];
 
     onBeforeMount(() => {
@@ -61,6 +72,7 @@ export default function(id: string, { emit }: SetupContext) {
     return {
         isOpen,
         open,
-        close
+        close,
+        cancel
     };
 }

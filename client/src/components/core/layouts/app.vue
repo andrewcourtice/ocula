@@ -1,21 +1,20 @@
 <template>
     <div class="app-layout">
-        <div class="margin__bottom--small" layout="row center-justify">
-            <div class="app-layout__menu">
-                <icon name="menu" @click.native="navigate"></icon>
+        <container>
+            <div class="margin__bottom--small" layout="row center-justify">
+                <div class="app-layout__menu">
+                    <icon name="menu" @click.native="navigate"></icon>
+                </div>
+                <div self="size-x1">
+                    <slot name="header"></slot>
+                </div>
             </div>
-            <div self="size-x1">
-                <slot name="header"></slot>
-            </div>
-        </div>
-        <slot></slot>
-        <navigation-sidebar />
+            <slot></slot>
+        </container>
     </div>
 </template>
 
 <script lang="ts">
-import NavigationSidebar from '../sidebars/navigation.vue';
-
 import applicationController from '../../../controllers/application';
 
 import {
@@ -23,10 +22,6 @@ import {
 } from 'vue';
 
 export default defineComponent({
-    
-    components: {
-        NavigationSidebar
-    },
 
     setup() {
         return {

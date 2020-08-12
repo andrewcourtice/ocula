@@ -4,14 +4,11 @@ export default {
         resized: 'application:resized',
         updateReady: 'application:update-ready'
     },
-    sidebars: {
-        navigation: 'sidebar:navigation',
-        alerts: 'sidebar:alerts'
+    storage: {
+        dataSaved: 'storage:data-saved',
+        settingsSaved: 'storage:settings-saved'
     },
-    modals: {
-        location: 'modal:location'
-    },
-    weather: {
-        locationChanged: 'weather:location-changed'
+    location: {
+        set: 'location:set'
     }
 };

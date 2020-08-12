@@ -7,6 +7,9 @@ module.exports = {
         '@babel/typescript'
     ],
     plugins: [
+        ['const-enum', {
+            transform: 'constObject'
+        }],
         '@babel/transform-typescript'
     ]
 };

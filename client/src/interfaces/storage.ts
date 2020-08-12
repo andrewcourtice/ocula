@@ -1,3 +1,5 @@
+import type LOCATION from '../enums/location';
+
 import type {
     ILocation
 } from './location';
@@ -8,7 +10,7 @@ import type {
 
 export interface ISettings {
     units: string,
-    location?: ILocation | string,
+    location?: ILocation | LOCATION,
     locations?: ILocation[] 
 };
 

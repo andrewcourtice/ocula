@@ -14,7 +14,8 @@ import type {
 
 export default [
     {
-        path: '/',
+        path: '/weather',
+        alias: '/',
         component: Weather,
         children: weather
     },

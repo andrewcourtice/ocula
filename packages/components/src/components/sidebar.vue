@@ -2,7 +2,7 @@
     <transition name="sidebar">
         <div class="sidebar" v-if="isOpen" @click.self="close">
             <aside class="sidebar__panel" :class="panelClass">
-                <slot></slot>
+                <slot :open="open" :close="close"></slot>
             </aside>
         </div>
     </transition>
@@ -34,6 +34,7 @@ export default defineComponent({
     setup(props, context) {
         const {
             isOpen,
+            open,
             close
         } = useLayer(props.id, context);
 
@@ -41,6 +42,7 @@ export default defineComponent({
 
         return {
             isOpen,
+            open,
             close,
             panelClass
         };

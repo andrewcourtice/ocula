@@ -1,8 +1,8 @@
 <template>
     <transition name="modal">
-        <div class="modal" layout="row center-center" v-if="isOpen" @click.self.stop="close">
+        <div class="modal" layout="row center-center" v-if="isOpen" @click.self.stop="close()">
             <div class="modal__body" :self="size">
-                <slot></slot>
+                <slot :open="open" :close="close" :cancel="cancel"></slot>
             </div>
         </div>
     </transition>
@@ -33,12 +33,15 @@ export default defineComponent({
     setup(props, context) {
         const {
             isOpen,
-            close
+            close,
+            cancel
         } = useLayer(props.id, context);
 
         return {
             isOpen,
-            close
+            open,
+            close,
+            cancel
         };
     }
 });

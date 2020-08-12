@@ -1,3 +1,5 @@
+export { default as arrayUniqueBy } from './array/unique-by';
+
 export { default as dateFormat } from './date/format';
 export { default as dateFormatDistance } from './date/format-distance';
 export { default as dateFormatDistanceToNow } from './date/format-distance-to-now';
@@ -21,3 +23,4 @@ export { default as typeIsFunction } from './type/is-function';
 export { default as typeIsNil } from './type/is-nil';
 export { default as typeIsNumber } from './type/is-number';
 export { default as typeIsPlainObject } from './type/is-plain-object';
+export { default as typeIsString } from './type/is-string';

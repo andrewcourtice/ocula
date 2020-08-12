@@ -1,6 +1,6 @@
 
 import GLOBAL from '../../constants/global';
-import LOCATIONS from '../../constants/locations';
+import LOCATIONS from '../../enums/location';
 
 import {
     state,
@@ -26,8 +26,8 @@ export default async function loadLocation() {
         location
     } = state.settings;
 
-    let latitude,
-        longitude;
+    let latitude: number,
+        longitude: number;
 
     if (location === LOCATIONS.current) {
         ({

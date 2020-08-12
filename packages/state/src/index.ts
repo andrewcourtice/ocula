@@ -32,7 +32,7 @@ export default function createStore<T extends object = any>(data: T): IStore<T> 
         return computed(() => getter(state as T));
     }
     
-    function mutate(mutation: Mutation<T>, name?: string) {
+    function mutate(mutation: Mutation<T>, name?: string): void {
         const mutationName = name || mutation.name || 'unknown';
 
         try {

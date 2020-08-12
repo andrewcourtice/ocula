@@ -1,23 +1,9 @@
-import {
-    state,
-    mutate
-} from '../store';
-
-import {
-    saveSettings
-} from '../helpers/storage';
+import setSettings from '../mutations/set-settings';
 
 import type {
     ISettings
 } from '../../interfaces/storage';
 
-export default function updateSettings(value: Partial<ISettings>) {
-    const settings = {
-        ...state.settings,
-        ...value
-    };
-
-    saveSettings(settings);
-
-    mutate(state => state.settings = settings);
+export default function updateSettings(settings: Partial<ISettings>): void {
+    setSettings(settings);
 }

@@ -52,7 +52,7 @@ export class ApplicationController {
     }
 
     async editLocations() {
-        return componentsController.open(MODALS.locations);
+        return componentsController.open(MODALS.locations).catch(() => console.log('cancelled'));
     }
 
     async navigate() {
