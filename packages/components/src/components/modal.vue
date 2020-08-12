@@ -65,7 +65,7 @@ export default defineComponent({
         max-height: 100%;
         padding: var(--spacing__medium);
         background-color: var(--background__colour);
-        border-radius: var(--border__radius);
+        border-radius: var(--border__radius--large);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }

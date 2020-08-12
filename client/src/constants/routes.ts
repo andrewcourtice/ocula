@@ -1,7 +1,7 @@
 export default {
     weather: {
         index: 'weather-index',
-        setup: 'weather-setup'
+        radar: 'weather-radar'
     },
     about: {
         index: 'about-index'

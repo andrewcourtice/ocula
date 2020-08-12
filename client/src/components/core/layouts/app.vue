@@ -1,12 +1,15 @@
 <template>
     <div class="app-layout">
         <container>
-            <div class="margin__bottom--small" layout="row center-justify">
+            <div class="app-layout__actions" layout="row center-justify">
                 <div class="app-layout__menu">
                     <icon name="menu" @click.native="navigate"></icon>
                 </div>
                 <div self="size-x1">
                     <slot name="header"></slot>
+                </div>
+                <div class="app-layout__location">
+                    <icon name="map-pin" @click.native="setLocation"></icon>
                 </div>
             </div>
             <slot></slot>
@@ -24,8 +27,14 @@ import {
 export default defineComponent({
 
     setup() {
+        const {
+            navigate,
+            setLocation
+        } = applicationController;
+
         return {
-            navigate: applicationController.navigate
+            navigate,
+            setLocation
         };
     }
 
@@ -35,6 +44,10 @@ export default defineComponent({
 <style lang="scss">
 
     .app-layout {
+      
+    }
+
+    .app-layout__actions {
         padding: var(--spacing__large);
     }
 

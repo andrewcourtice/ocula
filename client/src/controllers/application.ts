@@ -51,8 +51,8 @@ export class ApplicationController {
         });
     }
 
-    async editLocations() {
-        return componentsController.open(MODALS.locations).catch(() => console.log('cancelled'));
+    async setLocation() {
+        return componentsController.open(MODALS.locations);
     }
 
     async navigate() {
