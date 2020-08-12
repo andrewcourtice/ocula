@@ -1,85 +1,61 @@
 <template>
-    <sidebar class="navigation-sidebar" ref="sidebar">
+    <sidebar :id="id" class="navigation-sidebar">
         <div class="navigation-sidebar__branding">
-            <img class="navigation-sidebar__branding-logo" :src="$options.staticData.logo" alt="Ocula">
+            <img class="navigation-sidebar__branding-logo" :src="logo" alt="Ocula">
             <h1 class="navigation-sidebar__branding-title">Ocula</h1>
         </div>
         <div class="menu">
-            <router-link to="/" class="link" @click.native="close">
+            <router-link to="/" class="link">
                 <div class="menu-item" layout="row center-left">
                     <icon name="cloud-drizzle" class="margin__right--small"></icon>
                     <strong>Weather</strong>
                 </div>            
             </router-link>
-            <router-link to="/settings" class="link" @click.native="close">
+            <router-link to="/settings" class="link">
                 <div class="menu-item" layout="row center-left">
                     <icon name="settings" class="margin__right--small"></icon>
                     <strong>Settings</strong>
                 </div>
             </router-link>
-            <router-link to="/about" class="link" @click.native="close">
+            <router-link to="/about" class="link">
                 <div class="menu-item" layout="row center-left">
                     <icon name="info" class="margin__right--small"></icon>
                     <strong>About</strong>
                 </div>
             </router-link>
-            <div class="menu-item" layout="row center-left" v-if="updateReady" @click="update">
+            <!-- <div class="menu-item" layout="row center-left" v-if="updateReady" @click="update">
                 <icon name="refresh-cw" class="margin__right--small"></icon>
                 <div>
                     <strong>Update available</strong>
                     <br>
                     <small class="text--meta">Tap here to update</small>
                 </div>
-            </div>
+            </div> -->
         </div>
     </sidebar>
 </template>
 
 <script lang="ts">
-import EVENTS from '../../../constants/events';
-
-import applicationController from '../../../controllers/application';
-
-import subscriberMixin from '../mixins/subscriber';
+import SIDEBARS from '../../../constants/sidebars';
 
 import logo from '../../../assets/images/ocula-192.svg';
 
-export default {
-    
-    mixins: [
-        subscriberMixin(EVENTS.sidebars.navigation)
-    ],
+import {
+    defineComponent
+} from 'vue';
 
-    // @ts-ignore
-    staticData: {
-        logo
-    },
+export default defineComponent({
 
-    computed: {
+    setup() {
+        const id = SIDEBARS.navigation;
 
-        updateReady() {
-            return applicationController.updateReady;
-        }
-
-    },
-
-    methods: {
-
-        open() {
-            this.$refs.sidebar.open();
-        },
-
-        close() {
-            this.$refs.sidebar.close();
-        },
-
-        update() {
-            window.location.reload();
-        }
-
+        return {
+            id,
+            logo
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
-    <transition name="modal" v-on="$listeners">
-        <div class="modal" layout="row center-center" v-if="showing" @click.self.stop="close">
+    <transition name="modal">
+        <div class="modal" layout="row center-center" v-if="isOpen" @click.self.stop="close">
             <div class="modal__body" :self="size">
                 <slot></slot>
             </div>
@@ -9,36 +9,39 @@
 </template>
 
 <script lang="ts">
-export default {
+import {
+    defineComponent
+} from 'vue';
+
+import useLayer from '../compositions/layer';
+
+export default defineComponent({
 
     props: {
+
+        id: {
+            type: String
+        },
 
         size: {
             type: String,
             default: 'size-small'
-        }
+        } 
 
     },
 
-    data() {
+    setup(props, context) {
+        const {
+            isOpen,
+            close
+        } = useLayer(props.id, context);
+
         return {
-            showing: false
+            isOpen,
+            close
         };
-    },
-    
-    methods: {
-
-        open() {
-            this.showing = true;
-        },
-
-        close() {
-            this.showing = false;
-        }
-
     }
-
-};
+});
 </script>
 
 <style lang="scss">

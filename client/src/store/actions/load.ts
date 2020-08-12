@@ -4,7 +4,7 @@ import loadForecast from './load-forecast';
 import {
     state,
     mutate
-} from '../store/index';
+} from '../store';
 
 import {
     saveData

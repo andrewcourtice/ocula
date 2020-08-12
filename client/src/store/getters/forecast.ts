@@ -7,7 +7,7 @@ import {
 
 import {
     getter
-} from '../store/index';
+} from '../store';
 
 import {
     objectTransform

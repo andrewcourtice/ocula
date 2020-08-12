@@ -1,13 +1,17 @@
+import {
+    Directive
+} from 'vue';
+
 export default {
 
-    inserted(el: Element, binding) {
+    mounted(el, binding) {
         const {
             value,
             modifiers
         } = binding;
 
         const query = value || 'input, select, textarea';
-        const element = el.querySelector(query) || el;
+        const element = el.querySelector<HTMLInputElement>(query) || el;
 
         if (!element) {
             return;
@@ -20,4 +24,4 @@ export default {
         }
     }
 
-};
+} as Directive<HTMLInputElement, string>;

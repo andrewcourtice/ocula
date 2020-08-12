@@ -5,8 +5,13 @@
 </template>
 
 <script lang="ts">
-export default {
-    
+import {
+    defineComponent,
+    computed
+} from 'vue';
+
+export default defineComponent({
+
     props: {
 
         name: {
@@ -15,19 +20,17 @@ export default {
 
     },
 
-    computed: {
-
-        className() {
-            return `icon--${this.name}`;
-        },
-
-        href() {
-            return `/feather-sprite.svg#${this.name}`;
-        }
-
+    setup(props) {
+        const href = computed(() => `/feather-sprite.svg#${props.name}`);
+        const className = computed(() => `icon--${props.name}`);
+    
+        return {
+            href,
+            className
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

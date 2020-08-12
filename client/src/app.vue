@@ -12,8 +12,7 @@
 
     .app {
         width: 100%;
-        max-width: 720px;
-        margin: 0 auto;
+        margin: 0;
         padding: 0;
         user-select: none;
     }

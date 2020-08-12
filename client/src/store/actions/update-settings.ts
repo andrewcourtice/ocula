@@ -1,7 +1,7 @@
 import {
     state,
     mutate
-} from '../store/index';
+} from '../store';
 
 import {
     saveSettings

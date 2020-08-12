@@ -13,6 +13,8 @@ function register(application: App, registrar: Registrar, dictionary: Record<str
     Object.keys(dictionary).forEach(key => application[registrar].call(application, key, dictionary[key]));
 }
 
+export { default as componentsController } from './controllers/components';
+
 export default {
 
     install(application: App) {

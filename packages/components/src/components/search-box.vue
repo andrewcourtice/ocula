@@ -9,7 +9,12 @@
 </template>
 
 <script lang="ts">
-export default {
+import {
+    defineComponent,
+    computed
+} from 'vue';
+
+export default defineComponent({
     
     props: {
 
@@ -24,20 +29,22 @@ export default {
 
     },
 
-    computed: {
-
-        content: {
+    setup(props, { emit }) {
+        const content = computed({
             get() {
-                return this.modelValue;
+                return props.modelValue;
             },
             set(value) {
-                this.$emit('update:modelValue', value);
+                emit('update:modelValue', value);
             }
-        }
+        });
 
+        return {
+            content
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

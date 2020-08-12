@@ -1,7 +1,6 @@
 import './vendor';
 
 import initialiseComponents from './components';
-import initialiseState from './state';
 import initialiseRouter from './router';
 import initialiseApplication from './application';
 import initialiseLogging from './logging';
@@ -10,12 +9,11 @@ import initialiseWorker from './worker';
 export default async function start() {
     const application = initialiseApplication();
 
-    const store = initialiseState(application);
     const router = initialiseRouter(application);
     
     initialiseComponents(application);
-    initialiseWorker(store);
     
+    initialiseWorker();
     initialiseLogging();
 
     await router.isReady();
@@ -24,7 +22,6 @@ export default async function start() {
 
     return {
         router,
-        store,
         application
     };
 }

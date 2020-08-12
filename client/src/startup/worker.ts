@@ -1,6 +1,5 @@
 import EVENTS from '../constants/events';
 import STORAGE_KEYS from '../constants/storage-keys';
-import MUTATIONS from '../state/mutations';
 
 import eventEmitter from '@ocula/event-emitter';
 
@@ -8,11 +7,7 @@ import {
     Workbox
 } from 'workbox-window';
 
-import type {
-    Store
-} from 'vuex';
-
-export default async function initialiseWorker(store: Store<any>) {
+export default async function initialiseWorker() {
     if (!navigator.serviceWorker) {
         return;
     }
@@ -28,7 +23,7 @@ export default async function initialiseWorker(store: Store<any>) {
             // Clear any saved data
             localStorage.removeItem(STORAGE_KEYS.data);
 
-            store.commit(MUTATIONS.setUpdateReady);
+            //store.commit(MUTATIONS.setUpdateReady);
             eventEmitter.emit(EVENTS.application.updateReady);
         });
 

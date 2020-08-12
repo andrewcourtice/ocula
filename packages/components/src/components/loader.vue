@@ -3,8 +3,13 @@
 </template>
 
 <script lang="ts">
-export default {
-    
+import {
+    defineComponent,
+    computed
+} from 'vue';
+
+export default defineComponent({
+
     props: {
 
         disabled: {
@@ -14,17 +19,17 @@ export default {
 
     },
 
-    computed: {
+    setup(props) {
+        const className = computed(() => ({
+            'loader--loading': !props.disabled
+        }));
 
-        className() {
-            if (!this.disabled) {
-                return 'loader--loading';
-            }
-        }
-
+        return {
+            className
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

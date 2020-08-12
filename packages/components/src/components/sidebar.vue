@@ -1,6 +1,6 @@
 <template>
     <transition name="sidebar">
-        <div class="sidebar" v-if="showing" @click.self="close">
+        <div class="sidebar" v-if="isOpen" @click.self="close">
             <aside class="sidebar__panel" :class="panelClass">
                 <slot></slot>
             </aside>
@@ -9,9 +9,20 @@
 </template>
 
 <script lang="ts">
-export default {
+import {
+    defineComponent,
+    computed
+} from 'vue';
+
+import useLayer from '../compositions/layer';
+
+export default defineComponent({
 
     props: {
+
+        id: {
+            type: String
+        },
 
         position: {
             type: String,
@@ -19,34 +30,23 @@ export default {
         }
 
     },
-    
-    data() {
+
+    setup(props, context) {
+        const {
+            isOpen,
+            close
+        } = useLayer(props.id, context);
+
+        const panelClass = computed(() => `sidebar__panel--${props.position}`);
+
         return {
-            showing: false
+            isOpen,
+            close,
+            panelClass
         };
-    },
-
-    computed: {
-
-        panelClass() {
-            return `sidebar__panel--${this.position}`;
-        }
-
-    },
-
-    methods: {
-
-        open() {
-            this.showing = true; 
-        },
-
-        close() {
-            this.showing = false;
-        }
-
     }
 
-};
+});
 </script>
 
 <style lang="scss">

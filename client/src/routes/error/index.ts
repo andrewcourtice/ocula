@@ -1,19 +1,17 @@
 import Index from './index.vue';
 import NotFound from './not-found.vue';
 
+import type {
+    RouteRecordRaw
+} from 'vue-router';
+
 export default [
     {
-        path: '/error',
+        path: '',
         component: Index,
-        children: [
-            {
-                path: 'not-found',
-                component: NotFound
-            }
-        ]
     },
     {
-        path: '/:catchAll(.*)',
-        redirect: '/error/not-found'
+        path: 'not-found',
+        component: NotFound,
     }
-]
+] as RouteRecordRaw[];

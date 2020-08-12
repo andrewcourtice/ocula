@@ -4,6 +4,7 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "dependencies": {
+        "@ocula/event-emitter": "1.0.0",
         "@ocula/style": "1.0.0"
     },
     "peerDependencies": {

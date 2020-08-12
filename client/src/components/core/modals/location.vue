@@ -1,5 +1,5 @@
 <template>
-    <modal class="location-modal" ref="modal">
+    <modal :id="id" class="location-modal" @open="reset">
         <search-box class="location-modal__search" placeholder="Search for a location..." :loading="loading" v-model="search" v-focus />
         <div class="menu margin__top--small">
             <div class="menu-item" layout="row center-left" @click="setCurrentLocation">
@@ -26,96 +26,90 @@
 </template>
 
 <script lang="ts">
-import EVENTS from '../../../constants/events';
+import MODALS from '../../../constants/modals';
 
-import subscriberMixin from '../../core/mixins/subscriber';
+import {
+    defineComponent,
+    ref,
+    computed
+} from 'vue';
 
-import settingsController from '../../../controllers/settings';
+import {
+    state,
+    searchLocations
+} from '../../../store';
 
 import {
     functionDebounce
 } from '@ocula/utilities';
 
-export default {
+import type {
+    ILocation
+} from '../../../interfaces/location';
 
-    mixins: [
-        subscriberMixin(EVENTS.modals.location)
-    ],
-    
-    data() {
-        return {
-            query: '',
-            locations: [],
-            loading: false
-        };
-    },
+export default defineComponent({
 
-    computed: {
+    setup() {
+        const id = MODALS.locations;
 
-        search: {
-            get() {
-                return this.query;
-            },
-            set(value: string) {
-                this.query = value;
+        const query = ref('');
+        const locations = ref<ILocation[]>([]);
+        const loading = ref(false);
 
-                if (value && value.length > 0) {
-                    this.searchLocations(value);
-                }
-            }
-        },
+        const savedLocations = state.settings.locations;
 
-        savedLocations() {
-            return settingsController.locations;
-        }
-
-    },
-
-    methods: {
-
-        open(resolve, reject) {
-            this.query = '';
-            this.locations = [];
-
-            this.$refs.modal.open();
-        },
-
-        close() {
-            this.$refs.modal.close();
-        },
-
-        setCurrentLocation() {
-            settingsController.setCurrentLocation();
-            this.close();
-        },
-
-        setLocation(location, addLocation: boolean) {
-            settingsController.location = location;
-
-            if (addLocation) {
-                settingsController.addLocation(location);
-            }
-
-            this.close();
-        },
-
-        removeLocation(location) {
-            settingsController.removeLocation(location);
-        },
-
-        searchLocations: functionDebounce(async function(query) {
-            this.loading = true;
+        const executeSearch = functionDebounce(async function(query) {
+            loading.value = true;
 
             try {
-                this.locations = await settingsController.searchLocations(query);
+                locations.value = await searchLocations(query);
             } finally {
-                this.loading = false;
+                loading.value = false;
             }
-        }, 500)
+        }, 500);
 
+        const search = computed({
+            get: () => query.value,
+            set: value => {
+                query.value = value;
+
+                if (value && value.length > 0) {
+                    executeSearch(value);
+                }
+            }
+        });
+
+        function setCurrentLocation() {
+
+        }
+
+        function setLocation(location: ILocation) {
+            alert(JSON.stringify(location));
+        }
+
+        function removeLocation() {
+
+        }
+
+        function reset() {
+            query.value = '';
+            locations.value = [];
+        }
+
+        return {
+            id,
+            query,
+            locations,
+            loading,
+            search,
+            savedLocations,
+            setCurrentLocation,
+            setLocation,
+            removeLocation
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

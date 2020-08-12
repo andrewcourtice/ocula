@@ -1,10 +1,14 @@
 import EVENTS from '../constants/events';
-
-import Controller from './_base/controller';
+import MODALS from '../constants/modals';
+import SIDEBARS from '../constants/sidebars';
 
 import eventEmitter from '@ocula/event-emitter';
 
 import logo from '../assets/images/ocula-192.png';
+
+import {
+    componentsController
+} from '@ocula/components';
 
 import {
     functionDebounce
@@ -29,11 +33,9 @@ async function notify(title: string, options?: NotificationOptions): Promise<Not
 window.addEventListener('resize', resize)
 document.addEventListener('visibilitychange', visibilityChanged);
 
-export class ApplicationController extends Controller {
+export class ApplicationController {
 
     constructor() {
-        super();
-
         eventEmitter.on(EVENTS.application.updateReady, async () => {
             const notification = await notify('Update Available', {
                 icon: logo,
@@ -49,12 +51,12 @@ export class ApplicationController extends Controller {
         });
     }
 
-    get updateReady() {
-        return this.state.updateReady;
+    async editLocations() {
+        return componentsController.open(MODALS.locations);
     }
 
-    openNavigationSidebar() {
-        eventEmitter.emit(EVENTS.sidebars.navigation);
+    async navigate() {
+        return componentsController.open(SIDEBARS.navigation);
     }
 
     async notify(title: string, options?: NotificationOptions): Promise<Notification> {

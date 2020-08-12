@@ -1,5 +1,3 @@
-import createStore from '@ocula/state';
-
 import {
     getSettings,
     getData
@@ -29,8 +27,4 @@ function getState(): IState {
     };
 }
 
-export const {
-    state,
-    getter,
-    mutate
-} = createStore(getState());
+export default getState();
