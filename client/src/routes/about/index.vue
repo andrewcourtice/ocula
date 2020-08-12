@@ -1,23 +1,18 @@
 <template>
-    <app-layout class="about-route">
-        <template #header>
-            <div layout="row center-left">
-                <icon name="info"/><strong class="margin__left--small">About</strong>
-            </div>
-        </template>
+    <div class="about-route">
         <section class="text--centre">
-            <img class="about-route__logo" :src="$options.staticData.logo" alt="Ocula">
-            <h1>{{ title }}</h1>
-            <div>{{ description }}</div>
+            <img class="about-route__logo" :src="logo" alt="Ocula">
+            <h1>{{ manifest.title }}</h1>
+            <div>{{ manifest.description }}</div>
         </section>
         <block title="Application" class="margin__top--large">
             <div class="about-route__details-grid">
                 <strong>Version</strong>
-                <div>{{ version }}</div>
+                <div>{{ manifest.version }}</div>
                 <strong>Author</strong>
-                <div>{{ author }}</div>
+                <div>{{ manifest.author }}</div>
                 <strong>Licence</strong>
-                <div>{{ license }}</div>
+                <div>{{ manifest.license }}</div>
                 <strong>Source</strong>
                 <a :href="repository" target="_blank">Github</a>
             </div>
@@ -39,33 +34,27 @@
         <footer class="margin__top--large text--centre">
             <small class="text--meta">Psalm 147:8</small>
         </footer>
-    </app-layout>   
+    </div>   
 </template>
 
 <script lang="ts">
-
-
-import AppLayout from '../../components/core/layouts/app.vue';
-
 import manifest from '../../../package.json';
 import logo from '../../assets/images/ocula-192.svg';
 
-export default {
+import {
+    defineComponent
+} from 'vue';
 
-    data() {
-        return manifest;
-    },
+export default defineComponent({
 
-    // @ts-ignore
-    staticData: {
-        logo
-    },
-
-    components: {
-        AppLayout
+    setup() {
+        return {
+            logo,
+            manifest
+        };
     }
 
-};
+});
 </script>
 
 <style lang="scss">

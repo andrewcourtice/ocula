@@ -1,8 +1,15 @@
+import ROUTES from '../../constants/routes';
+
 import Index from './index.vue';
+
+import type {
+    RouteRecordRaw
+} from 'vue-router';
 
 export default [
     {
-        path: '/settings',
+        path: '',
+        name: ROUTES.settings.index,
         component: Index
     }
-];
+] as RouteRecordRaw[];

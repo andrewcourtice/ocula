@@ -5,4 +5,4 @@ export default {
     units: UNITS.metric,
     location: null,
     locations: []
-};
+} as const;
