@@ -81,6 +81,7 @@ export default defineComponent({
     }
 
     .app__route {
+        display: block;
         color: var(--font__colour);
 
         &.router-link-active {

@@ -2,7 +2,7 @@
     <div class="weather-actions" :class="actionsClass" layout="row center-justify">
         <div class="weather-actions__action weather-actions__action--location" layout="row center-left" @click="setLocation">
             <icon name="map-pin"/>
-            <div class="margin__left--x-small">{{ location.shortName }}</div>
+            <div class="margin__left--x-small" v-if="location">{{ location.shortName }}</div>
         </div>
         <div self="size-x1">
             <slot name="header"></slot>

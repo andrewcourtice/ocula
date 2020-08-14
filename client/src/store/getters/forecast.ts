@@ -15,15 +15,20 @@ import {
 
 export default getter(state => {
     const {
-        units
-    } = state.settings;
+        forecast,
+        settings
+    } = state;
 
-    const format = FORMATS[units] || FORMATS[UNITS.metric];
+    if (!forecast) {
+        return;
+    }
+
+    const format = FORMATS[settings.units] || FORMATS[UNITS.metric];
 
     const {
         daily,
         ...other
-    } = objectTransform(state.forecast, format, defaultFormatter);
+    } = objectTransform(forecast, format, defaultFormatter);
 
     const today = daily[0];
 

@@ -1,5 +1,5 @@
 export default {
     lastUpdated: null,
     location: null,
-    forecast: {}
+    forecast: null
 };
