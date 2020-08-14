@@ -30,7 +30,9 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     
     --transition__timing: 250ms;
     --transition__timing--long: 400ms;
-    --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition__timing--fade: 1s;
+    --transition__easing--default: cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition__easing--quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
     
     --colour__primary: #{ $colour__primary };
     --colour__primary--light: #{ $colour__primary--light };

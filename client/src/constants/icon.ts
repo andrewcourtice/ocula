@@ -1,14 +1,12 @@
-import DARKSKY_ICON from './darksky-icon';
-
 export default {
-    [DARKSKY_ICON.rain]: 'cloud-drizzle',
-    [DARKSKY_ICON.snow]: 'cloud-snow',
-    [DARKSKY_ICON.sleet]: 'cloud-snow',
-    [DARKSKY_ICON.wind]: 'wind',
-    [DARKSKY_ICON.fog]: 'cloud',
-    [DARKSKY_ICON.cloudy]: 'cloud',
-    [DARKSKY_ICON.clearDay]: 'sun',
-    [DARKSKY_ICON.clearNight]: 'sun',
-    [DARKSKY_ICON.partlyCloudyDay]: 'cloud',
-    [DARKSKY_ICON.partlyCloudyNight]: 'cloud',
+    200: 'cloud-lightning',
+    300: 'cloud-drizzle',
+    500: 'cloud-rain',
+    600: 'cloud-snow',
+    700: 'cloud',
+    800: 'sun',
+    801: 'cloud',
+    802: 'cloud',
+    803: 'cloud',
+    804: 'cloud',
 };

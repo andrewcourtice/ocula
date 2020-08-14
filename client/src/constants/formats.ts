@@ -1,5 +1,15 @@
 import UNITS from './units';
-import FORMATTERS from './formatters';
+import FORMATTERS, {
+    defaultFormatter
+} from './formatters';
+
+import {
+    objectTransform
+} from '@ocula/utilities';
+
+import type {
+    IForecastWeather
+} from '../interfaces/weather';
 
 const {
     general,
@@ -9,6 +19,10 @@ const {
     pressure,
     direction
 } = FORMATTERS;
+
+function weatherTransform(value: IForecastWeather[]): Record<string, any> {
+    return objectTransform(value[0], {}, defaultFormatter);
+}
 
 export default {
     [UNITS.metric]: {
@@ -27,11 +41,7 @@ export default {
             windSpeed: speed.kilometresPerHour,
             windDeg: direction.bearing,
 
-            weather: [
-                {
-                    icon: general.icon
-                }
-            ]
+            weather: weatherTransform
         },
 
         daily: [
@@ -58,11 +68,7 @@ export default {
                 dewPoint: temperature.celcius,
                 windSpeed: speed.kilometresPerHour,
                 windDeg: direction.bearing,
-                weather: [
-                    {
-                        icon: general.icon
-                    }
-                ],
+                weather: weatherTransform,
                 clouds: general.percentage,
                 rain: distance.millimeters,
                 pop: general.percentage
@@ -82,11 +88,7 @@ export default {
                 windSpeed: speed.kilometresPerHour,
                 windDeg: direction.bearing,
                 pop: general.percentage,
-                weather: [
-                    {
-                        icon: general.icon
-                    }
-                ],
+                weather: weatherTransform,
             }
         ]
     },
@@ -137,11 +139,7 @@ export default {
                 dewPoint: temperature.fahrenheit,
                 windSpeed: speed.milesPerHour,
                 windDeg: direction.bearing,
-                weather: [
-                    {
-                        icon: general.icon
-                    }
-                ],
+                weather: weatherTransform,
                 clouds: general.percentage,
                 rain: distance.inches,
                 pop: general.percentage
@@ -161,11 +159,7 @@ export default {
                 windSpeed: speed.milesPerHour,
                 windDeg: direction.bearing,
                 pop: general.percentage,
-                weather: [
-                    {
-                        icon: general.icon
-                    }
-                ]
+                weather: weatherTransform
             }
         ]
 

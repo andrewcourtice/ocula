@@ -9,9 +9,11 @@ import type {
 } from './weather';
 
 export interface ISettings {
-    units: string,
-    location?: ILocation | LOCATION,
-    locations?: ILocation[] 
+    version: number;
+    units: string;
+    theme: string;
+    location?: ILocation | LOCATION;
+    locations?: ILocation[];
 };
 
 export interface IStoredData {

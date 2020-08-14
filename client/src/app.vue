@@ -1,5 +1,5 @@
 <template>
-    <layout class="app" footer>
+    <layout class="app" :class="theme.core.class" v-meta:theme-color="theme.core.color" footer>
         <router-view />
         <location-modal />
         <template #footer>
@@ -25,6 +25,10 @@ import LocationModal from './components/modals/location.vue';
 import {
     defineComponent
 } from 'vue';
+
+import {
+    theme
+} from './store';
 
 const routes = [
     {
@@ -58,6 +62,7 @@ export default defineComponent({
 
     setup() {
         return {
+            theme,
             routes
         };
     }
@@ -76,12 +81,12 @@ export default defineComponent({
     }
 
     .app__footer {
-        padding: var(--spacing__x-small) 0;
         border-top: 1px solid var(--border__colour);
     }
 
     .app__route {
         display: block;
+        padding: var(--spacing__x-small);
         color: var(--font__colour);
 
         &.router-link-active {

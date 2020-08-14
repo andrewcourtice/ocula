@@ -18,6 +18,7 @@
         "@ocula/components": "1.0.0",
         "@ocula/event-emitter": "1.0.0",
         "@ocula/state": "1.0.0",
+        "@ocula/themes": "1.0.0",
         "@ocula/utilities": "1.0.0",
         "@sentry/browser": "^5.20.1",
         "@sentry/integrations": "^5.20.1",

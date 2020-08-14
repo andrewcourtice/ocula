@@ -81,10 +81,10 @@ export default defineComponent({
 
     .modal-enter-active,
     .modal-leave-active {
-        transition: opacity var(--transition__timing) var(--transition__easing-quartic-out);
+        transition: opacity var(--transition__timing) var(--transition__easing--default);
 
         & .modal__body {
-            transition: transform var(--transition__timing) var(--transition__easing-quartic-out);
+            transition: transform var(--transition__timing) var(--transition__easing--default);
         }
     }
 

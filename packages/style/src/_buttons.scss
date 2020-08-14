@@ -8,7 +8,7 @@ button,
     border-radius: var(--border__radius);
     background-color: #EEEEEE;
     cursor: pointer;
-    transition: background var(--transition__timing) var(--transition__easing-quartic-out);
+    transition: background var(--transition__timing) var(--transition__easing--default);
 
     &:hover {
         background-color: darken(#EEEEEE, 10%);

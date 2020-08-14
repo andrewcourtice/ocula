@@ -1,9 +1,10 @@
-import ICON from './icon';
+import getIcon from '../helpers/get-icon';
 
 import {
     dateFromUnix,
     functionIdentity
 } from '@ocula/utilities';
+
 
 function baseFormatter<T>(raw: T, formatted: any) {
     return {
@@ -52,7 +53,7 @@ export default {
     },
     general: {
         datetime: value => baseFormatter(value, dateFromUnix(value)),
-        icon: value => baseFormatter(value, ICON[value]),
+        icon: value => baseFormatter(value, getIcon(value)),
         percentage: toSuffix('%', value => Math.round(value))
     }
 };

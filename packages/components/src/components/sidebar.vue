@@ -96,10 +96,10 @@ export default defineComponent({
 
     .sidebar-enter-active,
     .sidebar-leave-active {
-        transition: background var(--transition__timing--long) var(--transition__easing-quartic-out);
+        transition: background var(--transition__timing--long) var(--transition__easing--default);
 
         & .sidebar__panel {
-            transition: transform var(--transition__timing--long) var(--transition__easing-quartic-out);
+            transition: transform var(--transition__timing--long) var(--transition__easing--default);
         }
     }
 

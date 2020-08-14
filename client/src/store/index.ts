@@ -1,5 +1,6 @@
 export { state } from './store';
 
+export { default as theme } from './getters/theme';
 export { default as forecast } from './getters/forecast';
 
 export { default as update } from './actions/update';

@@ -1,22 +1,22 @@
 <template>
-    <div class="route forecast-index">
+    <div class="route forecast-index" :class="theme.weather.class" v-meta:theme-color="theme.weather.colour">
         <container class="forecast-index__container" layout="column top-stretch">
             <weather-actions></weather-actions>
             <template v-if="forecast">
                 <section class="forecast-index__summary" layout="row center-justify">
                     <div>
                         <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                        <div class="forecast-index__summary-description">{{ forecast.current.weather[0].description.formatted }}</div>
+                        <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
                     </div>
                     <div>
-                        <img :src="weatherIcons.sun" alt="partly cloudy">
+                        <img :src="getFigure(forecast.current.weather.id.raw)" alt="partly cloudy">
                     </div>
                 </section>
                 <div class="forecast-index__body" self="size-x1">
                     <section class="forecast-index__ahead">
                         <template v-for="day in forecast.daily">
                             <div :key="getDayKey(day, 'icon')">
-                                <icon name="cloud"/>
+                                <icon :name="getIcon(day.weather.id.raw)"/>
                             </div>
                             <div :key="getDayKey(day, 'date')">{{ formatDate(day) }}</div>
                             <div :key="getDayKey(day, 'min')">{{ day.temp.min.formatted }}</div>
@@ -100,15 +100,17 @@ import TRENDS from '../../constants/trends';
 import WeatherActions from '../../components/weather/actions.vue';
 import TrendChart from '../../components/weather/trend-chart.vue';
 
-import weatherIcons from '../../assets/images/weather';
+import getIcon from '../../helpers/get-icon';
+import getFigure from '../../helpers/get-figure';
 
 import {
     defineComponent
 } from 'vue';
 
 import {
+    theme,
     forecast
-} from '../../store/index';
+} from '../../store';
 
 import {
     dateFormat
@@ -137,12 +139,14 @@ export default defineComponent({
         }
 
         return {
-            weatherIcons,
+            theme,
             forecast,
             getDayKey,
             formatDate,
             formatTime,
-            trendType
+            trendType,
+            getIcon,
+            getFigure
         };
     }
 
@@ -152,8 +156,10 @@ export default defineComponent({
 <style lang="scss">
 
     .forecast-index {
-        color: var(--foreground__colour);
-        background: var(--colour__primary);
+        color: var(--font__colour--weather);
+        background: var(--background__colour--weather);
+        transition: color var(--transition__timing--fade) var(--transition__easing--default),
+                    background var(--transition__timing--fade) var(--transition__easing--default);
     }
 
     .forecast-index__container {
@@ -163,7 +169,7 @@ export default defineComponent({
     .forecast-index__summary {
         padding: var(--spacing__large);
         padding-top: 0;
-        min-height: 33vh;
+        min-height: 25vh;
     }
 
     .forecast-index__summary-temp {
