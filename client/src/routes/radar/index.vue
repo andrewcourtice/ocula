@@ -1,36 +1,55 @@
 <template>
-    <div class="route radar-index">
-        <container>
-            <weather-actions></weather-actions>
-            <div>
-                {{ state.settings }}
-            </div>
-        </container>
+    <div class="route radar-index" layout="column top-stretch">
+        <div>
+            <container>
+                <weather-actions></weather-actions>
+            </container>
+        </div>
+        <div self="size-x1">
+            <radar class="radar-index__radar"
+                v-if="forecast"
+                :latitude="forecast.lat.raw"
+                :longitude="forecast.lon.raw"
+                :timestamps="forecast.radar.raw.timestamps"
+                interactive>
+            </radar>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import WeatherActions from '../../components/weather/actions.vue';
+import Radar from '../../components/weather/radar.vue';
 
 import {
-    defineComponent
+    defineComponent,
+    computed
 } from 'vue';
 
 import {
-    state
+    forecast
 } from '../../store/index';
 
 export default defineComponent({
 
     components: {
-        WeatherActions
+        WeatherActions,
+        Radar
     },
     
     setup() {
         return {
-            state
-        }
+            forecast
+        };
     }
 
 });
 </script>
+
+<style lang="scss">
+
+    .radar-index__radar {
+        border-radius: 0;
+    }
+
+</style>

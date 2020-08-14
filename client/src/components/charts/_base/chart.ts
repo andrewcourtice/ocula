@@ -1,13 +1,11 @@
 import EVENTS from '../../../constants/events';
 
-import subscriberMixin from '../../../core/mixins/subscriber';
+import {
+    defineComponent
+} from 'vue';
 
 export default function chart(Chart) {
-    return {
-
-        mixins: [
-            subscriberMixin(EVENTS.application.resized, 'render')
-        ],
+    return defineComponent({
 
         props: {
 
@@ -72,5 +70,5 @@ export default function chart(Chart) {
             this.updateWatch && this.updateWatch();
         }
 
-    };
+    });
 }

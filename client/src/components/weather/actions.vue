@@ -1,13 +1,13 @@
 <template>
-    <div class="weather-actions" layout="row center-justify">
-        <div class="weather-actions__location" layout="row center-left" @click="setLocation">
+    <div class="weather-actions" :class="actionsClass" layout="row center-justify">
+        <div class="weather-actions__action weather-actions__action--location" layout="row center-left" @click="setLocation">
             <icon name="map-pin"/>
             <div class="margin__left--x-small">{{ location.shortName }}</div>
         </div>
         <div self="size-x1">
             <slot name="header"></slot>
         </div>
-        <div class="weather-actions__update" @click="update">
+        <div class="weather-actions__action weather-actions__action--update" @click="update">
             <icon name="refresh-cw"/>
         </div>
     </div>
@@ -33,12 +33,14 @@ export default defineComponent({
             setLocation
         } = applicationController;
 
-        const location = computed(() => state.location)
+        const location = computed(() => state.location);
+        const actionsClass = computed(() => state.loading && 'weather-actions--loading');
 
         return {
             location,
             setLocation,
-            update
+            update,
+            actionsClass
         };
     }
 
@@ -49,6 +51,30 @@ export default defineComponent({
 
     .weather-actions {
         padding: var(--spacing__large);
+    }
+
+    .weather-actions--loading {
+
+        & .weather-actions__action {
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        & .weather-actions__action--update {
+            animation: rotate 750ms ease-out infinite;
+        }
+    }
+
+    @keyframes rotate {
+
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+
     }
 
 </style>

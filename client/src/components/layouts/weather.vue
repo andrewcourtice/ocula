@@ -21,7 +21,7 @@
 <script lang="ts">
 import applicationController from '../../controllers/application';
 
-import logo from '../../assets/images/ocula-192.svg';
+import logo from '../../assets/images/logo/logo-192.svg';
 
 import {
     defineComponent,

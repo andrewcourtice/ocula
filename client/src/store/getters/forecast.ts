@@ -20,9 +20,16 @@ export default getter(state => {
 
     const format = FORMATS[units] || FORMATS[UNITS.metric];
 
-    const output = objectTransform(state.forecast, format, defaultFormatter);
+    const {
+        daily,
+        ...other
+    } = objectTransform(state.forecast, format, defaultFormatter);
 
-    console.log(output);
+    const today = daily[0];
 
-    return output;
+    return {
+        ...other,
+        today,
+        daily
+    };
 });

@@ -1,17 +1,25 @@
 <template>
-    <div class="radar">
+    <div class="radar" ref="element">
         <loader class="radar__loader" v-if="loading" />
     </div>
 </template>
 
 <script lang="ts">
+import {
+    defineComponent,
+    ref,
+    watch,
+    onMounted,
+    toRefs
+} from 'vue';
+
 const STYLE = {
     light: 'light-v10',
     dark: 'dark-v10',
     streets: 'streets-v10'
 };
 
-export default {
+export default defineComponent({
 
     props: {
 
@@ -31,7 +39,7 @@ export default {
         style: {
             type: String,
             default: 'light',
-            validator: value => value in STYLE
+            //validator: value => value in STYLE
         },
 
         timestamps: {
@@ -55,63 +63,21 @@ export default {
 
     },
 
-    data() {
-        return {
-            loading: true,
+    setup(props) {
+        let map;
+        let index = 0;
+        let intervalHandle;
 
-            map: null,
-            index: 0,
-            intervalHandle: null
-        };
-    },
+        const element = ref<Element>(null);
+        const loading = ref(false);
 
-    methods: {
-
-        getTileUrl(index) {
-            const timestamp = this.timestamps[index] || this.timestamps[0];
+        function getTileUrl(index) {
+            const timestamp = props.timestamps[index] || props.timestamps[0];
             return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/2/0_0.png`;
-        },
-
-        startCarousel() {
-            this.index = 0;
-
-            setInterval(() => {
-                if (this.index === this.timestamps.length - 1) {
-                    this.index = 0;
-                }
-
-                const source = this.map.getSource('raster-tile');
-
-                source.tiles = [this.getTileUrl(this.index)];
-
-                this.map.style.sourceCaches['raster-tile'].clearTiles()
-                this.map.style.sourceCaches['raster-tile'].update(this.map.transform);
-                this.map.triggerRepaint();
-
-                this.index++;
-            }, this.carouselInterval);
-        },
-
-        stopCarousel() {
-            this.intervalHandle && window.clearInterval(this.intervalHandle);
-        },
-
-        updateLocation() {
-            if (!this.map) {
-                return;
-            }
-
-            this.map.easeTo({
-                zoom: this.zoom,
-                center: [
-                    this.longitude,
-                    this.latitude
-                ]
-            });
-        },
-
-        async loadMapbox() {
-            this.loading = true;
+        }
+        
+        async function loadMapbox() {
+            loading.value = true;
 
             try {
                 const mapboxModule = await import(/* webpackChunkName: 'mapbox' */ 'mapbox-gl');
@@ -121,81 +87,246 @@ export default {
 
                 return mapboxgl;
             } finally {
-                this.loading = false;
+                loading.value = false;
             }
         }
 
-    },
+        function startCarousel() {
+            index = 0;
 
-    async mounted() {
-        const mapboxgl = await this.loadMapbox();
+            setInterval(() => {
+                if (index === props.timestamps.length - 1) {
+                    index = 0;
+                }
 
-        const map = new mapboxgl.Map({
-            container: this.$el,
-            style: `mapbox://styles/mapbox/${STYLE[this.style]}`,
-            zoom: this.zoom,
-            interactive: this.interactive,
-            center: [
-                this.longitude,
-                this.latitude
-            ]
-        });
+                const source = map.getSource('raster-tile');
 
-        this.map = map;
+                source.tiles = [getTileUrl(index)];
 
-        if (!this.timestamps) {
-            return;
+                map.style.sourceCaches['raster-tile'].clearTiles()
+                map.style.sourceCaches['raster-tile'].update(map.transform);
+                map.triggerRepaint();
+
+                index++;
+            }, props.carouselInterval);
         }
-        
-        const latestTimestamp = this.timestamps[this.timestamps.length - 1];
 
-        map.on('load', () => {
-            
-            const layers = map.getStyle().layers;
-            const firstLayer = layers.find(layer => layer.type === 'symbol');
+        function stopCarousel() {
+            intervalHandle && window.clearInterval(intervalHandle);
+        }
 
-            map.addSource('raster-tile', {
-                type: 'raster',
-                tiles: [this.getTileUrl(latestTimestamp)],
-                tileSize: 256
+        function updateLocation() {
+            if (!map) {
+                return;
+            }
+
+            map.easeTo({
+                zoom: props.zoom,
+                center: [
+                    props.longitude,
+                    props.latitude
+                ]
+            });
+        }
+    
+        onMounted(async () => {
+            const mapboxgl = await loadMapbox();
+
+            console.log(element.value);
+
+            map = new mapboxgl.Map({
+                container: element.value,
+                style: `mapbox://styles/mapbox/${STYLE[props.style]}`,
+                zoom: props.zoom,
+                interactive: props.interactive,
+                center: [
+                    props.longitude,
+                    props.latitude
+                ]
             });
 
-            map.addLayer({
-                id: "simple-tiles",
-                type: "raster",
-                source: 'raster-tile',
-                minzoom: 0,
-                maxzoom: 22
-            }, firstLayer.id);
+            const latestTimestamp = props.timestamps[props.timestamps.length - 1];
 
-            if (this.carouselEnabled) {
-                this.startCarousel();
-            }
+            map.on('load', () => {
+                const layers = map.getStyle().layers;
+                const firstLayer = layers.find(layer => layer.type === 'symbol');
 
+                map.addSource('raster-tile', {
+                    type: 'raster',
+                    tiles: [getTileUrl(latestTimestamp)],
+                    tileSize: 256
+                });
+
+                map.addLayer({
+                    id: "simple-tiles",
+                    type: "raster",
+                    source: 'raster-tile',
+                    minzoom: 0,
+                    maxzoom: 22
+                }, firstLayer.id);
+
+                if (props.carouselEnabled) {
+                    startCarousel();
+                }
+
+            });
         });
+
+        watch([
+            () => props.latitude,
+            () => props.longitude,
+            () => props.zoom
+        ], updateLocation);
+
+        watch(() => props.carouselEnabled, value => (value ? startCarousel : stopCarousel)());
+
+        return {
+            element,
+            loading
+        };
     },
 
-    watch: {
+    // data() {
+    //     return {
+    //         loading: true,
 
-        latitude() {
-            this.updateLocation();
-        },
+    //         map: null,
+    //         index: 0,
+    //         intervalHandle: null
+    //     };
+    // },
 
-        longitude() {
-            this.updateLocation();
-        },
+    // methods: {
 
-        zoom() {
-            this.updateLocation();
-        },
+    //     getTileUrl(index) {
+    //         const timestamp = this.timestamps[index] || this.timestamps[0];
+    //         return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/2/0_0.png`;
+    //     },
 
-        carouselEnabled(value) {
-            value ? this.startCarousel() : this.stopCarousel();
-        }
+    //     startCarousel() {
+    //         this.index = 0;
 
-    }
+    //         setInterval(() => {
+    //             if (this.index === this.timestamps.length - 1) {
+    //                 this.index = 0;
+    //             }
 
-};
+    //             const source = this.map.getSource('raster-tile');
+
+    //             source.tiles = [this.getTileUrl(this.index)];
+
+    //             this.map.style.sourceCaches['raster-tile'].clearTiles()
+    //             this.map.style.sourceCaches['raster-tile'].update(this.map.transform);
+    //             this.map.triggerRepaint();
+
+    //             this.index++;
+    //         }, this.carouselInterval);
+    //     },
+
+    //     stopCarousel() {
+    //         this.intervalHandle && window.clearInterval(this.intervalHandle);
+    //     },
+
+    //     updateLocation() {
+    //         if (!this.map) {
+    //             return;
+    //         }
+
+    //         this.map.easeTo({
+    //             zoom: this.zoom,
+    //             center: [
+    //                 this.longitude,
+    //                 this.latitude
+    //             ]
+    //         });
+    //     },
+
+    //     async loadMapbox() {
+    //         this.loading = true;
+
+    //         try {
+    //             const mapboxModule = await import(/* webpackChunkName: 'mapbox' */ 'mapbox-gl');
+    //             const mapboxgl = mapboxModule.default;
+
+    //             mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
+
+    //             return mapboxgl;
+    //         } finally {
+    //             this.loading = false;
+    //         }
+    //     }
+
+    // },
+
+    // async mounted() {
+    //     const mapboxgl = await this.loadMapbox();
+
+    //     const map = new mapboxgl.Map({
+    //         container: this.$el,
+    //         style: `mapbox://styles/mapbox/${STYLE[this.style]}`,
+    //         zoom: this.zoom,
+    //         interactive: this.interactive,
+    //         center: [
+    //             this.longitude,
+    //             this.latitude
+    //         ]
+    //     });
+
+    //     this.map = map;
+
+    //     if (!this.timestamps) {
+    //         return;
+    //     }
+        
+    //     const latestTimestamp = this.timestamps[this.timestamps.length - 1];
+
+    //     map.on('load', () => {
+            
+    //         const layers = map.getStyle().layers;
+    //         const firstLayer = layers.find(layer => layer.type === 'symbol');
+
+    //         map.addSource('raster-tile', {
+    //             type: 'raster',
+    //             tiles: [this.getTileUrl(latestTimestamp)],
+    //             tileSize: 256
+    //         });
+
+    //         map.addLayer({
+    //             id: "simple-tiles",
+    //             type: "raster",
+    //             source: 'raster-tile',
+    //             minzoom: 0,
+    //             maxzoom: 22
+    //         }, firstLayer.id);
+
+    //         if (this.carouselEnabled) {
+    //             this.startCarousel();
+    //         }
+
+    //     });
+    // },
+
+    // watch: {
+
+    //     latitude() {
+    //         this.updateLocation();
+    //     },
+
+    //     longitude() {
+    //         this.updateLocation();
+    //     },
+
+    //     zoom() {
+    //         this.updateLocation();
+    //     },
+
+    //     carouselEnabled(value) {
+    //         value ? this.startCarousel() : this.stopCarousel();
+    //     }
+
+    // }
+
+});
 </script>
 
 <style lang="scss">
@@ -203,14 +334,8 @@ export default {
     .radar {
         position: relative;
         width: 100%;
-        border-radius: var(--border__radius);
+        height: 100%;
         overflow: hidden;
-
-        &::after {
-            display: block;
-            content: ' ';
-            padding-bottom: 100%;
-        }
     }
 
     .radar__loader {

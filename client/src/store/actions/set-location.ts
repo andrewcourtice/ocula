@@ -7,11 +7,19 @@ import updateSettings from './update-settings';
 
 import eventEmitter from '@ocula/event-emitter';
 
+import {
+    typeIsNil
+} from '@ocula/utilities';
+
 import type {
     ILocation
 } from '../../interfaces/location';
 
 export default function setLocation(location: ILocation | LOCATION): void {
+    if (typeIsNil(location)) {
+        return;
+    }
+    
     setLastUpdated(null);
 
     updateSettings({

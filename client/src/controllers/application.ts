@@ -4,7 +4,7 @@ import SIDEBARS from '../constants/sidebars';
 
 import eventEmitter from '@ocula/event-emitter';
 
-import logo from '../assets/images/ocula-192.png';
+import logo from '../assets/images/logo/logo-192.png';
 
 import {
     componentsController

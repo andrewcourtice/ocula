@@ -4,7 +4,7 @@
         <location-modal />
         <template #footer>
             <div class="app__footer" layout="row center-stretch">
-                <router-link v-for="route in routes" :key="route.label" :to="route.route">
+                <router-link class="app__route" v-for="route in routes" :key="route.label" :to="route.route">
                     <div class="menu-item text--centre">
                         <icon :name="route.icon"/>
                         <div class="margin__top--xx-small">
@@ -77,7 +77,22 @@ export default defineComponent({
 
     .app__footer {
         padding: var(--spacing__x-small) 0;
-        box-shadow: 0 -4px 2px -2px rgba(120, 120, 120, 0.1);
+        border-top: 1px solid var(--border__colour);
+    }
+
+    .app__route {
+        color: var(--font__colour);
+
+        &.router-link-active {
+            color: var(--colour__primary);
+        }
+    }
+
+    .route {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
     }
 
 </style>

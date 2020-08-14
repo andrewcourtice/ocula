@@ -53,6 +53,6 @@ export default {
     general: {
         datetime: value => baseFormatter(value, dateFromUnix(value)),
         icon: value => baseFormatter(value, ICON[value]),
-        percentage: toSuffix('%', value => Math.round(value * 100))
+        percentage: toSuffix('%', value => Math.round(value))
     }
 };

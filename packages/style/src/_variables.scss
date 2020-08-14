@@ -25,9 +25,8 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
 
     --font__family: 'DM Sans', sans-serif;
 
-    --font__colour: #121213;
+    --font__colour: #353539;
     --font__colour--meta: #9999AA;
-    --font__colour--compliment: #FFFFFF;
     
     --transition__timing: 250ms;
     --transition__timing--long: 400ms;
@@ -39,11 +38,9 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --colour__secondary: #{ $colour__primary };
     
     --background__colour: #FFFFFF;
+    --foreground__colour: #F7F7F7;
     
-    --foreground__colour: #FFFFFF;
-    --foreground__colour--hover: #F5F5F5;
-    
-    --border__colour: #DEDEDE;
+    --border__colour: #EDEDED;
     --border__radius: 5px;
     --border__radius--large: 1rem;
     

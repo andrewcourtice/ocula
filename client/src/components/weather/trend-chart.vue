@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import TRENDS from '../../../constants/trends';
+import TRENDS from '../../constants/trends';
 
-import SplineChart from '../../core/charts/spline.vue';
+import SplineChart from '../charts/spline.vue';
 
 import {
     dateFromUnix,
@@ -13,11 +13,15 @@ import {
     objectMerge
 } from '@ocula/utilities';
 
+import {
+    defineComponent, computed
+} from 'vue';
+
 const BASE_OPTIONS = {
     scales: {
         x: {
             type: 'time',
-            value: ({ raw }) => dateFromUnix(raw.time),
+            value: ({ dt }) => dateFromUnix(dt.raw),
             format: date => dateFormat(date, 'h a')
         },
         y: {
@@ -35,7 +39,7 @@ const OPTIONS = {
     [TRENDS.temperature]: {
         scales: {
             y: {
-                value: ({ raw }) => raw.temperature
+                value: ({ temp }) => temp.raw
             }
         },
         colours: {
@@ -45,7 +49,7 @@ const OPTIONS = {
     [TRENDS.rainfall]: {
         scales: {
             y: {
-                value: ({ raw }) => raw.precipProbability
+                value: ({ pop }) => pop.raw
             }
         },
         colours: {
@@ -55,7 +59,7 @@ const OPTIONS = {
     [TRENDS.uv]: {
         scales: {
             y: {
-                value: ({ raw }) => raw.uvIndex
+                value: ({ temp }) => temp.raw
             }
         },
         colours: {
@@ -65,7 +69,7 @@ const OPTIONS = {
     [TRENDS.wind]: {
         scales: {
             y: {
-                value: ({ raw }) => raw.windSpeed
+                value: ({ windSpeed }) => windSpeed.raw
             }
         },
         colours: {
@@ -74,8 +78,12 @@ const OPTIONS = {
     }
 }
 
-export default {
+export default defineComponent({
     
+    components: {
+        SplineChart
+    },
+
     props: {
 
         type: {
@@ -88,17 +96,13 @@ export default {
 
     },
 
-    computed: {
+    setup(props) {
+        const options = computed(() => objectMerge(BASE_OPTIONS, OPTIONS[props.type]));
 
-        options() {
-            return objectMerge(BASE_OPTIONS, OPTIONS[this.type]);
-        }
-
-    },
-
-    components: {
-        SplineChart
+        return {
+            options
+        };
     }
 
-};
+});
 </script>

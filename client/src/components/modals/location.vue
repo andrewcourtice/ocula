@@ -85,6 +85,16 @@ export default defineComponent({
             }
         });
 
+        function closeInvoke(callback) {
+            return (...args) => {
+                try {
+                    callback(...args);
+                } finally {
+                    modal.value.close();
+                }
+            };
+        }
+
         function reset() {
             query.value = '';
             searchResults.value = [];
@@ -92,16 +102,17 @@ export default defineComponent({
 
         return {
             id,
+            modal,
             query,
             loading,
             search,
             reset,
             locations,
             searchResults,
-            setLocation,
-            setCurrentLocation,
-            addLocation,
-            removeLocation
+            removeLocation,
+            addLocation: closeInvoke(addLocation),
+            setLocation: closeInvoke(setLocation),
+            setCurrentLocation: closeInvoke(setCurrentLocation)
         };
     }
 
