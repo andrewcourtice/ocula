@@ -1,5 +1,5 @@
 <template>
-    <div class="spline-chart"></div>
+    <div class="spline-chart" ref="element"></div>
 </template>
 
 <script lang="ts">

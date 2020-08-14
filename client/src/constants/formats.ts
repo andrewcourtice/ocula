@@ -35,12 +35,10 @@ export default {
             pressure: pressure.hectopascals,
             humidity: general.percentage,
             dewPoint: temperature.celcius,
-
             clouds: general.percentage,
             visibility: distance.kilometres,
             windSpeed: speed.kilometresPerHour,
             windDeg: direction.bearing,
-
             weather: weatherTransform
         },
 
@@ -102,17 +100,11 @@ export default {
             pressure: pressure.millibars,
             humidity: general.percentage,
             dewPoint: temperature.fahrenheit,
-
             clouds: general.percentage,
             visibility: distance.miles,
             windSpeed: speed.milesPerHour,
             windDeg: direction.bearing,
-
-            weather: [
-                {
-                    icon: general.icon
-                }
-            ]
+            weather: weatherTransform
         },
 
         daily: [

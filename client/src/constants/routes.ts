@@ -7,6 +7,7 @@ export default {
     },
     settings: {
         index: 'settings-index',
+        themes: 'settings-themes',
         about: 'settings-about'
     },
     error: {

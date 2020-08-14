@@ -70,7 +70,7 @@ export default defineComponent({
         width: 80%;
         height: 100%;
         max-width: 360px;
-        background-color: var(--foreground__colour);
+        background-color: var(--background__colour);
     }
 
     .sidebar__panel--left {

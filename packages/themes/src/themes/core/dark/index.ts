@@ -8,5 +8,6 @@ export default {
     id: 'dark',
     name: 'Dark',
     colour: '#333333',
-    class: 'theme--dark'
+    class: 'theme--dark',
+    mapStyle: 'dark'
 } as ITheme;

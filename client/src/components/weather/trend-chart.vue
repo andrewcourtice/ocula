@@ -1,5 +1,5 @@
 <template>
-    <spline-chart class="trend-chart" :data="data" :options="options"></spline-chart>
+    <spline-chart class="trend-chart" :data="data" :options="options" />
 </template>
 
 <script lang="ts">
@@ -54,16 +54,6 @@ const OPTIONS = {
         },
         colours: {
             line: '#47B1FA'
-        }
-    },
-    [TRENDS.uv]: {
-        scales: {
-            y: {
-                value: ({ temp }) => temp.raw
-            }
-        },
-        colours: {
-            line: '#FF9900'
         }
     },
     [TRENDS.wind]: {

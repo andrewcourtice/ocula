@@ -11,6 +11,7 @@
                 :latitude="forecast.lat.raw"
                 :longitude="forecast.lon.raw"
                 :timestamps="forecast.radar.raw.timestamps"
+                :style="theme.core.mapStyle"
                 interactive>
             </radar>
         </div>
@@ -27,6 +28,7 @@ import {
 } from 'vue';
 
 import {
+    theme,
     forecast
 } from '../../store/index';
 
@@ -39,6 +41,7 @@ export default defineComponent({
     
     setup() {
         return {
+            theme,
             forecast
         };
     }

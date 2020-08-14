@@ -26,6 +26,7 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --font__family: 'DM Sans', sans-serif;
 
     --font__colour: #353539;
+    --font__colour--compliment: #F7F7F7;
     --font__colour--meta: #9999AA;
     
     --transition__timing: 250ms;
@@ -40,7 +41,7 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --colour__secondary: #{ $colour__primary };
     
     --background__colour: #FFFFFF;
-    --foreground__colour: #F7F7F7;
+    --background__colour--hover: #EEEEEE;
     
     --border__colour: #EDEDED;
     --border__radius: 5px;

@@ -1,0 +1,15 @@
+@import "../dark/_dark";
+
+.theme--default {
+    --font__colour: #353539;
+    --background__colour: #FFFFFF;
+    --border__colour: #EDEDED;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .theme--default {
+        @include dark;
+    }
+
+}

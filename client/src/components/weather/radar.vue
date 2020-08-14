@@ -128,11 +128,13 @@ export default defineComponent({
                 ]
             });
         }
+
+        function updateStyle(style) {
+            map.setStyle(`mapbox://styles/mapbox/${STYLE[style]}`)
+        }
     
         onMounted(async () => {
             const mapboxgl = await loadMapbox();
-
-            console.log(element.value);
 
             map = new mapboxgl.Map({
                 container: element.value,
@@ -177,6 +179,8 @@ export default defineComponent({
             () => props.longitude,
             () => props.zoom
         ], updateLocation);
+
+        watch(() => props.style, updateStyle);
 
         watch(() => props.carouselEnabled, value => (value ? startCarousel : stopCarousel)());
 

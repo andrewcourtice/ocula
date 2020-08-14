@@ -3,4 +3,5 @@ export interface ITheme {
     name: string;
     colour: string;
     class: string | string[];
+    mapStyle: string;
 }

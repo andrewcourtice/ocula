@@ -1,17 +1,19 @@
 <template>
-    <layout class="app" :class="theme.core.class" v-meta:theme-color="theme.core.color" footer>
+    <layout class="app transition-theme-change" :class="theme.core.class" v-meta:theme-color="theme.core.colour" footer>
         <router-view />
         <location-modal />
         <template #footer>
-            <div class="app__footer" layout="row center-stretch">
-                <router-link class="app__route" v-for="route in routes" :key="route.label" :to="route.route">
-                    <div class="menu-item text--centre">
-                        <icon :name="route.icon"/>
-                        <div class="margin__top--xx-small">
-                            <small>{{ route.label }}</small>
+            <div class="app__footer">
+                <container layout="row center-stretch">
+                    <router-link class="app__route" v-for="route in routes" :key="route.label" :to="route.route">
+                        <div class="menu-item text--centre">
+                            <icon :name="route.icon"/>
+                            <div class="margin__top--xx-small">
+                                <small>{{ route.label }}</small>
+                            </div>
                         </div>
-                    </div>
-                </router-link>
+                    </router-link>
+                </container>
             </div>
         </template>
     </layout>
@@ -78,6 +80,8 @@ export default defineComponent({
         margin: 0;
         padding: 0;
         user-select: none;
+        color: var(--font__colour);
+        background-color: var(--background__colour);
     }
 
     .app__footer {

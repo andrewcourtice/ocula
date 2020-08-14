@@ -19,6 +19,8 @@
 </template>
 
 <script lang="ts">
+import EVENTS from '../../constants/events';
+
 import applicationController from '../../controllers/application';
 
 import logo from '../../assets/images/logo/logo-192.svg';
@@ -36,6 +38,10 @@ import {
     update,
     setCurrentLocation
 } from '../../store';
+
+import {
+    useSubscriber
+} from '@ocula/components';
 
 import {
     typeIsNil
@@ -61,6 +67,8 @@ export default defineComponent({
         
         watch(() => state.settings.location, updateForecast);
 
+        useSubscriber(EVENTS.application.visible, updateForecast);
+        
         return {
             logo,
             hasLocationSet,

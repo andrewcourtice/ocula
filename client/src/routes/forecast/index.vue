@@ -1,15 +1,20 @@
 <template>
-    <div class="route forecast-index" :class="theme.weather.class" v-meta:theme-color="theme.weather.colour">
+    <div class="route forecast-index transition-theme-change" :class="theme.weather.class" v-meta:theme-color="theme.weather.colour">
         <container class="forecast-index__container" layout="column top-stretch">
             <weather-actions></weather-actions>
             <template v-if="forecast">
-                <section class="forecast-index__summary" layout="row center-justify">
-                    <div>
-                        <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                        <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
+                <section class="forecast-index__summary">
+                    <div class="forecast-index__summary-detail" layout="row center-justify">
+                        <div>
+                            <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
+                            <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
+                        </div>
+                        <div>
+                            <img :src="getFigure(forecast.current.weather.id.raw)" alt="partly cloudy">
+                        </div>
                     </div>
-                    <div>
-                        <img :src="getFigure(forecast.current.weather.id.raw)" alt="partly cloudy">
+                    <div class="forecast-index__summary-last-updated">
+                        <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
                     </div>
                 </section>
                 <div class="forecast-index__body" self="size-x1">
@@ -86,7 +91,19 @@
                         </div>
                     </section>
                     <section class="forecast-index__trends">
-                        <trend-chart :type="trendType" :data="forecast.hourly"></trend-chart>
+                        <div class="forecast-index__trends-options">
+                            <div class="forecast-index__trends-option"
+                                layout="row center-left"
+                                v-for="(value, key) in trends"
+                                :key="key"
+                                @click="trend = key">
+                                <icon :name="value.icon" />
+                                <div class="margin__left--x-small">
+                                    <small>{{ value.label }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <trend-chart :type="trend" :data="forecast.hourly"></trend-chart>
                     </section>
                 </div>
             </template>
@@ -104,17 +121,39 @@ import getIcon from '../../helpers/get-icon';
 import getFigure from '../../helpers/get-figure';
 
 import {
-    defineComponent
+    defineComponent,
+    ref
 } from 'vue';
 
 import {
     theme,
+    state,
     forecast
 } from '../../store';
 
 import {
-    dateFormat
+    useTimer
+} from '@ocula/components';
+
+import {
+    dateFormat,
+    dateFormatDistanceToNow
 } from '@ocula/utilities';
+
+const trends = {
+    [TRENDS.temperature]: {
+        label: 'Temperature',
+        icon: 'thermometer'
+    },
+    [TRENDS.rainfall]: {
+        label: 'Rainfall',
+        icon: 'droplet'
+    },
+    [TRENDS.wind]: {
+        label: 'Wind',
+        icon: 'wind'
+    }
+};
 
 export default defineComponent({
 
@@ -124,7 +163,8 @@ export default defineComponent({
     },
     
     setup() {
-        const trendType = TRENDS.temperature;
+        const trend = ref(TRENDS.temperature);
+        const lastUpdated = ref('');
 
         function getDayKey(day: any, column: string): string {
             return `${day.dt.raw}-${column}`;
@@ -138,15 +178,23 @@ export default defineComponent({
             return dateFormat(date, 'hh:mm a');
         }
 
+        useTimer(() => {
+            if (state.lastUpdated) {
+                lastUpdated.value = dateFormatDistanceToNow(state.lastUpdated);
+            }
+        }, 10000);
+
         return {
             theme,
             forecast,
             getDayKey,
             formatDate,
             formatTime,
-            trendType,
+            trend,
+            trends,
             getIcon,
-            getFigure
+            getFigure,
+            lastUpdated
         };
     }
 
@@ -158,8 +206,6 @@ export default defineComponent({
     .forecast-index {
         color: var(--font__colour--weather);
         background: var(--background__colour--weather);
-        transition: color var(--transition__timing--fade) var(--transition__easing--default),
-                    background var(--transition__timing--fade) var(--transition__easing--default);
     }
 
     .forecast-index__container {
@@ -169,7 +215,10 @@ export default defineComponent({
     .forecast-index__summary {
         padding: var(--spacing__large);
         padding-top: 0;
-        min-height: 25vh;
+    }
+
+    .forecast-index__summary-detail {
+        min-height: 20vh;
     }
 
     .forecast-index__summary-temp {
@@ -207,6 +256,17 @@ export default defineComponent({
 
     .forecast-index__observations {
         grid-template-columns: max-content 1fr max-content 1fr;
+    }
+
+    .forecast-index__trends-options {
+        padding: 0 var(--spacing__large);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing__small);
+    }
+
+    .forecast-index__trends-option {
+        text-align: center;
     }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="route settings-master">
-        <container>
+        <container class="settings-master__container">
             <router-view />
         </container>
     </div>
@@ -15,3 +15,11 @@ export default defineComponent({
 
 });
 </script>
+
+<style lang="scss">
+ 
+    .settings-master__container {
+        padding: var(--spacing__large);
+    }
+
+</style>

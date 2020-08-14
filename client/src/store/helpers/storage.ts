@@ -24,13 +24,15 @@ export function getSettings() {
 }
 
 export function getData() {
-    let data = localStorage.getItem(STORAGE_KEYS.data);
+    const storedData = localStorage.getItem(STORAGE_KEYS.data);
 
-    if (!data) {
+    if (!storedData) {
         return DATA;
     }
 
-    data = JSON.parse(data);
+    const data = JSON.parse(storedData) as IStoredData;
+
+    data.lastUpdated = new Date(data.lastUpdated);
 
     return objectMerge(DATA, data);
 }

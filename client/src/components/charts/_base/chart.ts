@@ -1,7 +1,12 @@
 import EVENTS from '../../../constants/events';
 
 import {
-    defineComponent
+    defineComponent, 
+    ref,
+    watch,
+    onMounted,
+    onBeforeUnmount,
+    WatchStopHandle,
 } from 'vue';
 
 export default function chart(Chart) {
@@ -30,44 +35,40 @@ export default function chart(Chart) {
 
         },
 
-        data() {
-            return {
-                chart: null,
-                updateWatch: null
-            };
-        },
-    
-        methods: {
-    
-            async render() {
-                if (!this.chart) {
+        setup(props) {
+            let chart;
+            let watchHandle: WatchStopHandle;
+
+            const element = ref<Element>(null);
+
+            async function render() {
+                if (!chart) {
                     return;
                 }
-
-                return this.chart.render(this.data, this.options);
-            }
     
-        },
-        
-        mounted() {
-            const chart = new Chart(this.$el);
-    
-            this.chart = chart;
-    
-            if (this.autoRender) {
-                this.render();
+                return chart.render(props.data, props.options);
             }
 
-            if (this.autoUpdate) {
-                const dataWatcher = this.$watch('data', this.render);
-                const optionsWatcher = this.$watch('options', this.render);
+            onMounted(() => {
+                chart = new Chart(element.value);
+            
+                if (props.autoRender) {
+                    render();
+                }
+    
+                if (props.autoUpdate) {
+                    watchHandle = watch([
+                        () => props.data,
+                        () => props.options
+                    ], render);
+                }
+            });
 
-                this.updateWatch = () => dataWatcher() && optionsWatcher();
-            }
-        },
+            onBeforeUnmount(() => watchHandle && watchHandle());
 
-        beforeDestroy() {
-            this.updateWatch && this.updateWatch();
+            return {
+                element
+            };
         }
 
     });
