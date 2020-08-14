@@ -1,28 +1,65 @@
 <template>
-    <div class="app">
-        <router-view #default="{ Component }">
-            <keep-alive>
-                <component :is="Component"></component>
-            </keep-alive>
-        </router-view>
-        <navigation-sidebar />
-        <locations-modal />
-    </div>
+    <layout class="app" footer>
+        <router-view />
+        <location-modal />
+        <template #footer>
+            <div class="app__footer" layout="row center-stretch">
+                <router-link v-for="route in routes" :key="route.label" :to="route.route">
+                    <div class="menu-item text--centre">
+                        <icon :name="route.icon"/>
+                        <div class="margin__top--xx-small">
+                            <small>{{ route.label }}</small>
+                        </div>
+                    </div>
+                </router-link>
+            </div>
+        </template>
+    </layout>
 </template>
 
 <script lang="ts">
-import NavigationSidebar from './components/core/sidebars/navigation.vue';
-import LocationsModal from './components/core/modals/location.vue';
+import ROUTES from './constants/routes';
+
+import LocationModal from './components/modals/location.vue';
 
 import {
     defineComponent
 } from 'vue';
 
+const routes = [
+    {
+        label: 'Forecast',
+        icon: 'sun',
+        route: {
+            name: ROUTES.forecast.index
+        }
+    },
+    {
+        label: 'Radar',
+        icon: 'target',
+        route: {
+            name: ROUTES.radar.index
+        }
+    },
+    {
+        label: 'Settings',
+        icon: 'sliders',
+        route: {
+            name: ROUTES.settings.index
+        }
+    }
+];
+
 export default defineComponent({
 
     components: {
-        NavigationSidebar,
-        LocationsModal
+        LocationModal
+    },
+
+    setup() {
+        return {
+            routes
+        };
     }
 
 });
@@ -32,9 +69,15 @@ export default defineComponent({
 
     .app {
         width: 100%;
+        height: 100%;
         margin: 0;
         padding: 0;
         user-select: none;
+    }
+
+    .app__footer {
+        padding: var(--spacing__x-small) 0;
+        box-shadow: 0 -4px 2px -2px rgba(120, 120, 120, 0.1);
     }
 
 </style>

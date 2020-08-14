@@ -1,16 +1,16 @@
 export default {
-    weather: {
-        index: 'weather-index',
-        radar: 'weather-radar'
+    forecast: {
+        index: 'forecast-index',
     },
-    about: {
-        index: 'about-index'
+    radar: {
+        index: 'radar-index'
     },
     settings: {
-        index: 'settings-index'
+        index: 'settings-index',
+        about: 'settings-about'
     },
     error: {
         index: 'error-index',
         notFound: 'error-not-found'
     }
-} as const
+} as const;

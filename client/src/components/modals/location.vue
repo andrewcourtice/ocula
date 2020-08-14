@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import MODALS from '../../../constants/modals';
+import MODALS from '../../constants/modals';
 
 import {
     defineComponent,
@@ -41,7 +41,7 @@ import {
     setCurrentLocation,
     addLocation,
     removeLocation
-} from '../../../store';
+} from '../../store';
 
 import {
     functionDebounce
@@ -49,7 +49,7 @@ import {
 
 import type {
     ILocation
-} from '../../../interfaces/location';
+} from '../../interfaces/location';
 
 export default defineComponent({
 

@@ -1,12 +1,12 @@
 <template>
-    <div class="about-route">
+    <div class="route settings-about">
         <section class="text--centre">
-            <img class="about-route__logo" :src="logo" alt="Ocula">
+            <img class="settings-about__logo" :src="logo" alt="Ocula">
             <h1>{{ manifest.title }}</h1>
             <div>{{ manifest.description }}</div>
         </section>
         <block title="Application" class="margin__top--large">
-            <div class="about-route__details-grid">
+            <div class="settings-about__details-grid">
                 <strong>Version</strong>
                 <div>{{ manifest.version }}</div>
                 <strong>Author</strong>
@@ -18,7 +18,7 @@
             </div>
         </block>
         <block title="Credits" class="margin__top--large">
-            <div class="about-route__details-grid">
+            <div class="settings-about__details-grid">
                 <strong>Forecast Data</strong>
                 <a href="https://darksky.net" target="_blank">DarkSky</a>
                 <strong>Maps/Geocoding</strong>
@@ -59,11 +59,11 @@ export default defineComponent({
 
 <style lang="scss">
 
-    .about-route__logo {
+    .settings-about__logo {
         width: 96px;
     }
 
-    .about-route__details-grid {
+    .settings-about__details-grid {
         display: grid;
         grid-template-columns: auto 1fr;
         grid-gap: var(--spacing__x-small) var(--spacing__small);

@@ -1,4 +1,4 @@
-import EVENTS from '../../../../constants/events';
+import EVENTS from '../../../constants/events';
 
 import subscriberMixin from '../../../core/mixins/subscriber';
 

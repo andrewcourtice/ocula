@@ -8,6 +8,10 @@ $spacings: (
     xx-large: 4rem
 );
 
+$colour__primary: #5D9BE5;
+$colour__primary--light: lighten(#5D9BE5, 20%);
+$colour__primary--dark: darken(#5D9BE5, 20%);
+
 :root {
     --font__size: 14px;
     --font__size--small: 0.875em;
@@ -24,25 +28,28 @@ $spacings: (
     --font__colour: #121213;
     --font__colour--meta: #9999AA;
     --font__colour--compliment: #FFFFFF;
-
+    
     --transition__timing: 250ms;
     --transition__timing--long: 400ms;
     --transition__easing-quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
-
-    --colour__primary: #5D9BE5;
-    --colour__secondary: #5D9BE5;
-
+    
+    --colour__primary: #{ $colour__primary };
+    --colour__primary--light: #{ $colour__primary--light };
+    --colour__primary--dark: #{ $colour__primary--dark };
+    --colour__secondary: #{ $colour__primary };
+    
     --background__colour: #FFFFFF;
+    
     --foreground__colour: #FFFFFF;
     --foreground__colour--hover: #F5F5F5;
-
+    
     --border__colour: #DEDEDE;
     --border__radius: 5px;
     --border__radius--large: 1rem;
-
+    
     --link__colour: #1E90FF;
     --link__colour--hover: darken(#1E90FF, 20%);
-
+    
     @each $name, $value in $spacings {
         --spacing__#{ $name }: #{ $value };
     }

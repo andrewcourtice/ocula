@@ -9,7 +9,7 @@ import type {
 export default [
     {
         path: '',
-        name: ROUTES.weather.index,
+        name: ROUTES.radar.index,
         component: Index
     }
 ] as RouteRecordRaw[];

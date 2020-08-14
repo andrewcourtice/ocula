@@ -1,10 +1,6 @@
 import ICON from './icon';
 
 import {
-    formatBlock
-} from '../helpers/format-data';
-
-import {
     dateFromUnix,
     functionIdentity
 } from '@ocula/utilities';
@@ -12,7 +8,11 @@ import {
 function baseFormatter<T>(raw: T, formatted: any) {
     return {
         raw,
-        formatted
+        formatted,
+
+        toString() {
+            return formatted;
+        }
     };
 };
 

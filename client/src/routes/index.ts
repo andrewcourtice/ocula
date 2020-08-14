@@ -1,12 +1,12 @@
-import Error from './error.vue';
-import Weather from './weather.vue';
+import Forecast from './forecast.vue';
+import Radar from './radar.vue';
 import Settings from './settings.vue';
-import About from './about.vue';
+import Error from './error.vue';
 
-import error from './error/index';
-import weather from './weather/index';
+import forecast from './forecast/index';
+import radar from './radar/index';
 import settings from './settings/index';
-import about from './about/index';
+import error from './error/index';
 
 import type {
     RouteRecordRaw
@@ -14,20 +14,20 @@ import type {
 
 export default [
     {
-        path: '/weather',
+        path: '/forecast',
         alias: '/',
-        component: Weather,
-        children: weather
+        component: Forecast,
+        children: forecast
+    },
+    {
+        path: '/radar',
+        component: Radar,
+        children: radar
     },
     {
         path: '/settings',
         component: Settings,
         children: settings
-    },
-    {
-        path: '/about',
-        component: About,
-        children: about
     },
     {
         path: '/error',

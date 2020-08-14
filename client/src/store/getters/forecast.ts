@@ -20,5 +20,9 @@ export default getter(state => {
 
     const format = FORMATS[units] || FORMATS[UNITS.metric];
 
-    return objectTransform(state.forecast, format, defaultFormatter);
+    const output = objectTransform(state.forecast, format, defaultFormatter);
+
+    console.log(output);
+
+    return output;
 });

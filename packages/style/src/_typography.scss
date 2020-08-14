@@ -15,7 +15,8 @@ a,
 
 a {
     color: var(--link__colour);
-
+    
+    &:hover,
     &:active {
         color: var(--link__colour--hover);
     }

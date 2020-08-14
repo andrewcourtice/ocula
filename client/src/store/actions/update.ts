@@ -1,3 +1,5 @@
+import GLOBAL from '../../constants/global';
+
 import setLoading from '../mutations/set-loading';
 import setLastUpdated from '../mutations/set-last-updated';
 
@@ -12,7 +14,13 @@ import {
     saveData
 } from '../helpers/storage';
 
-export default async function load() {
+export default async function update() {
+    const lastUpdated = state.lastUpdated;
+
+    if (lastUpdated && Date.now() - +lastUpdated < GLOBAL.updateThreshold) {
+        return;
+    }
+
     setLoading(true);
     
     try {

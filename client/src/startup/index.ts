@@ -18,7 +18,7 @@ export default async function start() {
 
     await router.isReady();
 
-    application.mount('#app');
+    application.mount('body');
 
     return {
         router,

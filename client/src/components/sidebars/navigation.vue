@@ -36,9 +36,9 @@
 </template>
 
 <script lang="ts">
-import SIDEBARS from '../../../constants/sidebars';
+import SIDEBARS from '../../constants/sidebars';
 
-import logo from '../../../assets/images/ocula-192.svg';
+import logo from '../../assets/images/ocula-192.svg';
 
 import {
     defineComponent

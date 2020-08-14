@@ -1,5 +1,4 @@
 
-import GLOBAL from '../../constants/global';
 import LOCATIONS from '../../enums/location';
 
 import {
@@ -16,12 +15,6 @@ import {
 } from '../../services/location';
 
 export default async function loadLocation() {
-    const lastUpdated = state.lastUpdated;
-
-    if (lastUpdated && Date.now() - +lastUpdated < GLOBAL.updateThreshold) {
-        return;
-    }
-
     const {
         location
     } = state.settings;
