@@ -5,6 +5,8 @@ export { default as dateFormatDistance } from './date/format-distance';
 export { default as dateFormatDistanceToNow } from './date/format-distance-to-now';
 export { default as dateFromUnix } from './date/from-unix';
 
+export { default as domSetMeta } from './dom/set-meta';
+
 export { default as functionDebounce } from './function/debounce';
 export { default as functionIdentity } from './function/identity';
 

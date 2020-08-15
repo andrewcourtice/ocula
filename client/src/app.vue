@@ -1,5 +1,5 @@
 <template>
-    <layout class="app transition-theme-change" :class="theme.core.class" v-meta:theme-color="theme.core.colour" footer>
+    <layout class="app transition-theme-change" :class="theme.core.class" footer>
         <router-view />
         <location-modal />
         <template #footer>
@@ -24,8 +24,11 @@ import ROUTES from './constants/routes';
 
 import LocationModal from './components/modals/location.vue';
 
+import setThemeMeta from './helpers/set-theme-meta';
+
 import {
-    defineComponent
+    defineComponent,
+    watch
 } from 'vue';
 
 import {
@@ -63,6 +66,8 @@ export default defineComponent({
     },
 
     setup() {
+        watch(() => theme.value.core, ({ colour }) => setThemeMeta(colour));
+        
         return {
             theme,
             routes

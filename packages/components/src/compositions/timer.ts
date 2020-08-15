@@ -6,13 +6,19 @@ import {
 type Timer = 'interval' | 'timeout';
 
 interface ITimerApplication {
-    set(handler: TimerHandler, timeout: number): number;
+    set(handler: Function, timeout: number, ...args: any[]): number;
     clear(handle: number): void;
 }
 
 const TIMER = {
     interval: {
-        set: window.setInterval,
+        set: (handler: Function, timeout: number, immediateInvoke: boolean = true) => {
+            if (immediateInvoke) {
+                handler();
+            }
+            
+            return window.setInterval(handler, timeout);
+        },
         clear: window.clearInterval
     },
     timeout: {
@@ -21,7 +27,7 @@ const TIMER = {
     }
 } as Record<Timer, ITimerApplication>
 
-export default function useTimer(handler: TimerHandler, timeout: number, timer: Timer = 'interval'): number {
+export default function useTimer(handler: Function, timeout: number, timer: Timer = 'interval'): number {
     let handle;
 
     const timerApplication = TIMER[timer];

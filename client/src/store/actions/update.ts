@@ -14,10 +14,10 @@ import {
     saveData
 } from '../helpers/storage';
 
-export default async function update() {
+export default async function update(force: boolean = false) {
     const lastUpdated = state.lastUpdated;
 
-    if (lastUpdated && Date.now() - +lastUpdated < GLOBAL.updateThreshold) {
+    if (!force && lastUpdated && Date.now() - +lastUpdated < GLOBAL.updateThreshold) {
         return;
     }
 

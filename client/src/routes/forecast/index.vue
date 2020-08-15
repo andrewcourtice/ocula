@@ -1,5 +1,5 @@
 <template>
-    <div class="route forecast-index transition-theme-change" :class="theme.weather.class" v-meta:theme-color="theme.weather.colour">
+    <div class="route forecast-index transition-theme-change" :class="theme.weather.class">
         <container class="forecast-index__container" layout="column top-stretch">
             <weather-actions></weather-actions>
             <template v-if="forecast">
@@ -119,10 +119,12 @@ import TrendChart from '../../components/weather/trend-chart.vue';
 
 import getIcon from '../../helpers/get-icon';
 import getFigure from '../../helpers/get-figure';
+import setThemeMeta from '../../helpers/set-theme-meta';
 
 import {
     defineComponent,
-    ref
+    ref,
+    watch
 } from 'vue';
 
 import {
@@ -184,6 +186,8 @@ export default defineComponent({
             }
         }, 10000);
 
+        watch(() => theme.value.weather, ({ colour }) => setThemeMeta(colour));
+
         return {
             theme,
             forecast,
@@ -218,7 +222,7 @@ export default defineComponent({
     }
 
     .forecast-index__summary-detail {
-        min-height: 20vh;
+        min-height: 25vh;
     }
 
     .forecast-index__summary-temp {

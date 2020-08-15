@@ -5,7 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "@ocula/event-emitter": "1.0.0",
-        "@ocula/style": "1.0.0"
+        "@ocula/style": "1.0.0",
+        "@ocula/utilities": "1.0.0"
     },
     "peerDependencies": {
         "vue": "3.0.0-rc.5"

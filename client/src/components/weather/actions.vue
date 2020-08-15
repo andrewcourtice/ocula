@@ -7,7 +7,7 @@
         <div self="size-x1">
             <slot name="header"></slot>
         </div>
-        <div class="weather-actions__action weather-actions__action--update" @click="update">
+        <div class="weather-actions__action weather-actions__action--update" @click="update(true)">
             <icon name="refresh-cw"/>
         </div>
     </div>
@@ -50,7 +50,7 @@ export default defineComponent({
 <style lang="scss">
 
     .weather-actions {
-        padding: var(--spacing__large);
+        padding: var(--spacing__medium) var(--spacing__large);
     }
 
     .weather-actions--loading {
