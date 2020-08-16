@@ -5,7 +5,8 @@ import {
 } from '../store';
 
 import {
-    core
+    core,
+    weather
 } from '@ocula/themes';
 
 export default getter(({ settings, forecast }) => {
@@ -14,10 +15,10 @@ export default getter(({ settings, forecast }) => {
     } = settings;
 
     let coreTheme = core[theme] || core.default;
-    let weatherTheme = THEME['800']
+    let weatherTheme = weather.default;
     
     if (forecast && forecast.current) {
-        weatherTheme = THEME[forecast.current.weather[0].id] || THEME['800'];
+        weatherTheme = THEME[forecast.current.weather[0].id] || weather.default;
     }
 
     return {

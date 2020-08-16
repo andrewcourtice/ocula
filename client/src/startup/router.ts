@@ -37,7 +37,7 @@ export default function initialiseRouter(application: App) {
         } = theme.value.core;
 
         if (isForecast) {
-            colour = theme.value.weather.colour;
+            colour = theme.value.weather.colour || colour;
         }
 
         setThemeMeta(colour);

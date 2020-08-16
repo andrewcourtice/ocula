@@ -6,6 +6,8 @@ import Modal from './modal.vue';
 import SearchBox from './search-box.vue';
 import Sidebar from './sidebar.vue';
 
+import CoreComponents from './core/index.vue';
+
 export default {
     Container,
     Icon,
@@ -13,5 +15,6 @@ export default {
     Loader,
     Modal,
     SearchBox,
-    Sidebar
+    Sidebar,
+    CoreComponents
 };

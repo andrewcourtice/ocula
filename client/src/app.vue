@@ -1,7 +1,6 @@
 <template>
     <layout class="app transition-theme-change" :class="theme.core.class" footer>
         <router-view />
-        <location-modal />
         <template #footer>
             <div class="app__footer">
                 <container layout="row center-stretch">
@@ -16,6 +15,9 @@
                 </container>
             </div>
         </template>
+        <location-modal />
+
+        <core-components />
     </layout>
 </template>
 

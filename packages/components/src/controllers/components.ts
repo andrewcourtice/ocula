@@ -1,4 +1,10 @@
+import MODALS from '../constants/modals';
+
 import eventEmitter from '../event-emitter/index';
+
+import type {
+    IConfirmModalPayload
+} from '../interfaces';
 
 class ComponentsController {
 
@@ -10,6 +16,10 @@ class ComponentsController {
 
     public close(id: string, payload?: any): void {
         eventEmitter.emit(`close:${id}`, payload);
+    }
+
+    public async confirm(payload: IConfirmModalPayload): Promise<void> {
+        return this.open(MODALS.confirm, payload);
     }
 
 }

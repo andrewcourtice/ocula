@@ -13,5 +13,14 @@
             "GA_TRACKING_ID": "@ga-tracking-id",
             "SENTRY_DSN": "@sentry-dsn"
         }
-    }
+    },
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/.*",
+            "dest": "/index.html"
+        }
+    ]
 }
