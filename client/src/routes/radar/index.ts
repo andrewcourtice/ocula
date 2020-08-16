@@ -4,7 +4,7 @@ import Index from './index.vue';
 
 import type {
     RouteRecordRaw
-} from 'vue-router';
+} from '@ocula/router';
 
 export default [
     {

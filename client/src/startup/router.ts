@@ -4,10 +4,9 @@ import routes from '../routes/index';
 
 import setThemeMeta from '../helpers/set-theme-meta';
 
-import {
-    createRouter,
-    createWebHistory
-} from 'vue-router';
+import Router, {
+    router
+} from '@ocula/router';
 
 import type {
     App
@@ -20,10 +19,7 @@ import {
 declare function gtag(key: string, trackingId: string, meta: any): void;
 
 export default function initialiseRouter(application: App) {
-    const router = createRouter({
-        history: createWebHistory(),
-        routes
-    });
+    application.use(Router, routes);
 
     router.beforeEach((to, from, next) => {
         if (!theme.value) {
@@ -50,8 +46,6 @@ export default function initialiseRouter(application: App) {
             'page_path': to.path
         }));
     }
-
-    application.use(router);
 
     return router;
 }

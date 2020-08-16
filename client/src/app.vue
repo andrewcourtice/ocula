@@ -16,7 +16,6 @@
             </div>
         </template>
         <location-modal />
-
         <core-components />
     </layout>
 </template>
@@ -97,11 +96,14 @@ export default defineComponent({
 
     .app__route {
         display: block;
-        padding: var(--spacing__x-small);
         color: var(--font__colour);
 
         &.router-link-active {
             color: var(--colour__primary);
+        }
+
+        & .menu-item {            
+            padding: var(--spacing__small);
         }
     }
 

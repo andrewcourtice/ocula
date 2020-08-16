@@ -9485,11 +9485,6 @@ vue@3.0.0-rc.5:
     "@vue/runtime-dom" "3.0.0-rc.5"
     "@vue/shared" "3.0.0-rc.5"
 
-vuex@4.0.0-beta.4:
-  version "4.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.0-beta.4.tgz#7b319ead2ef30432b7eaa4e37258ea3c5e44f698"
-  integrity sha512-/+4E1dokq5cwbl4mohOqOj8h0vOLOWmLSqlqTf++bfmN9/JKWtwYfsBrzlK0sYrNfuYcpQeX0BVxQHoHXDfYZQ==
-
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.0.tgz#9948a1866cbbd6cb824dea13a7ed691f6c8ddff0"

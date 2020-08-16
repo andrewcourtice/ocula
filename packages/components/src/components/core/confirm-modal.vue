@@ -15,7 +15,7 @@
 <script lang="ts">
 import MODALS from '../../constants/modals';
 
-import Modal from '../modal.vue';
+import Modal from '../modal/modal.vue';
 
 import {
     defineComponent,

@@ -90,6 +90,9 @@
                             <div>{{ forecast.current.windDeg.formatted }}</div>
                         </div>
                     </section>
+                    <section class="forecast-index__uv-index">
+                        <uv-index></uv-index>
+                    </section>
                     <section class="forecast-index__trends">
                         <div class="forecast-index__trends-options">
                             <div class="forecast-index__trends-option"
@@ -116,6 +119,7 @@ import TRENDS from '../../constants/trends';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import TrendChart from '../../components/weather/trend-chart.vue';
+import UvIndex from '../../components/weather/uv-index.vue';
 
 import getIcon from '../../helpers/get-icon';
 import getFigure from '../../helpers/get-figure';
@@ -161,7 +165,8 @@ export default defineComponent({
 
     components: {
         WeatherActions,
-        TrendChart
+        TrendChart,
+        UvIndex
     },
     
     setup() {
@@ -232,7 +237,7 @@ export default defineComponent({
     }
 
     .forecast-index__body {
-        padding-bottom: var(--spacing__large);
+        padding: var(--spacing__large) 0;
         color: var(--font__colour);
         background: var(--background__colour);
         border-top-left-radius: var(--border__radius--large);
@@ -241,8 +246,10 @@ export default defineComponent({
 
     .forecast-index__ahead,
     .forecast-index__observations,
-    .forecast-index__trends {
-        margin-top: var(--spacing__large);
+    .forecast-index__uv-index {
+        margin-bottom: var(--spacing__x-large);
+        padding-left: var(--spacing__large);
+        padding-right: var(--spacing__large);
     }
 
     .forecast-index__ahead,
@@ -250,8 +257,6 @@ export default defineComponent({
         display: grid;
         gap: var(--spacing__small);
         align-items: center;
-        padding-left: var(--spacing__large);
-        padding-right: var(--spacing__large);
     }
 
     .forecast-index__ahead {

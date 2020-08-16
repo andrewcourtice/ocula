@@ -6,7 +6,7 @@ import About from './about.vue';
 
 import type {
     RouteRecordRaw
-} from 'vue-router';
+} from '@ocula/router';
 
 export default [
     {

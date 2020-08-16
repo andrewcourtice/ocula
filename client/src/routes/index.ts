@@ -10,7 +10,7 @@ import error from './error/index';
 
 import type {
     RouteRecordRaw
-} from 'vue-router';
+} from '@ocula/router';
 
 export default [
     {

@@ -13,7 +13,7 @@ import {
     defineComponent
 } from 'vue';
 
-import useLayer from '../compositions/layer';
+import useLayer from '../../compositions/layer';
 
 export default defineComponent({
 

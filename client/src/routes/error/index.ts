@@ -5,7 +5,7 @@ import NotFound from './not-found.vue';
 
 import type {
     RouteRecordRaw
-} from 'vue-router';
+} from '@ocula/router';
 
 export default [
     {
