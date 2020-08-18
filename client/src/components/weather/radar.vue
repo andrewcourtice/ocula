@@ -80,7 +80,19 @@ export default defineComponent({
             loading.value = true;
 
             try {
-                const mapboxModule = await import(/* webpackChunkName: 'mapbox' */ 'mapbox-gl');
+                const [
+                    mapboxModule
+                ] = await Promise.all([
+                    import(
+                    /* webpackChunkName: 'mapbox' */
+                    /* webpackPrefetch: true */
+                    'mapbox-gl'),
+                    import(
+                    /* webpackChunkName: 'mapbox' */
+                    /* webpackPrefetch: true */
+                    'mapbox-gl/dist/mapbox-gl.css'),
+                ]);
+                    
                 const mapboxgl = mapboxModule.default;
 
                 mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
