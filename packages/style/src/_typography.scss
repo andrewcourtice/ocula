@@ -25,6 +25,14 @@ a {
     color: inherit;
 }
 
+.link--inherit {
+    color: inherit;
+
+    &:hover {
+        color: inherit;
+    }
+}
+
 .text--meta {
     color: var(--font__colour--meta);
 }
@@ -57,6 +65,10 @@ small,
 
 .text--right {
     text-align: right;
+}
+
+.text--tight {
+    line-height: 1;
 }
 
 .text--truncate {

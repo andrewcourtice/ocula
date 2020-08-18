@@ -23,9 +23,14 @@
                             <div :key="getDayKey(day, 'icon')">
                                 <icon :name="getIcon(day.weather.id.raw)"/>
                             </div>
-                            <div :key="getDayKey(day, 'date')">{{ formatDate(day) }}</div>
-                            <div :key="getDayKey(day, 'min')">{{ day.temp.min.formatted }}</div>
-                            <div :key="getDayKey(day, 'max')">{{ day.temp.max.formatted }}</div>
+                            <div :key="getDayKey(day, 'date')">
+                                <div>{{ formatDate(day) }}</div>
+                                <div class="text--meta text--tight">
+                                    <small class="text--x-small">{{ day.weather.description.raw }} <template v-if="day.pop.raw > 0">&middot; <span>{{ day.pop.formatted }} chance of rain</span></template></small>
+                                </div>
+                            </div>
+                            <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>
+                            <div :key="getDayKey(day, 'max')">{{ Math.round(day.temp.max.raw) }}</div>
                         </template>
                     </section>
                     <section class="forecast-index__observations">

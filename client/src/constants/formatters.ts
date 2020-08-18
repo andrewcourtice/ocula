@@ -5,7 +5,6 @@ import {
     functionIdentity
 } from '@ocula/utilities';
 
-
 function baseFormatter<T>(raw: T, formatted: any) {
     return {
         raw,
@@ -18,7 +17,7 @@ function baseFormatter<T>(raw: T, formatted: any) {
 };
 
 function toSuffix(suffix: string, transformer: Function = functionIdentity) {
-    return value => baseFormatter(value, `${transformer(value)} ${suffix}`);
+    return value => baseFormatter(value, `${transformer(value)}${suffix}`);
 }
 
 export function defaultFormatter(value) {
@@ -54,6 +53,7 @@ export default {
     general: {
         datetime: value => baseFormatter(value, dateFromUnix(value)),
         icon: value => baseFormatter(value, getIcon(value)),
-        percentage: toSuffix('%', value => Math.round(value))
+        percentage: toSuffix('%', value => Math.round(value)),
+        fractional: toSuffix('%', value => Math.round(value * 100))
     }
 };

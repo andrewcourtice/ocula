@@ -69,7 +69,7 @@ export default {
                 weather: weatherTransform,
                 clouds: general.percentage,
                 rain: distance.millimeters,
-                pop: general.percentage
+                pop: general.fractional
             }
         ],
 
@@ -85,7 +85,7 @@ export default {
                 visibility: distance.kilometres,
                 windSpeed: speed.kilometresPerHour,
                 windDeg: direction.bearing,
-                pop: general.percentage,
+                pop: general.fractional,
                 weather: weatherTransform,
             }
         ]
@@ -134,7 +134,7 @@ export default {
                 weather: weatherTransform,
                 clouds: general.percentage,
                 rain: distance.inches,
-                pop: general.percentage
+                pop: general.fractional
             }
         ],
 
@@ -150,7 +150,7 @@ export default {
                 visibility: distance.miles,
                 windSpeed: speed.milesPerHour,
                 windDeg: direction.bearing,
-                pop: general.percentage,
+                pop: general.fractional,
                 weather: weatherTransform
             }
         ]

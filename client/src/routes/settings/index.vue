@@ -1,13 +1,13 @@
 <template>
     <settings-layout class="route settings-index">
-        <div class="menu">
+        <div class="settings-index__settings menu">
             <settings-item class="menu-item" label="Units" :value="units.label">
                 <select name="units" v-model="units">
                     <option v-for="option in unitOptions" :key="option.value" :value="option">{{ option.label }}</option>
                 </select>
             </settings-item>
             <router-link :to="themeRoute">
-                <settings-item class="menu-item" label="Theme" :value="theme.name"></settings-item>
+                <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
         </div>
     </settings-layout>
@@ -81,6 +81,10 @@ export default defineComponent({
 
     .settings-index__header {
         padding: var(--spacing__large);
+    }
+
+    .settings-index__settings {
+        padding: 0 var(--spacing__small);
     }
 
 </style>

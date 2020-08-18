@@ -1,9 +1,7 @@
 <template>
     <modal :id="id" class="confirm-modal" @open="onOpen">
         <template #default="{ close, cancel }">
-            <div>
-                <p>{{ message }}</p>
-            </div>
+            <div class="margin__bottom--large">{{ message }}</div>
             <div class="confirm-modal__actions" layout="row center-right">
                 <button class="button margin__right--small" @click="cancel">{{ cancelLabel }}</button>
                 <button class="button button--primary" @click="close">{{ confirmLabel }}</button>
