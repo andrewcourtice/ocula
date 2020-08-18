@@ -1,35 +1,24 @@
 <template>
-    <div class="route settings-index">
-        <div>
-            <strong>Settings</strong>
+    <settings-layout class="route settings-index">
+        <div class="menu">
+            <settings-item class="menu-item" label="Units" :value="units.label">
+                <select name="units" v-model="units">
+                    <option v-for="option in unitOptions" :key="option.value" :value="option">{{ option.label }}</option>
+                </select>
+            </settings-item>
+            <router-link :to="themeRoute">
+                <settings-item class="menu-item" label="Theme" :value="theme.name"></settings-item>
+            </router-link>
         </div>
-        <section class="margin__top--large">
-            <div class="menu">
-                <div class="menu-item" layout="row center-justify">
-                    <div>Units</div>
-                    <div class="text--meta">{{ theme.name }}</div>
-                    <select name="units" v-model="units">
-                        <option v-for="options in unitOptions" :key="options.value" :value="options.value">{{ options.label }}</option>
-                    </select>
-                </div>
-                <div class="menu-item" layout="row center-justify">
-                    <div>Locations</div>
-                    <div class="text--meta">{{ theme.name }}</div>
-                </div>
-                <router-link :to="themeRoute">
-                    <div class="menu-item" layout="row center-justify">
-                        <div>Theme</div>
-                        <div class="text--meta">{{ theme.name }}</div>
-                    </div>
-                </router-link>
-            </div>
-        </section>
-    </div>
+    </settings-layout>
 </template>
 
 <script>
 import ROUTES from '../../constants/routes';
 import UNITS from '../../constants/units';
+
+import SettingsLayout from '../../components/layouts/settings.vue';
+import SettingsItem from '../../components/settings/settings-item.vue';
 
 import {
     defineComponent,
@@ -58,6 +47,11 @@ const unitOptions = [
 ];
 
 export default defineComponent({
+
+    components: {
+        SettingsLayout,
+        SettingsItem
+    },
     
     setup() {
         const themeRoute = {
@@ -65,8 +59,8 @@ export default defineComponent({
         };
 
         const units = computed({
-            get: () => state.settings.units,
-            set: value => updateSettings({
+            get: () => unitOptions.find(unit => unit.value === state.settings.units),
+            set: ({ value }) => updateSettings({
                 units: value
             })
         });
@@ -84,5 +78,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
+    .settings-index__header {
+        padding: var(--spacing__large);
+    }
 
 </style>

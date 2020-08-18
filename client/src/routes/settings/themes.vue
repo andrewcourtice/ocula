@@ -1,7 +1,6 @@
 <template>
-    <div class="route settings-themes">
-        <div><strong>Themes</strong></div>
-        <section class="settings-themes__themes">
+    <settings-layout class="route settings-themes" title="Themes">
+        <div class="settings-themes__themes">
             <div class="settings-themes__theme"
                 layout="row center-center"
                 v-for="(value, key) in themes"
@@ -10,11 +9,13 @@
                 @click="setTheme(value.id)">
                 <div>{{ value.name }}</div>
             </div>
-        </section>
-    </div>
+        </div>
+    </settings-layout>
 </template>
 
 <script lang="ts">
+import SettingsLayout from '../../components/layouts/settings.vue';
+
 import {
     defineComponent,
     computed
@@ -30,6 +31,10 @@ import {
 } from '@ocula/themes';
 
 export default defineComponent({
+
+    components: {
+        SettingsLayout
+    },
     
     setup() {
         const theme = computed(() => state.settings.theme);
@@ -56,7 +61,7 @@ export default defineComponent({
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--spacing__small);
-        margin-top: var(--spacing__large);
+        padding: 0 var(--spacing__large);
     }
 
     .settings-themes__theme {

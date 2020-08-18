@@ -17,9 +17,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
- 
-    .settings-master__container {
-        padding: var(--spacing__large);
-    }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="settings-item" layout="row center-justify" ref="item" @click="click">
+    <div class="settings-item" layout="row center-justify">
         <div>{{ label }}</div>
         <div class="text--meta">{{ value }}</div>
         <slot></slot>
@@ -8,8 +8,7 @@
 
 <script lang="ts">
 import {
-    defineComponent,
-    ref
+    defineComponent
 } from "vue";
 
 export default defineComponent({
@@ -24,25 +23,6 @@ export default defineComponent({
             type: null
         }
 
-    },
-
-    setup(props, { emit }) {
-        const item = ref<Element>(null);
-
-        function click(event: MouseEvent) {
-            const select = item.value.querySelector('select');
-
-            if (select) {
-                select.click();
-            }
-
-            emit('selected', event);
-        }
-
-        return {
-            item,
-            click
-        };
     }
 
 });
@@ -51,9 +31,16 @@ export default defineComponent({
 <style lang="scss">
 
     .settings-item {
+        position: relative;
 
         & select {
-            display: none;
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
         }
     }
 
