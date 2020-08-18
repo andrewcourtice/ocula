@@ -6,8 +6,14 @@
                     <option v-for="option in unitOptions" :key="option.value" :value="option">{{ option.label }}</option>
                 </select>
             </settings-item>
-            <router-link :to="themeRoute">
+            <router-link class="link--inherit" :to="routes.locations">
+                <settings-item class="menu-item" label="Locations" :value="locationsLabel"></settings-item>
+            </router-link>
+            <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
+            </router-link>
+            <router-link class="link--inherit" :to="routes.about">
+                <settings-item class="menu-item" label="About"></settings-item>
             </router-link>
         </div>
     </settings-layout>
@@ -54,8 +60,16 @@ export default defineComponent({
     },
     
     setup() {
-        const themeRoute = {
-            name: ROUTES.settings.themes
+        const routes = {
+            locations: {
+                name: ROUTES.settings.locations
+            },
+            theme: {
+                name: ROUTES.settings.themes
+            },
+            about: {
+                name: ROUTES.settings.about
+            }
         };
 
         const units = computed({
@@ -64,13 +78,16 @@ export default defineComponent({
                 units: value
             })
         });
+        
+        const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
 
         return {
+            routes,
             units,
             unitOptions,
+            locationsLabel,
             theme,
-            themeOptions,
-            themeRoute
+            themeOptions
         };
     }
 

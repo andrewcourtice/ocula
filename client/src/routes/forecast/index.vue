@@ -10,7 +10,7 @@
                             <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
                         </div>
                         <div>
-                            <img :src="getFigure(forecast.current.weather.id.raw)" alt="partly cloudy">
+                            <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
                         </div>
                     </div>
                     <div class="forecast-index__summary-last-updated">
@@ -26,7 +26,7 @@
                             <div :key="getDayKey(day, 'date')">
                                 <div>{{ formatDate(day) }}</div>
                                 <div class="text--meta text--tight">
-                                    <small class="text--x-small">{{ day.weather.description.raw }} <template v-if="day.pop.raw > 0">&middot; <span>{{ day.pop.formatted }} chance of rain</span></template></small>
+                                    <small>{{ day.weather.description.raw }} <template v-if="day.pop.raw > 0">&middot; <span>{{ day.pop.formatted }} chance of rain</span></template></small>
                                 </div>
                             </div>
                             <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>

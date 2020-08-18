@@ -1,5 +1,5 @@
 <template>
-    <settings-layout class="route settings-themes" title="Themes">
+    <settings-layout class="route settings-themes" title="Themes" :back-route="backRoute">
         <div class="settings-themes__themes">
             <div class="settings-themes__theme"
                 layout="row center-center"
@@ -8,12 +8,19 @@
                 :class="value.class"
                 @click="setTheme(value.id)">
                 <div>{{ value.name }}</div>
+                <div class="settings-themes__theme-check" v-show="isCurrentTheme(value.id)">
+                    <small class="text--x-small">
+                        <icon name="check"/>
+                    </small>
+                </div>
             </div>
         </div>
     </settings-layout>
 </template>
 
 <script lang="ts">
+import ROUTES from '../../constants/routes';
+
 import SettingsLayout from '../../components/layouts/settings.vue';
 
 import {
@@ -23,6 +30,7 @@ import {
 
 import {
     state,
+    theme,
     updateSettings
 } from '../../store';
 
@@ -37,7 +45,15 @@ export default defineComponent({
     },
     
     setup() {
+        const backRoute = {
+            name: ROUTES.settings.index
+        };
+
         const theme = computed(() => state.settings.theme);
+
+        function isCurrentTheme(id: string) {
+            return id === theme.value;
+        }
 
         function setTheme(id: string): void {
             updateSettings({
@@ -46,8 +62,10 @@ export default defineComponent({
         }
 
         return {
+            backRoute,
             theme,
             themes,
+            isCurrentTheme,
             setTheme
         };
     }
@@ -65,6 +83,7 @@ export default defineComponent({
     }
 
     .settings-themes__theme {
+        position: relative;
         color: var(--font__colour);
         background-color: var(--background__colour);
         border: 1px solid var(--border__colour);
@@ -75,6 +94,20 @@ export default defineComponent({
             display: block;
             content: '';
             padding-bottom: 100%;
+        }
+    }
+
+    .settings-themes__theme-check {
+        position: absolute;
+        top: var(--spacing__x-small);
+        right: var(--spacing__x-small);
+        padding: var(--spacing__xx-small);
+        color: var(--font__colour--compliment);
+        background-color: var(--colour__primary);
+        border-radius: 50%;
+
+        & .icon {
+            display: block;
         }
     }
 

@@ -1,3 +1,4 @@
+import Block from './block/block.vue';
 import Container from './container/container.vue';
 import Icon from './icon/icon.vue';
 import Layout from './layout/layout.vue';
@@ -9,6 +10,7 @@ import Sidebar from './sidebar/sidebar.vue';
 import CoreComponents from './core/index.vue';
 
 export default {
+    Block,
     Container,
     Icon,
     Layout,

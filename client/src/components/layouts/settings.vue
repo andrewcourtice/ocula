@@ -1,6 +1,9 @@
 <template>
     <div class="settings-layout">
-        <div class="settings-layout__header">
+        <div class="settings-layout__header" layout="row center-left">
+            <router-link class="link--inherit" :to="backRoute" replace v-if="backRoute">
+                <icon name="arrow-left" class="margin__right--small"/>
+            </router-link>
             <strong>{{ title }}</strong>
         </div>
         <div class="settings-layout__body">
@@ -21,6 +24,10 @@ export default defineComponent({
        title: {
            type: String,
            default: 'Settings'
+       },
+
+       backRoute: {
+           type: Object
        }
 
    }

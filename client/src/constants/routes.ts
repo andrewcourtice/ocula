@@ -7,6 +7,7 @@ export default {
     },
     settings: {
         index: 'settings-index',
+        locations: 'settings-locations',
         themes: 'settings-themes',
         about: 'settings-about'
     },

@@ -2,7 +2,7 @@
     <div class="search-box" layout="row center-justify">
         <icon name="search" class="margin__right--small"/>
         <div self="size-x1">
-            <input type="text" class="search-box__input" v-model="content" v-bind="$attrs">
+            <input type="text" class="search-box__input" autocomplete="off" v-model="content" v-bind="$attrs">
         </div>
         <loader class="margin__left--small" v-show="loading"/>
     </div>

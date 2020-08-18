@@ -36,6 +36,7 @@ export default defineComponent({
 <style lang="scss">
 
     .icon {
+        display: inline-block;
         width: 1.5em;
         height: 1.5em;
         fill: none;
