@@ -1,4 +1,5 @@
-import UNITS from './units';
+import UNITS from '../enums/units';
+import MAP from '../enums/map';
 
 import type {
     ISettings
@@ -8,6 +9,7 @@ export default {
     version: 1,
     units: UNITS.metric,
     theme: 'default',
+    defaultMap: MAP.radar,
     location: null,
     locations: []
 } as ISettings;

@@ -1,5 +1,5 @@
+import UNITS from '../../enums/units';
 import FORMATS from '../../constants/formats';
-import UNITS from '../../constants/units';
 
 import {
     defaultFormatter

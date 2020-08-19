@@ -8,6 +8,12 @@ $spacings: (
     xx-large: 4rem
 );
 
+$breakpoints: (
+    lg: 64em,
+    md: 52em,
+    sm: 40em
+);
+
 $colour__primary: #5D9BE5;
 $colour__primary--light: lighten(#5D9BE5, 20%);
 $colour__primary--dark: darken(#5D9BE5, 20%);

@@ -2,8 +2,8 @@ export default {
     forecast: {
         index: 'forecast-index',
     },
-    radar: {
-        index: 'radar-index'
+    maps: {
+        index: 'maps-index'
     },
     settings: {
         index: 'settings-index',

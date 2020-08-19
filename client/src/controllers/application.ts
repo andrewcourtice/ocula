@@ -1,10 +1,10 @@
+import MAP from '../enums/map';
+
 import EVENTS from '../constants/events';
 import MODALS from '../constants/modals';
-import SIDEBARS from '../constants/sidebars';
+import DRAWERS from '../constants/drawers';
 
 import eventEmitter from '@ocula/event-emitter';
-
-import logo from '../assets/images/logo/logo-192.png';
 
 import {
     componentsController
@@ -22,45 +22,29 @@ function visibilityChanged() {
     }     
 }
 
-async function notify(title: string, options?: NotificationOptions): Promise<Notification> {
-    if (Notification.permission !== 'granted') {
-        await Notification.requestPermission();
-    }
-    
-    return new Notification(title, options);
-}
-
 window.addEventListener('resize', resize)
 document.addEventListener('visibilitychange', visibilityChanged);
 
 export class ApplicationController {
 
     constructor() {
-        eventEmitter.on(EVENTS.application.updateReady, async () => {
-            const notification = await notify('Update Available', {
-                icon: logo,
-                badge: logo,
-                body: 'An update to Ocula is available. Tap here to update now.',
-                requireInteraction: true
-            });
 
-            notification.onclick = () => {
-                window.location.reload();
-                notification.close();
-            };
-        });
     }
 
     async setLocation() {
         return componentsController.open(MODALS.locations);
     }
 
-    async navigate() {
-        return componentsController.open(SIDEBARS.navigation);
+    async setMapType(): Promise<MAP> {
+        return componentsController.open(DRAWERS.maps);
     }
 
     async notify(title: string, options?: NotificationOptions): Promise<Notification> {
-        return notify(title, options);
+        if (Notification.permission !== 'granted') {
+            await Notification.requestPermission();
+        }
+        
+        return new Notification(title, options);
     }
 
 }

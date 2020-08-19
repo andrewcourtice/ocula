@@ -1,0 +1,79 @@
+$min-size: 1;
+$max-size: 12;
+
+$alignments: (
+    auto,
+    start,
+    end,
+    center,
+    stretch
+);
+
+[grid] {
+    display: grid;
+    grid-gap: var(--spacing__small);
+}
+
+@for $size from $min-size to $max-size {
+
+    [grid^="#{$size}"] {
+        grid-template-columns: repeat($size, 1fr);
+    }
+
+}
+
+@each $alignment in $alignments {
+
+    [grid*="#{$alignment}-"] {
+        justify-items: $alignment;
+    }
+
+    [grid*="-#{$alignment}"] {
+        align-items: $alignment;
+    }
+
+    [grid-self^="#{$alignment}"] {
+        justify-self: $alignment;
+    }
+
+    [grid-self*="-#{$alignment}"] {
+        align-self: $alignment;
+    }
+
+}
+
+[grid-gap="none"] {
+    grid-gap: 0;
+}
+
+@each $spacing-name, $spacing-value in $spacings {
+
+    [grid-gap="#{$spacing-name}"] {
+        grid-gap: var(--spacing__#{ $spacing-name });
+    }
+
+    [grid-gap|="#{$spacing-name}"] {
+        grid-column-gap: var(--spacing__#{ $spacing-name });
+    }
+
+    [grid-gap$="-#{$spacing-name}"] {
+        grid-row-gap: var(--spacing__#{ $spacing-name });
+    }
+
+}
+
+@each $breakpoint-name, $breakpoint-value in $breakpoints {
+
+    @include breakpoint($breakpoint-value) {
+
+        @for $size from $min-size to $max-size {
+
+            [grid*="#{$breakpoint-name}-#{$size}"] {
+                grid-template-columns: repeat($size, 1fr);
+            }
+
+        }
+
+    }
+
+}

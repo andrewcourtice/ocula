@@ -8,8 +8,9 @@ import type {
 
 export default [
     {
-        path: '',
-        name: ROUTES.radar.index,
+        path: ':type?',
+        name: ROUTES.maps.index,
+        props: true,
         component: Index
     }
-] as RouteRecordRaw[];
+];

@@ -1,5 +1,5 @@
 <template>
-    <weather-layout class="route radar-master">
+    <weather-layout class="route maps-master">
         <router-view />
     </weather-layout>    
 </template>

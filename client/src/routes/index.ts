@@ -1,10 +1,10 @@
 import Forecast from './forecast.vue';
-import Radar from './radar.vue';
+import Maps from './maps.vue';
 import Settings from './settings.vue';
 import Error from './error.vue';
 
 import forecast from './forecast/index';
-import radar from './radar/index';
+import maps from './maps/index';
 import settings from './settings/index';
 import error from './error/index';
 
@@ -20,9 +20,9 @@ export default [
         children: forecast
     },
     {
-        path: '/radar',
-        component: Radar,
-        children: radar
+        path: '/maps',
+        component: Maps,
+        children: maps
     },
     {
         path: '/settings',

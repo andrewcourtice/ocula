@@ -1,14 +1,19 @@
 <template>
     <settings-layout class="route settings-index">
         <div class="settings-index__settings menu">
-            <settings-item class="menu-item" label="Units" :value="units.label">
+            <settings-item class="menu-item" label="Units" :value="unit.label">
                 <select name="units" v-model="units">
-                    <option v-for="option in unitOptions" :key="option.value" :value="option">{{ option.label }}</option>
+                    <option v-for="(value, key) in unitOptions" :key="key" :value="key">{{ value.label }}</option>
                 </select>
             </settings-item>
             <router-link class="link--inherit" :to="routes.locations">
                 <settings-item class="menu-item" label="Locations" :value="locationsLabel"></settings-item>
             </router-link>
+            <settings-item class="menu-item" label="Default Map" :value="map.label">
+                <select name="default-map" v-model="defaultMap">
+                    <option v-for="(value, key) in mapOptions" :key="key" :value="key">{{ value.label }}</option>
+                </select>
+            </settings-item>
             <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
@@ -19,9 +24,11 @@
     </settings-layout>
 </template>
 
-<script>
-import ROUTES from '../../constants/routes';
+<script lang="ts">
 import UNITS from '../../constants/units';
+
+import ROUTES from '../../constants/routes';
+import MAPS from '../../constants/maps';
 
 import SettingsLayout from '../../components/layouts/settings.vue';
 import SettingsItem from '../../components/settings/settings-item.vue';
@@ -40,17 +47,6 @@ import {
 import {
     core as themeOptions
 } from '@ocula/themes';
-
-const unitOptions = [
-    {
-        label: 'Metric',
-        value: UNITS.metric
-    },
-    {
-        label: 'Imperial',
-        value: UNITS.imperial
-    }
-];
 
 export default defineComponent({
 
@@ -73,21 +69,35 @@ export default defineComponent({
         };
 
         const units = computed({
-            get: () => unitOptions.find(unit => unit.value === state.settings.units),
-            set: ({ value }) => updateSettings({
+            get: () => state.settings.units,
+            set: value => updateSettings({
                 units: value
             })
         });
+
+        const defaultMap = computed({
+            get: () => state.settings.defaultMap,
+            set: value => updateSettings({
+                defaultMap: value
+            })
+        });
         
+        const unit = computed(() => UNITS[state.settings.units]);
+        const map = computed(() => MAPS[state.settings.defaultMap]);
+
         const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
 
         return {
             routes,
             units,
-            unitOptions,
+            unit,
+            defaultMap,
+            map,
             locationsLabel,
             theme,
-            themeOptions
+            themeOptions,
+            mapOptions: MAPS,
+            unitOptions: UNITS,
         };
     }
 

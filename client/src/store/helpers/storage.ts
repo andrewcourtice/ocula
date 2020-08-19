@@ -11,7 +11,7 @@ import type {
     IStoredData
 } from '../../interfaces/storage';
 
-export function getSettings() {
+export function getSettings(): ISettings {
     let settings = localStorage.getItem(STORAGE_KEYS.settings);
 
     if (!settings) {
@@ -23,7 +23,7 @@ export function getSettings() {
     return objectMerge(SETTINGS, settings);
 }
 
-export function getData() {
+export function getData(): IStoredData {
     const storedData = localStorage.getItem(STORAGE_KEYS.data);
 
     if (!storedData) {

@@ -1,4 +1,10 @@
+import UNITS from '../enums/units';
+
 export default {
-    metric: 'metric',
-    imperial: 'imperial'
-};
+    [UNITS.metric]: {
+        label: 'Metric'
+    },
+    [UNITS.imperial]: {
+        label: 'Imperial'
+    }
+} as const;

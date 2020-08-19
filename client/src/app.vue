@@ -45,10 +45,10 @@ const routes = [
         }
     },
     {
-        label: 'Radar',
-        icon: 'target',
+        label: 'Maps',
+        icon: 'map',
         route: {
-            name: ROUTES.radar.index
+            name: ROUTES.maps.index
         }
     },
     {
