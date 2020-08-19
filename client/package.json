@@ -21,7 +21,7 @@
         "@sentry/browser": "^5.20.1",
         "@sentry/integrations": "^5.20.1",
         "core-js": "3.6.5",
-        "mapbox-gl": "^1.11.1",
+        "mapbox-gl": "^1.12.0",
         "regenerator-runtime": "^0.13.7",
         "vue": "^2.6.11",
         "vue-router": "^3.3.4",
