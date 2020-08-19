@@ -1,6 +1,6 @@
 <template>
     <drawer :id="id" class="maps-drawer" position="top" ref="drawer">
-        <container class="maps-drawer__container" grid="sm-2 md-3 lg-4">
+        <container class="maps-drawer__container" grid="sm-3 lg-4">
             <router-link class="link--inherit" :to="getRoute(key)" v-for="(value, key) in maps" :key="key">
                 <div class="menu-item text--centre">
                     <icon :name="value.icon"/>
