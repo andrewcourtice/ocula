@@ -82,6 +82,7 @@ export default {
     plugins: [
         new webpack.EnvironmentPlugin([
             'MAPBOX_API_KEY',
+            'OWM_API_KEY',
             'GA_TRACKING_ID',
             'SENTRY_DSN'
         ]),
@@ -107,7 +108,15 @@ export default {
                 theme_color: '#FFFFFF',
                 appleStatusBarStyle: 'default',
                 start_url: '/?source=pwa',
-                scope: '/'
+                scope: '/',
+                icons: {
+                    android: true,
+                    appleIcon: true,
+                    appleStartup: true,
+                    favicons: true,
+                    firefox: true,
+                    windows: true
+                }
             }
         }),
 

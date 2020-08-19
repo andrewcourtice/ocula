@@ -6,9 +6,13 @@
     "dependencies": {
         "@ocula/event-emitter": "1.0.0",
         "@ocula/style": "1.0.0",
-        "@ocula/utilities": "1.0.0"
+        "@ocula/utilities": "1.0.0",
+        "mapbox-gl": "^1.11.1"
     },
     "peerDependencies": {
         "vue": "3.0.0-rc.5"
+    },
+    "devDependencies": {
+        "@types/mapbox-gl": "^1.11.1"
     }
 }

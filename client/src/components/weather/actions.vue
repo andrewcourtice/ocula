@@ -5,7 +5,7 @@
             <div class="margin__left--x-small" v-if="location">{{ location.shortName }}</div>
         </div>
         <div self="size-x1">
-            <slot name="header"></slot>
+            <slot></slot>
         </div>
         <div class="weather-actions__action weather-actions__action--update" @click="update(true)">
             <icon name="refresh-cw"/>
