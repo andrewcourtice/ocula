@@ -6,8 +6,8 @@
                 <div class="forecast-index__summary-detail" layout="row center-justify">
                     <div>
                         <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                        <div class="forecast-index__summary-description">Feels like {{ forecast.current.feelsLike.formatted }}</div>
                         <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
+                        <div class="forecast-index__summary-feels-like margin__top--medium">Feels like {{ forecast.current.feelsLike.formatted }}</div>
                     </div>
                     <div>
                         <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
@@ -19,28 +19,11 @@
             </section>
         </container>
         <div class="forecast-index__body" self="size-x1" v-if="forecast">
-            <container class="forecast-index__container" >
-                <section class="forecast-index__ahead">
-                    <template v-for="day in forecast.daily">
-                        <div :key="getDayKey(day, 'icon')">
-                            <icon :name="getIcon(day.weather.id.raw)"/>
-                        </div>
-                        <div :key="getDayKey(day, 'date')">
-                            <div>{{ formatDate(day) }}</div>
-                            <div class="text--meta text--tight">
-                                <small>{{ day.weather.description.formatted }}</small>
-                            </div>
-                        </div>
-                        <div :key="getDayKey(day, 'precip')">
-                            <div layout="row center-left" v-if="day.pop.raw > 0">
-                                <div class="text--meta">{{ day.pop.formatted }}</div>
-                                <icon name="droplet" class="forecast-index__precip-icon" :style="{ opacity: Math.max(0.33, day.pop.raw) }"/>
-                            </div>
-                        </div>
-                        <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>
-                        <div :key="getDayKey(day, 'max')">{{ Math.round(day.temp.max.raw) }}</div>
-                    </template>
+            <container class="forecast-index__container">
+                <section class="forecast-index__upcoming">
+                    <upcoming></upcoming>
                 </section>
+
                 <section class="forecast-index__observations">
                     <div class="forecast-index__observation-icon">
                         <icon name="thermometer"/>
@@ -130,6 +113,7 @@
 import TRENDS from '../../enums/trends';
 
 import WeatherActions from '../../components/weather/actions.vue';
+import Upcoming from '../../components/forecast/upcoming.vue';
 import HourlyTrends from '../../components/forecast/hourly-trends.vue';
 import UvIndex from '../../components/weather/uv-index.vue';
 
@@ -178,6 +162,7 @@ export default defineComponent({
 
     components: {
         WeatherActions,
+        Upcoming,
         HourlyTrends,
         UvIndex
     },
@@ -262,7 +247,7 @@ export default defineComponent({
         border-top-right-radius: var(--border__radius--large);
     }
 
-    .forecast-index__ahead,
+    .forecast-index__upcoming,
     .forecast-index__observations,
     .forecast-index__uv-index {
         margin-bottom: var(--spacing__x-large);
@@ -270,24 +255,10 @@ export default defineComponent({
         padding-right: var(--spacing__large);
     }
 
-    .forecast-index__ahead,
     .forecast-index__observations {
         display: grid;
         gap: var(--spacing__small);
         align-items: center;
-    }
-
-    .forecast-index__ahead {
-        grid-template-columns: max-content auto max-content max-content max-content;
-    }
-
-    .forecast-index__precip-icon {
-        display: block;
-        width: 1em;
-        height: 1em;
-        margin-left: var(--spacing__xx-small);
-        stroke: var(--colour__primary);
-        fill: var(--colour__primary);
     }
 
     .forecast-index__observations {
