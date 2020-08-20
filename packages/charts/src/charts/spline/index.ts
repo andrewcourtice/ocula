@@ -1,15 +1,24 @@
-import SCALE from '../constants/scale';
+import LINE_TYPE from './enums/line-type';
+import MARKER_TYPE from './enums/marker-type';
 
-import Chart from './_base/chart';
+import SCALE from '../../constants/scale';
+import CURVE from './constants/curve';
+
+import Chart from '../_base/chart';
+
+import * as d3 from '../../d3/index';
 
 import {
     getScale
-} from '../scales/index';
+} from '../../scales/index';
 
-import * as d3 from '../d3/index';
+import {
+    valueGetAccessor
+} from '@ocula/utilities';
 
 interface ISplinePoint {
-    value: number,
+    xValue: number,
+    yValue: number,
     x: number,
     y0: number,
     y1: number
@@ -18,15 +27,13 @@ interface ISplinePoint {
 const lineGenerator = d3.line<ISplinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
-    .y(data => data.y1)
-    .curve(d3.curveCatmullRom.alpha(1));
+    .y(data => data.y1);
 
 const areaGenerator = d3.area<ISplinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y0(data => data.y0)
-    .y1(data => data.y1)
-    .curve(d3.curveCatmullRom.alpha(1));
+    .y1(data => data.y1);
 
 export default class Spline extends Chart {
 
@@ -51,6 +58,7 @@ export default class Spline extends Chart {
         return {
             ...super.defaultOptions,
 
+            type: LINE_TYPE.line,
             scales: {
                 x: {
                     type: SCALE.point,
@@ -63,9 +71,17 @@ export default class Spline extends Chart {
                     format: value => value
                 }
             },
+            markers: {
+                visible: true,
+                type: MARKER_TYPE.point
+            },
+            labels: {
+                visible: true,
+                content: value => value
+            },
             padding: {
-                top: 16,
-                bottom: 16,
+                top: 32,
+                bottom: 0,
                 left: 0,
                 right: 0
             },
@@ -109,66 +125,89 @@ export default class Spline extends Chart {
 
     private async enter() {
         const {
+            type,
             classes,
             colours,
-            animation
+            markers,
+            labels
         } = this.options;
 
-        const area = this.lineGroup.append('path')
+        const curve = CURVE[type] || CURVE.line;
+
+        const getLabel = valueGetAccessor(labels.content);
+
+        this.lineGroup.append('path')
             .classed(classes.area, true)
             .attr('fill', colours.line)
             .attr('fill-opacity', 0.5)
-            .style('opacity', 0)
-            .attr('d', areaGenerator);
+            .attr('d', areaGenerator.curve(curve));
 
-        const line = this.lineGroup.append('path')
+        this.lineGroup.append('path')
             .classed(classes.line, true)
             .attr('stroke-width', 2)
             .attr('stroke', colours.line)
             .attr('fill', 'none')
-            .attr('d', lineGenerator);
+            .attr('d', lineGenerator.curve(curve));
 
-        const lineLength = line.node().getTotalLength();
+        const groups = this.markerGroup.selectAll('g')
+            .data(data => data)
+            .join('g')
+            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
 
-        line.attr('stroke-dasharray', lineLength)
-            .attr('stroke-dashoffset', lineLength);
-    
-        await line.transition()
-            .duration(animation.duration)
-            .ease(d3.easePolyOut.exponent(4))
-            .attr('stroke-dashoffset', 0)
-            .end();
+        groups.append('circle')
+            .attr('r', 3)
+            .attr('fill', colours.marker);
 
-        line.attr('stroke-dasharray', null);
-
-        return area.transition()
-            .duration(animation.duration)
-            .ease(d3.easePolyOut.exponent(4))
-            .style('opacity', 1)
-            .end();
+        groups.append('text')
+            .text((data, index) => getLabel(data.yValue, index))
+            .attr('text-anchor', 'middle')
+            .attr('dy', data => Math.sign(data.yValue) * -16)
+            .style('font-size', 'var(--font__size--small)')
     }
 
     private async update() {
         const {
+            type,
             classes,
             colours,
+            labels,
             animation
         } = this.options;
+
+        const curve = CURVE[type] || CURVE.line;
+        const getLabel = valueGetAccessor(labels.content);
 
         const line = this.lineGroup.select(`.${classes.line}`);
         const area = this.lineGroup.select(`.${classes.area}`);
 
+        const markers = this.markerGroup.selectAll('g')
+            .data(data => data, data => data.xValue);
+
+        markers.exit().remove();
+
+        markers.select('circle')
+            .attr('fill', colours.marker);
+
+        markers.select('text')
+            .text((data, index) => getLabel(data.yValue, index))
+            .attr('dy', data => Math.sign(data.yValue) * -16);
+
+        markers.transition()
+            .duration(animation.duration)
+            .ease(d3.easePolyOut.exponent(4))
+            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
+
         const areaTransition = area.transition()
             .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
-            .attr('d', areaGenerator)
+            .attr('d', areaGenerator.curve(curve))
             .attr('fill', colours.line)
             .end();
             
         const lineTransition = line.transition()
             .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
-            .attr('d', lineGenerator)
+            .attr('d', lineGenerator.curve(curve))
             .attr('stroke', colours.line)
             .end();
 
@@ -216,7 +255,7 @@ export default class Spline extends Chart {
     }
 
     private async draw() {
-        this.drawAxes();
+        //this.drawAxes();
 
         const path = this.lineGroup.select('path');
         const action = path.empty() ? this.enter : this.update;
@@ -266,6 +305,8 @@ export default class Spline extends Chart {
             const yValue = yOptions.value(item);
     
             return {
+                xValue,
+                yValue,
                 x: xScale(xValue),
                 y0: yScale(0),
                 y1: yScale(yValue)
@@ -278,6 +319,7 @@ export default class Spline extends Chart {
         });
         
         this.lineGroup.datum(points);
+        this.markerGroup.datum(points);
     }
 
     public async render<T>(data: T[], options) {

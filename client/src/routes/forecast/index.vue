@@ -33,8 +33,8 @@
                         </div>
                         <div :key="getDayKey(day, 'precip')">
                             <div layout="row center-left" v-if="day.pop.raw > 0">
-                                <small class="text--meta">{{ day.pop.formatted }}</small>
-                                <icon name="droplet" class="forecast-index__precip-icon" :style="{ opacity: Math.max(0.25, day.pop.raw) }"/>
+                                <div class="text--meta">{{ day.pop.formatted }}</div>
+                                <icon name="droplet" class="forecast-index__precip-icon" :style="{ opacity: Math.max(0.33, day.pop.raw) }"/>
                             </div>
                         </div>
                         <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                    <trend-chart :type="trend" :data="forecast.hourly"></trend-chart>
+                    <hourly-trends :type="trend"></hourly-trends>
                 </section>
             </container>
         </div>
@@ -127,10 +127,10 @@
 </template>
 
 <script lang="ts">
-import TRENDS from '../../constants/trends';
+import TRENDS from '../../enums/trends';
 
 import WeatherActions from '../../components/weather/actions.vue';
-import TrendChart from '../../components/weather/trend-chart.vue';
+import HourlyTrends from '../../components/forecast/hourly-trends.vue';
 import UvIndex from '../../components/weather/uv-index.vue';
 
 import getIcon from '../../helpers/get-icon';
@@ -178,7 +178,7 @@ export default defineComponent({
 
     components: {
         WeatherActions,
-        TrendChart,
+        HourlyTrends,
         UvIndex
     },
     

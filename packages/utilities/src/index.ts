@@ -28,3 +28,5 @@ export { default as typeIsNil } from './type/is-nil';
 export { default as typeIsNumber } from './type/is-number';
 export { default as typeIsPlainObject } from './type/is-plain-object';
 export { default as typeIsString } from './type/is-string';
+
+export { default as valueGetAccessor } from './value/get-accessor';

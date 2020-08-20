@@ -9,6 +9,10 @@ import {
     WatchStopHandle,
 } from 'vue';
 
+import {
+    useSubscriber
+} from '@ocula/components';
+
 export default function chart(Chart) {
     return defineComponent({
 
@@ -48,6 +52,8 @@ export default function chart(Chart) {
     
                 return chart.render(props.data, props.options);
             }
+
+            useSubscriber(EVENTS.application.resized, render);
 
             onMounted(() => {
                 chart = new Chart(element.value);

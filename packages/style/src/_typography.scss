@@ -71,6 +71,12 @@ small,
     line-height: 1;
 }
 
+.text--no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .text--truncate {
     overflow: hidden;
     text-overflow: ellipsis;
