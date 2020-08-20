@@ -1,121 +1,128 @@
 <template>
-    <div class="route forecast-index transition-theme-change" :class="theme.weather.class">
-        <container class="forecast-index__container" layout="column top-stretch">
+    <div class="route forecast-index transition-theme-change" layout="column top-stretch" :class="theme.weather.class">
+        <container class="forecast-index__header">
             <weather-actions></weather-actions>
-            <template v-if="forecast">
-                <section class="forecast-index__summary">
-                    <div class="forecast-index__summary-detail" layout="row center-justify">
-                        <div>
-                            <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                            <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
-                        </div>
-                        <div>
-                            <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
-                        </div>
+            <section class="forecast-index__summary" v-if="forecast">
+                <div class="forecast-index__summary-detail" layout="row center-justify">
+                    <div>
+                        <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
+                        <div class="forecast-index__summary-description">Feels like {{ forecast.current.feelsLike.formatted }}</div>
+                        <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
                     </div>
-                    <div class="forecast-index__summary-last-updated">
-                        <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
+                    <div>
+                        <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
+                    </div>
+                </div>
+                <div class="forecast-index__summary-last-updated">
+                    <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
+                </div>
+            </section>
+        </container>
+        <div class="forecast-index__body" self="size-x1" v-if="forecast">
+            <container class="forecast-index__container" >
+                <section class="forecast-index__ahead">
+                    <template v-for="day in forecast.daily">
+                        <div :key="getDayKey(day, 'icon')">
+                            <icon :name="getIcon(day.weather.id.raw)"/>
+                        </div>
+                        <div :key="getDayKey(day, 'date')">
+                            <div>{{ formatDate(day) }}</div>
+                            <div class="text--meta text--tight">
+                                <small>{{ day.weather.description.formatted }}</small>
+                            </div>
+                        </div>
+                        <div :key="getDayKey(day, 'precip')">
+                            <div layout="row center-left" v-if="day.pop.raw > 0">
+                                <small class="text--meta">{{ day.pop.formatted }}</small>
+                                <icon name="droplet" class="forecast-index__precip-icon" :style="{ opacity: Math.max(0.25, day.pop.raw) }"/>
+                            </div>
+                        </div>
+                        <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>
+                        <div :key="getDayKey(day, 'max')">{{ Math.round(day.temp.max.raw) }}</div>
+                    </template>
+                </section>
+                <section class="forecast-index__observations">
+                    <div class="forecast-index__observation-icon">
+                        <icon name="thermometer"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Temp Min</strong>
+                        <div>{{ forecast.today.temp.min.formatted }}</div>
+                    </div>
+                    <div class="forecast-index__observation-icon">
+                        <icon name="thermometer"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Temp Max</strong>
+                        <div>{{ forecast.today.temp.max.formatted }}</div>
+                    </div>
+
+                    <div class="forecast-index__observation-icon">
+                        <icon name="umbrella"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Precipitation</strong>
+                        <div v-if="forecast.today.pop.raw > 0">{{ forecast.today.pop.formatted }} chance of rain</div>
+                        <div v-else>n/a</div>
+                    </div>
+                    <div class="forecast-index__observation-icon">
+                        <icon name="droplet"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Humidity</strong>
+                        <div>{{ forecast.current.humidity.formatted }}</div>
+                    </div>
+
+                    <div class="forecast-index__observation-icon">
+                        <icon name="sunrise"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Sunrise</strong>
+                        <div>{{ formatTime(forecast.today.sunrise.formatted) }}</div>
+                    </div>
+                    <div class="forecast-index__observation-icon">
+                        <icon name="sunset"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Sunset</strong>
+                        <div>{{ formatTime(forecast.today.sunset.formatted) }}</div>
+                    </div>
+
+                    <div class="forecast-index__observation-icon">
+                        <icon name="wind"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Wind Speed</strong>
+                        <div>{{ forecast.current.windSpeed.formatted }}</div>
+                    </div>
+                    <div class="forecast-index__observation-icon">
+                        <icon name="compass"/>
+                    </div>
+                    <div class="forecast-index__observation-details">
+                        <strong>Wind Direction</strong>
+                        <div>{{ forecast.current.windDeg.formatted }}</div>
                     </div>
                 </section>
-                <div class="forecast-index__body" self="size-x1">
-                    <section class="forecast-index__ahead">
-                        <template v-for="day in forecast.daily">
-                            <div :key="getDayKey(day, 'icon')">
-                                <icon :name="getIcon(day.weather.id.raw)"/>
-                            </div>
-                            <div :key="getDayKey(day, 'date')">
-                                <div>{{ formatDate(day) }}</div>
-                                <div class="text--meta text--tight">
-                                    <small>{{ day.weather.description.raw }} <template v-if="day.pop.raw > 0">&middot; <span>{{ day.pop.formatted }} chance of rain</span></template></small>
-                                </div>
-                            </div>
-                            <div :key="getDayKey(day, 'min')" class="text--meta">{{ Math.round(day.temp.min.raw) }}</div>
-                            <div :key="getDayKey(day, 'max')">{{ Math.round(day.temp.max.raw) }}</div>
-                        </template>
-                    </section>
-                    <section class="forecast-index__observations">
-                        <div class="forecast-index__observation-icon">
-                            <icon name="thermometer"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Temp Min</strong>
-                            <div>{{ forecast.today.temp.min.formatted }}</div>
-                        </div>
-                        <div class="forecast-index__observation-icon">
-                            <icon name="thermometer"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Temp Max</strong>
-                            <div>{{ forecast.today.temp.max.formatted }}</div>
-                        </div>
-
-                        <div class="forecast-index__observation-icon">
-                            <icon name="umbrella"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Precipitation</strong>
-                            <div v-if="forecast.today.pop.raw > 0">{{ forecast.today.pop.formatted }} chance of rain</div>
-                            <div v-else>n/a</div>
-                        </div>
-                        <div class="forecast-index__observation-icon">
-                            <icon name="droplet"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Humidity</strong>
-                            <div>{{ forecast.current.humidity.formatted }}</div>
-                        </div>
-
-                        <div class="forecast-index__observation-icon">
-                            <icon name="sunrise"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Sunrise</strong>
-                            <div>{{ formatTime(forecast.today.sunrise.formatted) }}</div>
-                        </div>
-                        <div class="forecast-index__observation-icon">
-                            <icon name="sunset"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Sunset</strong>
-                            <div>{{ formatTime(forecast.today.sunset.formatted) }}</div>
-                        </div>
-
-                        <div class="forecast-index__observation-icon">
-                            <icon name="wind"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Wind Speed</strong>
-                            <div>{{ forecast.current.windSpeed.formatted }}</div>
-                        </div>
-                        <div class="forecast-index__observation-icon">
-                            <icon name="compass"/>
-                        </div>
-                        <div class="forecast-index__observation-details">
-                            <strong>Wind Direction</strong>
-                            <div>{{ forecast.current.windDeg.formatted }}</div>
-                        </div>
-                    </section>
-                    <section class="forecast-index__uv-index">
-                        <uv-index></uv-index>
-                    </section>
-                    <section class="forecast-index__trends">
-                        <div class="forecast-index__trends-options">
-                            <div class="forecast-index__trends-option"
-                                layout="row center-left"
-                                v-for="(value, key) in trends"
-                                :key="key"
-                                @click="trend = key">
-                                <icon :name="value.icon" />
-                                <div class="margin__left--x-small">
-                                    <small>{{ value.label }}</small>
-                                </div>
+                <section class="forecast-index__uv-index">
+                    <uv-index></uv-index>
+                </section>
+                <section class="forecast-index__trends">
+                    <div class="forecast-index__trends-options">
+                        <div class="forecast-index__trends-option"
+                            layout="row center-left"
+                            v-for="(value, key) in trends"
+                            :key="key"
+                            @click="trend = key">
+                            <icon :name="value.icon" />
+                            <div class="margin__left--x-small">
+                                <small>{{ value.label }}</small>
                             </div>
                         </div>
-                        <trend-chart :type="trend" :data="forecast.hourly"></trend-chart>
-                    </section>
-                </div>
-            </template>
-        </container>
+                    </div>
+                    <trend-chart :type="trend" :data="forecast.hourly"></trend-chart>
+                </section>
+            </container>
+        </div>
     </div>
 </template>
 
@@ -139,7 +146,8 @@ import {
 import {
     theme,
     state,
-    forecast
+    forecast,
+    format
 } from '../../store';
 
 import {
@@ -183,11 +191,17 @@ export default defineComponent({
         }
 
         function formatDate(day: any): string {
-            return dateFormat(day.dt.formatted, 'EEEE, d MMM');
+            return format.value.date(day.dt.formatted);
+            // return dateFormat(day.dt.formatted, 'EEEE, d MMM', {
+            //     timeZone: forecast.value.timezone.raw
+            // });
         }
 
         function formatTime(date: Date): string {
-            return dateFormat(date, 'hh:mm a');
+            return format.value.time(date);
+            // return dateFormat(date, 'hh:mm a', {
+            //     timeZone: forecast.value.timezone.raw
+            // });
         }
 
         useTimer(() => {
@@ -223,7 +237,7 @@ export default defineComponent({
     }
 
     .forecast-index__container {
-        min-height: 100%;
+        padding: var(--spacing__large) 0;
     }
 
     .forecast-index__summary {
@@ -242,7 +256,6 @@ export default defineComponent({
     }
 
     .forecast-index__body {
-        padding: var(--spacing__large) 0;
         color: var(--font__colour);
         background: var(--background__colour);
         border-top-left-radius: var(--border__radius--large);
@@ -265,7 +278,16 @@ export default defineComponent({
     }
 
     .forecast-index__ahead {
-        grid-template-columns: max-content auto max-content max-content;
+        grid-template-columns: max-content auto max-content max-content max-content;
+    }
+
+    .forecast-index__precip-icon {
+        display: block;
+        width: 1em;
+        height: 1em;
+        margin-left: var(--spacing__xx-small);
+        stroke: var(--colour__primary);
+        fill: var(--colour__primary);
     }
 
     .forecast-index__observations {

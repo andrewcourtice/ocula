@@ -1,15 +1,17 @@
 <template>
     <drawer :id="id" class="maps-drawer" position="top" ref="drawer">
-        <container class="maps-drawer__container" grid="sm-2 md-3 lg-4">
-            <router-link class="link--inherit" :to="getRoute(key)" v-for="(value, key) in maps" :key="key">
-                <div class="menu-item text--centre">
-                    <icon :name="value.icon"/>
-                    <div>
-                        <small>{{ value.label }}</small>
+        <template #default="{ close }">
+            <container class="maps-drawer__container" grid="3">
+                <router-link class="link--inherit" :to="getRoute(key)" v-for="(value, key) in maps" :key="key">
+                    <div class="menu-item text--centre" @click="close">
+                        <icon :name="value.icon"/>
+                        <div>
+                            <small>{{ value.label }}</small>
+                        </div>
                     </div>
-                </div>
-            </router-link>
-        </container>
+                </router-link>
+            </container>
+        </template>
     </drawer>
 </template>
 

@@ -2,6 +2,7 @@ export { state } from './store';
 
 export { default as theme } from './getters/theme';
 export { default as forecast } from './getters/forecast';
+export { default as format } from './getters/format';
 
 export { default as update } from './actions/update';
 export { default as loadLocation } from './actions/load-location';

@@ -22,7 +22,9 @@ const {
 } = FORMATTERS;
 
 function weatherTransform(value: IForecastWeather[]): Record<string, any> {
-    return objectTransform(value[0], {}, defaultFormatter);
+    return objectTransform(value[0], {
+        description: general.description
+    }, defaultFormatter);
 }
 
 export default {

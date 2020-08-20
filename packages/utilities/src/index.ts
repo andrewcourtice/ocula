@@ -4,6 +4,7 @@ export { default as dateFormat } from './date/format';
 export { default as dateFormatDistance } from './date/format-distance';
 export { default as dateFormatDistanceToNow } from './date/format-distance-to-now';
 export { default as dateFromUnix } from './date/from-unix';
+export { default as dateUtcToZoned } from './date/utc-to-zoned';
 
 export { default as domSetMeta } from './dom/set-meta';
 
@@ -17,6 +18,7 @@ export { default as objectCloneLazy } from './object/clone-lazy';
 export { default as objectMerge } from './object/merge';
 export { default as objectTransform } from './object/transform';
 
+export { default as stringCapitalize } from './string/capitalize';
 export { default as stringUniqueId } from './string/unique-id';
 
 export { default as typeIsArray } from './type/is-array';

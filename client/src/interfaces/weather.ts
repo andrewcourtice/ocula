@@ -1,3 +1,10 @@
+export type FormattedForecast<T, U = string> =  {
+    [P in keyof T]: T[P] extends string | number ? {
+        raw: T[P];
+        formatted: U
+    } : FormattedForecast<T[P]>
+}
+
 export interface IForecast {
     lat: number;
     lon: number;

@@ -14,10 +14,10 @@ a,
 }
 
 a {
-    color: var(--link__colour);
+    color: var(--colour__primary);
     
     &:hover {
-        color: var(--link__colour--hover);
+        color: var(--colour__primary--dark);
     }
 }
 
@@ -82,7 +82,7 @@ small,
     a {
 
         &:hover {
-            color: var(--link__colour--hover);
+            color: var(--colour__primary--dark);
         }
     }
 

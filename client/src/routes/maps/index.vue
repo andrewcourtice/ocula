@@ -5,11 +5,12 @@
                 <weather-actions></weather-actions>
             </container>
             <div class="maps-index__options" @click="changeMap">
-                <container class="maps-index__options-container">
+                <container class="maps-index__options-container" layout="row center-justify">
                     <div layout="row center-left" >
                         <icon :name="map.icon"/>
                         <div class="margin__left--x-small">{{ map.label }}</div>
                     </div>
+                    <loader v-if="updating"/>
                 </container>
             </div>
         </div>
@@ -21,7 +22,9 @@
                 :longitude="forecast.lon.raw"
                 :style="theme.core.mapStyle"
                 :tile-source="map.options"
-                interactive>
+                interactive
+                @sourcedataloading="onSourceDataLoading"
+                @idle="onIdle">
             </interactive-map>
         </div>
     </div>
@@ -38,6 +41,7 @@ import applicationController from '../../controllers/application';
 
 import {
     defineComponent,
+    ref,
     computed,
     PropType
 } from 'vue';
@@ -68,6 +72,8 @@ export default defineComponent({
     },
     
     setup(props) {
+        let updating = ref(false);
+
         const map = computed(() => {
             const map = MAPS[props.type || state.settings.defaultMap];
 
@@ -88,10 +94,21 @@ export default defineComponent({
             };
         });
 
+        function onSourceDataLoading() {
+            updating.value = true;
+        }
+
+        function onIdle() {
+            updating.value = false;
+        }
+
         return {
             theme,
             forecast,
             map,
+            updating,
+            onSourceDataLoading,
+            onIdle,
             changeMap: applicationController.setMapType
         };
     }

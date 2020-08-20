@@ -56,7 +56,7 @@ export default defineComponent({
         }
 
         &:before {
-            border-color: #DDDEDF;
+            border-color: var(--background__colour--hover);
         }
 
         &:after {

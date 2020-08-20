@@ -12,7 +12,7 @@ import {
     ref,
     watch,
     onMounted,
-    toRefs,
+    onBeforeUnmount,
     PropType
 } from 'vue';
 
@@ -22,6 +22,9 @@ interface ITileSource {
     minzoom: number;
     maxzoom: number;
 }
+
+const SOURCE_NAME = 'ocula-tile-source';
+const LAYER_NAME = 'ocula-tile-layer';
 
 const TILE_OPTIONS = {
     tiles: [''],
@@ -74,8 +77,9 @@ export default defineComponent({
 
     },
 
-    setup(props) {
+    setup(props, { emit, attrs }) {
         let map: mapboxgl.Map;
+        let updating = false;
 
         const element = ref<HTMLElement>(null);
         const loading = ref(false);
@@ -157,8 +161,8 @@ export default defineComponent({
             layer.minzoom = minzoom;
             layer.maxzoom = maxzoom;
 
-            map.style.sourceCaches['ocula-tile-source'].clearTiles()
-            map.style.sourceCaches['ocula-tile-source'].update(map.transform);
+            map.style.sourceCaches[SOURCE_NAME].clearTiles()
+            map.style.sourceCaches[SOURCE_NAME].update(map.transform);
 
             console.log()
 
@@ -166,13 +170,13 @@ export default defineComponent({
         }
 
         function addSource(tiles: string[] = [''], tileSize: number = 256) {
-            map.addSource('ocula-tile-source', {
+            map.addSource(SOURCE_NAME, {
                 type: 'raster',
                 tiles: [].concat(tiles),
                 tileSize
             });
 
-            return map.getSource('ocula-tile-source') as mapboxgl.RasterSource;
+            return map.getSource(SOURCE_NAME) as mapboxgl.RasterSource;
         }
 
         function addLayer(minzoom: number = 0, maxzoom: number = 22) {
@@ -180,14 +184,14 @@ export default defineComponent({
             const firstLayer = layers.find(layer => layer.type === 'symbol');
 
             map.addLayer({
-                id: 'ocula-tile-layer',
+                id: LAYER_NAME,
                 type: 'raster',
-                source: 'ocula-tile-source',
+                source: SOURCE_NAME,
                 minzoom,
                 maxzoom
             }, firstLayer.id);
 
-            return map.getLayer('ocula-tile-layer');
+            return map.getLayer(LAYER_NAME);
         }
 
         function setDefaultLayer(tileSource: ITileSource) {
@@ -195,8 +199,8 @@ export default defineComponent({
                 return;
             }
 
-            let source = map.getSource('ocula-tile-source') as mapboxgl.RasterSource;
-            let layer = map.getLayer('ocula-tile-layer');
+            let source = map.getSource(SOURCE_NAME) as mapboxgl.RasterSource;
+            let layer = map.getLayer(LAYER_NAME);
 
             const {
                 tiles,
@@ -218,6 +222,18 @@ export default defineComponent({
                 layer
             };
         }
+
+        function handleListeners(invokee: Function): void {
+            Object.keys(attrs)
+                .filter(key => key.startsWith('on'))
+                .forEach(key => {
+                try {
+                    invokee.call(map, key.replace(/^on/, '').toLowerCase(), attrs[key]);
+                } catch (error) {
+                    console.warn(error);
+                }
+            });
+        }
     
         onMounted(async () => {
             const mapboxgl = await loadMapbox();
@@ -238,7 +254,11 @@ export default defineComponent({
                     setDefaultLayer(props.tileSource);
                 }
             });
+
+            handleListeners(map.on);
         });
+
+        onBeforeUnmount(() => handleListeners(map.off));
 
         watch([
             () => props.latitude,

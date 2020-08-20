@@ -1,8 +1,10 @@
 import getIcon from '../helpers/get-icon';
+import getDirection from '../helpers/get-direction';
 
 import {
     dateFromUnix,
-    functionIdentity
+    functionIdentity,
+    stringCapitalize
 } from '@ocula/utilities';
 
 function baseFormatter<T>(raw: T, formatted: any) {
@@ -48,9 +50,10 @@ export default {
         millibars: toSuffix('bar')
     },
     direction: {
-        bearing: toSuffix('°')
+        bearing: value => baseFormatter(value, getDirection(value))
     },
     general: {
+        description: value => baseFormatter(value, stringCapitalize(value)),
         datetime: value => baseFormatter(value, dateFromUnix(value)),
         icon: value => baseFormatter(value, getIcon(value)),
         percentage: toSuffix('%', value => Math.round(value)),

@@ -4,14 +4,14 @@ import typeIsFunction from '../type/is-function';
 import typeIsNil from '../type/is-nil';
 import typeIsPlainObject from '../type/is-plain-object';
 
-type Transformer = (value: any, key?: string) => any;
+type Transformer = <T>(value: any, key?: string, input?: T) => any;
 
 interface Schema {
     [key: string]: Transformer | Schema | Schema[]
 }
 
-export default function transform(input: Record<string, any>, schema: Schema, baseTransformer: Transformer = functionIdentity): Record<string, any> {
-    const output = {};
+export default function transform<T, U = any>(input: T, schema: Schema, baseTransformer: Transformer = functionIdentity): U {
+    const output: U = {};
 
     for (const key in input) {
         const schemaValue = schema[key];
@@ -19,7 +19,7 @@ export default function transform(input: Record<string, any>, schema: Schema, ba
 
         switch (true) {
             case typeIsFunction(schemaValue):
-                value = (schemaValue as Transformer)(value, key);
+                value = (schemaValue as Transformer)(value, key, input);
                 break;
             case typeIsArray(schemaValue):
                 value = value.map(item => transform(item, schemaValue[0], baseTransformer));
@@ -28,7 +28,7 @@ export default function transform(input: Record<string, any>, schema: Schema, ba
                 value = transform(value, schemaValue as Schema, baseTransformer);
                 break;
             default:
-                value = baseTransformer(value, key)
+                value = baseTransformer(value, key, input)
         }
 
         if (!typeIsNil(value)) {

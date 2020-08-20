@@ -38,13 +38,11 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --transition__timing: 250ms;
     --transition__timing--long: 400ms;
     --transition__timing--fade: 1s;
-    --transition__easing--default: cubic-bezier(0.165, 0.84, 0.44, 1);
-    --transition__easing--quartic-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition__easing--default: cubic-bezier(0.165, 0.84, 0.44, 1); // quartic-out
     
-    --colour__primary: #{ $colour__primary };
-    --colour__primary--light: #{ $colour__primary--light };
-    --colour__primary--dark: #{ $colour__primary--dark };
-    --colour__secondary: #{ $colour__primary };
+    --colour__primary: #5D9BE5;
+    --colour__primary--light: #{ lighten(#5D9BE5, 20%) };
+    --colour__primary--dark: #{ darken(#5D9BE5, 20%) };
     
     --background__colour: #FFFFFF;
     --background__colour--hover: #EEEEEE;
@@ -52,10 +50,9 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --border__colour: #EDEDED;
     --border__radius: 5px;
     --border__radius--large: 1rem;
+
     
-    --link__colour: #1E90FF;
-    --link__colour--hover: darken(#1E90FF, 20%);
-    
+        
     @each $name, $value in $spacings {
         --spacing__#{ $name }: #{ $value };
     }

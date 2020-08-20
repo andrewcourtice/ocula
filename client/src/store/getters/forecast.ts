@@ -13,7 +13,12 @@ import {
     objectTransform
 } from '@ocula/utilities';
 
-export default getter(state => {
+import type {
+    FormattedForecast,
+    IForecast
+} from '../../interfaces/weather';
+
+export default getter<FormattedForecast<IForecast>>(state => {
     const {
         forecast,
         settings
@@ -28,10 +33,10 @@ export default getter(state => {
     const {
         daily,
         ...other
-    } = objectTransform(forecast, format, defaultFormatter);
+    } = objectTransform<IForecast, FormattedForecast<IForecast>>(forecast, format, defaultFormatter);
 
     const today = daily[0];
-
+    
     return {
         ...other,
         today,

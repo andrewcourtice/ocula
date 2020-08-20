@@ -1,6 +1,8 @@
 import ROUTES from '../../constants/routes';
 
-import Index from './index.vue';
+import {
+    defineAsyncComponent
+} from 'vue';
 
 import type {
     RouteRecordRaw
@@ -11,6 +13,6 @@ export default [
         path: ':type?',
         name: ROUTES.maps.index,
         props: true,
-        component: Index
+        component: defineAsyncComponent(() => import(/* webpackChunkName: 'maps' */ './index.vue'))
     }
 ];
