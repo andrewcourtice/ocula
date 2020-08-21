@@ -44,7 +44,6 @@ export default {
             windDeg: direction.bearing,
             weather: weatherTransform
         },
-
         daily: [
             {
                 dt: general.datetime,
@@ -75,7 +74,6 @@ export default {
                 pop: general.fractional
             }
         ],
-
         hourly: [
             {
                 dt: general.datetime,
@@ -109,7 +107,6 @@ export default {
             windDeg: direction.bearing,
             weather: weatherTransform
         },
-
         daily: [
             {
                 dt: general.datetime,
@@ -140,7 +137,6 @@ export default {
                 pop: general.fractional
             }
         ],
-
         hourly: [
             {
                 dt: general.datetime,

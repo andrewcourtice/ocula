@@ -35,20 +35,25 @@ import {
     format
 } from '../../store';
 
+import {
+    Formatted,
+    IMappedForecastDay
+} from '../../interfaces/state';
+
 export default defineComponent({
     
     setup() {
         const days = computed(() => forecast.value.daily);
 
-        function getKey(day, key: string): string {
+        function getKey(day: Formatted<IMappedForecastDay>, key: string): string {
             return `${key}-${day.dt.raw}`;
         }
 
-        function getDate(day) {
-            return format.value.date(day.dt.formatted);
+        function getDate(day: Formatted<IMappedForecastDay>) {
+            return format.value.date(day.dt.formatted as any);
         }
 
-        function getPrecipIconStyle(day) {
+        function getPrecipIconStyle(day: Formatted<IMappedForecastDay>) {
             return {
                 opacity: Math.max(day.pop.raw)
             };

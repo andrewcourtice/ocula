@@ -25,70 +25,13 @@
                 </section>
 
                 <section class="forecast-index__observations">
-                    <div class="forecast-index__observation-icon">
-                        <icon name="thermometer"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Temp Min</strong>
-                        <div>{{ forecast.today.temp.min.formatted }}</div>
-                    </div>
-                    <div class="forecast-index__observation-icon">
-                        <icon name="thermometer"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Temp Max</strong>
-                        <div>{{ forecast.today.temp.max.formatted }}</div>
-                    </div>
-
-                    <div class="forecast-index__observation-icon">
-                        <icon name="umbrella"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Precipitation</strong>
-                        <div v-if="forecast.today.pop.raw > 0">{{ forecast.today.pop.formatted }} chance of rain</div>
-                        <div v-else>n/a</div>
-                    </div>
-                    <div class="forecast-index__observation-icon">
-                        <icon name="droplet"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Humidity</strong>
-                        <div>{{ forecast.current.humidity.formatted }}</div>
-                    </div>
-
-                    <div class="forecast-index__observation-icon">
-                        <icon name="sunrise"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Sunrise</strong>
-                        <div>{{ formatTime(forecast.today.sunrise.formatted) }}</div>
-                    </div>
-                    <div class="forecast-index__observation-icon">
-                        <icon name="sunset"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Sunset</strong>
-                        <div>{{ formatTime(forecast.today.sunset.formatted) }}</div>
-                    </div>
-
-                    <div class="forecast-index__observation-icon">
-                        <icon name="wind"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Wind Speed</strong>
-                        <div>{{ forecast.current.windSpeed.formatted }}</div>
-                    </div>
-                    <div class="forecast-index__observation-icon">
-                        <icon name="compass"/>
-                    </div>
-                    <div class="forecast-index__observation-details">
-                        <strong>Wind Direction</strong>
-                        <div>{{ forecast.current.windDeg.formatted }}</div>
-                    </div>
+                    <observations></observations>
                 </section>
+
                 <section class="forecast-index__uv-index">
                     <uv-index></uv-index>
                 </section>
+                
                 <section class="forecast-index__trends">
                     <div class="forecast-index__trends-options">
                         <div class="forecast-index__trends-option"
@@ -114,8 +57,9 @@ import TRENDS from '../../enums/trends';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import Upcoming from '../../components/forecast/upcoming.vue';
+import Observations from '../../components/forecast/observations.vue';
 import HourlyTrends from '../../components/forecast/hourly-trends.vue';
-import UvIndex from '../../components/weather/uv-index.vue';
+import UvIndex from '../../components/forecast/uv-index.vue';
 
 import getIcon from '../../helpers/get-icon';
 import getFigure from '../../helpers/get-figure';
@@ -163,6 +107,7 @@ export default defineComponent({
     components: {
         WeatherActions,
         Upcoming,
+        Observations,
         HourlyTrends,
         UvIndex
     },
@@ -253,16 +198,6 @@ export default defineComponent({
         margin-bottom: var(--spacing__x-large);
         padding-left: var(--spacing__large);
         padding-right: var(--spacing__large);
-    }
-
-    .forecast-index__observations {
-        display: grid;
-        gap: var(--spacing__small);
-        align-items: center;
-    }
-
-    .forecast-index__observations {
-        grid-template-columns: max-content 1fr max-content 1fr;
     }
 
     .forecast-index__trends-options {

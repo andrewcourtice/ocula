@@ -1,7 +1,7 @@
 <template>
     <div class="forecast-hourly-trends">
         <div class="forecast-hourly-trends__body" :style="bodyStyle">
-            <spline-chart class="forecast-hourly-trends__chart" :data="hours" :options="options" />
+            <line-chart class="forecast-hourly-trends__chart" :data="hours" :options="options" />
 
             <div class="forecast-hourly-trends__column"></div>
             <div class="forecast-hourly-trends__column"></div>
@@ -27,7 +27,7 @@
 <script lang="ts">
 import TRENDS from '../../enums/trends';
 
-import SplineChart from '../charts/spline.vue';
+import LineChart from '../charts/line.vue';
 
 import getIcon from '../../helpers/get-icon';
 
@@ -52,9 +52,9 @@ import {
 } from '@ocula/charts';
 
 import type {
-    FormattedForecast,
-    IForecastHour
-} from '../../interfaces/weather';
+    Formatted,
+    IMappedForecastHour
+} from '../../interfaces/state';
 
 const BASE_OPTIONS = {
     type: LINE_TYPE.spline,
@@ -118,7 +118,7 @@ const OPTIONS = {
 export default defineComponent({
     
     components: {
-        SplineChart
+        LineChart
     },
 
     props: {
@@ -137,11 +137,11 @@ export default defineComponent({
             gridTemplateColumns: `1.5rem repeat(${hours.value.length - 2}, 3rem) 1.5rem`
         }));
 
-        function getKey(hour: FormattedForecast<IForecastHour>, key: string): string {
+        function getKey(hour: Formatted<IMappedForecastHour>, key: string): string {
             return `${key}-${hour.dt.raw}`;
         }
 
-        function getTime(hour: FormattedForecast<IForecastHour>): string {
+        function getTime(hour: Formatted<IMappedForecastHour>): string {
             return format.value.time(hour.dt.formatted as any, 'h a');
         }
 

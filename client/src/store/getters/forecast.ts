@@ -14,11 +14,12 @@ import {
 } from '@ocula/utilities';
 
 import type {
-    FormattedForecast,
-    IForecast
+    Formatted,
+    IForecast,
+    IMappedForecast
 } from '../../interfaces/weather';
 
-export default getter<FormattedForecast<IForecast>>(state => {
+export default getter<Formatted<IMappedForecast>>(state => {
     const {
         forecast,
         settings
@@ -33,7 +34,7 @@ export default getter<FormattedForecast<IForecast>>(state => {
     const {
         daily,
         ...other
-    } = objectTransform<IForecast, FormattedForecast<IForecast>>(forecast, format, defaultFormatter);
+    } = objectTransform<IForecast, Formatted<IMappedForecast>>(forecast, format, defaultFormatter);
 
     const today = daily[0];
     

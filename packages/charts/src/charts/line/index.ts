@@ -16,7 +16,7 @@ import {
     valueGetAccessor
 } from '@ocula/utilities';
 
-interface ISplinePoint {
+interface ILinePoint {
     xValue: number,
     yValue: number,
     x: number,
@@ -24,24 +24,24 @@ interface ISplinePoint {
     y1: number
 };
 
-const lineGenerator = d3.line<ISplinePoint>()
+const lineGenerator = d3.line<ILinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y(data => data.y1);
 
-const areaGenerator = d3.area<ISplinePoint>()
+const areaGenerator = d3.area<ILinePoint>()
     .defined(data => !!data.y1)
     .x(data => data.x)
     .y0(data => data.y0)
     .y1(data => data.y1);
 
-export default class Spline extends Chart {
+export default class LineChart extends Chart {
 
-    private lineGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
-    private markerGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
-    private axisGroup: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
-    private xAxis: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
-    private yAxis: d3.Selection<SVGGElement, ISplinePoint[], null, undefined>;
+    private lineGroup: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
+    private markerGroup: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
+    private axisGroup: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
+    private xAxis: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
+    private yAxis: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
 
     constructor(element: Element) {
         super(element);

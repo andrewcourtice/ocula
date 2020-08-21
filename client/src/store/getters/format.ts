@@ -7,7 +7,11 @@ import {
     dateUtcToZoned
 } from '@ocula/utilities';
 
-export default getter(({ forecast }) => {
+import type {
+    IFormatter
+} from '../../interfaces/state';
+
+export default getter<IFormatter>(({ forecast }) => {
     let options;
     let converter = value => value;
 

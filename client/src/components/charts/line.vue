@@ -1,20 +1,20 @@
 <template>
-    <div class="spline-chart" ref="element"></div>
+    <div class="line-chart" ref="element"></div>
 </template>
 
 <script lang="ts">
 import {
-    SplineChart
+    LineChart
 } from '@ocula/charts';
 
 import chart from './_base/chart';
 
-export default chart(SplineChart);
+export default chart(LineChart);
 </script>
 
 <style lang="scss">
 
-    .spline-chart {
+    .line-chart {
         width: 100%;
         height: 100%;
     }
