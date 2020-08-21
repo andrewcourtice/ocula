@@ -2,73 +2,52 @@
     <div class="route forecast-index transition-theme-change" layout="column top-stretch" :class="theme.weather.class">
         <container class="forecast-index__header">
             <weather-actions></weather-actions>
-            <section class="forecast-index__summary" v-if="forecast">
-                <div class="forecast-index__summary-detail" layout="row center-justify">
-                    <div>
-                        <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                        <div class="forecast-index__summary-description">{{ forecast.current.weather.description.formatted }}</div>
-                        <div class="forecast-index__summary-feels-like margin__top--medium">Feels like {{ forecast.current.feelsLike.formatted }}</div>
+            <header class="forecast-index__summary" layout="row center-justify" v-if="forecast">
+                <div>
+                    <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
+                    <div class="forecast-index__summary-feels-like">
+                        <small>Feels like {{ forecast.current.feelsLike.formatted }}</small>
                     </div>
-                    <div>
-                        <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
-                    </div>
+                    <div class="forecast-index__summary-description margin__top--medium">{{ forecast.current.weather.description.formatted }}</div>
                 </div>
-                <div class="forecast-index__summary-last-updated">
-                    <small v-show="lastUpdated">Updated {{ lastUpdated }} ago</small>
+                <div>
+                    <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
                 </div>
-            </section>
+            </header>
         </container>
         <div class="forecast-index__body" self="size-x1" v-if="forecast">
             <container class="forecast-index__container">
-                <section class="forecast-index__upcoming">
-                    <upcoming></upcoming>
-                </section>
-
-                <section class="forecast-index__observations">
-                    <observations></observations>
-                </section>
-
-                <section class="forecast-index__uv-index">
-                    <uv-index></uv-index>
-                </section>
-                
-                <section class="forecast-index__trends">
-                    <div class="forecast-index__trends-options">
-                        <div class="forecast-index__trends-option"
-                            layout="row center-left"
-                            v-for="(value, key) in trends"
-                            :key="key"
-                            @click="trend = key">
-                            <icon :name="value.icon" />
-                            <div class="margin__left--x-small">
-                                <small>{{ value.label }}</small>
-                            </div>
-                        </div>
-                    </div>
-                    <hourly-trends :type="trend"></hourly-trends>
-                </section>
+                <block class="forecast-index__block"
+                    v-for="section in sections"
+                    :key="section.id"
+                    :class="section.class"
+                    :title="section.label">
+                    <component :is="section.component"/>
+                </block>
+                <footer class="forecast-index__last-updated">
+                    <small>
+                        <template v-if="lastUpdated">Updated {{ lastUpdated }} ago</template>
+                        <template v-else>Not updated yet</template>
+                    </small>
+                </footer>
             </container>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import TRENDS from '../../enums/trends';
+import FORECAST_SECTIONS from '../../constants/sections';
 
 import WeatherActions from '../../components/weather/actions.vue';
-import Upcoming from '../../components/forecast/upcoming.vue';
-import Observations from '../../components/forecast/observations.vue';
-import HourlyTrends from '../../components/forecast/hourly-trends.vue';
-import UvIndex from '../../components/forecast/uv-index.vue';
 
-import getIcon from '../../helpers/get-icon';
 import getFigure from '../../helpers/get-figure';
 import setThemeMeta from '../../helpers/set-theme-meta';
 
 import {
     defineComponent,
     ref,
-    watch
+    watch,
+    computed
 } from 'vue';
 
 import {
@@ -87,51 +66,27 @@ import {
     dateFormatDistanceToNow
 } from '@ocula/utilities';
 
-const trends = {
-    [TRENDS.temperature]: {
-        label: 'Temperature',
-        icon: 'thermometer'
-    },
-    [TRENDS.rainfall]: {
-        label: 'Rainfall',
-        icon: 'droplet'
-    },
-    [TRENDS.wind]: {
-        label: 'Wind',
-        icon: 'wind'
-    }
-};
-
 export default defineComponent({
 
     components: {
-        WeatherActions,
-        Upcoming,
-        Observations,
-        HourlyTrends,
-        UvIndex
+        WeatherActions
     },
     
     setup() {
-        const trend = ref(TRENDS.temperature);
         const lastUpdated = ref('');
+
+        const sections = computed(() => {
+            const visibleSections = state.settings.forecast.sections.filter(({ visible }) => !!visible);
+
+            return visibleSections.map(({ type }) => ({
+                id: type,
+                class: `forecast-index__block--${type}`,
+                ...FORECAST_SECTIONS[type]
+            }));
+        });
 
         function getDayKey(day: any, column: string): string {
             return `${day.dt.raw}-${column}`;
-        }
-
-        function formatDate(day: any): string {
-            return format.value.date(day.dt.formatted);
-            // return dateFormat(day.dt.formatted, 'EEEE, d MMM', {
-            //     timeZone: forecast.value.timezone.raw
-            // });
-        }
-
-        function formatTime(date: Date): string {
-            return format.value.time(date);
-            // return dateFormat(date, 'hh:mm a', {
-            //     timeZone: forecast.value.timezone.raw
-            // });
         }
 
         useTimer(() => {
@@ -145,12 +100,8 @@ export default defineComponent({
         return {
             theme,
             forecast,
+            sections,
             getDayKey,
-            formatDate,
-            formatTime,
-            trend,
-            trends,
-            getIcon,
             getFigure,
             lastUpdated
         };
@@ -166,17 +117,10 @@ export default defineComponent({
         background: var(--background__colour--weather);
     }
 
-    .forecast-index__container {
-        padding: var(--spacing__large) 0;
-    }
-
     .forecast-index__summary {
+        min-height: 30vh;
         padding: var(--spacing__large);
         padding-top: 0;
-    }
-
-    .forecast-index__summary-detail {
-        min-height: 25vh;
     }
 
     .forecast-index__summary-temp {
@@ -186,28 +130,37 @@ export default defineComponent({
     }
 
     .forecast-index__body {
+        padding-top: var(--spacing__small);
         color: var(--font__colour);
         background: var(--background__colour);
         border-top-left-radius: var(--border__radius--large);
         border-top-right-radius: var(--border__radius--large);
     }
 
-    .forecast-index__upcoming,
-    .forecast-index__observations,
-    .forecast-index__uv-index {
-        margin-bottom: var(--spacing__x-large);
-        padding-left: var(--spacing__large);
-        padding-right: var(--spacing__large);
+    .forecast-index__block {
+        
+        &:not(:last-of-type) {
+            margin-bottom: var(--spacing__small);
+        }
+
+        & .block__header,
+        & .block__body {
+            padding-left: var(--spacing__large);
+            padding-right: var(--spacing__large);
+        }
     }
 
-    .forecast-index__trends-options {
-        padding: 0 var(--spacing__large);
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing__small);
+    .forecast-index__block--hourly-forecast {
+
+        & .block__body {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
-    .forecast-index__trends-option {
+    .forecast-index__last-updated {
+        padding: var(--spacing__small) var(--spacing__large);
+        color: var(--font__colour--meta);
         text-align: center;
     }
 

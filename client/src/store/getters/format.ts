@@ -17,7 +17,7 @@ export default getter<IFormatter>(({ forecast }) => {
 
     const output = {
         date: (value: Date, format: string = 'EEEE, d MMM') => dateFormat(converter(value), format, options),
-        time: (value: Date, format: string = 'hh:mm a') => dateFormat(converter(value), format, options)
+        time: (value: Date, format: string = 'h:mm a') => dateFormat(converter(value), format, options).toLowerCase()
     };
 
     if (forecast && forecast.timezone) {

@@ -76,14 +76,17 @@ export default defineComponent({
         });
 
         const defaultMap = computed({
-            get: () => state.settings.defaultMap,
+            get: () => state.settings.maps.default,
             set: value => updateSettings({
-                defaultMap: value
+                maps: {
+                    ...state.settings.maps, 
+                    default: value
+                }
             })
         });
         
         const unit = computed(() => UNITS[state.settings.units]);
-        const map = computed(() => MAPS[state.settings.defaultMap]);
+        const map = computed(() => MAPS[state.settings.maps.default]);
 
         const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
 

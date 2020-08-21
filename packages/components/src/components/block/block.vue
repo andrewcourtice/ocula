@@ -1,12 +1,14 @@
 <template>
-    <div class="block">
+    <section class="block">
         <div class="block__header" v-if="$slots.title || title">
-            <slot name="title">{{ title }}</slot>
+            <div class="block__title">
+                <slot name="title">{{ title }}</slot>
+            </div>
         </div>
         <div class="block__body">
             <slot></slot>
         </div>
-    </div>
+    </section>
 </template>
 
 <script lang="ts">
@@ -34,8 +36,9 @@ export default defineComponent({
         padding: var(--spacing__small);
     }
 
-    .block__header {
-        text-align: center;
+    .block__title {
+        font-size: var(--font__size--small);
+        font-weight: var(--font__weight--heavy);
         text-transform: uppercase;
     }
 

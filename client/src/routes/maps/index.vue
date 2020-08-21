@@ -75,7 +75,7 @@ export default defineComponent({
         let updating = ref(false);
 
         const map = computed(() => {
-            const map = MAPS[props.type || state.settings.defaultMap];
+            const map = MAPS[props.type || state.settings.maps.default];
 
             let {
                 tiles

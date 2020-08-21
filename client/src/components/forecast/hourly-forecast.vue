@@ -3,8 +3,9 @@
         <div class="forecast-hourly-trends__body" :style="bodyStyle">
             <line-chart class="forecast-hourly-trends__chart" :data="hours" :options="options" />
 
-            <div class="forecast-hourly-trends__column"></div>
-            <div class="forecast-hourly-trends__column"></div>
+            <div class="forecast-hourly-trends__now" layout="column center-left">
+                <span class="forecast-hourly-trends__now-label">Now</span>
+            </div>
             <!-- <div class="forecast-hourly-trends__column"></div> -->
             <template v-for="hour in hours.slice(1, -1)">
                 <div class="forecast-hourly-trends__column text--no-wrap" :key="getKey(hour, 'time')">
@@ -17,15 +18,16 @@
                     <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
                 </div> -->
             </template>
-            <div class="forecast-hourly-trends__column"></div>
-            <div class="forecast-hourly-trends__column"></div>
+            <div class="forecast-hourly-trends__later" layout="column center-right">
+                <span class="forecast-hourly-trends__later-label">Later</span>
+            </div>
             <!-- <div class="forecast-hourly-trends__column"></div> -->
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import TRENDS from '../../enums/trends';
+import TREND from '../../enums/trend';
 
 import LineChart from '../charts/line.vue';
 
@@ -39,6 +41,7 @@ import {
 
 import {
     defineComponent,
+    ref,
     computed
 } from 'vue';
 
@@ -61,8 +64,7 @@ const BASE_OPTIONS = {
     scales: {
         x: {
             type: 'time',
-            value: ({ dt }) => dateFromUnix(dt.raw),
-            format: date => dateFormat(date, 'h a')
+            value: ({ dt }) => dateFromUnix(dt.raw)
         },
         y: {
             type: 'linear',
@@ -79,7 +81,7 @@ const BASE_OPTIONS = {
 };
 
 const OPTIONS = {
-    [TRENDS.temperature]: {
+    [TREND.temperature]: {
         scales: {
             y: {
                 value: ({ temp }) => temp.raw
@@ -90,7 +92,7 @@ const OPTIONS = {
             marker: '#FF9900'
         }
     },
-    [TRENDS.rainfall]: {
+    [TREND.rainfall]: {
         type: LINE_TYPE.step,
         scales: {
             y: {
@@ -102,7 +104,7 @@ const OPTIONS = {
             marker: '#47B1FA'
         }
     },
-    [TRENDS.wind]: {
+    [TREND.wind]: {
         scales: {
             y: {
                 value: ({ windSpeed }) => windSpeed.raw
@@ -121,17 +123,11 @@ export default defineComponent({
         LineChart
     },
 
-    props: {
-
-        type: {
-            type: String
-        }
-
-    },
-
     setup(props) {
+        const type = ref(TREND.temperature);
+
         const hours = computed(() => forecast.value.hourly);
-        const options = computed(() => objectMerge(BASE_OPTIONS, OPTIONS[props.type]));
+        const options = computed(() => objectMerge(BASE_OPTIONS, OPTIONS[type.value]));
 
         const bodyStyle = computed(() => ({
             gridTemplateColumns: `1.5rem repeat(${hours.value.length - 2}, 3rem) 1.5rem`
@@ -146,6 +142,7 @@ export default defineComponent({
         }
 
         return {
+            type,
             hours,
             options,
             bodyStyle,
@@ -167,6 +164,7 @@ export default defineComponent({
 
     .forecast-hourly-trends__body {
         display: inline-grid;
+        padding-bottom: var(--spacing__small);
         grid-template-rows: repeat(3, auto);
         grid-auto-flow: column;
         row-gap: var(--spacing__x-small);
@@ -181,6 +179,27 @@ export default defineComponent({
     .forecast-hourly-trends__column {
         padding: 0 var(--spacing__xx-small);
         text-align: center;
+    }
+
+    .forecast-hourly-trends__now,
+    .forecast-hourly-trends__later {
+        grid-row: 2 / -1;      
+    }
+
+    .forecast-hourly-trends__now-label,
+    .forecast-hourly-trends__later-label {
+        color: var(--font__colour--meta);
+        font-size: var(--font__size--x-small);
+        text-transform: uppercase;
+        transform-origin: center;
+    }
+
+    .forecast-hourly-trends__now-label {
+        transform: rotate(90deg);
+    }
+    
+    .forecast-hourly-trends__later-label {
+        transform: rotate(-90deg);
     }
 
 </style>
