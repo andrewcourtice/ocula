@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div :key="getKey(day, 'precip')">
-                <div layout="row center-left" v-if="day.pop.raw > 0">
+                <div layout="row center-right" v-if="day.pop.raw > 0">
                     <div class="text--meta">{{ day.pop.formatted }}</div>
                     <icon name="droplet" class="forecast-upcoming__precip-icon" :style="getPrecipIconStyle(day)"/>
                 </div>
@@ -55,7 +55,7 @@ export default defineComponent({
 
         function getPrecipIconStyle(day: Formatted<IMappedForecastDay>) {
             return {
-                opacity: Math.max(day.pop.raw)
+                opacity: Math.max(day.pop.raw, 0.3)
             };
         }
 

@@ -1,3 +1,4 @@
+export { default as arrayJoinBy } from './array/join-by';
 export { default as arrayUniqueBy } from './array/unique-by';
 
 export { default as dateFormat } from './date/format';
@@ -11,6 +12,7 @@ export { default as domSetMeta } from './dom/set-meta';
 export { default as functionDebounce } from './function/debounce';
 export { default as functionIdentity } from './function/identity';
 
+export { default as numberClamp } from './number/clamp';
 export { default as numberMinBy } from './number/min-by';
 export { default as numberMaxBy } from './number/max-by';
 export { default as numberRound } from './number/round';
@@ -18,6 +20,9 @@ export { default as numberRound } from './number/round';
 export { default as objectCloneLazy } from './object/clone-lazy';
 export { default as objectMerge } from './object/merge';
 export { default as objectTransform } from './object/transform';
+
+export { default as scaleContinuous } from './scale/continuous';
+export { default as scaleDiscrete } from './scale/discrete';
 
 export { default as stringCapitalize } from './string/capitalize';
 export { default as stringUniqueId } from './string/unique-id';

@@ -2,17 +2,8 @@
     <div class="route forecast-index transition-theme-change" layout="column top-stretch" :class="theme.weather.class">
         <container class="forecast-index__header">
             <weather-actions></weather-actions>
-            <header class="forecast-index__summary" layout="row center-justify" v-if="forecast">
-                <div>
-                    <div class="forecast-index__summary-temp">{{ forecast.current.temp.formatted }}</div>
-                    <div class="forecast-index__summary-feels-like">
-                        <small>Feels like {{ forecast.current.feelsLike.formatted }}</small>
-                    </div>
-                    <div class="forecast-index__summary-description margin__top--medium">{{ forecast.current.weather.description.formatted }}</div>
-                </div>
-                <div>
-                    <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
-                </div>
+            <header class="forecast-index__summary" layout="column center-stretch" v-if="forecast">
+                <forecast-summary></forecast-summary>
             </header>
         </container>
         <div class="forecast-index__body" self="size-x1" v-if="forecast">
@@ -39,8 +30,8 @@
 import FORECAST_SECTIONS from '../../constants/sections';
 
 import WeatherActions from '../../components/weather/actions.vue';
+import ForecastSummary from '../../components/forecast/summary.vue';
 
-import getFigure from '../../helpers/get-figure';
 import setThemeMeta from '../../helpers/set-theme-meta';
 
 import {
@@ -53,8 +44,7 @@ import {
 import {
     theme,
     state,
-    forecast,
-    format
+    forecast
 } from '../../store';
 
 import {
@@ -62,14 +52,14 @@ import {
 } from '@ocula/components';
 
 import {
-    dateFormat,
     dateFormatDistanceToNow
 } from '@ocula/utilities';
 
 export default defineComponent({
 
     components: {
-        WeatherActions
+        WeatherActions,
+        ForecastSummary
     },
     
     setup() {
@@ -85,10 +75,6 @@ export default defineComponent({
             }));
         });
 
-        function getDayKey(day: any, column: string): string {
-            return `${day.dt.raw}-${column}`;
-        }
-
         useTimer(() => {
             if (state.lastUpdated) {
                 lastUpdated.value = dateFormatDistanceToNow(state.lastUpdated);
@@ -101,8 +87,6 @@ export default defineComponent({
             theme,
             forecast,
             sections,
-            getDayKey,
-            getFigure,
             lastUpdated
         };
     }
@@ -121,12 +105,6 @@ export default defineComponent({
         min-height: 30vh;
         padding: var(--spacing__large);
         padding-top: 0;
-    }
-
-    .forecast-index__summary-temp {
-        font-size: 4rem;
-        font-weight: var(--font__weight--medium);
-        line-height: 1;
     }
 
     .forecast-index__body {

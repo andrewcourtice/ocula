@@ -162,7 +162,8 @@ export default class LineChart extends Chart {
             .text((data, index) => getLabel(data.yValue, index))
             .attr('text-anchor', 'middle')
             .attr('dy', data => Math.sign(data.yValue) * -16)
-            .style('font-size', 'var(--font__size--small)')
+            .style('fill', 'var(--font__colour)')
+            .style('font-size', 'var(--font__size--small)');
     }
 
     private async update() {
