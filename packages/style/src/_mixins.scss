@@ -1,4 +1,8 @@
-@mixin breakpoint($size) {
+@import "./_variables.scss";
+
+@mixin breakpoint($breakpoint) {
+
+    $size: map-get($breakpoints, $breakpoint);
 
     @media screen and (min-width: #{ $size }) {
         @content;

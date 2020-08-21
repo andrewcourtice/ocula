@@ -64,7 +64,7 @@ $alignments: (
 
 @each $breakpoint-name, $breakpoint-value in $breakpoints {
 
-    @include breakpoint($breakpoint-value) {
+    @include breakpoint($breakpoint-name) {
 
         @for $size from $min-size to $max-size {
 

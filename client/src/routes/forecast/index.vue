@@ -95,6 +95,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+    @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-index {
         color: var(--font__colour--weather);
@@ -140,6 +141,14 @@ export default defineComponent({
         padding: var(--spacing__small) var(--spacing__large);
         color: var(--font__colour--meta);
         text-align: center;
+    }
+
+    @include breakpoint("lg") {
+
+        .forecast-index__body {
+            border-radius: 0;
+        }
+
     }
 
 </style>
