@@ -47,7 +47,7 @@ export default defineComponent({
 <style lang="scss">
 
     .weather-actions {
-        padding: var(--spacing__small);
+        padding: var(--spacing__small) var(--spacing__medium);
     }
 
     .weather-actions--loading {
