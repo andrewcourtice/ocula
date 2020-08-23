@@ -31,8 +31,8 @@
 </template>
 
 <script lang="ts">
-import MAP from '../../enums/map';
-import MAPS from '../../constants/maps';
+import MAP from '../../enums/maps/map';
+import MAPS from '../../constants/maps/maps';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import MapsDrawer from '../../components/drawers/maps.vue';

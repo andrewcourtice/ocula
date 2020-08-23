@@ -1,4 +1,4 @@
-import LOCATION from '../../enums/location';
+import LOCATION from '../../enums/forecast/location';
 
 import setLocation from './set-location';
 

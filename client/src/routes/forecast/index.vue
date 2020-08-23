@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import FORECAST_SECTIONS from '../../constants/sections';
+import FORECAST_SECTIONS from '../../constants/forecast/sections';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import ForecastSummary from '../../components/forecast/summary.vue';

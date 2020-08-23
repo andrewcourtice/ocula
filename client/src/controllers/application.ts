@@ -1,8 +1,8 @@
-import MAP from '../enums/map';
+import MAP from '../enums/maps/map';
 
-import EVENTS from '../constants/events';
-import MODALS from '../constants/modals';
-import DRAWERS from '../constants/drawers';
+import EVENTS from '../constants/core/events';
+import MODALS from '../constants/core/modals';
+import DRAWERS from '../constants/core/drawers';
 
 import eventEmitter from '@ocula/event-emitter';
 

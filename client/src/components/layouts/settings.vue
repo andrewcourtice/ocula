@@ -15,7 +15,7 @@
 <script>
 import {
     defineComponent
-} from "vue";
+} from 'vue';
 
 export default defineComponent({
    

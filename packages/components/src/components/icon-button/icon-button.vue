@@ -36,7 +36,7 @@ export default defineComponent({
     .icon-button {
         display: inline-flex;
         width: auto;
-        padding: var(--spacing__x-small) var(--spacing__small);
+        padding: var(--spacing__x-small);
         cursor: pointer;
     }
 

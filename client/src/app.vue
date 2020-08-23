@@ -2,7 +2,7 @@
     <layout class="app transition-theme-change" :class="theme.core.class" footer>
         <router-view />
         <template #footer>
-            <div class="app__footer">
+            <nav class="app__nav">
                 <container layout="row center-stretch">
                     <router-link class="app__route" v-for="route in routes" :key="route.label" :to="route.route">
                         <div class="menu-item text--centre">
@@ -13,7 +13,7 @@
                         </div>
                     </router-link>
                 </container>
-            </div>
+            </nav>
         </template>
         <location-modal />
         <core-components />
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import ROUTES from './constants/routes';
+import ROUTES from './constants/core/routes';
 
 import LocationModal from './components/modals/location.vue';
 
@@ -90,7 +90,7 @@ export default defineComponent({
         background-color: var(--background__colour);
     }
 
-    .app__footer {
+    .app__nav {
         border-top: 1px solid var(--border__colour);
     }
 

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import EVENTS from '../../constants/events';
+import EVENTS from '../../constants/core/events';
 
 import applicationController from '../../controllers/application';
 

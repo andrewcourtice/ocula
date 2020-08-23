@@ -1,47 +1,46 @@
 <template>
-    <div class="forecast-hourly-trends">
-        <div class="forecast-hourly-trends__header" layout="rows center-left">
-            <div class="menu-item forecast-hourly-trends__option"
+    <div class="forecast-hourly">
+        <div class="forecast-hourly__header" layout="rows center-left">
+            <icon-button class="menu-item forecast-hourly__option"
                 v-for="trend in trends"
                 layout="row center-left"
                 :key="trend.key"
+                :icon="trend.icon"
                 :class="getOptionClass(trend.key)"
                 @click="setTrend(trend.key)">
-                <icon class="margin__right--x-small" :name="trend.icon"></icon>
-                <div>{{ trend.label }}</div>
-            </div>
+            </icon-button>
         </div>
-        <div class="forecast-hourly-trends__body-wrapper">
-            <div class="forecast-hourly-trends__body" :style="bodyStyle">
-                <line-chart class="forecast-hourly-trends__chart" :data="hours" :options="trend.chartOptions" />
+        <div class="forecast-hourly__body-wrapper">
+            <div class="forecast-hourly__body" :style="bodyStyle">
+                <line-chart class="forecast-hourly__chart" :data="hours" :options="trend.chartOptions" />
 
-                <div class="forecast-hourly-trends__now" layout="column center-left">
-                    <span class="forecast-hourly-trends__now-label">Now</span>
+                <div class="forecast-hourly__now" layout="column center-left">
+                    <span class="forecast-hourly__now-label">Now</span>
                 </div>
-                <!-- <div class="forecast-hourly-trends__column"></div> -->
+                <!-- <div class="forecast-hourly__column"></div> -->
                 <template v-for="hour in hours.slice(1, -1)">
-                    <div class="forecast-hourly-trends__column text--no-wrap" :key="getKey(hour, 'time')">
+                    <div class="forecast-hourly__column text--no-wrap" :key="getKey(hour, 'time')">
                         <small>{{ getTime(hour) }}</small>
                     </div>
-                    <div class="forecast-hourly-trends__column" :key="getKey(hour, 'icon')">
+                    <div class="forecast-hourly__column" :key="getKey(hour, 'icon')">
                         <icon :name="getIcon(hour.weather.id.raw)"/>
                     </div>
-                    <!-- <div class="forecast-hourly-trends__column" :key="getKey(hour, 'description')">
+                    <!-- <div class="forecast-hourly__column" :key="getKey(hour, 'description')">
                         <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
                     </div> -->
                 </template>
-                <div class="forecast-hourly-trends__later" layout="column center-right">
-                    <span class="forecast-hourly-trends__later-label">Later</span>
+                <div class="forecast-hourly__later" layout="column center-right">
+                    <span class="forecast-hourly__later-label">Later</span>
                 </div>
-                <!-- <div class="forecast-hourly-trends__column"></div> -->
+                <!-- <div class="forecast-hourly__column"></div> -->
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import TREND from '../../enums/trend';
-import TRENDS from '../../constants/trends';
+import TREND from '../../enums/forecast/trend';
+import TRENDS from '../../constants/forecast/trends';
 
 import LineChart from '../charts/line.vue';
 
@@ -138,20 +137,20 @@ export default defineComponent({
 
 <style lang="scss">
 
-    .forecast-hourly-trends__header {
+    .forecast-hourly__header {
         padding: 0 var(--spacing__small);
     }
 
-    .forecast-hourly-trends__option {
+    .forecast-hourly__option {
         width: auto;
     }
 
-    .forecast-hourly-trends__body-wrapper {
+    .forecast-hourly__body-wrapper {
         overflow: hidden;
         overflow-x: auto;
     }
 
-    .forecast-hourly-trends__body {
+    .forecast-hourly__body {
         display: inline-grid;
         padding-bottom: var(--spacing__small);
         grid-template-rows: repeat(3, auto);
@@ -160,34 +159,34 @@ export default defineComponent({
         width: auto;
     }
 
-    .forecast-hourly-trends__chart {
+    .forecast-hourly__chart {
         grid-column: 1 / -1;
         height: 196px;
     }
 
-    .forecast-hourly-trends__column {
+    .forecast-hourly__column {
         padding: 0 var(--spacing__xx-small);
         text-align: center;
     }
 
-    .forecast-hourly-trends__now,
-    .forecast-hourly-trends__later {
+    .forecast-hourly__now,
+    .forecast-hourly__later {
         grid-row: 2 / -1;      
     }
 
-    .forecast-hourly-trends__now-label,
-    .forecast-hourly-trends__later-label {
+    .forecast-hourly__now-label,
+    .forecast-hourly__later-label {
         color: var(--font__colour--meta);
         font-size: var(--font__size--x-small);
         text-transform: uppercase;
         transform-origin: center;
     }
 
-    .forecast-hourly-trends__now-label {
+    .forecast-hourly__now-label {
         transform: rotate(90deg);
     }
     
-    .forecast-hourly-trends__later-label {
+    .forecast-hourly__later-label {
         transform: rotate(-90deg);
     }
 

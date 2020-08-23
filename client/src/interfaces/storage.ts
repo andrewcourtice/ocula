@@ -1,5 +1,5 @@
-import type LOCATION from '../enums/location';
-import type MAP from '../enums/map';
+import type LOCATION from '../enums/forecast/location';
+import type MAP from '../enums/maps/map';
 import type FORECAST_SECTION from '../enums/section';
 
 import type {

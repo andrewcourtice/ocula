@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import MODALS from '../../constants/modals';
+import MODALS from '../../constants/core/modals';
 
 import {
     defineComponent,

@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import UNITS from '../../constants/units';
+import UNITS from '../../constants/forecast/units';
 
-import ROUTES from '../../constants/routes';
-import MAPS from '../../constants/maps';
+import ROUTES from '../../constants/core/routes';
+import MAPS from '../../constants/maps/maps';
 
 import SettingsLayout from '../../components/layouts/settings.vue';
 import SettingsItem from '../../components/settings/settings-item.vue';

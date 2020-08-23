@@ -1,5 +1,5 @@
-import LOCATION from '../../enums/location';
-import EVENTS from '../../constants/events';
+import LOCATION from '../../enums/forecast/location';
+import EVENTS from '../../constants/core/events';
 
 import setLastUpdated from '../mutations/set-last-updated';
 

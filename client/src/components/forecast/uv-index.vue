@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import UVINDEX from '../../constants/uv-index';
+import UVINDEX from '../../constants/forecast/uv-index';
 
 import {
     defineComponent,
     computed
-} from "vue";
+} from 'vue';
 
 import {
     forecast

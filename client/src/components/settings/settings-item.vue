@@ -9,7 +9,7 @@
 <script lang="ts">
 import {
     defineComponent
-} from "vue";
+} from 'vue';
 
 export default defineComponent({
     

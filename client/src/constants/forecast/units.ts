@@ -1,4 +1,4 @@
-import UNITS from '../enums/units';
+import UNITS from '../../enums/forecast/units';
 
 export default {
     [UNITS.metric]: {

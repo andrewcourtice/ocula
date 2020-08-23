@@ -1,4 +1,4 @@
-import TREND from '../enums/trend';
+import TREND from '../../enums/forecast/trend';
 
 import {
     LINE_TYPE
@@ -48,8 +48,8 @@ export default {
                 }
             },
             colours: {
-                line: '#FF9900',
-                marker: '#FF9900'
+                line: '#47B1FA',
+                marker: '#47B1FA'
             }
         })
     },

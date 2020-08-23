@@ -1,4 +1,4 @@
-import STORAGE_KEYS from '../constants/storage-keys';
+import STORAGE_KEYS from '../constants/core/storage-keys';
 
 import {
     Workbox,

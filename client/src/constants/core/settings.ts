@@ -1,10 +1,10 @@
-import UNITS from '../enums/units';
-import MAP from '../enums/map';
-import FORECAST_SECTION from '../enums/section';
+import UNITS from '../../enums/forecast/units';
+import MAP from '../../enums/maps/map';
+import FORECAST_SECTION from '../../enums/forecast/section';
 
 import type {
     ISettings
-} from '../interfaces/storage';
+} from '../../interfaces/storage';
 
 export default {
     version: 1,

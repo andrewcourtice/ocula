@@ -1,6 +1,6 @@
 <template>
     <settings-layout class="route settings-themes" title="Themes" :back-route="backRoute">
-        <div class="settings-themes__themes">
+        <div class="settings-themes__themes" grid="2 md-3 lg-4">
             <div class="settings-themes__theme"
                 layout="row center-center"
                 v-for="(value, key) in themes"
@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/routes';
+import ROUTES from '../../constants/core/routes';
 
 import SettingsLayout from '../../components/layouts/settings.vue';
 
 import {
     defineComponent,
     computed
-} from "vue";
+} from 'vue';
 
 import {
     state,
@@ -76,9 +76,6 @@ export default defineComponent({
 <style lang="scss">
 
     .settings-themes__themes {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--spacing__small);
         padding: 0 var(--spacing__large);
     }
 

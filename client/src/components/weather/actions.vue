@@ -1,15 +1,12 @@
 <template>
     <div class="weather-actions" :class="actionsClass" layout="row center-justify">
-        <div class="weather-actions__action weather-actions__action--location" layout="row center-left" @click="setLocation">
-            <icon name="map-pin"/>
-            <div class="margin__left--x-small" v-if="location">{{ location.shortName }}</div>
-        </div>
+        <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin" @click="setLocation">
+            <div v-if="location">{{ location.shortName }}</div>
+        </icon-button>
         <div self="size-x1">
             <slot></slot>
         </div>
-        <div class="weather-actions__action weather-actions__action--update" @click="update(true)">
-            <icon name="refresh-cw"/>
-        </div>
+        <icon-button class="weather-actions__action weather-actions__action--update" icon="refresh-cw" @click="update(true)"></icon-button>
     </div>
 </template>
 
@@ -50,7 +47,7 @@ export default defineComponent({
 <style lang="scss">
 
     .weather-actions {
-        padding: var(--spacing__medium) var(--spacing__large);
+        padding: var(--spacing__small);
     }
 
     .weather-actions--loading {

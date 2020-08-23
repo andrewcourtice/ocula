@@ -1,25 +1,72 @@
 <template>
-    <section class="forecast-upcoming">
-        <template v-for="day in days">
-            <div :key="getKey(day, 'icon')">
-                <icon :name="getIcon(day.weather.id.raw)"/>
-            </div>
-            <div :key="getKey(day, 'date')">
-                <div>{{ getDate(day) }}</div>
-                <div class="text--meta text--tight">
-                    <small>{{ day.weather.description.formatted }}</small>
-                </div>
-            </div>
-            <div :key="getKey(day, 'precip')">
-                <div layout="row center-right" v-if="day.pop.raw > 0">
-                    <div class="text--meta">{{ day.pop.formatted }}</div>
-                    <icon name="droplet" class="forecast-upcoming__precip-icon" :style="getPrecipIconStyle(day)"/>
-                </div>
-            </div>
-            <div :key="getKey(day, 'min')" class="text--meta">{{ getMinMax(day.temp.min) }}</div>
-            <div :key="getKey(day, 'max')">{{ getMinMax(day.temp.max) }}</div>
+    <accordion class="forecast-daily">
+        <template #default="accordion">
+            <table class="forecast-daily__days">
+                <tbody class="forecast-daily__day" v-for="day in days" :key="day.dt.raw">
+                    <tr class="forecast-daily__day-header menu-item" @click="accordion.toggle(day.dt.raw)">
+                        <td class="forecast-daily__day-column forecast-daily__day-column--icon">
+                            <icon :name="getIcon(day.weather.id.raw)"/>
+                        </td>
+                        <td class="forecast-daily__day-column forecast-daily__day-column--label">
+                            <div>{{ getDate(day) }}</div>
+                            <div class="text--meta text--tight">
+                                <small>{{ day.weather.description.formatted }}</small>
+                            </div>
+                        </td>
+                        <td class="forecast-daily__day-column forecast-daily__day-column--precip">
+                            <div layout="row center-right" v-if="day.pop.raw > 0">
+                                <div class="text--meta">{{ day.pop.formatted }}</div>
+                                <icon name="droplet" class="forecast-daily__precip-icon" :style="getPrecipIconStyle(day)"/>
+                            </div>
+                        </td>
+                        <td class="forecast-daily__day-column forecast-daily__day-column--min">{{ getMinMax(day.temp.min) }}</td>
+                        <td class="forecast-daily__day-column forecast-daily__day-column--max">{{ getMinMax(day.temp.max) }}</td>
+                    </tr>
+                    <tr class="forecast-daily__day-body">
+                        <td></td>
+                        <td colspan="4">
+                            <accordion-pane :id="day.dt.raw">
+                                <div class="forecast-daily__day-details">
+                                    <div>
+                                        <icon name="thermometer"/>
+                                    </div>
+                                    <div>
+                                        <strong>Temp Min</strong>
+                                        <div>{{ day.temp.min.formatted }}</div>
+                                    </div>  
+
+                                    <div>
+                                        <icon name="thermometer"/>
+                                    </div>
+                                    <div>
+                                        <strong>Temp Max</strong>
+                                        <div>{{ day.temp.max.formatted }}</div>
+                                    </div>
+
+                                    <div>
+                                        <icon name="wind"/>
+                                    </div>
+                                    <div>
+                                        <strong>Wind Speed</strong>
+                                        <div>{{ day.windSpeed.formatted }}</div>
+                                    </div>                                
+                                
+                                    <div>
+                                        <icon name="compass"/>
+                                    </div>
+                                    <div>
+                                        <strong>Wind Direction</strong>
+                                        <div>{{ day.windDeg.formatted }}</div>
+                                    </div>                                
+                                </div>
+                            </accordion-pane>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
         </template>
-    </section>
+    </accordion>
 </template>
 
 <script lang="ts">
@@ -28,7 +75,7 @@ import getIcon from '../../helpers/get-icon';
 import {
     defineComponent,
     computed
-} from "vue";
+} from 'vue';
 
 import {
     forecast,
@@ -44,10 +91,6 @@ export default defineComponent({
     
     setup() {
         const days = computed(() => forecast.value.daily);
-
-        function getKey(day: Formatted<IMappedForecastDay>, key: string): string {
-            return `${key}-${day.dt.raw}`;
-        }
 
         function getDate(day: Formatted<IMappedForecastDay>) {
             return format.value.date(day.dt.formatted as any);
@@ -65,7 +108,6 @@ export default defineComponent({
 
         return {
             days,
-            getKey,
             getIcon,
             getDate,
             getPrecipIconStyle,
@@ -78,20 +120,77 @@ export default defineComponent({
 
 <style lang="scss">
 
-    .forecast-upcoming {
-        display: grid;
-        grid-template-columns: max-content auto max-content max-content max-content;
-        gap: var(--spacing__small);
-        align-items: center;
+    .forecast-daily {
+
     }
 
-    .forecast-upcoming__precip-icon {
+    .forecast-daily__days {
+        width: 100%;
+        max-width: 100%;
+        margin: calc(var(--spacing__x-small) * -1);
+
+        & tr {
+
+            & td:first-of-type {
+                border-top-left-radius: var(--border__radius);
+                border-bottom-left-radius: var(--border__radius);
+            }
+
+            & td:last-of-type {
+                border-top-right-radius: var(--border__radius);
+                border-bottom-right-radius: var(--border__radius);
+            }
+        }
+    }
+
+    .forecast-daily__precip-icon {
         display: block;
         width: 1em;
         height: 1em;
         margin-left: var(--spacing__xx-small);
         stroke: var(--colour__primary);
         fill: var(--colour__primary);
+    }
+
+    .forecast-daily__day-column {
+        padding: var(--spacing__x-small);
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .forecast-daily__day-column--label {
+        width: 100%;
+        text-align: left;
+    }
+
+    .forecast-daily__day-column--precip {
+        text-align: right;
+    }
+
+    .forecast-daily__day-column--min {
+        color: var(--font__colour--meta);
+    }
+
+    .forecast-daily__day-body {
+
+        & td {
+            padding: 0;
+        }
+
+        & .accordion-pane {
+            width: 100%;
+            overflow: hidden;
+        }       
+    }
+
+    .forecast-daily__day-details {
+        display: grid;
+        padding: var(--spacing__x-small);
+        padding-bottom: var(--spacing__large);
+        gap: var(--spacing__small);
+        grid-template-columns: max-content 1fr max-content 1fr;
+        align-items: center;
+        font-size: var(--font__size--small);
     }
 
 </style>

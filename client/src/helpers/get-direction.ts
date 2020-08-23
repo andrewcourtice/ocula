@@ -1,4 +1,4 @@
-import DIRECTIONS from '../constants/directions';
+import DIRECTIONS from '../constants/forecast/directions';
 
 const divisor = 360 / DIRECTIONS.length;
 

@@ -1,4 +1,4 @@
-import MAP from '../enums/map';
+import MAP from '../../enums/maps/map';
 
 function getOwmTileUrl(layer: string) {
     return `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${process.env.OWM_API_KEY}`;

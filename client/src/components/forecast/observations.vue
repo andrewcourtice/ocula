@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts">
-import OBSERVATIONS from '../../constants/observations';
+import OBSERVATIONS from '../../constants/forecast/observations';
 
 import {
     defineComponent,
     computed
-} from "vue";
+} from 'vue';
 
 import {
     forecast,

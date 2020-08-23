@@ -1,6 +1,6 @@
-import DATA from '../../constants/data';
-import SETTINGS from '../../constants/settings';
-import STORAGE_KEYS from '../../constants/storage-keys';
+import DATA from '../../constants/core/data';
+import SETTINGS from '../../constants/core/settings';
+import STORAGE_KEYS from '../../constants/core/storage-keys';
 
 import {
     objectMerge

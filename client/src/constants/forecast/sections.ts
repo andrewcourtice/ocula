@@ -1,9 +1,9 @@
-import FORECAST_SECTION from '../enums/section';
+import FORECAST_SECTION from '../../enums/forecast/section';
 
-import DailyForecast from '../components/forecast/daily-forecast.vue';
-import HourlyForecast from '../components/forecast/hourly-forecast.vue';
-import Observations from '../components/forecast/observations.vue';
-import UvIndex from '../components/forecast/uv-index.vue';
+import DailyForecast from '../../components/forecast/daily-forecast.vue';
+import HourlyForecast from '../../components/forecast/hourly-forecast.vue';
+import Observations from '../../components/forecast/observations.vue';
+import UvIndex from '../../components/forecast/uv-index.vue';
 
 interface IForecastSection {
     label: string;

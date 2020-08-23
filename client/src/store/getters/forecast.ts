@@ -1,9 +1,9 @@
-import UNITS from '../../enums/units';
-import FORMATS from '../../constants/formats';
+import UNITS from '../../enums/forecast/units';
+import FORMATS from '../../constants/forecast/formats';
 
 import {
     defaultFormatter
-} from '../../constants/formatters';
+} from '../../constants/forecast/formatters';
 
 import {
     getter

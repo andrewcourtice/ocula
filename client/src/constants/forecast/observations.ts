@@ -1,10 +1,10 @@
-import OBSERVATION from '../enums/observation';
+import OBSERVATION from '../../enums/forecast/observation';
 
 import {
     Formatted,
     IMappedForecast,
     IFormatter
-} from '../interfaces/state';
+} from '../../interfaces/state';
 
 export interface IObservation {
     icon: string;

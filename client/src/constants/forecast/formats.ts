@@ -1,4 +1,4 @@
-import UNITS from '../enums/units';
+import UNITS from '../../enums/forecast/units';
 
 import FORMATTERS, {
     defaultFormatter
@@ -10,7 +10,7 @@ import {
 
 import type {
     IForecastWeather
-} from '../interfaces/weather';
+} from '../../interfaces/weather';
 
 const {
     general,
@@ -39,8 +39,8 @@ export default {
             humidity: general.percentage,
             dewPoint: temperature.celcius,
             clouds: general.percentage,
-            visibility: distance.kilometres,
-            windSpeed: speed.kilometresPerHour,
+            visibility: distance.metres,
+            windSpeed: speed.metresPerSecond,
             windDeg: direction.bearing,
             weather: weatherTransform
         },
@@ -66,7 +66,7 @@ export default {
                 pressure: pressure.hectopascals,
                 humidity: general.percentage,
                 dewPoint: temperature.celcius,
-                windSpeed: speed.kilometresPerHour,
+                windSpeed: speed.metresPerSecond,
                 windDeg: direction.bearing,
                 weather: weatherTransform,
                 clouds: general.percentage,
@@ -83,8 +83,8 @@ export default {
                 humidity: general.percentage,
                 dewPoint: temperature.celcius,
                 clouds: general.percentage,
-                visibility: distance.kilometres,
-                windSpeed: speed.kilometresPerHour,
+                visibility: distance.metres,
+                windSpeed: speed.metresPerSecond,
                 windDeg: direction.bearing,
                 pop: general.fractional,
                 weather: weatherTransform,

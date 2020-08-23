@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/routes';
+import ROUTES from '../../constants/core/routes';
 
 import SettingsLayout from '../../components/layouts/settings.vue';
 

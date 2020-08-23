@@ -16,16 +16,16 @@
 </template>
 
 <script lang="ts">
-import MAP from '../../enums/map';
+import MAP from '../../enums/maps/map';
 
-import DRAWERS from '../../constants/drawers';
-import MAPS from '../../constants/maps';
-import ROUTES from '../../constants/routes';
+import DRAWERS from '../../constants/core/drawers';
+import MAPS from '../../constants/maps/maps';
+import ROUTES from '../../constants/core/routes';
 
 import {
     defineComponent,
     ref
-} from "vue";
+} from 'vue';
 
 export default defineComponent({
     

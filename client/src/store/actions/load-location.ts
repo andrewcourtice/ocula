@@ -1,5 +1,5 @@
 
-import LOCATIONS from '../../enums/location';
+import LOCATIONS from '../../enums/forecast/location';
 
 import {
     state,

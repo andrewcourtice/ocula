@@ -1,4 +1,4 @@
-import GLOBAL from '../../constants/global';
+import GLOBAL from '../../constants/core/global';
 
 import setLoading from '../mutations/set-loading';
 import setLastUpdated from '../mutations/set-last-updated';

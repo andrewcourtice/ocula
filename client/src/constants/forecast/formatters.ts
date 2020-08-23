@@ -1,5 +1,5 @@
-import getIcon from '../helpers/get-icon';
-import getDirection from '../helpers/get-direction';
+import getIcon from '../../helpers/get-icon';
+import getDirection from '../../helpers/get-direction';
 
 import {
     dateFromUnix,
@@ -30,6 +30,7 @@ export default {
     distance: {
         millimeters: toSuffix('mm'),
         centimetres: toSuffix('cm'),
+        metres: toSuffix('m'),
         kilometres: toSuffix('km'),
         miles: toSuffix('mi'),
         inches: toSuffix('in')

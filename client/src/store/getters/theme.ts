@@ -1,4 +1,4 @@
-import THEME from '../../constants/theme';
+import THEME from '../../constants/forecast/theme';
 
 import {
     getter
@@ -18,7 +18,9 @@ export default getter(({ settings, forecast }) => {
     let weatherTheme = weather.default;
     
     if (forecast && forecast.current) {
-        weatherTheme = THEME[forecast.current.weather[0].id] || weather.default;
+        const conditionId = forecast.current.weather[0].id;
+
+        weatherTheme = THEME[conditionId] || THEME[Math.floor(conditionId / 100) * 100] || weather.default;
     }
 
     return {

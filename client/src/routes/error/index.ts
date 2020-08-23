@@ -1,4 +1,4 @@
-import ROUTES from '../../constants/routes';
+import ROUTES from '../../constants/core/routes';
 
 import Index from './index.vue';
 import NotFound from './not-found.vue';

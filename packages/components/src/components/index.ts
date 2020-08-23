@@ -1,3 +1,5 @@
+import Accordion from './accordion/accordion.vue';
+import AccordionPane from './accordion/accordion-pane.vue';
 import Block from './block/block.vue';
 import Container from './container/container.vue';
 import Drawer from './drawer/drawer.vue';
@@ -12,6 +14,8 @@ import SearchBox from './search-box/search-box.vue';
 import CoreComponents from './core/index.vue';
 
 export default {
+    Accordion,
+    AccordionPane,
     Block,
     Container,
     Drawer,

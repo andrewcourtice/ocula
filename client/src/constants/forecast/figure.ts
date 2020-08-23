@@ -1,4 +1,4 @@
-import figures from '../assets/images/figures/index';
+import figures from '../../assets/images/figures/index';
 
 export default {
     200: figures.storm,
