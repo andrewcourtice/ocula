@@ -17,22 +17,30 @@
                 <div class="forecast-hourly__now" layout="column center-left">
                     <span class="forecast-hourly__now-label">Now</span>
                 </div>
-                <!-- <div class="forecast-hourly__column"></div> -->
                 <template v-for="hour in hours.slice(1, -1)">
                     <div class="forecast-hourly__column text--no-wrap" :key="getKey(hour, 'time')">
                         <small>{{ getTime(hour) }}</small>
                     </div>
-                    <div class="forecast-hourly__column" :key="getKey(hour, 'icon')">
-                        <icon :name="getIcon(hour.weather.id.raw)"/>
-                    </div>
-                    <!-- <div class="forecast-hourly__column" :key="getKey(hour, 'description')">
-                        <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
-                    </div> -->
+                    <template v-if="type === 'wind'">
+                        <div class="forecast-hourly__column" :key="getKey(hour, 'wind-icon')">
+                            <icon name="navigation-2" :style="getWindIconStyle(hour)"/>
+                        </div>
+                        <div class="forecast-hourly__column" :key="getKey(hour, 'wind-direction')">
+                            <small class="text--x-small">{{ hour.windDeg.formatted }}</small>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="forecast-hourly__column" :key="getKey(hour, 'weather-icon')">
+                            <icon :name="getIcon(hour.weather.id.raw)"/>
+                        </div>
+                        <div class="forecast-hourly__column" :key="getKey(hour, 'weather-description')">
+                            <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
+                        </div>
+                    </template>
                 </template>
                 <div class="forecast-hourly__later" layout="column center-right">
                     <span class="forecast-hourly__later-label">Later</span>
                 </div>
-                <!-- <div class="forecast-hourly__column"></div> -->
             </div>
         </div>
     </div>
@@ -99,7 +107,7 @@ export default defineComponent({
         const trend = computed(() => TRENDS[type.value]);
 
         const bodyStyle = computed(() => ({
-            gridTemplateColumns: `1.5rem repeat(${hours.value.length - 2}, 3rem) 1.5rem`
+            gridTemplateColumns: `2rem repeat(${hours.value.length - 2}, 4rem) 2rem`
         }));
 
         function getKey(hour: Formatted<IMappedForecastHour>, key: string): string {
@@ -108,6 +116,13 @@ export default defineComponent({
 
         function getTime(hour: Formatted<IMappedForecastHour>): string {
             return format.value.time(hour.dt.formatted as any, 'h a');
+        }
+
+        function getWindIconStyle(hour: Formatted<IMappedForecastHour>) {
+            return {
+                transformOrigin: 'center',
+                transform: `rotate(${hour.windDeg.raw}deg)`
+            };
         }
 
         function getOptionClass(key: TREND): string {
@@ -127,6 +142,7 @@ export default defineComponent({
             getKey,
             getTime,
             getIcon,
+            getWindIconStyle,
             getOptionClass,
             setTrend
         };
@@ -136,6 +152,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+    @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-hourly__header {
         padding: 0 var(--spacing__small);
@@ -153,7 +170,7 @@ export default defineComponent({
     .forecast-hourly__body {
         display: inline-grid;
         padding-bottom: var(--spacing__small);
-        grid-template-rows: repeat(3, auto);
+        grid-template-rows: repeat(4, auto);
         grid-auto-flow: column;
         row-gap: var(--spacing__x-small);
         width: auto;
@@ -165,6 +182,7 @@ export default defineComponent({
     }
 
     .forecast-hourly__column {
+        @include text-truncate;
         padding: 0 var(--spacing__xx-small);
         text-align: center;
     }

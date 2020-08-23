@@ -27,7 +27,15 @@
                         <td colspan="4">
                             <accordion-pane :id="day.dt.raw">
                                 <div class="forecast-daily__day-details">
-                                    <div>
+                                    <observation class="forecast-daily__day-observation" label="Temp Min" icon="thermometer">{{ day.temp.min.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Temp Max" icon="thermometer">{{ day.temp.max.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Wind Speed" icon="wind">{{ day.windSpeed.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Wind Direction" icon="compass">{{ day.windDeg.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Humidity" icon="droplet">{{ day.humidity.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloud">{{ day.clouds.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="UV Index" icon="sun">{{ day.uvi.formatted }}</observation>
+
+                                    <!-- <div>
                                         <icon name="thermometer"/>
                                     </div>
                                     <div>
@@ -57,7 +65,7 @@
                                     <div>
                                         <strong>Wind Direction</strong>
                                         <div>{{ day.windDeg.formatted }}</div>
-                                    </div>                                
+                                    </div>                                 -->
                                 </div>
                             </accordion-pane>
                         </td>
@@ -70,6 +78,8 @@
 </template>
 
 <script lang="ts">
+import Observation from '../weather/observation.vue';
+
 import getIcon from '../../helpers/get-icon';
 
 import {
@@ -88,6 +98,10 @@ import {
 } from '../../interfaces/state';
 
 export default defineComponent({
+
+    components: {
+        Observation
+    },
     
     setup() {
         const days = computed(() => forecast.value.daily);
@@ -185,12 +199,17 @@ export default defineComponent({
 
     .forecast-daily__day-details {
         display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing__x-small);
         padding: var(--spacing__x-small);
         padding-bottom: var(--spacing__large);
-        gap: var(--spacing__small);
-        grid-template-columns: max-content 1fr max-content 1fr;
-        align-items: center;
+    }
+
+    .forecast-daily__day-observation {
+        padding: var(--spacing__x-small) var(--spacing__small);
         font-size: var(--font__size--small);
+        background: var(--background__colour--hover);
+        border-radius: var(--border__radius);
     }
 
 </style>

@@ -1,5 +1,11 @@
 @import "./_variables.scss";
 
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @mixin breakpoint($breakpoint) {
 
     $size: map-get($breakpoints, $breakpoint);

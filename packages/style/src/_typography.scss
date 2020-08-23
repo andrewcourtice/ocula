@@ -73,14 +73,11 @@ small,
 
 .text--no-wrap {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .text--truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include text-truncate;
 }
 
 @media (hover: hover) {
