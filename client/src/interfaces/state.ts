@@ -13,6 +13,7 @@ import type {
     IForecastDay,
     IForecastHour
 } from './weather';
+import STATUS from '../enums/core/status';
 
 export type Formatted<T, U = string> =  {
     [P in keyof T]: T[P] extends string | number ? {
@@ -22,12 +23,11 @@ export type Formatted<T, U = string> =  {
 }
 
 export interface IState {
-    loading: boolean,
-    updateReady: boolean,
-    lastUpdated: Date,
-    settings: ISettings,
-    location: ILocation,
-    forecast: IForecast
+    status: STATUS;
+    lastUpdated: Date;
+    settings: ISettings;
+    location: ILocation;
+    forecast: IForecast;
 };
 
 export interface IMappedForecastCurrent extends Omit<IForecastCurrent, 'weather'> {

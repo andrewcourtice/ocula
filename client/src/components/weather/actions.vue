@@ -2,6 +2,7 @@
     <div class="weather-actions" :class="actionsClass" layout="row center-justify">
         <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin" @click="setLocation">
             <div v-if="location">{{ location.shortName }}</div>
+            <div v-else>Unknown</div>
         </icon-button>
         <div self="size-x1">
             <slot></slot>
@@ -11,6 +12,8 @@
 </template>
 
 <script lang="ts">
+import STATUS from '../../enums/core/status';
+
 import applicationController from '../../controllers/application';
 
 import {
@@ -31,7 +34,7 @@ export default defineComponent({
         } = applicationController;
 
         const location = computed(() => state.location);
-        const actionsClass = computed(() => state.loading && 'weather-actions--loading');
+        const actionsClass = computed(() => state.status === STATUS.loading && 'weather-actions--loading');
 
         return {
             location,

@@ -26,7 +26,7 @@
                         <td></td>
                         <td colspan="4">
                             <accordion-pane :id="day.dt.raw">
-                                <div class="forecast-daily__day-details">
+                                <div class="forecast-daily__day-details" grid="2 md-3">
                                     <observation class="forecast-daily__day-observation" label="Temp Min" icon="thermometer">{{ day.temp.min.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Temp Max" icon="thermometer">{{ day.temp.max.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Wind Speed" icon="wind">{{ day.windSpeed.formatted }}</observation>
@@ -34,38 +34,6 @@
                                     <observation class="forecast-daily__day-observation" label="Humidity" icon="droplet">{{ day.humidity.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloud">{{ day.clouds.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="UV Index" icon="sun">{{ day.uvi.formatted }}</observation>
-
-                                    <!-- <div>
-                                        <icon name="thermometer"/>
-                                    </div>
-                                    <div>
-                                        <strong>Temp Min</strong>
-                                        <div>{{ day.temp.min.formatted }}</div>
-                                    </div>  
-
-                                    <div>
-                                        <icon name="thermometer"/>
-                                    </div>
-                                    <div>
-                                        <strong>Temp Max</strong>
-                                        <div>{{ day.temp.max.formatted }}</div>
-                                    </div>
-
-                                    <div>
-                                        <icon name="wind"/>
-                                    </div>
-                                    <div>
-                                        <strong>Wind Speed</strong>
-                                        <div>{{ day.windSpeed.formatted }}</div>
-                                    </div>                                
-                                
-                                    <div>
-                                        <icon name="compass"/>
-                                    </div>
-                                    <div>
-                                        <strong>Wind Direction</strong>
-                                        <div>{{ day.windDeg.formatted }}</div>
-                                    </div>                                 -->
                                 </div>
                             </accordion-pane>
                         </td>
@@ -198,9 +166,6 @@ export default defineComponent({
     }
 
     .forecast-daily__day-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--spacing__x-small);
         padding: var(--spacing__x-small);
         padding-bottom: var(--spacing__large);
     }

@@ -10,7 +10,7 @@
             </div>
         </div>
         <div>
-            <img :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
+            <img class="forecast-summary__figure" :src="getFigure(forecast.current.weather.id.raw)" :alt="forecast.current.weather.description.raw">
         </div>
     </div>
 </template>
@@ -39,11 +39,26 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+    @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-summary__temp {
         font-size: 4rem;
         font-weight: var(--font__weight--medium);
         line-height: 1;
+    }
+
+    .forecast-summary__figure {
+        width: 96px;
+        height: 96px;
+    }
+
+    @include breakpoint("lg") {
+        
+        .forecast-summary__figure {
+            width: 192px;
+            height: 192px;
+        }
+
     }
 
 </style>

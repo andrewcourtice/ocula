@@ -2,7 +2,7 @@
     <div class="settings-layout">
         <div class="settings-layout__header" layout="row center-left">
             <router-link class="link--inherit" :to="backRoute" replace v-if="backRoute">
-                <icon name="arrow-left" class="margin__right--small"/>
+                <icon-button icon="arrow-left" class="margin__right--small"/>
             </router-link>
             <strong>{{ title }}</strong>
         </div>

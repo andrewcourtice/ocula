@@ -31,7 +31,7 @@
                     </template>
                     <template v-else>
                         <div class="forecast-hourly__column">
-                            <icon :name="getIcon(hour.weather.id.raw)"/>
+                            <icon :name="getIcon(hour.weather.id.raw, hour.dt.raw)"/>
                         </div>
                         <div class="forecast-hourly__column">
                             <small class="text--x-small">{{ hour.weather.description.formatted }}</small>

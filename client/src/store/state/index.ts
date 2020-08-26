@@ -21,9 +21,7 @@ function getState(): IState {
         location,
         forecast,
         lastUpdated,
-
-        loading: false,
-        updateReady: false,
+        status: null
     };
 }
 

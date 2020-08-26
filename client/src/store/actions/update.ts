@@ -1,6 +1,8 @@
+import STATUS from '../../enums/core/status';
+
 import GLOBAL from '../../constants/core/global';
 
-import setLoading from '../mutations/set-loading';
+import setStatus from '../mutations/set-status';
 import setLastUpdated from '../mutations/set-last-updated';
 
 import loadLocation from './load-location';
@@ -21,7 +23,7 @@ export default async function update(force: boolean = false) {
         return;
     }
 
-    setLoading(true);
+    setStatus(STATUS.loading);
     
     try {
         const {
@@ -44,7 +46,9 @@ export default async function update(force: boolean = false) {
             location,
             forecast
         });
-    } finally {
-        setLoading(false);
+    } catch (error) {
+        setStatus(STATUS.error);
     }
+
+    setStatus(null);
 }

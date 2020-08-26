@@ -1,8 +1,7 @@
 export default {
     application: {
         visible: 'application:visible',
-        resized: 'application:resized',
-        updateReady: 'application:update-ready'
+        resized: 'application:resized'
     },
     storage: {
         dataSaved: 'storage:data-saved',
