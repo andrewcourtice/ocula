@@ -1,6 +1,6 @@
 import {
     weather
-} from '@ocula/themes';
+} from '../../themes';
 
 export default {
     200: weather.rainy,

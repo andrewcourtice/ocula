@@ -46,7 +46,7 @@ import {
 
 import {
     core as themeOptions
-} from '@ocula/themes';
+} from '../../themes';
 
 export default defineComponent({
 

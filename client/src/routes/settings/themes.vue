@@ -36,7 +36,7 @@ import {
 
 import {
     core as themes
-} from '@ocula/themes';
+} from '../../themes';
 
 export default defineComponent({
 

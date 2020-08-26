@@ -126,7 +126,7 @@ export default defineComponent({
         }
 
         function updateStyle(style): void {
-            map.setStyle(`mapbox://styles/mapbox/${STYLE[style]}`)
+            map.setStyle(`mapbox://styles/mapbox/${STYLE[style]}`);            
         }
 
         function getTileSource(tileSource: ITileSource): ITileSource {
@@ -161,7 +161,7 @@ export default defineComponent({
             layer.minzoom = minzoom;
             layer.maxzoom = maxzoom;
 
-            map.style.sourceCaches[SOURCE_NAME].clearTiles()
+            map.style.sourceCaches[SOURCE_NAME].clearTiles();
             map.style.sourceCaches[SOURCE_NAME].update(map.transform);
 
             map.triggerRepaint();

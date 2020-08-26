@@ -2,7 +2,7 @@ import './index.scss';
 
 import type {
     ITheme
-} from '../../../interfaces';
+} from '../../../interfaces/themes';
 
 export default {
     id: 'dark',

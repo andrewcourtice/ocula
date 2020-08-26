@@ -1,5 +1,5 @@
 <template>
-    <layout class="app transition-theme-change" :class="theme.core.class" footer>
+    <layout class="app transition-theme-change" :class="appClass" footer>
         <router-view />
         <template #footer>
             <nav class="app__nav">
@@ -29,12 +29,15 @@ import setThemeMeta from './helpers/set-theme-meta';
 
 import {
     defineComponent,
-    watch
+    watch,
+    computed
 } from 'vue';
 
 import {
+    phase,
     theme
 } from './store';
+import PHASE from './enums/forecast/phase';
 
 const routes = [
     {
@@ -60,6 +63,11 @@ const routes = [
     }
 ];
 
+const PHASE_CLASS = {
+    [PHASE.day]: 'phase--day',
+    [PHASE.night]: 'phase--night'
+};
+
 export default defineComponent({
 
     components: {
@@ -68,9 +76,14 @@ export default defineComponent({
 
     setup() {
         watch(() => theme.value.core, ({ colour }) => setThemeMeta(colour));
+
+        const appClass = computed(() => [
+            PHASE_CLASS[phase.value],
+            theme.value.core.class
+        ]);
         
         return {
-            theme,
+            appClass,
             routes
         };
     }
@@ -112,6 +125,11 @@ export default defineComponent({
         height: 100%;
         overflow: hidden;
         overflow-y: auto;
+    }
+
+    .transition-theme-change {
+        transition: color var(--transition__timing--fade) var(--transition__easing--default),
+                    background var(--transition__timing--fade) var(--transition__easing--default);
     }
 
 </style>

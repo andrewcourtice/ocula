@@ -1,6 +1,6 @@
 import type {
     ITheme
-} from '../../../interfaces';
+} from '../../../interfaces/themes';
 
 export default {
     id: 'weather-default',
