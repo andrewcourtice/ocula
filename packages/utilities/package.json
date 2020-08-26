@@ -6,10 +6,10 @@
     "dependencies": {
         "date-fns": "^2.15.0",
         "date-fns-tz": "^1.0.10",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.20",
         "nanoid": "^3.1.12"
     },
     "devDependencies": {
-        "@types/lodash": "^4.14.159"
+        "@types/lodash": "^4.14.160"
     }
 }

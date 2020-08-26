@@ -18,22 +18,22 @@
                     <span class="forecast-hourly__now-label">Now</span>
                 </div>
                 <template v-for="hour in hours.slice(1, -1)">
-                    <div class="forecast-hourly__column text--no-wrap" :key="getKey(hour, 'time')">
+                    <div class="forecast-hourly__column text--no-wrap">
                         <small>{{ getTime(hour) }}</small>
                     </div>
                     <template v-if="type === 'wind'">
-                        <div class="forecast-hourly__column" :key="getKey(hour, 'wind-icon')">
+                        <div class="forecast-hourly__column">
                             <icon name="navigation-2" :style="getWindIconStyle(hour)"/>
                         </div>
-                        <div class="forecast-hourly__column" :key="getKey(hour, 'wind-direction')">
+                        <div class="forecast-hourly__column">
                             <small class="text--x-small">{{ hour.windDeg.formatted }}</small>
                         </div>
                     </template>
                     <template v-else>
-                        <div class="forecast-hourly__column" :key="getKey(hour, 'weather-icon')">
+                        <div class="forecast-hourly__column">
                             <icon :name="getIcon(hour.weather.id.raw)"/>
                         </div>
-                        <div class="forecast-hourly__column" :key="getKey(hour, 'weather-description')">
+                        <div class="forecast-hourly__column">
                             <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
                         </div>
                     </template>

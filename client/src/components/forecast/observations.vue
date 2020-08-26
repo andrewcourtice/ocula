@@ -1,10 +1,10 @@
 <template>
     <div class="forecast-observations">
         <template v-for="observation in observations">
-            <div class="forecast-observations__icon" :key="getKey(observation.id, 'icon')">
+            <div class="forecast-observations__icon">
                 <icon :name="observation.icon"/>
             </div>
-            <div class="forecast-observations__details" :key="getKey(observation.id, 'label')">
+            <div class="forecast-observations__details">
                 <strong>{{ observation.label }}</strong>
                 <div>{{ observation.value }}</div>
             </div>

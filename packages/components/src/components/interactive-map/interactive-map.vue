@@ -164,8 +164,6 @@ export default defineComponent({
             map.style.sourceCaches[SOURCE_NAME].clearTiles()
             map.style.sourceCaches[SOURCE_NAME].update(map.transform);
 
-            console.log()
-
             map.triggerRepaint();
         }
 
