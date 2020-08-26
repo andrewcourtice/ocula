@@ -1651,10 +1651,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vercel/node@^1.7.3":
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/@vercel/node/-/node-1.7.3.tgz#55338b04b8f5559c45ba125966e3f46f38830bb9"
-  integrity sha512-bENPZRdmOSlHn4eZpfps1nZtwVuQbZj5vgt2FKa1gT/Uiy3zo5BPB+ANINNC+qcCXHxUdS50XKB2m4VvtVLY1w==
+"@vercel/node@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@vercel/node/-/node-1.8.0.tgz#0ecdfd906ce374601b91482c8a229e6f8de69458"
+  integrity sha512-Qt1Akss/NVKgSnxsLfEf+gT8Oh2xuiIAHYT4xdMqk1g3PjyADklLgngBrzpwGHn9+2k/1PJQKpeIGARMe7kCkw==
   dependencies:
     "@types/node" "*"
     ts-node "8.9.1"
