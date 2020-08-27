@@ -2,10 +2,12 @@
 <html lang="en">
 
 <head>
+    <title>Ocula</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Ocula - The free and open-source progressive weather app">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src fonts.googleapis.com; script-src 'self' 'unsafe-inline' *.googletagmanager.com *.google-analytics.com; img-src 'self' data: *.google-analytics.com; worker-src 'self' blob:; connect-src 'self' sentry.io *.mapbox.com tilecache.rainviewer.com tile.openweathermap.org">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="preconnect">
     <script src="https://www.googletagmanager.com/gtag/js?id=<%= process.env.GA_TRACKING_ID %>" async></script>
     <script>
@@ -16,7 +18,6 @@
         gtag('config', '<%= process.env.GA_TRACKING_ID %>');
     </script>
 
-    <title>Ocula</title>
 </head>
 
 <body>
