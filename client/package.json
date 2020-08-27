@@ -18,7 +18,7 @@
         "@ocula/components": "1.0.0",
         "@ocula/event-emitter": "1.0.0",
         "@ocula/utilities": "1.0.0",
-        "@sentry/browser": "^5.20.1",
+        "@sentry/browser": "^5.21.4",
         "@sentry/integrations": "^5.20.1",
         "core-js": "3.6.5",
         "mapbox-gl": "^1.11.1",
