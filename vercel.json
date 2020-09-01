@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "env": {
+        "OWM_API_KEY": "@owm-api-key",
+        "MAPBOX_API_KEY": "@mapbox-api-key",
+        "GA_TRACKING_ID": "@ga-tracking-id",
+        "SENTRY_DSN": "@sentry-dsn"
+    },
+    "build": {
+        "env": {
+            "OWM_API_KEY": "@owm-api-key",
+            "MAPBOX_API_KEY": "@mapbox-api-key",
+            "GA_TRACKING_ID": "@ga-tracking-id",
+            "SENTRY_DSN": "@sentry-dsn"
+        }
+    },
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/.*",
+            "dest": "/index.html"
+        }
+    ]
+}

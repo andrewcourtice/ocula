@@ -1,9 +1,11 @@
 import fetch from 'node-fetch';
 
+import camelCaseKeys from '../_helpers/camel-case-keys';
+
 import {
     NowRequest,
     NowResponse
-} from '@now/node';
+} from '@vercel/node';
 
 export default async function (request: NowRequest, response: NowResponse) {
     let {
@@ -12,19 +14,21 @@ export default async function (request: NowRequest, response: NowResponse) {
         units
     } = request.query;
 
-    units = units || 'auto';
+    units = units || 'metric';
 
-    const apiKey = process.env.DARKSKY_API_KEY;
+    const apiKey = process.env.OWM_API_KEY;
 
     const responses = await Promise.all([
-        fetch(`https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude}?exclude=minutely&units=${units}`),
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${latitude}&lon=${longitude}&units=${units}&exclude=minutely`),
         fetch('https://tilecache.rainviewer.com/api/maps.json')
     ]);
 
-    const [
+    let [
         forecast,
         timestamps
     ] = await Promise.all(responses.map(response => response.json()));
+
+    forecast = camelCaseKeys(forecast);
 
     return response.json({
         ...forecast,

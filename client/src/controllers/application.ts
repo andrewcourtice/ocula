@@ -1,10 +1,14 @@
-import EVENTS from '../constants/events';
+import MAP from '../enums/maps/map';
 
-import Controller from './_base/controller';
+import EVENTS from '../constants/core/events';
+import MODALS from '../constants/core/modals';
+import DRAWERS from '../constants/core/drawers';
 
 import eventEmitter from '@ocula/event-emitter';
 
-import logo from '../assets/images/ocula-192.png';
+import {
+    componentsController
+} from '@ocula/components';
 
 import {
     functionDebounce
@@ -18,47 +22,29 @@ function visibilityChanged() {
     }     
 }
 
-async function notify(title: string, options?: NotificationOptions): Promise<Notification> {
-    if (Notification.permission !== 'granted') {
-        await Notification.requestPermission();
-    }
-    
-    return new Notification(title, options);
-}
-
 window.addEventListener('resize', resize)
 document.addEventListener('visibilitychange', visibilityChanged);
 
-export class ApplicationController extends Controller {
+export class ApplicationController {
 
     constructor() {
-        super();
 
-        eventEmitter.on(EVENTS.application.updateReady, async () => {
-            const notification = await notify('Update Available', {
-                icon: logo,
-                badge: logo,
-                body: 'An update to Ocula is available. Tap here to update now.',
-                requireInteraction: true
-            });
-
-            notification.onclick = () => {
-                window.location.reload();
-                notification.close();
-            };
-        });
     }
 
-    get updateReady() {
-        return this.state.updateReady;
+    async setLocation() {
+        return componentsController.open(MODALS.locations);
     }
 
-    openNavigationSidebar() {
-        eventEmitter.emit(EVENTS.sidebars.navigation);
+    async setMapType(): Promise<MAP> {
+        return componentsController.open(DRAWERS.maps);
     }
 
     async notify(title: string, options?: NotificationOptions): Promise<Notification> {
-        return notify(title, options);
+        if (Notification.permission !== 'granted') {
+            await Notification.requestPermission();
+        }
+        
+        return new Notification(title, options);
     }
 
 }

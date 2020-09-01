@@ -83,8 +83,3 @@ export default merge(base, {
 
     ]
 });
-
-// new BundleAnalyzerPlugin({
-//     analyzerMode: 'static',
-//     reportFilename: 'ocula-bundle-report.html'
-// })

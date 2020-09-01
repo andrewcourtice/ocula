@@ -16,6 +16,6 @@
         "build": "cd client && yarn build"
     },
     "devDependencies": {
-        "typescript": "^3.8.3"
+        "typescript": "^3.9.7"
     }
 }

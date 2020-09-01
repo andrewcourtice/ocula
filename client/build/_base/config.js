@@ -37,6 +37,8 @@ export default {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.vue'],
 
         alias: {
+            'vue': '@vue/runtime-dom',
+            
             'components': path.resolve(__dirname, '../src/components'),
             'constants': path.resolve(__dirname, '../src/constants'),
             'controllers': path.resolve(__dirname, '../src/controllers'),
@@ -80,7 +82,9 @@ export default {
     plugins: [
         new webpack.EnvironmentPlugin([
             'MAPBOX_API_KEY',
-            'GA_TRACKING_ID'
+            'OWM_API_KEY',
+            'GA_TRACKING_ID',
+            'SENTRY_DSN'
         ]),
         
         new CleanWebpackPlugin(),
@@ -93,7 +97,7 @@ export default {
         }),
     
         new FaviconsWebpackPlugin({
-            logo: './src/assets/images/ocula-512.svg',
+            logo: './src/assets/images/logo/logo-512.svg',
             favicons: {
                 appName: 'Ocula',
                 appShortName: 'Ocula',
@@ -104,7 +108,15 @@ export default {
                 theme_color: '#FFFFFF',
                 appleStatusBarStyle: 'default',
                 start_url: '/?source=pwa',
-                scope: '/'
+                scope: '/',
+                icons: {
+                    android: true,
+                    appleIcon: true,
+                    appleStartup: true,
+                    favicons: true,
+                    firefox: true,
+                    windows: true
+                }
             }
         }),
 

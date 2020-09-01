@@ -1,0 +1,11 @@
+{
+    "name": "@ocula/router",
+    "version": "1.0.0",
+    "main": "./src/index.ts",
+    "dependencies": {
+        "vue-router": "4.0.0-beta.7"
+    },
+    "peerDependencies": {
+        "vue": "3.0.0-rc.8"
+    }
+}

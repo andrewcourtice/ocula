@@ -1,0 +1,21 @@
+@import "../light/_light";
+@import "../dark/_dark";
+
+.theme--default {
+    @include light;
+}
+
+.phase--night {
+
+    &.theme--default {
+        @include dark;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .theme--default {
+        @include dark;
+    }
+
+}
