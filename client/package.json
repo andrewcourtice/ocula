@@ -34,7 +34,7 @@
         "@babel/plugin-transform-typescript": "^7.10.5",
         "@babel/preset-env": "^7.10.4",
         "@babel/preset-typescript": "^7.10.4",
-        "@babel/register": "^7.10.5",
+        "@babel/register": "^7.11.5",
         "@types/d3": "^5.7.2",
         "autoprefixer": "^9.8.5",
         "babel-loader": "^8.1.0",
