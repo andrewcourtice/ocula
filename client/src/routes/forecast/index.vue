@@ -15,12 +15,6 @@
                     :title="section.label">
                     <component :is="section.component"/>
                 </block>
-                <footer class="forecast-index__last-updated">
-                    <small>
-                        <template v-if="lastUpdated">Updated {{ lastUpdated }} ago</template>
-                        <template v-else>Not updated yet</template>
-                    </small>
-                </footer>
             </container>
         </div>
     </div>
@@ -36,7 +30,6 @@ import setThemeMeta from '../../helpers/set-theme-meta';
 
 import {
     defineComponent,
-    ref,
     watch,
     computed
 } from 'vue';
@@ -47,14 +40,6 @@ import {
     forecast
 } from '../../store';
 
-import {
-    useTimer
-} from '@ocula/components';
-
-import {
-    dateFormatDistanceToNow
-} from '@ocula/utilities';
-
 export default defineComponent({
 
     components: {
@@ -63,8 +48,6 @@ export default defineComponent({
     },
     
     setup() {
-        const lastUpdated = ref('');
-
         const sections = computed(() => {
             const visibleSections = state.settings.forecast.sections.filter(({ visible }) => !!visible);
 
@@ -75,19 +58,12 @@ export default defineComponent({
             }));
         });
 
-        useTimer(() => {
-            if (state.lastUpdated) {
-                lastUpdated.value = dateFormatDistanceToNow(state.lastUpdated);
-            }
-        }, 10000);
-
         watch(() => theme.value.weather, ({ colour }) => setThemeMeta(colour));
 
         return {
             theme,
             forecast,
-            sections,
-            lastUpdated
+            sections
         };
     }
 
@@ -135,12 +111,6 @@ export default defineComponent({
             padding-left: 0;
             padding-right: 0;
         }
-    }
-
-    .forecast-index__last-updated {
-        padding: var(--spacing__small) var(--spacing__large);
-        color: var(--font__colour--meta);
-        text-align: center;
     }
 
     @include breakpoint("lg") {

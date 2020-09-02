@@ -48,3 +48,7 @@ export function saveData({ lastUpdated, location, forecast }: IStoredData): void
         lastUpdated
     }));
 }
+
+export function clearData(): void {
+    localStorage.removeItem(STORAGE_KEYS.data);
+}

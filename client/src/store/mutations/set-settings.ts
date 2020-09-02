@@ -11,12 +11,11 @@ import type {
     ISettings
 } from '../../interfaces/storage';
 
-import {
-    objectMerge
-} from '@ocula/utilities';
-
 export default function setSettings(value: Partial<ISettings>) {
-    const settings = objectMerge(state.settings, value);
+    const settings = {
+        ...state.settings,
+        ...value
+    };
 
     mutate(state => state.settings = settings);
     saveSettings(settings);

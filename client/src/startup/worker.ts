@@ -1,9 +1,11 @@
-import STORAGE_KEYS from '../constants/core/storage-keys';
-
 import {
     Workbox,
     messageSW
 } from 'workbox-window';
+
+import {
+    clearData
+} from '../store/helpers/storage';
 
 import {
     componentsController
@@ -35,7 +37,7 @@ export default async function initialiseWorker() {
             });
 
             workbox.addEventListener('controlling', () => {
-                localStorage.removeItem(STORAGE_KEYS.data);
+                clearData();
                 window.location.reload();
             });
     

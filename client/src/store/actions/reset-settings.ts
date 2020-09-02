@@ -5,10 +5,12 @@ import {
 } from '../store';
 
 import {
-    saveSettings
+    saveSettings,
+    clearData
 } from '../helpers/storage';
 
 export default function resetSettings() {
     mutate(state => state.settings = SETTINGS);
     saveSettings(SETTINGS);
+    clearData();
 }
