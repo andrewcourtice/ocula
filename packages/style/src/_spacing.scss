@@ -37,7 +37,7 @@ $spacing-properties: (
             .#{ $property-name }__#{ $direction-name }--#{ $spacing-name } {
 
                 @each $direction-property in $direction-value {
-                    #{ $property-name }-#{ $direction-property }: $spacing-value;
+                    #{ $property-name }-#{ $direction-property }: var(--spacing__#{ $spacing-name });
                 }
 
             }

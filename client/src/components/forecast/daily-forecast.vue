@@ -23,8 +23,7 @@
                         <td class="forecast-daily__day-column forecast-daily__day-column--max">{{ getMinMax(day.temp.max) }}</td>
                     </tr>
                     <tr class="forecast-daily__day-body">
-                        <td></td>
-                        <td colspan="4">
+                        <td colspan="5">
                             <accordion-pane :id="day.dt.raw">
                                 <div class="forecast-daily__day-details" grid="2 md-3">
                                     <observation class="forecast-daily__day-observation" label="Temp Min" icon="thermometer">{{ day.temp.min.formatted }}</observation>
@@ -107,8 +106,6 @@ export default defineComponent({
     }
 
     .forecast-daily__days {
-        width: 100%;
-        max-width: 100%;
         margin: calc(var(--spacing__x-small) * -1);
 
         & tr {
@@ -166,15 +163,11 @@ export default defineComponent({
     }
 
     .forecast-daily__day-details {
-        padding: var(--spacing__x-small);
-        padding-bottom: var(--spacing__large);
+        padding: var(--spacing__small) var(--spacing__x-small) var(--spacing__large);
     }
 
     .forecast-daily__day-observation {
-        padding: var(--spacing__x-small) var(--spacing__small);
         font-size: var(--font__size--small);
-        background: var(--background__colour--hover);
-        border-radius: var(--border__radius);
     }
 
 </style>

@@ -150,7 +150,7 @@ export default class LineChart extends Chart {
             .attr('d', lineGenerator.curve(curve));
 
         const groups = this.markerGroup.selectAll('g')
-            .data(data => data)
+            .data(data => data, item => item.xValue)
             .join('g')
             .attr('transform', data => `translate(${data.x}, ${data.y1})`);
 

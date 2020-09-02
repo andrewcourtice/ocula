@@ -31,7 +31,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const eventEmitter = new EventEmitter();
 
-        const listener = eventEmitter.on(EVENTS.paneOpened, (id: string) => {
+        const listener = eventEmitter.on(EVENTS.paneOpened, (id: string | number) => {
             if (!props.multiple) {
                 eventEmitter.emit(EVENTS.closeExcept, id);
             }
@@ -39,15 +39,15 @@ export default defineComponent({
             emit(EVENTS.paneOpened, id);
         });
 
-        function open(id: string) {
+        function open(id: string | number) {
             eventEmitter.emit(EVENTS.openPane, id);
         }
 
-        function close(id: string) {
+        function close(id: string | number) {
             eventEmitter.emit(EVENTS.openPane, id);
         }
 
-        function toggle(id: string) {
+        function toggle(id: string | number) {
             eventEmitter.emit(EVENTS.togglePane, id);
         }
 

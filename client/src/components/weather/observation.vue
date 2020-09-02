@@ -1,6 +1,6 @@
 <template>
     <div class="weather-observation" layout="row center-left">
-        <icon class="margin__right--x-small" :name="icon" v-if="icon"/>
+        <icon class="margin__right--small" :name="icon" v-if="icon"/>
         <div class="text--truncate">
             <strong>
                 <slot name="label">{{ label }}</slot>
@@ -40,6 +40,9 @@ export default defineComponent({
         display: inline-flex;
         width: auto;
         overflow: hidden;
+        padding: var(--spacing__x-small) var(--spacing__small);
+        background: var(--background__colour--hover);
+        border-radius: var(--border__radius);
     }
 
 </style>

@@ -1,19 +1,18 @@
 <template>
-    <div class="forecast-observations">
-        <template v-for="observation in observations">
-            <div class="forecast-observations__icon">
-                <icon :name="observation.icon"/>
-            </div>
-            <div class="forecast-observations__details">
-                <strong>{{ observation.label }}</strong>
-                <div>{{ observation.value }}</div>
-            </div>
-        </template>
+    <div class="forecast-observations" grid="2 md-3">
+        <observation v-for="observation in observations"
+            :key="observation.id"
+            :icon="observation.icon"
+            :label="observation.label">
+            {{ observation.value }}
+        </observation>
     </div>
 </template>
 
 <script lang="ts">
 import OBSERVATIONS from '../../constants/forecast/observations';
+
+import Observation from '../weather/observation.vue';
 
 import {
     defineComponent,
@@ -27,9 +26,13 @@ import {
 
 import type {
     IObservation
-} from '../../constants/observations';
+} from '../../constants/forecast/observations';
 
 export default defineComponent({
+
+    components: {
+        Observation
+    },
     
     setup() {
         const observations = computed(() => Object.keys(OBSERVATIONS).map(id => {
@@ -63,10 +66,7 @@ export default defineComponent({
 <style lang="scss">
 
     .forecast-observations {
-        display: grid;
-        grid-template-columns: max-content 1fr max-content 1fr;
-        gap: var(--spacing__small);
-        align-items: center;
+
     }
 
 </style>

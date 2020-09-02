@@ -17,7 +17,7 @@
                 <div class="forecast-hourly__now" layout="column center-left">
                     <span class="forecast-hourly__now-label">Now</span>
                 </div>
-                <template v-for="hour in hours.slice(1, -1)">
+                <template v-for="hour in hours.slice(1, -1)" :key="hour.dt.raw">
                     <div class="forecast-hourly__column text--no-wrap">
                         <small>{{ getTime(hour) }}</small>
                     </div>
@@ -155,7 +155,7 @@ export default defineComponent({
     @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-hourly__header {
-        padding: 0 var(--spacing__small);
+        padding: 0 var(--spacing__medium);
     }
 
     .forecast-hourly__option {

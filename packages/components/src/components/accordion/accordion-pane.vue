@@ -32,7 +32,7 @@ export default defineComponent({
     props: {
 
         id: {
-            type: String,
+            type: [String, Number],
             default: () => stringUniqueId()
         },
 
@@ -65,7 +65,7 @@ export default defineComponent({
             (!!isOpen.value ? close : open)();
         }
 
-        function closeExcept(id: string) {
+        function closeExcept(id: string | number) {
             if (id !== props.id) {
                 close();
             }

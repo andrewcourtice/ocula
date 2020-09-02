@@ -42,6 +42,7 @@ export default defineComponent({
     @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-summary__temp {
+        margin-bottom: var(--spacing__small);
         font-size: 4rem;
         font-weight: var(--font__weight--medium);
         line-height: 1;
