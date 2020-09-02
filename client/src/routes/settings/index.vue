@@ -9,6 +9,9 @@
             <router-link class="link--inherit" :to="routes.locations">
                 <settings-item class="menu-item" label="Locations" :value="locationsLabel"></settings-item>
             </router-link>
+            <router-link class="link--inherit" :to="routes.sections">
+                <settings-item class="menu-item" label="Sections"></settings-item>
+            </router-link>
             <settings-item class="menu-item" label="Default Map" :value="map.label">
                 <select name="default-map" v-model="defaultMap">
                     <option v-for="(value, key) in mapOptions" :key="key" :value="key">{{ value.label }}</option>
@@ -17,6 +20,8 @@
             <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
+            <settings-item class="menu-item" label="Check for updates" @click.native="update"></settings-item>
+            <settings-item class="menu-item" label="Reset" @click.native="reset"></settings-item>
             <router-link class="link--inherit" :to="routes.about">
                 <settings-item class="menu-item" label="About"></settings-item>
             </router-link>
@@ -41,12 +46,17 @@ import {
 import {
     state,
     theme,
-    updateSettings
+    updateSettings,
+    resetSettings
 } from '../../store';
 
 import {
     core as themeOptions
 } from '../../themes';
+
+import {
+    componentsController
+} from '@ocula/components';
 
 export default defineComponent({
 
@@ -59,6 +69,9 @@ export default defineComponent({
         const routes = {
             locations: {
                 name: ROUTES.settings.locations
+            },
+            sections: {
+                name: ROUTES.settings.sections
             },
             theme: {
                 name: ROUTES.settings.themes
@@ -90,6 +103,27 @@ export default defineComponent({
 
         const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
 
+        async function update() {
+            const registration = await navigator.serviceWorker.getRegistration();
+
+            if (registration) {
+                registration.update();
+            }
+        }
+
+        async function reset() {
+            try {
+                await componentsController.confirm({
+                    message: 'This will reset all settings back to default. This cannot be undone. Do you wish to continue?',
+                    confirmLabel: 'Yes, Reset'
+                });
+
+                resetSettings();
+            } catch {
+                // do nothing
+            }
+        }
+
         return {
             routes,
             units,
@@ -101,6 +135,8 @@ export default defineComponent({
             themeOptions,
             mapOptions: MAPS,
             unitOptions: UNITS,
+            update,
+            reset
         };
     }
 

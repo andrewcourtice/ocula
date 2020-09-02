@@ -20,4 +20,4 @@ export default {
         domSetMeta(arg);
     }
 
-} as Directive<HTMLInputElement, string>
+} as Directive<HTMLInputElement, string>;

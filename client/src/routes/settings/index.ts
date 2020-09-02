@@ -2,6 +2,7 @@ import ROUTES from '../../constants/core/routes';
 
 import Index from './index.vue';
 import Locations from './locations.vue';
+import Sections from './sections.vue';
 import Themes from './themes.vue';
 import About from './about.vue';
 
@@ -19,6 +20,11 @@ export default [
         path: 'locations',
         name: ROUTES.settings.locations,
         component: Locations
+    },
+    {
+        path: 'sections',
+        name: ROUTES.settings.sections,
+        component: Sections
     },
     {
         path: 'themes',

@@ -1,9 +1,12 @@
 import TerserPlugin from 'terser-webpack-plugin';
 import OptimiseCSSPlugin from 'optimize-css-assets-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import merge from 'webpack-merge';
 import base from './_base/config';
+
+import workboxConfig from './_base/workbox';
 
 const CSS_LOADERS = [
     MiniCssExtractPlugin.loader, 
@@ -79,7 +82,9 @@ export default merge(base, {
         new MiniCssExtractPlugin({
             filename: '[name]-[contenthash].css',
             chunkFilename: '[name]-[contenthash].css'
-        })
+        }),
+
+        new WorkboxPlugin.GenerateSW(workboxConfig)
 
     ]
 });

@@ -1,6 +1,6 @@
 <template>
     <settings-layout class="route settings-themes" title="Themes" :back-route="backRoute">
-        <div class="settings-themes__themes" grid="2 md-3 lg-4">
+        <div class="settings-themes__themes" grid="2 md-4 lg-4">
             <div class="settings-themes__theme"
                 layout="row center-center"
                 v-for="(value, key) in themes"

@@ -3,7 +3,6 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
-import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import {
     CleanWebpackPlugin
@@ -13,7 +12,7 @@ import {
     VueLoaderPlugin 
 } from 'vue-loader';
 
-import workboxConfig from './workbox';
+
 import webpack from 'webpack';
 
 export default {
@@ -42,7 +41,7 @@ export default {
             'components': path.resolve(__dirname, '../src/components'),
             'constants': path.resolve(__dirname, '../src/constants'),
             'controllers': path.resolve(__dirname, '../src/controllers'),
-            'state': path.resolve(__dirname, '../src/state'),
+            'store': path.resolve(__dirname, '../src/store'),
         },
 
         symlinks: false
@@ -122,8 +121,7 @@ export default {
 
         new CopyWebpackPlugin([
             './src/static'
-        ]),
-    
-        new WorkboxPlugin.GenerateSW(workboxConfig)
+        ])
+
     ]
 };

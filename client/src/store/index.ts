@@ -13,4 +13,7 @@ export { default as addLocation } from './actions/add-location';
 export { default as removeLocation } from './actions/remove-location';
 export { default as setLocation } from './actions/set-location';
 export { default as setCurrentLocation } from './actions/set-current-location';
+export { default as moveSection } from './actions/move-section';
+export { default as setSectionVisibility } from './actions/set-section-visibility';
 export { default as updateSettings } from './actions/update-settings';
+export { default as resetSettings } from './actions/reset-settings';
