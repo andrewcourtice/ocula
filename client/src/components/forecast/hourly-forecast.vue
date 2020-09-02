@@ -1,13 +1,14 @@
 <template>
     <div class="forecast-hourly">
-        <div class="forecast-hourly__header" layout="rows center-left">
-            <icon-button class="menu-item forecast-hourly__option"
+        <div class="forecast-hourly__header" :grid="trends.length">
+            <icon-button class="menu-item text--small"
                 v-for="trend in trends"
-                layout="row center-left"
+                layout="vertical"
                 :key="trend.key"
                 :icon="trend.icon"
                 :class="getOptionClass(trend.key)"
                 @click="setTrend(trend.key)">
+                {{ trend.label }}
             </icon-button>
         </div>
         <div class="forecast-hourly__body-wrapper">
@@ -156,10 +157,6 @@ export default defineComponent({
 
     .forecast-hourly__header {
         padding: 0 var(--spacing__medium);
-    }
-
-    .forecast-hourly__option {
-        width: auto;
     }
 
     .forecast-hourly__body-wrapper {

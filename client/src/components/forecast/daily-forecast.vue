@@ -60,6 +60,10 @@ import {
 } from '../../store';
 
 import {
+    scaleContinuous
+} from '@ocula/utilities';
+
+import type {
     Formatted,
     IMappedForecastDay
 } from '../../interfaces/state';
@@ -71,6 +75,7 @@ export default defineComponent({
     },
     
     setup() {
+        const precipScale = scaleContinuous([0, 1], [0.5, 1]);
         const days = computed(() => forecast.value.daily);
 
         function getDate(day: Formatted<IMappedForecastDay>) {
@@ -79,7 +84,7 @@ export default defineComponent({
 
         function getPrecipIconStyle(day: Formatted<IMappedForecastDay>) {
             return {
-                opacity: Math.max(day.pop.raw, 0.3)
+                opacity: precipScale(day.pop.raw, true)
             };
         }
 
