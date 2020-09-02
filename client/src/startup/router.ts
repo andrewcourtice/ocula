@@ -16,7 +16,11 @@ import {
     theme
 } from '../store';
 
-declare function gtag(key: string, trackingId: string, meta: any): void;
+declare global {
+    interface Window {
+        gtag?(key: string, trackingId: string, meta: any): void
+    }
+}
 
 export default function initialiseRouter(application: App) {
     application.use(Router, routes);
@@ -41,8 +45,8 @@ export default function initialiseRouter(application: App) {
         next();
     });
 
-    if (gtag) {
-        router.afterEach(to => gtag('config', process.env.GA_TRACKING_ID, {
+    if ('gtag' in window) {
+        router.afterEach(to => window.gtag('config', process.env.GA_TRACKING_ID, {
             'page_path': to.path
         }));
     }

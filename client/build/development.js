@@ -21,9 +21,8 @@ export default merge(base, {
     mode: 'development',
 
     devServer: {
-        port: 7000,
+        port: 3000,
         hot: true,
-        open: true,
         noInfo: true,
         historyApiFallback: true,
         clientLogLevel: 'warning'

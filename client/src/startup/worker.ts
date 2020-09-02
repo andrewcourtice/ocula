@@ -9,12 +9,16 @@ import {
     componentsController
 } from '@ocula/components';
 
+import {
+    envIsDevelopment
+} from '@ocula/utilities';
+
 import type {
     WorkboxLifecycleWaitingEvent
 } from 'workbox-window/utils/WorkboxEvent';
 
 export default async function initialiseWorker() {
-    if (!navigator.serviceWorker) {
+    if (envIsDevelopment || !navigator.serviceWorker) {
         return;
     }
 

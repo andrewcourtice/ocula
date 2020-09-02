@@ -10,6 +10,9 @@ export { default as dateUtcToZoned } from './date/utc-to-zoned';
 
 export { default as domSetMeta } from './dom/set-meta';
 
+export { default as envIsDevelopment } from './env/is-development';
+export { default as envIsProduction } from './env/is-production';
+
 export { default as functionDebounce } from './function/debounce';
 export { default as functionIdentity } from './function/identity';
 

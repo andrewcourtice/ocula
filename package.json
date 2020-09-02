@@ -13,6 +13,7 @@
         "packages/*"
     ],
     "scripts": {
+        "dev": "cd client && yarn start --port $PORT",
         "build": "cd client && yarn build"
     },
     "devDependencies": {
