@@ -20,7 +20,7 @@
             <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
-            <settings-item class="menu-item" label="Check for updates" @click.native="update"></settings-item>
+            <settings-item class="menu-item" label="Update" @click.native="update"></settings-item>
             <settings-item class="menu-item" label="Reset" @click.native="reset"></settings-item>
             <router-link class="link--inherit" :to="routes.about">
                 <settings-item class="menu-item" label="About"></settings-item>
