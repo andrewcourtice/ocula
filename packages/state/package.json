@@ -4,6 +4,6 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "peerDependencies": {
-        "vue": "3.0.0-rc.8"
+        "vue": "3.0.0-rc.10"
     }
 }
