@@ -7,6 +7,6 @@
     "dependencies": {
         "@vercel/node": "^1.7.3",
         "lodash": "^4.17.19",
-        "node-fetch": "^2.6.0"
+        "node-fetch": "^2.6.1"
     }
 }
