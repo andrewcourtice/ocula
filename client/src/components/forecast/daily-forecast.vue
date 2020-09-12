@@ -16,7 +16,7 @@
                         <td class="forecast-daily__day-column forecast-daily__day-column--precip">
                             <div layout="row center-right" v-if="day.pop.raw > 0">
                                 <div class="text--meta">{{ day.pop.formatted }}</div>
-                                <icon name="droplet" class="forecast-daily__precip-icon" :style="getPrecipIconStyle(day)"/>
+                                <icon name="drop-fill" class="forecast-daily__precip-icon" :style="getPrecipIconStyle(day)"/>
                             </div>
                         </td>
                         <td class="forecast-daily__day-column forecast-daily__day-column--min">{{ getMinMax(day.temp.min) }}</td>
@@ -26,13 +26,13 @@
                         <td colspan="5">
                             <accordion-pane :id="day.dt.raw">
                                 <div class="forecast-daily__day-details" grid="2 md-3">
-                                    <observation class="forecast-daily__day-observation" label="Temp Min" icon="thermometer">{{ day.temp.min.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="Temp Max" icon="thermometer">{{ day.temp.max.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="Wind Speed" icon="wind">{{ day.windSpeed.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="Wind Direction" icon="compass">{{ day.windDeg.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="Humidity" icon="droplet">{{ day.humidity.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloud">{{ day.clouds.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="UV Index" icon="sun">{{ day.uvi.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Temp Min" icon="temp-cold-line">{{ day.temp.min.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Temp Max" icon="temp-hot-line">{{ day.temp.max.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Wind Speed" icon="windy-line">{{ day.windSpeed.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Wind Direction" icon="compass-3-line">{{ day.windDeg.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Humidity" icon="contrast-drop-2-line">{{ day.humidity.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloudy-line">{{ day.clouds.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="UV Index" icon="sun-line">{{ day.uvi.formatted }}</observation>
                                 </div>
                             </accordion-pane>
                         </td>
@@ -132,7 +132,6 @@ export default defineComponent({
         width: 1em;
         height: 1em;
         margin-left: var(--spacing__xx-small);
-        stroke: var(--colour__primary);
         fill: var(--colour__primary);
     }
 

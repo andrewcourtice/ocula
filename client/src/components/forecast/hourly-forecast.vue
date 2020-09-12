@@ -24,7 +24,7 @@
                     </div>
                     <template v-if="type === 'wind'">
                         <div class="forecast-hourly__column">
-                            <icon name="navigation-2" :style="getWindIconStyle(hour)"/>
+                            <icon name="arrow-up-line" :style="getWindIconStyle(hour)"/>
                         </div>
                         <div class="forecast-hourly__column">
                             <small class="text--x-small">{{ hour.windDeg.formatted }}</small>

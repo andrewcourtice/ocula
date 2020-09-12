@@ -39,7 +39,7 @@ const BASE_OPTIONS = {
 
 export default {
     [TREND.temperature]: {
-        icon: 'thermometer',
+        icon: 'temp-cold-line',
         label: 'Temperature',
         chartOptions: objectMerge(BASE_OPTIONS, {
             scales: {
@@ -54,7 +54,7 @@ export default {
         })
     },
     [TREND.rainfall]: {
-        icon: 'umbrella',
+        icon: 'rainy-line',
         label: 'Rainfall',
         chartOptions: objectMerge(BASE_OPTIONS, {
             type: LINE_TYPE.step,
@@ -73,7 +73,7 @@ export default {
         })
     },
     [TREND.wind]: {
-        icon: 'wind',
+        icon: 'windy-line',
         label: 'Wind',
         chartOptions: objectMerge(BASE_OPTIONS, {
             scales: {

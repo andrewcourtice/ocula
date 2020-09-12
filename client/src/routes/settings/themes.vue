@@ -10,7 +10,7 @@
                 <div>{{ value.name }}</div>
                 <div class="settings-themes__theme-check" v-show="isCurrentTheme(value.id)">
                     <small class="text--x-small">
-                        <icon name="check"/>
+                        <icon name="check-line"/>
                     </small>
                 </div>
             </div>

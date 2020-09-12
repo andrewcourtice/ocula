@@ -14,17 +14,17 @@ export interface IObservation {
 
 export default {
     [OBSERVATION.tempMin]: {
-        icon: 'thermometer',
+        icon: 'temp-cold-line',
         label: 'Temp Min',
         getValue: (forecast) => forecast.today.temp.min.formatted
     },
     [OBSERVATION.tempMax]: {
-        icon: 'thermometer',
+        icon: 'temp-hot-line',
         label: 'Temp Max',
         getValue: (forecast) => forecast.today.temp.max.formatted
     },
     [OBSERVATION.precipitation]: {
-        icon: 'umbrella',
+        icon: 'rainy-line',
         label: 'Precipitation',
         getValue: (forecast) => {
             const {
@@ -35,27 +35,27 @@ export default {
         }
     },
     [OBSERVATION.humidity]: {
-        icon: 'droplet',
+        icon: 'contrast-drop-2-line',
         label: 'Humidity',
         getValue: (forecast) => forecast.current.humidity.formatted
     },
     [OBSERVATION.sunrise]: {
-        icon: 'sunrise',
+        icon: 'sun-line',
         label: 'Sunrise',
         getValue: (forecast, format) => format.time(forecast.today.sunrise.formatted as any)
     },
     [OBSERVATION.sunset]: {
-        icon: 'sunset',
+        icon: 'moon-line',
         label: 'Sunset',
         getValue: (forecast, format) => format.time(forecast.today.sunset.formatted as any)
     },
     [OBSERVATION.windSpeed]: {
-        icon: 'wind',
+        icon: 'windy-line',
         label: 'Wind Speed',
         getValue: (forecast) => forecast.current.windSpeed.formatted
     },
     [OBSERVATION.windDirection]: {
-        icon: 'compass',
+        icon: 'compass-3-line',
         label: 'Wind Direction',
         getValue: (forecast) => forecast.current.windDeg.formatted
     },

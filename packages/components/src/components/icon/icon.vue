@@ -21,7 +21,7 @@ export default defineComponent({
     },
 
     setup(props) {
-        const href = computed(() => `/feather-sprite.svg#${props.name}`);
+        const href = computed(() => `/icons.svg#${props.name}`);
         const className = computed(() => `icon--${props.name}`);
     
         return {
@@ -39,11 +39,8 @@ export default defineComponent({
         display: inline-block;
         width: 1.5em;
         height: 1.5em;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
+        fill: currentColor;
+        stroke: none;
         vertical-align: middle;
     }
 

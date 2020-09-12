@@ -4,7 +4,7 @@
             <div class="menu-item" layout="row center-justify" v-for="location in locations" :key="location.id">
                 <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
                 <div @click.stop="removeLocation(location)">
-                    <icon name="trash-2" class="margin__left--small"/>
+                    <icon name="delete-bin-line" class="margin__left--small"/>
                 </div>
             </div>
         </div>

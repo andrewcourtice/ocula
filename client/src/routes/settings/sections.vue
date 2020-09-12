@@ -3,8 +3,8 @@
         <transition-group tag="div" name="sections" class="settings-sections__sections menu">
             <div class="settings-sections__section menu-item" layout="row center-justify" v-for="(section, index) in sections" :key="section.type">
                 <div class="text--truncate margin__right--x-small" self="size-x1">{{ section.label }}</div>
-                <icon-button icon="arrow-up" @click.native.stop="moveSection(section.type, -1)" v-visible="index > 0"></icon-button>
-                <icon-button icon="arrow-down" @click.native.stop="moveSection(section.type, 1)" v-visible="index < sections.length - 1"></icon-button>
+                <icon-button icon="arrow-up-line" @click.native.stop="moveSection(section.type, -1)" v-visible="index > 0"></icon-button>
+                <icon-button icon="arrow-down-line" @click.native.stop="moveSection(section.type, 1)" v-visible="index < sections.length - 1"></icon-button>
                 <icon-button :icon="getVisibilityIcon(section)" @click.native.stop="setSectionVisibility(section.type, !section.visible)"></icon-button>
             </div>
         </transition-group>
@@ -53,7 +53,7 @@ export default defineComponent({
         });
 
         function getVisibilityIcon(section): string {
-            return section.visible ? 'eye' : 'eye-off';
+            return section.visible ? 'eye-line' : 'eye-off-line';
         }
 
         return {

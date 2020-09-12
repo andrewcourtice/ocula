@@ -14,42 +14,42 @@ function getRadarTileUrl(forecast) {
 export default {
     [MAP.radar]: {
         label: 'Radar',
-        icon: 'target',
+        icon: 'radar-line',
         options: {
             tiles: getRadarTileUrl
         }
     },
     [MAP.precipitation]: {
         label: 'Precipitation',
-        icon: 'droplet',
+        icon: 'drop-line',
         options: {
             tiles: getOwmTileUrl('precipitation_new')
         }
     },
     [MAP.temperature]: {
         label: 'Temperature',
-        icon: 'thermometer',
+        icon: 'temp-cold-line',
         options: {
             tiles: getOwmTileUrl('temp_new')
         }
     },
     [MAP.cloud]: {
         label: 'Cloud',
-        icon: 'cloud',
+        icon: 'cloudy-line',
         options: {
             tiles: getOwmTileUrl('clouds_new')
         }
     },
     [MAP.wind]: {
         label: 'Wind',
-        icon: 'wind',
+        icon: 'windy-line',
         options: {
             tiles: getOwmTileUrl('wind_new')
         }
     },
     [MAP.pressure]: {
         label: 'Pressure',
-        icon: 'disc',
+        icon: 'swap-line',
         options: {
             tiles: getOwmTileUrl('pressure_new')
         }

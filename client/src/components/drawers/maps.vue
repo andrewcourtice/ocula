@@ -3,12 +3,9 @@
         <template #default="{ close }">
             <container class="maps-drawer__container" grid="3">
                 <router-link class="link--inherit" :to="getRoute(key)" v-for="(value, key) in maps" :key="key">
-                    <div class="menu-item text--centre" @click="close">
-                        <icon :name="value.icon"/>
-                        <div>
-                            <small>{{ value.label }}</small>
-                        </div>
-                    </div>
+                    <icon-button class="maps-drawer__option menu-item" layout="vertical" :icon="value.icon" @click.native="close">
+                        <small>{{ value.label }}</small>
+                    </icon-button>
                 </router-link>
             </container>
         </template>
@@ -57,6 +54,10 @@ export default defineComponent({
 
     .maps-drawer__container {
         padding: var(--spacing__small);
+    }
+
+    .maps-drawer__option {
+        display: flex;
     }
 
 </style>

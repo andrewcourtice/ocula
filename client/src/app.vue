@@ -3,14 +3,11 @@
         <router-view />
         <template #footer>
             <nav class="app__nav">
-                <container layout="row center-stretch">
+                <container class="app__nav-container" layout="row center-stretch" :grid="routes.length">
                     <router-link class="app__route" v-for="route in routes" :key="route.label" :to="route.route">
-                        <div class="menu-item text--centre">
-                            <icon :name="route.icon"/>
-                            <div class="margin__top--xx-small">
-                                <small>{{ route.label }}</small>
-                            </div>
-                        </div>
+                        <icon-button class="app__route-button" layout="vertical" :icon="route.icon">
+                            <small>{{ route.label }}</small>
+                        </icon-button>
                     </router-link>
                 </container>
             </nav>
@@ -42,21 +39,21 @@ import PHASE from './enums/forecast/phase';
 const routes = [
     {
         label: 'Forecast',
-        icon: 'sun',
+        icon: 'sun-line',
         route: {
             name: ROUTES.forecast.index
         }
     },
     {
         label: 'Maps',
-        icon: 'map',
+        icon: 'road-map-line',
         route: {
             name: ROUTES.maps.index
         }
     },
     {
         label: 'Settings',
-        icon: 'sliders',
+        icon: 'equalizer-line',
         route: {
             name: ROUTES.settings.index
         }
@@ -107,6 +104,10 @@ export default defineComponent({
         border-top: 1px solid var(--border__colour);
     }
 
+    .app__nav-container {
+        padding: var(--spacing__x-small) var(--spacing__medium);
+    }
+
     .app__route {
         display: block;
         color: var(--font__colour);
@@ -114,10 +115,10 @@ export default defineComponent({
         &.router-link-active {
             color: var(--colour__primary);
         }
+    }
 
-        & .menu-item {            
-            padding: var(--spacing__small);
-        }
+    .app__route-button {
+        display: flex;
     }
 
     .route {
