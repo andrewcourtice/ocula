@@ -1,0 +1,90 @@
+@media (hover: hover) {
+
+    [data-tooltip] {
+        position: relative;
+    
+        &::after {
+            display: block;
+            position: absolute;
+            content: attr(data-tooltip);
+            width: auto;
+            padding: var(--spacing__xx-small) var(--spacing__x-small);
+            font-size: var(--font__size--small);
+            color: var(--tooltip__font-colour);
+            white-space: nowrap;
+            background: var(--tooltip__background);
+            border-radius: 3px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity var(--transition__timing--long) var(--transition__easing--default) 500ms;
+        }
+        
+        &:hover {
+            
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+    
+    [data-tooltip-position="top"],
+    [data-tooltip-position="bottom"] {
+    
+        &::after {
+            left: 50%;
+        }
+    }
+    
+    [data-tooltip-position="left"],
+    [data-tooltip-position="right"] {
+    
+        &::after {
+            top: 50%;
+        }
+    }
+    
+    [data-tooltip-position="top"] {
+    
+        &::after {
+            bottom: 100%;
+            transform: translate(-50%, -0.5rem);
+        }
+    }
+    
+    [data-tooltip-position="bottom"] {
+    
+        &::after {
+            top: 100%;
+            transform: translate(-50%, 0.5rem);
+        }
+    }
+    
+    [data-tooltip-position="left"] {
+    
+        &::after {
+            right: 100%;
+            transform: translate(-0.5rem, -50%);
+        }
+    }
+    
+    [data-tooltip-position="right"] {
+    
+        &::after {
+            left: 100%;
+            transform: translate(0.5rem, -50%);
+        }
+    }
+
+}
+
+@keyframes tooltip {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}

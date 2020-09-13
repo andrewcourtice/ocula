@@ -51,7 +51,8 @@ $colour__primary--dark: darken(#5D9BE5, 20%);
     --border__radius: 5px;
     --border__radius--large: 1rem;
 
-    
+    --tooltip__background: #333333;
+    --tooltip__font-colour: #FFFFFF;
         
     @each $name, $value in $spacings {
         --spacing__#{ $name }: #{ $value };
