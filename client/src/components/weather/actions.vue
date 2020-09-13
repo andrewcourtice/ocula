@@ -1,13 +1,13 @@
 <template>
     <div class="weather-actions" :class="actionsClass" layout="row center-justify">
-        <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin-line" @click="setLocation">
+        <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin-line" v-tooltip:right="'Set location'" @click="setLocation">
             <div v-if="location">{{ location.shortName }}</div>
             <div v-else>Unknown</div>
         </icon-button>
         <div self="size-x1">
             <slot></slot>
         </div>
-        <icon-button class="weather-actions__action weather-actions__action--update" icon="refresh-line" @click="update(true)"></icon-button>
+        <icon-button class="weather-actions__action weather-actions__action--update" icon="refresh-line" @click="update(true)" v-tooltip:left="'Update'"></icon-button>
     </div>
 </template>
 

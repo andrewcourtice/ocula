@@ -16,7 +16,7 @@
                 <div class="menu-item" layout="row center-justify" v-for="location in locations" :key="location.id" @click="setLocation(location)">
                     <icon name="star-line" class="margin__right--small"/>
                     <div class="text--truncate" self="size-x1">{{ location.longName }}</div>
-                    <div @click.stop="removeLocation(location)">
+                    <div v-tooltip:left="'Remove Location'" @click.stop="removeLocation(location)">
                         <icon name="delete-bin-line" class="margin__left--small"/>
                     </div>
                 </div>
