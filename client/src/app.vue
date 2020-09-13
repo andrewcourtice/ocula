@@ -110,7 +110,11 @@ export default defineComponent({
 
     .app__route {
         display: block;
-        color: var(--font__colour);
+        color: inherit;
+
+        &:hover {
+            color: inherit;
+        }
 
         &.router-link-active {
             color: var(--colour__primary);

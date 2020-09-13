@@ -4,19 +4,22 @@
             <container>
                 <weather-actions></weather-actions>
             </container>
-            <div class="maps-index__options" @click="changeMap">
+            <div class="maps-index__options">
                 <container class="maps-index__options-container" layout="row center-justify">
-                    <div layout="row center-left" >
-                        <icon :name="map.icon"/>
-                        <div class="margin__left--x-small">{{ map.label }}</div>
-                    </div>
-                    <loader v-if="updating"/>
+                    <icon-button class="maps-index__drawer-button" self="size-x1" :icon="map.icon" @click.native="changeMap">
+                        <div layout="row center-justify">
+                            <div>{{ map.label }}</div>
+                            <loader v-if="updating"/>
+                        </div>
+                    </icon-button>
+                    <icon-button icon="focus-3-line" v-tooltip:left="'Recentre'" @click.native="recentre"></icon-button>
                 </container>
             </div>
         </div>
         <div class="maps-index__body" self="size-x1">
-            <maps-drawer class="maps-index__maps-drawer"/>
+            <maps-drawer class="maps-index__drawer"/>
             <interactive-map class="maps-index__map"
+                ref="interactiveMap"
                 v-if="forecast"
                 :latitude="forecast.lat.raw"
                 :longitude="forecast.lon.raw"
@@ -72,6 +75,8 @@ export default defineComponent({
     },
     
     setup(props) {
+        const interactiveMap = ref(null);
+
         let updating = ref(false);
 
         const map = computed(() => {
@@ -102,13 +107,19 @@ export default defineComponent({
             updating.value = false;
         }
 
+        function recentre() {
+            interactiveMap.value.updateLocation();
+        }
+
         return {
             theme,
             forecast,
             map,
+            interactiveMap,
             updating,
             onSourceDataLoading,
             onIdle,
+            recentre,
             changeMap: applicationController.setMapType
         };
     }
@@ -124,14 +135,14 @@ export default defineComponent({
     }
 
     .maps-index__options-container {
-        padding: var(--spacing__small) var(--spacing__large);
+        padding: var(--spacing__x-small) var(--spacing__medium);
     }
 
     .maps-index__body {
         position: relative;
     }
 
-    .maps-index__maps-drawer {
+    .maps-index__drawer {
         position: absolute;
     }
 

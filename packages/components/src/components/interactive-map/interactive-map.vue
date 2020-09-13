@@ -269,7 +269,8 @@ export default defineComponent({
 
         return {
             element,
-            loading
+            loading,
+            updateLocation
         };
     }
 

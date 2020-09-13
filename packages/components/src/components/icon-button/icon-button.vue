@@ -1,7 +1,7 @@
 <template>
     <div class="icon-button" :class="buttonClass" layout="row center-left" v-bind="$attrs">
         <icon class="icon-button__icon" :name="icon"></icon>
-        <div class="icon-button__label" v-if="$slots.default">
+        <div class="icon-button__label" self="size-x1" v-if="$slots.default">
             <slot></slot>
         </div>
     </div>
