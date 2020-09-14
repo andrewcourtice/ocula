@@ -1,14 +1,14 @@
 import MAP from '../../enums/maps/map';
 
-function getOwmTileUrl(layer: string) {
+function getOwmTileUrl(layer: string): string {
     return `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${process.env.OWM_API_KEY}`;
 }
 
-function getRadarTileUrl(forecast) {
+function getRadarTileUrl(forecast, smooth: boolean = true, snow: boolean = true): string {
     const timestamps = forecast.radar.raw.timestamps;
     const timestamp = timestamps[timestamps.length - 1];
     
-    return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/2/0_0.png`;
+    return `https://tilecache.rainviewer.com/v2/radar/${timestamp}/256/{z}/{x}/{y}/2/${+smooth}_${+snow}.png`;
 }
 
 export default {
