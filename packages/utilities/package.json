@@ -4,12 +4,12 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "dependencies": {
-        "date-fns": "^2.15.0",
+        "date-fns": "^2.16.1",
         "date-fns-tz": "^1.0.10",
         "lodash": "^4.17.20",
         "nanoid": "^3.1.12"
     },
     "devDependencies": {
-        "@types/lodash": "^4.14.160"
+        "@types/lodash": "^4.14.161"
     }
 }
