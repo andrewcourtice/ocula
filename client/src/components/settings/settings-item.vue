@@ -1,7 +1,11 @@
 <template>
     <div class="settings-item" layout="row center-justify">
-        <div>{{ label }}</div>
-        <div class="text--meta">{{ value }}</div>
+        <div class="settings-item__label">
+            <slot name="label">{{ label }}</slot>
+        </div>
+        <div class="settings-item__value text--meta">
+            <slot name="value">{{ value }}</slot>
+        </div>
         <slot></slot>
     </div>
 </template>

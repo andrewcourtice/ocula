@@ -6,7 +6,8 @@ import Drawer from './drawer/drawer.vue';
 import Icon from './icon/icon.vue';
 import IconButton from './icon-button/icon-button.vue';
 import IconLabel from './icon-label/icon-label.vue';
-import InteractiveMap from './interactive-map/interactive-map.vue';
+import InteractiveMap from './interactive-map/interactive-map-new.vue';
+import InteractiveMapTileLayer from './interactive-map/interactive-map-tile-layer.vue';
 import Layout from './layout/layout.vue';
 import Loader from './loader/loader.vue';
 import Modal from './modal/modal.vue';
@@ -24,6 +25,7 @@ export default {
     IconButton,
     IconLabel,
     InteractiveMap,
+    InteractiveMapTileLayer,
     Layout,
     Loader,
     Modal,

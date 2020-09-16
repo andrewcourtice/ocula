@@ -20,7 +20,11 @@
             <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
-            <settings-item class="menu-item" label="Update" @click.native="update"></settings-item>
+            <settings-item class="menu-item" label="Update" @click.native="update">
+                <template #value>
+                    <loader v-if="updating"></loader>
+                </template>
+            </settings-item>
             <settings-item class="menu-item" label="Reset" @click.native="reset"></settings-item>
             <router-link class="link--inherit" :to="routes.about">
                 <settings-item class="menu-item" label="About"></settings-item>
@@ -40,6 +44,7 @@ import SettingsItem from '../../components/settings/settings-item.vue';
 
 import {
     defineComponent,
+    ref,
     computed
 } from 'vue';
 
@@ -66,6 +71,8 @@ export default defineComponent({
     },
     
     setup() {
+        const updating = ref(false);
+
         const routes = {
             locations: {
                 name: ROUTES.settings.locations
@@ -106,8 +113,16 @@ export default defineComponent({
         async function update() {
             const registration = await navigator.serviceWorker.getRegistration();
 
-            if (registration) {
-                registration.update();
+            if (!registration) {
+                return;
+            }
+
+            try {
+                updating.value = true;
+
+                await registration.update();
+            } finally {
+                updating.value = false;
             }
         }
 
@@ -136,6 +151,7 @@ export default defineComponent({
             mapOptions: MAPS,
             unitOptions: UNITS,
             update,
+            updating,
             reset
         };
     }
