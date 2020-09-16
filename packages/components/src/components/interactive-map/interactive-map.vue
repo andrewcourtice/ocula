@@ -1,37 +1,36 @@
 <template>
     <div class="map" ref="element">
         <loader class="map__loader" v-if="loading" />
+        <slot></slot>
     </div>
 </template>
 
 <script lang="ts">
+import 'leaflet/dist/leaflet.css';
+
 import Loader from '../loader/loader.vue';
+
+import getListeners from '../../helpers/get-listeners';
+
+import {
+    TaskQueue
+} from '@ocula/task-queue';
 
 import {
     defineComponent,
     ref,
     watch,
     onMounted,
-    onBeforeUnmount,
+    onUnmounted,
+    provide,
     PropType
 } from 'vue';
 
-interface ITileSource {
-    tiles: string[];
-    tileSize: number;
-    minzoom: number;
-    maxzoom: number;
-}
-
-const SOURCE_NAME = 'ocula-tile-source';
-const LAYER_NAME = 'ocula-tile-layer';
-
-const TILE_OPTIONS = {
-    tiles: [''],
-    tileSize: 256,
-    minzoom: 0,
-    maxzoom: 22
-};
+import {
+    Map as InteractiveMap,
+    TileLayer,
+    Layer
+} from 'leaflet';
 
 const STYLE = {
     light: 'light-v10',
@@ -40,10 +39,6 @@ const STYLE = {
 };
 
 export default defineComponent({
-
-    components: {
-        Loader
-    },
 
     props: {
 
@@ -57,7 +52,7 @@ export default defineComponent({
 
         zoom: {
             type: Number,
-            default: 6
+            default: 8
         },
 
         style: {
@@ -66,197 +61,77 @@ export default defineComponent({
             //validator: value => value in STYLE
         },
 
-        tileSource: {
-            type: Object as PropType<ITileSource>
-        },
-
-        interactive: {
-            type: Boolean,
-            default: true
-        }
-
     },
 
-    setup(props, { emit, attrs }) {
-        let map: mapboxgl.Map;
-        let updating = false;
+    setup(props, { attrs, emit }) {
+        let map: InteractiveMap;
 
+        const taskQueue = new TaskQueue(true);
         const element = ref<HTMLElement>(null);
         const loading = ref(false);
+
+        const listeners = getListeners(attrs);
+
+        const baseLayer = new TileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            id: `mapbox/${STYLE[props.style]}`,
+            accessToken: process.env.MAPBOX_API_KEY,
+            tileSize: 256
+        });
+
+        function handleListeners(invokee: Function) {
+            if (!map) {
+                return;
+            }
+
+            Object.keys(listeners).forEach(key => {
+                invokee.call(map, key, listeners[key]);
+            });
+        }
         
-        async function loadMapbox() {
-            loading.value = true;
+        function addLayer(layer: Layer): void {
+            const task = () => layer.addTo(map);
 
-            try {
-                const [
-                    mapboxModule
-                ] = await Promise.all([
-                    import(
-                    /* webpackChunkName: 'mapbox' */
-                    /* webpackPrefetch: true */
-                    'mapbox-gl'),
-                    import(
-                    /* webpackChunkName: 'mapbox' */
-                    /* webpackPrefetch: true */
-                    'mapbox-gl/dist/mapbox-gl.css'),
-                ]);
-                    
-                const mapboxgl = mapboxModule.default;
-
-                mapboxgl.accessToken = process.env.MAPBOX_API_KEY;
-
-                return mapboxgl;
-            } finally {
-                loading.value = false;
-            }
-        }
-
-        function updateLocation() {
             if (!map) {
-                return;
+                return taskQueue.add(task);
             }
 
-            map.easeTo({
-                zoom: props.zoom,
-                center: [
-                    props.longitude,
-                    props.latitude
-                ]
-            });
+            task();
         }
 
-        function updateStyle(style): void {
-            map.setStyle(`mapbox://styles/mapbox/${STYLE[style]}`);            
-        }
+        function removeLayer(layer: Layer): void {
+            const task = () => layer.removeFrom(map);
 
-        function getTileSource(tileSource: ITileSource): ITileSource {
-            return {
-                ...TILE_OPTIONS,
-                ...tileSource
-            };
-        }
-
-        function updateTileSource(tileSource: ITileSource): void {
             if (!map) {
-                return;
+                return taskQueue.add(task);
             }
 
-            const mergedTileSource = getTileSource(tileSource);
-
-            const {
-                tiles,
-                tileSize,
-                minzoom,
-                maxzoom
-            } = mergedTileSource;
-
-            const {
-                source,
-                layer
-            } = setDefaultLayer(mergedTileSource);
-
-            source.tiles = [].concat(tiles);
-            source.tileSize = tileSize;
-
-            layer.minzoom = minzoom;
-            layer.maxzoom = maxzoom;
-
-            map.style.sourceCaches[SOURCE_NAME].clearTiles();
-            map.style.sourceCaches[SOURCE_NAME].update(map.transform);
-
-            map.triggerRepaint();
+            task();
         }
 
-        function addSource(tiles: string[] = [''], tileSize: number = 256) {
-            map.addSource(SOURCE_NAME, {
-                type: 'raster',
-                tiles: [].concat(tiles),
-                tileSize
-            });
-
-            return map.getSource(SOURCE_NAME) as mapboxgl.RasterSource;
+        function updateLocation(): void {
+            map.flyTo({
+                lat: props.latitude,
+                lng: props.longitude
+            }, props.zoom);
         }
 
-        function addLayer(minzoom: number = 0, maxzoom: number = 22) {
-            const layers = map.getStyle().layers;
-            const firstLayer = layers.find(layer => layer.type === 'symbol');
-
-            map.addLayer({
-                id: LAYER_NAME,
-                type: 'raster',
-                source: SOURCE_NAME,
-                minzoom,
-                maxzoom
-            }, firstLayer.id);
-
-            return map.getLayer(LAYER_NAME);
-        }
-
-        function setDefaultLayer(tileSource: ITileSource) {
-            if (!tileSource || !map) {
-                return;
-            }
-
-            let source = map.getSource(SOURCE_NAME) as mapboxgl.RasterSource;
-            let layer = map.getLayer(LAYER_NAME);
-
-            const {
-                tiles,
-                tileSize,
-                minzoom,
-                maxzoom
-            } = getTileSource(tileSource);
-
-            if (!source) {
-                source = addSource(tiles, tileSize);
-            }
-
-            if (!layer) {
-                layer = addLayer(minzoom, maxzoom);
-            }
-
-            return {
-                source,
-                layer
-            };
-        }
-
-        function handleListeners(invokee: Function): void {
-            Object.keys(attrs)
-                .filter(key => key.startsWith('on'))
-                .forEach(key => {
-                try {
-                    invokee.call(map, key.replace(/^on/, '').toLowerCase(), attrs[key]);
-                } catch (error) {
-                    console.warn(error);
-                }
-            });
-        }
-    
-        onMounted(async () => {
-            const mapboxgl = await loadMapbox();
-
-            map = new mapboxgl.Map({
-                container: element.value,
-                style: `mapbox://styles/mapbox/${STYLE[props.style]}`,
+        onMounted(() => {
+            map = new InteractiveMap(element.value, {
                 zoom: props.zoom,
-                interactive: props.interactive,
-                center: [
-                    props.longitude,
-                    props.latitude
-                ]
-            });
-
-            map.on('load', () => {
-                if (props.tileSource) {
-                    setDefaultLayer(props.tileSource);
+                zoomControl: false,
+                center: {
+                    lat: props.latitude,
+                    lng: props.longitude
                 }
             });
 
             handleListeners(map.on);
+
+            baseLayer.addTo(map);
+            taskQueue.run();
         });
 
-        onBeforeUnmount(() => handleListeners(map.off));
+        onUnmounted(() => handleListeners(map.off));
 
         watch([
             () => props.latitude,
@@ -264,8 +139,14 @@ export default defineComponent({
             () => props.zoom
         ], updateLocation);
 
-        watch(() => props.style, updateStyle);
-        watch(() => props.tileSource, updateTileSource);
+        watch(() => props.style, value => {
+            baseLayer.options.id = `mapbox/${STYLE[value]}`;
+        });
+
+        provide('map', {
+            addLayer,
+            removeLayer
+        });
 
         return {
             element,

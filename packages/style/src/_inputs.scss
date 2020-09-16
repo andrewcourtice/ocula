@@ -1,0 +1,108 @@
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="datetime"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+textarea,
+select {
+    display: block;
+    width: 100%;
+    padding: var(--spacing__x-small) var(--spacing__small);
+    color: inherit;
+    font-size: var(--font__size);
+    background-color: var(--background__colour);
+    border: 1px solid var(--border__colour);
+    border-radius: var(--border__radius);
+    outline: none;
+}
+
+input[type="range"] {
+    margin: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+
+    @mixin track {
+        box-sizing: border-box;
+        width: 100%;
+        height: 0.5rem;
+        background: var(--background__colour--hover);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    @mixin thumb {
+        box-sizing: border-box;
+        width: 1rem;
+        height: 1rem;
+        margin-top: -0.25rem;
+        background: var(--colour__primary);
+        border: none;
+        border-radius: 50%;
+        transition: background var(--transition__timing) var(--transition__easing--default);
+        cursor: pointer;
+        -webkit-appearance: none;
+    }
+
+    &:focus,
+    &:active {
+        outline: none;
+
+        // &::-webkit-slider-runnable-track {
+        //     background: var(--colour__primary);
+        // }
+        
+        // &::-moz-range-track {
+        //     background: var(--colour__primary);
+        // }
+        
+        // &::-ms-track {
+        //     background: var(--colour__primary);
+        // }
+    }
+
+
+    /* Track */
+
+    &::-webkit-slider-runnable-track {
+        @include track;
+    }
+
+    &::-moz-range-track {
+        @include track;
+    }
+
+    &::-ms-track {
+        @include track;
+    }
+
+    /* Thumb */
+
+    &::-webkit-slider-thumb {
+        @include thumb;
+
+        &:hover {
+            background: var(--colour__primary--dark);
+        }
+    }
+    
+    &::-moz-range-thumb {
+        @include thumb;
+        
+        &:hover {
+            background: var(--colour__primary--dark);
+        }
+    }
+    
+    &::-ms-thumb {
+        @include thumb;
+        margin-top: 0;
+        
+        &:hover {
+            background: var(--colour__primary--dark);
+        }
+    }
+} 

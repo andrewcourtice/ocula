@@ -11,7 +11,7 @@ function getOwmTileUrl(layer: string): string {
 }
 
 function getRadarLayers(forecast: Formatted<IMappedForecast>, format: IFormatter, smooth: boolean = true, snow: boolean = true) {
-    const timestamps = forecast.radar.timestamps;
+    let timestamps = forecast.radar.timestamps;
 
     return timestamps.map(({ raw, formatted }) => ({
         id: raw,

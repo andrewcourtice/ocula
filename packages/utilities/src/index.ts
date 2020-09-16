@@ -1,4 +1,5 @@
 export { default as arrayJoinBy } from './array/join-by';
+export { default as arrayOrderBy } from './array/order-by';
 export { default as arraySwapBy } from './array/swap-by';
 export { default as arrayUniqueBy } from './array/unique-by';
 

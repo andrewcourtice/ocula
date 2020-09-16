@@ -24,9 +24,7 @@
                     v-if="forecast"
                     :latitude="forecast.lat.raw"
                     :longitude="forecast.lon.raw"
-                    :style="theme.core.mapStyle"
-                    @sourcedataloading="onSourceDataLoading"
-                    @idle="onIdle">
+                    :style="theme.core.mapStyle">
                     <interactive-map-tile-layer v-for="(layer, index) in map.layers"
                         class="maps-index__map-layer"
                         :key="layer.id"
@@ -36,7 +34,7 @@
             </div>
             <div class="maps-index__controls" v-show="map.layers.length > 1">
                 <container class="maps-index__controls-container" layout="row center-justify">
-                    <icon-button class="maps-index__control-loop" icon="arrow-right-line" @click.native="loop"></icon-button>
+                    <icon-button class="maps-index__control-loop" :icon="controlIcon" @click.native="loop"></icon-button>
                     <div class="padding__horizontal--small" self="size-x1">
                         <input class="maps-index__control-slider" type="range" v-model.number="layerIndex" min="0" :max="map.layers.length - 1" step="1">
                     </div>
@@ -72,7 +70,7 @@ import {
 } from '../../store';
 
 import {
-    typeIsFunction
+    typeIsFunction, numberClamp
 } from '@ocula/utilities';
 
 export default defineComponent({
@@ -93,7 +91,7 @@ export default defineComponent({
     setup(props) {
         const interactiveMap = ref(null);
 
-        let loopHandle;
+        let isLooping = ref(null);
         let updating = ref(false);
         let layerIndex = ref(0);
 
@@ -114,14 +112,7 @@ export default defineComponent({
         });
 
         const layer = computed(() => map.value.layers[layerIndex.value] || map.value.layers[0]);
-
-        function onSourceDataLoading() {
-            updating.value = true;
-        }
-
-        function onIdle() {
-            updating.value = false;
-        }
+        const controlIcon = computed(() => isLooping.value ? 'stop-fill' : 'play-fill');
 
         function recentre() {
             interactiveMap.value.updateLocation();
@@ -132,24 +123,22 @@ export default defineComponent({
         }
 
         function stop() {
-            window.clearInterval(loopHandle);
-            loopHandle = null;
+            window.clearInterval(isLooping.value);
+            isLooping.value = null;
         }
 
         function start() {
-            loopHandle = window.setInterval(() => {
+            isLooping.value = window.setInterval(() => {
                 layerIndex.value = layerIndex.value === map.value.layers.length - 1 ? 0 : layerIndex.value + 1;
             }, 500);
         }
 
         function loop() {
-            if (loopHandle) {
+            if (isLooping.value) {
                 return stop();
             }
 
-            if (map.value.layers.length > 1) {
-                start();
-            }
+            start();
         }
 
         watch(map, value => {
@@ -163,15 +152,14 @@ export default defineComponent({
             theme,
             forecast,
             map,
-            layerIndex,
             layer,
+            layerIndex,
             interactiveMap,
             updating,
-            onSourceDataLoading,
-            onIdle,
             recentre,
             getLayerOpacity,
             loop,
+            controlIcon,
             changeMap: applicationController.setMapType
         };
     }
@@ -200,8 +188,8 @@ export default defineComponent({
         z-index: 1000;
     }
 
-    .maps-index__map-layer {
-        transition: opacity 150ms linear;
+    .maps-index__controls {
+        border-top: 1px solid var(--border__colour);
     }
 
     .maps-index__control-slider {
