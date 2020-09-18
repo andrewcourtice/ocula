@@ -11,6 +11,7 @@ interface Schema {
 }
 
 export default function transform<T, U = any>(input: T, schema: Schema, baseTransformer: Transformer = functionIdentity): U {
+
     const output: U = {};
 
     for (const key in input) {

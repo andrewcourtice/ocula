@@ -89,7 +89,10 @@ export default {
                 pop: general.fractional,
                 weather: weatherTransform,
             }
-        ]
+        ],
+        radar: {
+            timestamps: value => value.map(general.datetime)
+        }
     },
     [UNITS.imperial]: {
         current: {
@@ -152,7 +155,9 @@ export default {
                 pop: general.fractional,
                 weather: weatherTransform
             }
-        ]
-
+        ],
+        radar: {
+            timestamps: value => value.map(general.datetime)
+        }
     }
 }

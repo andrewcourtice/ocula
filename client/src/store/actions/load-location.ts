@@ -1,5 +1,4 @@
-
-import LOCATIONS from '../../enums/forecast/location';
+import LOCATION from '../../enums/forecast/location';
 
 import {
     state,
@@ -14,33 +13,31 @@ import {
     getLocation
 } from '../../services/location';
 
-export default async function loadLocation() {
+import type {
+    ILocation
+} from '../../interfaces/location';
+
+export default async function loadLocation(): Promise<ILocation> {
     const {
-        location
+        location: savedLocation
     } = state.settings;
 
-    let latitude: number,
-        longitude: number;
+    let location = savedLocation;
 
-    if (location === LOCATIONS.current) {
-        ({
+    if (location === LOCATION.current) {
+        const {
             latitude,
             longitude
-        } = await getPosition());
-    } else {
-        ({
-            latitude,
-            longitude
-        } = location);
-    }
+        } = await getPosition();
 
-    if (!latitude || !longitude) {
-        return;
-    }
+        if (!latitude || !longitude) {
+            return;
+        }
 
-    const response = await getLocation(latitude, longitude);
+        location = await getLocation(latitude, longitude);
+    } 
 
-    mutate(state => state.location = response);
+    mutate(state => state.location = location as ILocation);
 
-    return response;
+    return location;
 } 

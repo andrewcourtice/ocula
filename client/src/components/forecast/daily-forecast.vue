@@ -32,19 +32,25 @@
                                     <observation class="forecast-daily__day-observation" label="Wind Direction" icon="compass-3-line">{{ day.windDeg.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Humidity" icon="contrast-drop-2-line">{{ day.humidity.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloudy-line">{{ day.clouds.formatted }}</observation>
-                                    <observation class="forecast-daily__day-observation" label="UV Index" icon="sun-line">{{ day.uvi.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="UV Index" icon="sun-line">
+                                        <div layout="row center-left">
+                                            <div class="margin__right--x-small">{{ day.uvi.formatted }}</div>
+                                            <div class="dot" :style="getUvIndexDotStyle(day.uvi.raw)"></div>
+                                        </div>
+                                    </observation>
                                 </div>
                             </accordion-pane>
                         </td>
                     </tr>
                 </tbody>
-
             </table>
         </template>
     </accordion>
 </template>
 
 <script lang="ts">
+import UV_INDEX from '../../constants/forecast/uv-index';
+
 import Observation from '../weather/observation.vue';
 
 import getIcon from '../../helpers/get-icon';
@@ -92,12 +98,23 @@ export default defineComponent({
             return Math.round(value.raw);
         }
 
+        function getUvIndexDotStyle(uvIndex: number) {
+            const {
+                colour
+            } = UV_INDEX.reverse().find(({ start }) => uvIndex >= start);
+
+            return {
+                backgroundColor: colour
+            };
+        }
+
         return {
             days,
             getIcon,
             getDate,
             getPrecipIconStyle,
-            getMinMax
+            getMinMax,
+            getUvIndexDotStyle
         };
     }
 

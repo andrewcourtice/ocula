@@ -7,7 +7,7 @@
         </div>
         <div class="forecast-uv-index__legend" layout="rows center-center">
             <div class="forecast-uv-index__legend-key" layout="row center-left" v-for="key in legend" :key="key.id">
-                <div class="forecast-uv-index__legend-key-icon" :style="{ background: key.colour }"></div>
+                <div class="dot margin__right--x-small" :style="{ background: key.colour }"></div>
                 <small class="text--meta">{{ key.label }}</small>
             </div>
         </div>
@@ -82,8 +82,11 @@ export default defineComponent({
         position: absolute;
         top: 0;
         left: 0;
-        width: 0;
+        width: 0.5em;
         height: 100%;
+        border-radius: 50%;
+        background-color: var(--background__colour--hover);
+        transform: translateX(-50%);
         overflow: visible;
         transition: left var(--transition__timing--long) var(--transition__easing--default);
 
@@ -118,13 +121,6 @@ export default defineComponent({
     .forecast-uv-index__legend-key {
         width: auto;
         margin: var(--spacing__xx-small) var(--spacing__x-small);
-    }
-
-    .forecast-uv-index__legend-key-icon {
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 50%;
-        margin-right: var(--spacing__xx-small);
     }
 
 </style>
