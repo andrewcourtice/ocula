@@ -14,7 +14,7 @@ function getRadarLayers(forecast: Formatted<IMappedForecast>, format: IFormatter
     let timestamps = forecast.radar.timestamps;
 
     return timestamps.map(({ raw, formatted }) => ({
-        id: raw,
+        id: raw.toString(),
         label: format.time(formatted),
         url: `https://tilecache.rainviewer.com/v2/radar/${raw}/256/{z}/{x}/{y}/2/${+smooth}_${+snow}.png`
     }));
