@@ -21,6 +21,7 @@ export { default as functionIdentity } from './function/identity';
 export { default as numberClamp } from './number/clamp';
 export { default as numberMinBy } from './number/min-by';
 export { default as numberMaxBy } from './number/max-by';
+export { default as numberPercentage } from './number/percentage';
 export { default as numberRound } from './number/round';
 
 export { default as objectCloneLazy } from './object/clone-lazy';

@@ -1,15 +1,18 @@
 <template>
     <div class="forecast-hourly">
-        <div class="forecast-hourly__header" :grid="trends.length">
-            <icon-button class="menu-item text--small"
-                v-for="trend in trends"
-                layout="vertical"
-                :key="trend.key"
-                :icon="trend.icon"
-                :class="getOptionClass(trend.key)"
-                @click="setTrend(trend.key)">
-                {{ trend.label }}
-            </icon-button>
+        <div class="forecast-hourly__header" layout="row center-justify">
+            <div self="size-x1">{{ trend.label }} (m/s)</div>
+            <div class="forecast-hourly__options" layout="row center-center">
+                <icon-button class="menu-item text--small"
+                    v-for="trend in trends"
+                    v-tooltip="trend.label"
+                    layout="vertical"
+                    :key="trend.key"
+                    :icon="trend.icon"
+                    :class="getOptionClass(trend.key)"
+                    @click="setTrend(trend.key)">
+                </icon-button>
+            </div>
         </div>
         <div class="forecast-hourly__body-wrapper">
             <div class="forecast-hourly__body" :style="bodyStyle">
@@ -156,7 +159,11 @@ export default defineComponent({
     @import "~@ocula/style/src/_mixins.scss";
 
     .forecast-hourly__header {
-        padding: 0 var(--spacing__medium);
+        padding: 0 var(--spacing__medium) 0 var(--spacing__large) ;
+    }
+
+    .forecast-hourly__options {
+        width: auto;
     }
 
     .forecast-hourly__body-wrapper {

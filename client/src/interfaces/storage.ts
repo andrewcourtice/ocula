@@ -1,6 +1,7 @@
 import type LOCATION from '../enums/forecast/location';
+import UNITS from '../enums/forecast/units';
 import type MAP from '../enums/maps/map';
-import type FORECAST_SECTION from '../enums/section';
+import type FORECAST_SECTION from '../enums/forecast/section';
 
 import type {
     ILocation
@@ -18,7 +19,7 @@ interface ISection {
 
 export interface ISettings {
     version: number;
-    units: string;
+    units: UNITS;
     theme: string;
     location?: ILocation | LOCATION;
     locations?: ILocation[];

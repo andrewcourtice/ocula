@@ -7,7 +7,7 @@ import {
 import {
     objectMerge,
     dateFromUnix,
-    numberRound
+    numberPercentage
 } from '@ocula/utilities';
 
 interface ITrend {
@@ -64,7 +64,7 @@ export default {
                 }
             },
             labels: {
-                content: (value, index) => index ? numberRound(value, 1) : null
+                content: (value, index) => index ? numberPercentage(value, 1) : null
             },
             colours: {
                 line: '#47B1FA',

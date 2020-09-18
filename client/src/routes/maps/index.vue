@@ -22,6 +22,7 @@
                 <mapbox-map class="maps-index__map"
                     ref="mapboxMap"
                     v-if="forecast"
+                    :key="theme.core.mapStyle"
                     :latitude="forecast.lat.raw"
                     :longitude="forecast.lon.raw"
                     :style="theme.core.mapStyle"
