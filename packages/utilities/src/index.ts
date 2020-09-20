@@ -7,6 +7,7 @@ export { default as dateFormat } from './date/format';
 export { default as dateFormatDistance } from './date/format-distance';
 export { default as dateFormatDistanceToNow } from './date/format-distance-to-now';
 export { default as dateFromUnix } from './date/from-unix';
+export { default as dateIsToday } from './date/is-today';
 export { default as dateToUnix } from './date/to-unix';
 export { default as dateUtcToZoned } from './date/utc-to-zoned';
 

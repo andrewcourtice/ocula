@@ -1,7 +1,7 @@
 <template>
     <div class="forecast-hourly">
         <div class="forecast-hourly__header" layout="row center-justify">
-            <div self="size-x1">{{ trend.label }} (m/s)</div>
+            <div self="size-x1">{{ trend.label }} ({{ trend.unitOfMeasure }})</div>
             <div class="forecast-hourly__options" layout="row center-center">
                 <icon-button class="menu-item text--small"
                     v-for="trend in trends"
@@ -73,7 +73,8 @@ import {
 
 import {
     forecast,
-    format
+    format,
+    unitOfMeasure
 } from '../../store';
 
 import {
@@ -108,7 +109,16 @@ export default defineComponent({
         })
 
         const hours = computed(() => forecast.value.hourly);
-        const trend = computed(() => TRENDS[type.value]);
+
+        const trend = computed(() => {
+            const trend = TRENDS[type.value];
+            const uom = unitOfMeasure.value[trend.observation];
+
+            return {
+                ...trend,
+                unitOfMeasure: uom
+            };
+        });
 
         const bodyStyle = computed(() => ({
             gridTemplateColumns: `2rem repeat(${hours.value.length - 2}, 4rem) 2rem`

@@ -1,10 +1,10 @@
 const enum OBSERVATION {
-    tempMin = 'tempMin',
-    tempMax = 'tempMax',
+    temperature = 'temperature',
     precipitation = 'precipitation',
     humidity = 'humidity',
     sunrise = 'sunrise',
     sunset = 'sunset',
+    pressure = 'pressure',
     windSpeed = 'windSpeed',
     windDirection = 'windDirection',
 };

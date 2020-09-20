@@ -1,7 +1,7 @@
 const enum FORECAST_SECTION {
+    today = 'today',
     dailyForecast = 'daily-forecast',
     hourlyForecast = 'hourly-forecast',
-    observations = 'observations',
     uvIndex = 'uv-index'
 };
 

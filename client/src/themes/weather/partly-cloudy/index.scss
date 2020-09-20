@@ -1,0 +1,11 @@
+.theme--weather-partly-cloudy {
+    --font__colour--weather: #FFFFFF;
+    --background__colour--weather: #5D9BE5;
+}
+
+.phase--night {
+    
+    & .theme--weather-partly-cloudy {
+        --background__colour--weather: #44296A;
+    }
+}

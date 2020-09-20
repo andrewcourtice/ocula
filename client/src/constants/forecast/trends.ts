@@ -1,4 +1,5 @@
 import TREND from '../../enums/forecast/trend';
+import OBSERVATION from '../../enums/forecast/observation';
 
 import {
     LINE_TYPE
@@ -13,6 +14,7 @@ import {
 interface ITrend {
     icon: string;
     label: string;
+    observation: OBSERVATION;
     chartOptions: any;
 }
 
@@ -41,6 +43,7 @@ export default {
     [TREND.temperature]: {
         icon: 'temp-cold-line',
         label: 'Temperature',
+        observation: OBSERVATION.temperature,
         chartOptions: objectMerge(BASE_OPTIONS, {
             scales: {
                 y: {
@@ -55,7 +58,8 @@ export default {
     },
     [TREND.rainfall]: {
         icon: 'rainy-line',
-        label: 'Rainfall',
+        label: 'Precipitation',
+        observation: OBSERVATION.precipitation,
         chartOptions: objectMerge(BASE_OPTIONS, {
             type: LINE_TYPE.step,
             scales: {
@@ -75,6 +79,7 @@ export default {
     [TREND.wind]: {
         icon: 'windy-line',
         label: 'Wind',
+        observation: OBSERVATION.windSpeed,
         chartOptions: objectMerge(BASE_OPTIONS, {
             scales: {
                 y: {

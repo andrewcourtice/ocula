@@ -61,7 +61,10 @@ export default defineComponent({
         }
 
         & .weather-actions__action--update {
-            animation: rotate 750ms ease-out infinite;
+
+            & .icon {
+                animation: rotate 750ms ease-out infinite;
+            }
         }
     }
 

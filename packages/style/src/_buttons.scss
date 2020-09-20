@@ -23,3 +23,16 @@ button,
         background-color: var(--colour__primary);
     }
 }
+
+.button--ghost {
+    font-weight: var(--font__weight);
+    background: none;
+
+    &:hover {
+        background: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}

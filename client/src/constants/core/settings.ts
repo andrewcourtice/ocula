@@ -15,19 +15,19 @@ export default {
     forecast: {
         sections: [
             {
+                type: FORECAST_SECTION.today,
+                visible: true
+            },
+            {
                 type: FORECAST_SECTION.dailyForecast,
                 visible: true
             },
             {
-                type: FORECAST_SECTION.observations,
+                type: FORECAST_SECTION.hourlyForecast,
                 visible: true
             },
             {
                 type: FORECAST_SECTION.uvIndex,
-                visible: true
-            },
-            {
-                type: FORECAST_SECTION.hourlyForecast,
                 visible: true
             }
         ]

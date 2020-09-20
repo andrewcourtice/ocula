@@ -20,7 +20,7 @@
             <router-link class="link--inherit" :to="routes.theme">
                 <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
             </router-link>
-            <settings-item class="menu-item" label="Update" @click.native="update">
+            <settings-item class="menu-item" label="Update" @click.native="updateApplication">
                 <template #value>
                     <loader v-if="updating"></loader>
                 </template>
@@ -52,7 +52,8 @@ import {
     state,
     theme,
     updateSettings,
-    resetSettings
+    resetSettings,
+    update
 } from '../../store';
 
 import {
@@ -90,9 +91,10 @@ export default defineComponent({
 
         const units = computed({
             get: () => state.settings.units,
-            set: value => updateSettings({
-                units: value
-            })
+            set: units => {
+                updateSettings({ units });
+                update(true);
+            }
         });
 
         const defaultMap = computed({
@@ -110,7 +112,7 @@ export default defineComponent({
 
         const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
 
-        async function update() {
+        async function updateApplication() {
             const registration = await navigator.serviceWorker.getRegistration();
 
             if (!registration) {
@@ -150,7 +152,7 @@ export default defineComponent({
             themeOptions,
             mapOptions: MAPS,
             unitOptions: UNITS,
-            update,
+            updateApplication,
             updating,
             reset
         };

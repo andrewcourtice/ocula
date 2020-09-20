@@ -20,7 +20,10 @@ const enum UNIT_OF_MEASURE {
     
     // Pressure
     hectopascals = 'hPa',
-    millibars = 'bar'
+    millibars = 'bar',
+
+    // General
+    percentage = '%'
 };
 
 export default UNIT_OF_MEASURE;
