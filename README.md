@@ -26,6 +26,7 @@ I set out to create Ocula as a replacement for my favourite weather app - Pocket
     <img src="https://user-images.githubusercontent.com/11718453/93705532-95b09a80-fb61-11ea-89d9-e72e6146aea2.png" width="192" />
     <img src="https://user-images.githubusercontent.com/11718453/93705531-93e6d700-fb61-11ea-8201-80efecfc95d3.png" width="192" />
     <img src="https://user-images.githubusercontent.com/11718453/93705526-8e898c80-fb61-11ea-82aa-cf381b5e13a3.png" width="192" />
+    <img src="https://user-images.githubusercontent.com/11718453/93705761-2f2c7c00-fb63-11ea-8649-11a63c63d9d3.png" width="192" />
     <img src="https://user-images.githubusercontent.com/11718453/93705522-87fb1500-fb61-11ea-8b2d-cefa59c9c712.png" width="192" />
 </p>
 
