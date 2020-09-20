@@ -3,7 +3,7 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: weekly
+    interval: monthly
     day: wednesday
     time: "12:00"
     timezone: Australia/Brisbane
