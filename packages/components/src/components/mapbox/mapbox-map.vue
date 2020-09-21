@@ -66,7 +66,7 @@ export default defineComponent({
 
     },
 
-    setup(props, { attrs, emit }) {
+    setup(props, { attrs }) {
         let map: mapboxgl.Map;
 
         const element = ref<HTMLElement>(null);

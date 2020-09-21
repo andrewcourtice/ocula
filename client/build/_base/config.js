@@ -35,9 +35,7 @@ export default {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.vue'],
 
-        alias: {
-            'vue': '@vue/runtime-dom',
-            
+        alias: {           
             'components': path.resolve(__dirname, '../src/components'),
             'constants': path.resolve(__dirname, '../src/constants'),
             'controllers': path.resolve(__dirname, '../src/controllers'),
