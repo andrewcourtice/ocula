@@ -1,5 +1,5 @@
 import {
-    envIsDevelopment
+    envIsProduction
 } from '@ocula/utilities';
 
 import {
@@ -12,12 +12,8 @@ import {
 // } from '@sentry/integrations';
 
 export default function initialiseLogging() {
-    if (envIsDevelopment) {
-        return;
-    }
-
     init({
-        enabled: true,
+        enabled: envIsProduction,
         dsn: process.env.SENTRY_DSN,
         // integrations: [
         //     new SentryVue({

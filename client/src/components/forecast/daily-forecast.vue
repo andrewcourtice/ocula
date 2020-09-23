@@ -66,7 +66,6 @@ import {
 } from '../../store';
 
 import {
-    dateIsToday,
     scaleContinuous
 } from '@ocula/utilities';
 
@@ -86,10 +85,6 @@ export default defineComponent({
         const days = computed(() => forecast.value.daily);
 
         function getDate(day: Formatted<IMappedForecastDay>) {
-            if (dateIsToday(day.dt.formatted as any)) {
-                return 'Today';
-            }
-
             return format.value.date(day.dt.formatted as any);
         }
 

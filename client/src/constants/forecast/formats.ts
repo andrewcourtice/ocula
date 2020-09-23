@@ -91,7 +91,9 @@ export default {
             }
         ],
         radar: {
-            timestamps: value => value.map(general.datetime)
+            timestamps: [
+                general.datetime
+            ]
         }
     },
     [UNITS.imperial]: {
@@ -157,7 +159,9 @@ export default {
             }
         ],
         radar: {
-            timestamps: value => value.map(general.datetime)
+            timestamps: [
+                general.datetime
+            ]
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
-    <transition-box-resize class="forecast-today">
-        <div v-for="observation in observations" :key="observation.label">
+    <transition-box-resize class="forecast-today" grid="3">
+        <div class="forecast-today__observation" v-for="observation in observations" :key="observation.label">
             <div class="text--meta">
                 <small>{{ observation.label }}</small>
             </div>
@@ -8,7 +8,7 @@
         </div>
     </transition-box-resize>
     <div class="margin__top--small text--centre">
-        <button class="button button--ghost text--meta" @click="toggleDetailedView">{{ detailedViewLabel }} Detail</button>
+        <icon-button :icon="detailedViewIcon" @click="toggleDetailedView"></icon-button>
     </div>
 </template>
 
@@ -39,7 +39,7 @@ export default defineComponent({
     setup() {
         const showDetailedView = ref(false);
 
-        const detailedViewLabel = computed(() => showDetailedView.value ? 'Less' : 'More');
+        const detailedViewIcon = computed(() => showDetailedView.value ? 'arrow-up-line' : 'arrow-down-line');
 
         function toggleDetailedView() {
             showDetailedView.value = !showDetailedView.value;
@@ -99,7 +99,7 @@ export default defineComponent({
 
         return {
             observations,
-            detailedViewLabel,
+            detailedViewIcon,
             toggleDetailedView
         };
     }
@@ -109,10 +109,8 @@ export default defineComponent({
 
 <style lang="scss">
 
-    .forecast-today {
-        display: grid;
-        grid-template-columns: repeat(3, auto);
-        gap: var(--spacing__small);
+    .forecast-today__observation {
+        text-align: center;
     }
 
 </style>

@@ -4,33 +4,39 @@ import typeIsFunction from '../type/is-function';
 import typeIsNil from '../type/is-nil';
 import typeIsPlainObject from '../type/is-plain-object';
 
-type Transformer = <T>(value: any, key?: string, input?: T) => any;
+type Transformer = <T>(value: any, key?: PropertyKey, input?: T) => any;
+type SchemaValue = any | any[] | Transformer | Object;
 
 interface Schema {
     [key: string]: Transformer | Schema | Schema[]
 }
 
-export default function transform<T, U = any>(input: T, schema: Schema, baseTransformer: Transformer = functionIdentity): U {
+function getTransformer(schemaValue: SchemaValue, baseTransformer: Transformer): Transformer {
+    switch (true) {
+        case typeIsFunction(schemaValue):
+            return schemaValue;
+        case typeIsArray(schemaValue):
+            return value => transformArray(value, schemaValue, baseTransformer);
+        case typeIsPlainObject(schemaValue):
+            return value => transformObject(value, schemaValue, baseTransformer);
+        default:
+            return baseTransformer;
+    }
+}
 
+function transformArray(input: any[], schemaValue: any[], baseTransformer: Transformer): any[] {
+    const transformer = getTransformer(schemaValue[0], baseTransformer);
+
+    return input.map(transformer);
+}
+
+function transformObject<T, U = any>(input: T, schema: Schema, baseTransformer: Transformer): U {
     const output: U = {};
 
     for (const key in input) {
         const schemaValue = schema[key];
-        let value = input[key];
-
-        switch (true) {
-            case typeIsFunction(schemaValue):
-                value = (schemaValue as Transformer)(value, key, input);
-                break;
-            case typeIsArray(schemaValue):
-                value = value.map(item => transform(item, schemaValue[0], baseTransformer));
-                break;
-            case typeIsPlainObject(schemaValue):
-                value = transform(value, schemaValue as Schema, baseTransformer);
-                break;
-            default:
-                value = baseTransformer(value, key, input)
-        }
+        const transformer = getTransformer(schemaValue, baseTransformer);
+        const value = transformer(input[key], key, input);
 
         if (!typeIsNil(value)) {
             output[key] = value;
@@ -38,4 +44,8 @@ export default function transform<T, U = any>(input: T, schema: Schema, baseTran
     }
 
     return output;
+}
+
+export default function transform<T, U = any>(input: T, schema: Schema, baseTransformer: Transformer = functionIdentity): U {
+    return transformObject(input, schema, baseTransformer);
 }

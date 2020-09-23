@@ -102,7 +102,7 @@ export default {
                 appShortName: 'Ocula',
                 appDescription: 'The open-source, progressive weather app',
                 developerName: 'Andrew Courtice',
-                display: 'standalone',
+                display: 'minimal-ui',
                 background: '#FFFFFF',
                 theme_color: '#FFFFFF',
                 appleStatusBarStyle: 'default',

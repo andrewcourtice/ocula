@@ -1,5 +1,6 @@
 import DATA from '../../constants/core/data';
 import SETTINGS from '../../constants/core/settings';
+import MIGRATIONS from '../../constants/core/migrations';
 import STORAGE_KEYS from '../../constants/core/storage-keys';
 
 import {
@@ -12,15 +13,25 @@ import type {
 } from '../../interfaces/storage';
 
 export function getSettings(): ISettings {
-    let settings = localStorage.getItem(STORAGE_KEYS.settings);
+    const storedSettings = localStorage.getItem(STORAGE_KEYS.settings);
 
-    if (!settings) {
+    if (!storedSettings) {
         return SETTINGS;
     }
 
-    settings = JSON.parse(settings);
+    let settings = JSON.parse(storedSettings) as ISettings;
 
-    return objectMerge(SETTINGS, settings);
+    settings = objectMerge(SETTINGS, settings);
+
+    if (settings.version < SETTINGS.version && settings.version in MIGRATIONS) {
+        try {
+            settings = MIGRATIONS[settings.version](settings);
+        } catch (error) {
+            console.warn('Failed to migrate settings');
+        }
+    }
+
+    return settings;
 }
 
 export function getData(): IStoredData {

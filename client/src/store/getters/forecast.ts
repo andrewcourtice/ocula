@@ -39,7 +39,7 @@ export default getter<Formatted<IMappedForecast>>(state => {
         ...other
     } = objectTransform<IForecast, Formatted<IMappedForecast>>(forecast, format, defaultFormatter);
 
-    const today = daily[0];
+    const today = daily.shift();
     
     return {
         ...other,
