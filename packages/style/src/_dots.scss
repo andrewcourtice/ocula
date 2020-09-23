@@ -1,0 +1,13 @@
+.dot {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    vertical-align: middle;
+    background-color: var(--border__colour);
+}
+
+.dot--large {
+    width: 1em;
+    height: 1em;    
+}

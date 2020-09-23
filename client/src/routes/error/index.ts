@@ -1,19 +1,21 @@
+import ROUTES from '../../constants/core/routes';
+
 import Index from './index.vue';
 import NotFound from './not-found.vue';
 
+import type {
+    RouteRecordRaw
+} from '@ocula/router';
+
 export default [
     {
-        path: '/error',
+        path: '',
+        name: ROUTES.error.index,
         component: Index,
-        children: [
-            {
-                path: 'not-found',
-                component: NotFound
-            }
-        ]
     },
     {
-        path: '*',
-        redirect: '/error/not-found'
+        path: 'not-found',
+        name: ROUTES.error.notFound,
+        component: NotFound,
     }
-]
+] as RouteRecordRaw[];

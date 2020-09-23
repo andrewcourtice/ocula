@@ -1,33 +1,58 @@
-import EVENTS from '../constants/events';
-import STORAGE_KEYS from '../constants/storage-keys';
-import MUTATIONS from '../state/mutations';
-
-import eventEmitter from '@ocula/event-emitter';
-
 import {
-    Workbox
+    Workbox,
+    messageSW
 } from 'workbox-window';
 
-export default async function initialiseWorker(store) {
-    if (!navigator.serviceWorker) {
+import {
+    clearData
+} from '../store/helpers/storage';
+
+import {
+    componentsController
+} from '@ocula/components';
+
+import {
+    envIsDevelopment
+} from '@ocula/utilities';
+
+import type {
+    WorkboxLifecycleWaitingEvent
+} from 'workbox-window/utils/WorkboxEvent';
+
+export default async function initialiseWorker() {
+    if (envIsDevelopment || !navigator.serviceWorker) {
         return;
     }
 
-    window.addEventListener('load', () => {
-        const workbox = new Workbox('/service-worker.js');
+    const workbox = new Workbox('/service-worker.js');
 
-        workbox.addEventListener('installed', event => {
-            if (!event.isUpdate) {
-                return;
+    let registration: ServiceWorkerRegistration;
+
+    async function handleUpdate(event: WorkboxLifecycleWaitingEvent) {
+        try {
+            await componentsController.confirm({
+                message: 'An update to Ocula has been installed. Would you like to reload now and complete the update?',
+                confirmLabel: 'Yes, update',
+                cancelLabel: 'Later'
+            });
+
+            workbox.addEventListener('controlling', () => {
+                clearData();
+                window.location.reload();
+            });
+    
+            if (registration && registration.waiting) {
+                messageSW(registration.waiting, {  
+                    type: 'SKIP_WAITING'
+                });
             }
-            
-            // Clear any saved data
-            localStorage.removeItem(STORAGE_KEYS.data);
+        } catch {
+            // do nothing
+        }
+    }
 
-            store.commit(MUTATIONS.setUpdateReady);
-            eventEmitter.emit(EVENTS.application.updateReady);
-        });
+    workbox.addEventListener('waiting', handleUpdate);
+    workbox.addEventListener('externalwaiting', handleUpdate);
 
-        workbox.register();
-    });
+    registration = await workbox.register();
 }

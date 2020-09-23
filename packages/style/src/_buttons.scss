@@ -8,7 +8,7 @@ button,
     border-radius: var(--border__radius);
     background-color: #EEEEEE;
     cursor: pointer;
-    transition: background var(--transition__timing) var(--transition__easing-quartic-out);
+    transition: background var(--transition__timing) var(--transition__easing--default);
 
     &:hover {
         background-color: darken(#EEEEEE, 10%);
@@ -16,7 +16,7 @@ button,
 }
 
 .button--primary {
-    color: var(--foreground__colour);
+    color: var(--font__colour--compliment);
     background-color: var(--colour__primary);
 
     &:hover {
@@ -24,11 +24,15 @@ button,
     }
 }
 
-.button--secondary {
-    color: var(--foreground__colour);
-    background-color: var(--colour__secondary);
+.button--ghost {
+    font-weight: var(--font__weight);
+    background: none;
 
     &:hover {
-        background-color: var(--colour__secondary);
+        background: none;
+    }
+
+    &:focus {
+        outline: none;
     }
 }

@@ -5,8 +5,8 @@
     "author": "Andrew Courtice",
     "license": "MIT",
     "dependencies": {
-        "@vercel/node": "^1.7.3",
-        "lodash": "^4.17.19",
-        "node-fetch": "^2.6.0"
+        "@vercel/node": "^1.8.2",
+        "lodash": "^4.17.20",
+        "node-fetch": "^2.6.1"
     }
 }

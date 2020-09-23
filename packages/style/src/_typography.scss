@@ -14,15 +14,23 @@ a,
 }
 
 a {
-    color: var(--link__colour);
-
-    &:active {
-        color: var(--link__colour--hover);
+    color: var(--colour__primary);
+    
+    &:hover {
+        color: var(--colour__primary--dark);
     }
 }
 
 .link {
     color: inherit;
+}
+
+.link--inherit {
+    color: inherit;
+
+    &:hover {
+        color: inherit;
+    }
 }
 
 .text--meta {
@@ -59,10 +67,17 @@ small,
     text-align: right;
 }
 
-.text--truncate {
+.text--tight {
+    line-height: 1;
+}
+
+.text--no-wrap {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.text--truncate {
+    @include text-truncate;
 }
 
 @media (hover: hover) {
@@ -70,7 +85,7 @@ small,
     a {
 
         &:hover {
-            color: var(--link__colour--hover);
+            color: var(--colour__primary--dark);
         }
     }
 

@@ -13,9 +13,10 @@
         "packages/*"
     ],
     "scripts": {
+        "dev": "cd client && yarn start --port $PORT",
         "build": "cd client && yarn build"
     },
     "devDependencies": {
-        "typescript": "^3.9.7"
+        "typescript": "^4.0.2"
     }
 }

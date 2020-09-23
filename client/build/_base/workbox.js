@@ -1,7 +1,7 @@
 export default {
     swDest: 'service-worker.js',
     clientsClaim: true,
-    skipWaiting: true,
+    //skipWaiting: true,
     navigateFallback: '/index.html',
     runtimeCaching: [
         {

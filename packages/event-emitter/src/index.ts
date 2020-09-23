@@ -1,4 +1,4 @@
-interface IListener {
+export interface IListener {
     dispose(): void
 }
 

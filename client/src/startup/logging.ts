@@ -1,8 +1,11 @@
-import Vue from 'vue';
+import {
+    envIsProduction
+} from '@ocula/utilities';
 
 import {
     init
 } from '@sentry/browser';
+
 
 // import {
 //     Vue as SentryVue
@@ -10,7 +13,7 @@ import {
 
 export default function initialiseLogging() {
     init({
-        enabled: true,
+        enabled: envIsProduction,
         dsn: process.env.SENTRY_DSN,
         // integrations: [
         //     new SentryVue({

@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://app.ocula.io">
-        <img src="https://github.com/andrewcourtice/ocula/raw/master/client/src/assets/images/ocula-192.png" alt="Ocula"/>
+        <img src="https://github.com/andrewcourtice/ocula/raw/dev/client/src/assets/images/logo/logo-192.svg" alt="Ocula"/>
     </a>
 </p>
 

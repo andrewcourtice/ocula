@@ -1,25 +1,27 @@
 import './vendor';
 
 import initialiseComponents from './components';
-import initialiseState from './state';
 import initialiseRouter from './router';
 import initialiseApplication from './application';
 import initialiseLogging from './logging';
 import initialiseWorker from './worker';
 
-export default function start() {
-    initialiseComponents();
-    
-    const store = initialiseState();
-    const router = initialiseRouter();
-    const application = initialiseApplication(router, store);
+export default async function start() {
+    const application = initialiseApplication();
 
+    const router = initialiseRouter(application);
+    
+    initialiseComponents(application);
+    
+    initialiseWorker();
     initialiseLogging();
-    initialiseWorker(store);
+
+    await router.isReady();
+
+    application.mount('body');
 
     return {
         router,
-        store,
         application
     };
 }

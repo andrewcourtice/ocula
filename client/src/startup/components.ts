@@ -1,6 +1,9 @@
-import Vue from 'vue';
 import Components from '@ocula/components';
 
-export default function initialiseComponents() {
-    return Vue.use(Components);
+import type {
+    App
+} from 'vue';
+
+export default function initialiseComponents(application: App) {
+    return application.use(Components);
 }

@@ -1,7 +1,10 @@
-export interface ILocation {
-    id: string,
-    shortName: string,
-    longName: string,
-    latitude: number,
-    longitude: number
+export interface ICoordinate {
+    latitude: number;
+    longitude: number;
+}
+
+export interface ILocation extends ICoordinate {
+    id: string;
+    shortName: string;
+    longName: string;
 }

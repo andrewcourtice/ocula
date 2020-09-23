@@ -1,0 +1,5 @@
+@import "./_light";
+
+.theme--light {
+    @include light;
+}

@@ -3,7 +3,6 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
-import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import {
     CleanWebpackPlugin
@@ -13,7 +12,7 @@ import {
     VueLoaderPlugin 
 } from 'vue-loader';
 
-import workboxConfig from './workbox';
+
 import webpack from 'webpack';
 
 export default {
@@ -36,11 +35,11 @@ export default {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.vue'],
 
-        alias: {
+        alias: {           
             'components': path.resolve(__dirname, '../src/components'),
             'constants': path.resolve(__dirname, '../src/constants'),
             'controllers': path.resolve(__dirname, '../src/controllers'),
-            'state': path.resolve(__dirname, '../src/state'),
+            'store': path.resolve(__dirname, '../src/store'),
         },
 
         symlinks: false
@@ -78,11 +77,14 @@ export default {
     },
 
     plugins: [
-        new webpack.EnvironmentPlugin([
-            'MAPBOX_API_KEY',
-            'GA_TRACKING_ID',
-            'SENTRY_DSN'
-        ]),
+        new webpack.EnvironmentPlugin({
+            'MAPBOX_API_KEY': '',
+            'OWM_API_KEY': '',
+            'GA_TRACKING_ID': '',
+            'SENTRY_DSN': '',
+            '__VUE_OPTIONS_API__': false, 
+            '__VUE_PROD_DEVTOOLS__': false 
+        }),
         
         new CleanWebpackPlugin(),
     
@@ -94,25 +96,32 @@ export default {
         }),
     
         new FaviconsWebpackPlugin({
-            logo: './src/assets/images/ocula-512.svg',
+            logo: './src/assets/images/logo/logo-512.svg',
             favicons: {
                 appName: 'Ocula',
                 appShortName: 'Ocula',
                 appDescription: 'The open-source, progressive weather app',
                 developerName: 'Andrew Courtice',
-                display: 'standalone',
+                display: 'minimal-ui',
                 background: '#FFFFFF',
                 theme_color: '#FFFFFF',
                 appleStatusBarStyle: 'default',
                 start_url: '/?source=pwa',
-                scope: '/'
+                scope: '/',
+                icons: {
+                    android: true,
+                    appleIcon: true,
+                    appleStartup: true,
+                    favicons: true,
+                    firefox: true,
+                    windows: true
+                }
             }
         }),
 
         new CopyWebpackPlugin([
             './src/static'
-        ]),
-    
-        new WorkboxPlugin.GenerateSW(workboxConfig)
+        ])
+
     ]
 };

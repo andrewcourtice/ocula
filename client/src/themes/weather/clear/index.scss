@@ -1,0 +1,11 @@
+.theme--weather-clear {
+    --font__colour--weather: #FFFFFF;
+    --background__colour--weather: #5D9BE5;
+}
+
+.phase--night {
+    
+    & .theme--weather-clear {
+        --background__colour--weather: #44296A;
+    }
+}
