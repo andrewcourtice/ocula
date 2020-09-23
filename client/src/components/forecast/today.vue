@@ -8,7 +8,7 @@
         </div>
     </transition-box-resize>
     <div class="margin__top--small text--centre">
-        <icon-button :icon="detailedViewIcon" @click="toggleDetailedView"></icon-button>
+        <icon-button :icon="detailedViewButton.icon" v-tooltip="detailedViewButton.tooltip" @click="toggleDetailedView"></icon-button>
     </div>
 </template>
 
@@ -39,7 +39,10 @@ export default defineComponent({
     setup() {
         const showDetailedView = ref(false);
 
-        const detailedViewIcon = computed(() => showDetailedView.value ? 'arrow-up-line' : 'arrow-down-line');
+        const detailedViewButton = computed(() => ({
+            icon: showDetailedView.value ? 'arrow-up-s-line' : 'arrow-down-s-line',
+            tooltip: `Show ${showDetailedView.value ? 'less' : 'more'} detail`
+        }));
 
         function toggleDetailedView() {
             showDetailedView.value = !showDetailedView.value;
@@ -99,7 +102,7 @@ export default defineComponent({
 
         return {
             observations,
-            detailedViewIcon,
+            detailedViewButton,
             toggleDetailedView
         };
     }
