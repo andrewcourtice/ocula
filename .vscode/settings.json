@@ -8,5 +8,6 @@
         "**/node_modules": true,
         "**/*.log": true
     },
-    "npm.packageManager": "yarn"
+    "npm.packageManager": "yarn",
+    "vetur.experimental.templateInterpolationService": true
 }

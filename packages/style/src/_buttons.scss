@@ -10,8 +10,9 @@ button,
     cursor: pointer;
     transition: background var(--transition__timing) var(--transition__easing--default);
 
-    &:hover {
-        background-color: darken(#EEEEEE, 10%);
+    &:hover,
+    &:focus {
+        background-color: darken(#EEEEEE, 20%);
     }
 }
 
@@ -19,8 +20,9 @@ button,
     color: var(--font__colour--compliment);
     background-color: var(--colour__primary);
 
-    &:hover {
-        background-color: var(--colour__primary);
+    &:hover,
+    &:focus {
+        background-color: var(--colour__primary--dark);
     }
 }
 
@@ -28,7 +30,8 @@ button,
     font-weight: var(--font__weight);
     background: none;
 
-    &:hover {
+    &:hover,
+    &:focus {
         background: none;
     }
 

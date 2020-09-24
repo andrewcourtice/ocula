@@ -14,7 +14,7 @@
                 <strong>Licence</strong>
                 <div>{{ manifest.license }}</div>
                 <strong>Source</strong>
-                <a :href="repository" target="_blank">Github</a>
+                <a :href="manifest.repository" target="_blank">Github</a>
             </div>
             <div class="settings-about__details-grid margin__top--large">
                 <strong>Forecast Data</strong>
@@ -26,7 +26,7 @@
                 <strong>Logo Design</strong>
                 <a href="https://github.com/ethanroxburgh" target="_blank">Ethan Roxburgh</a>
                 <strong>Icons</strong>
-                <a href="https://feathericons.com/" target="_blank">Feather Icons</a>
+                <a href="https://remixicon.com/" target="_blank">Remix Icons</a>
             </div>
             <div class="margin__top--large text--centre">
                 <small class="text--meta">Psalm 147:8</small>

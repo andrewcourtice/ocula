@@ -56,38 +56,47 @@ export default defineComponent({
 
             const output = [
                 {
+                    icon: 'temp-cold-line',
                     label: 'Temp',
                     value: `${numberRound(today.temp.min.raw)} / ${numberRound(today.temp.max.raw)}`
                 },
                 {
+                    icon: 'contrast-drop-2-line',
                     label: 'Humidity',
                     value: current.humidity.formatted
                 },
                 {
+                    icon: 'rainy-line',
                     label: 'Precipitation',
-                    value: today.pop.formatted
+                    value: `${today.pop.formatted} chance`
                 },
                 {
+                    icon: 'sun-line',
                     label: 'Sunrise',
                     value: format.value.time(today.sunrise.formatted as any)
                 },
                 {
+                    icon: 'moon-line',
                     label: 'Sunset',
                     value: format.value.time(today.sunset.formatted as any)
                 },
                 {
+                    icon: 'windy-line',
                     label: 'Wind',
                     value: `${current.windSpeed.formatted} ${current.windDeg.formatted}`
                 },
                 {
+                    icon: 'swap-line',
                     label: 'Pressure',
                     value: current.pressure.formatted
                 },
                 {
+                    icon: 'cloudy-line',
                     label: 'Cloud Cov.',
                     value: current.clouds.formatted
                 },
                 {
+                    icon: 'eye-line',
                     label: 'Visibility',
                     value: current.visibility.formatted
                 }
