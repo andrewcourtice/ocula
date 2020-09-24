@@ -31,6 +31,7 @@
                                     <observation class="forecast-daily__day-observation" label="Wind Speed" icon="windy-line">{{ day.windSpeed.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Wind Direction" icon="compass-3-line">{{ day.windDeg.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Humidity" icon="contrast-drop-2-line">{{ day.humidity.formatted }}</observation>
+                                    <observation class="forecast-daily__day-observation" label="Pressure" icon="swap-line">{{ day.pressure.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="Cloud Coverage" icon="cloudy-line">{{ day.clouds.formatted }}</observation>
                                     <observation class="forecast-daily__day-observation" label="UV Index" icon="sun-line">
                                         <div layout="row center-left">
@@ -101,7 +102,9 @@ export default defineComponent({
         function getUvIndexDotStyle(uvIndex: number) {
             const {
                 colour
-            } = UV_INDEX.reverse().find(({ start }) => uvIndex >= start);
+            } = UV_INDEX.slice()
+                .reverse()
+                .find(({ start }) => uvIndex >= start);
 
             return {
                 backgroundColor: colour

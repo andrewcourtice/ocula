@@ -30,6 +30,19 @@ import type {
     Layout
 } from 'mapbox-gl';
 
+import {
+    functionDebounce
+} from '@ocula/utilities';
+
+declare class ResizeObserver {
+
+    constructor(callback: Function);
+
+    public observe(element: Element);
+    public unobserve(element: Element);
+    public disconnect(): void;
+}
+
 const STYLE = {
     light: 'light-v10',
     dark: 'dark-v10',
@@ -182,6 +195,13 @@ export default defineComponent({
             });
         }
 
+        const resizeMap = functionDebounce(resize, 300, {
+            leading: true,
+            trailing: true
+        });
+
+        const resizeObserver = new ResizeObserver(resizeMap);
+
         onMounted(async () => {
             const mapboxgl = await loadMapbox();
 
@@ -201,9 +221,13 @@ export default defineComponent({
             });
 
             handleListeners(map.on);
+            resizeObserver.observe(element.value);
         });
 
-        onBeforeUnmount(() => handleListeners(map.off));
+        onBeforeUnmount(() => {
+            handleListeners(map.off);
+            resizeObserver.disconnect();
+        });
 
         watch([
             () => props.latitude,

@@ -123,99 +123,102 @@ export default class LineChart extends Chart {
         this.markerGroup.selectAll('*').remove();
     }
 
-    private async enter() {
+    private async drawMarkers() {
         const {
-            type,
-            classes,
-            colours,
-            markers,
-            labels
-        } = this.options;
-
-        const curve = CURVE[type] || CURVE.line;
-
-        const getLabel = valueGetAccessor(labels.content);
-
-        this.lineGroup.append('path')
-            .classed(classes.area, true)
-            .attr('fill', colours.line)
-            .attr('fill-opacity', 0.5)
-            .attr('d', areaGenerator.curve(curve));
-
-        this.lineGroup.append('path')
-            .classed(classes.line, true)
-            .attr('stroke-width', 2)
-            .attr('stroke', colours.line)
-            .attr('fill', 'none')
-            .attr('d', lineGenerator.curve(curve));
-
-        const groups = this.markerGroup.selectAll('g')
-            .data(data => data, item => item.xValue)
-            .join('g')
-            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
-
-        groups.append('circle')
-            .attr('r', 3)
-            .attr('fill', colours.marker);
-
-        groups.append('text')
-            .text((data, index) => getLabel(data.yValue, index))
-            .attr('text-anchor', 'middle')
-            .attr('dy', data => Math.sign(data.yValue) * -16)
-            .style('fill', 'var(--font__colour)')
-            .style('font-size', 'var(--font__size--small)');
-    }
-
-    private async update() {
-        const {
-            type,
-            classes,
             colours,
             labels,
             animation
         } = this.options;
 
-        const curve = CURVE[type] || CURVE.line;
         const getLabel = valueGetAccessor(labels.content);
 
-        const line = this.lineGroup.select(`.${classes.line}`);
-        const area = this.lineGroup.select(`.${classes.area}`);
+        const updates = this.markerGroup.selectAll('g')
+            .data(data => data, item => item.xValue);
 
-        const markers = this.markerGroup.selectAll('g')
-            .data(data => data, data => data.xValue);
+        const entries = updates.enter()
+            .append('g')
+            .attr('transform', data => `translate(${data.x}, ${data.y1})`);
 
-        markers.exit().remove();
+        updates.exit().remove();
 
-        markers.select('circle')
+        entries.append('text')
+            .attr('text-anchor', 'middle')
+            .style('fill', 'var(--font__colour)')
+            .style('font-size', 'var(--font__size--small)');
+
+        entries.append('circle')
+            .attr('r', 3);
+
+        const merges = updates.merge(entries);
+
+        merges.select('circle')
             .attr('fill', colours.marker);
 
-        markers.select('text')
+        merges.select('text')
             .text((data, index) => getLabel(data.yValue, index))
             .attr('dy', data => Math.sign(data.yValue) * -16);
 
-        markers.transition()
+        return updates.transition()
             .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('transform', data => `translate(${data.x}, ${data.y1})`);
+    }
 
-        const areaTransition = area.transition()
+    private async drawArea() {
+        const {
+            type,
+            classes,
+            colours,
+            animation
+        } = this.options;
+
+        const curve = CURVE[type] || CURVE.line;
+
+        let area = this.lineGroup.select(`.${classes.area}`);
+
+        if (area.empty()) {
+            area = this.lineGroup.append('path')
+                .classed(classes.area, true)
+                .attr('fill', colours.line)
+                .attr('fill-opacity', 0.5)
+                .attr('d', areaGenerator.curve(curve));
+        }
+
+        return area.transition()
             .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('d', areaGenerator.curve(curve))
             .attr('fill', colours.line)
             .end();
-            
-        const lineTransition = line.transition()
+    }
+
+    private async drawLine() {
+        const {
+            type,
+            classes,
+            colours,
+            animation
+        } = this.options;
+
+        const curve = CURVE[type] || CURVE.line;
+
+        let line = this.lineGroup.select(`.${classes.line}`);
+
+        if (line.empty()) {
+            line = this.lineGroup.append('path')
+                .classed(classes.line, true)
+                .attr('stroke-width', 2)
+                .attr('stroke', colours.line)
+                .attr('fill', 'none')
+                .attr('d', lineGenerator.curve(curve));
+        }
+
+        return line.transition()
             .duration(animation.duration)
             .ease(d3.easePolyOut.exponent(4))
             .attr('d', lineGenerator.curve(curve))
             .attr('stroke', colours.line)
             .end();
-
-        return Promise.all([
-            lineTransition,
-            areaTransition
-        ]);
     }
 
     private drawAxes() {
@@ -256,12 +259,11 @@ export default class LineChart extends Chart {
     }
 
     private async draw() {
-        //this.drawAxes();
-
-        const path = this.lineGroup.select('path');
-        const action = path.empty() ? this.enter : this.update;
-
-        return action.call(this);
+        return Promise.all([
+            this.drawArea(),
+            this.drawLine(),
+            this.drawMarkers()
+        ]);
     }
 
     private getAxis(axisType, scale, options) {

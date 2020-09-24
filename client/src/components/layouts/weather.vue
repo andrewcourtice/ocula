@@ -6,12 +6,13 @@
                 <img :src="logo" alt="Ocula">
                 <h3>Welcome to Ocula</h3>
                 <p>
-                    Get started by searching for a location
-                    or using your current GPS location.
+                    Get started by setting a location.
+                </p>
+                <p>
+                    You can set a location by either searching for a place you know or using your current GPS position.
                 </p>
                 <div layout="rows center-center">
-                    <button class="button button--primary margin__all--x-small" @click="setLocation">Search for a location</button>
-                    <button class="button button--primary margin__all--x-small" @click="setCurrentLocation">Use my location</button>
+                    <button class="button button--primary margin__all--x-small" @click="setLocation">Set my location</button>
                 </div>
             </div>
         </container>
