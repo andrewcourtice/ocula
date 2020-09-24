@@ -12,7 +12,7 @@
                     You can set a location by either searching for a place you know or using your current GPS position.
                 </p>
                 <div layout="rows center-center">
-                    <button class="button button--primary margin__all--x-small" @click="setLocation">Set my location</button>
+                    <button class="button button--primary margin__all--x-small" @click="setLocation">Set location</button>
                 </div>
             </div>
         </container>
