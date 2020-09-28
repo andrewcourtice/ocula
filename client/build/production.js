@@ -29,6 +29,8 @@ export default merge(base, {
         chunkFilename: '[name]-[contenthash].js'
     },
 
+    devtool: 'source-map',
+
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
