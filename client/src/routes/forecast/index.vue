@@ -15,9 +15,6 @@
                     :title="section.label">
                     <component :is="section.component"/>
                 </block>
-                <block class="forecast-index__block" title="Tides">
-                    <forecast-tides></forecast-tides>
-                </block>
             </container>
         </div>
     </div>
@@ -110,7 +107,8 @@ export default defineComponent({
         }
     }
 
-    .forecast-index__block--hourly-forecast {
+    .forecast-index__block--hourly-forecast,
+    .forecast-index__block--tides {
 
         & .block__body {
             padding-left: 0;

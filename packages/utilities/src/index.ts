@@ -1,6 +1,7 @@
 export { default as arrayJoinBy } from './array/join-by';
 export { default as arrayOrderBy } from './array/order-by';
 export { default as arraySwapBy } from './array/swap-by';
+export { default as arrayUnionWith } from './array/union-with';
 export { default as arrayUniqueBy } from './array/unique-by';
 
 export { default as dateFormat } from './date/format';
@@ -27,6 +28,7 @@ export { default as numberRound } from './number/round';
 
 export { default as objectCloneLazy } from './object/clone-lazy';
 export { default as objectMerge } from './object/merge';
+export { default as objectMergeWith } from './object/merge-with';
 export { default as objectTransform } from './object/transform';
 
 export { default as scaleContinuous } from './scale/continuous';

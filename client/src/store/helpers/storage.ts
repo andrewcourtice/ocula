@@ -4,7 +4,7 @@ import MIGRATIONS from '../../constants/core/migrations';
 import STORAGE_KEYS from '../../constants/core/storage-keys';
 
 import {
-    objectMerge
+    objectMerge, objectMergeWith, typeIsArray
 } from '@ocula/utilities';
 
 import type {
@@ -21,11 +21,18 @@ export function getSettings(): ISettings {
 
     let settings = JSON.parse(storedSettings) as ISettings;
 
-    settings = objectMerge(SETTINGS, settings);
+    settings = objectMergeWith(SETTINGS, settings, (obj, src) => {
+        if (typeIsArray(obj)) {
+            return src;
+        }
+    });
 
     if (settings.version < SETTINGS.version && settings.version in MIGRATIONS) {
         try {
-            settings = MIGRATIONS[settings.version](settings);
+            settings = MIGRATIONS[settings.version.toString()](settings);
+            settings.version = SETTINGS.version;
+
+            saveSettings(settings);
         } catch (error) {
             console.warn('Failed to migrate settings');
         }

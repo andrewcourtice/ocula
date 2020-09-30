@@ -4,6 +4,7 @@ import DailyForecast from '../../components/forecast/daily-forecast.vue';
 import HourlyForecast from '../../components/forecast/hourly-forecast.vue';
 import Today from '../../components/forecast/today.vue';
 import UvIndex from '../../components/forecast/uv-index.vue';
+import Tides from '../../components/forecast/tides.vue';
 
 interface IForecastSection {
     label: string;
@@ -26,5 +27,9 @@ export default {
     [FORECAST_SECTION.uvIndex]: {
         label: 'UV Index',
         component: UvIndex
+    },
+    [FORECAST_SECTION.tides]: {
+        label: 'Tides',
+        component: Tides
     }
 } as Record<FORECAST_SECTION, IForecastSection>;

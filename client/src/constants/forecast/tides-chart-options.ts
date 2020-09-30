@@ -4,7 +4,8 @@ import {
 } from '@ocula/charts';
 
 import {
-    dateFromUnix
+    dateFromUnix,
+    numberRound
 } from '@ocula/utilities';
 
 import type {
@@ -31,7 +32,7 @@ export default {
         }
     },
     labels: {
-        content: (point, index) => index ? point.value.height.formatted : null
+        content: (point, index) => index ? numberRound(point.value.height.raw, 2) : null
     },
     colours: {
         line: '#47B1FA',

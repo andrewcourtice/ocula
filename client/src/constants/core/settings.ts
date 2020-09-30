@@ -7,7 +7,7 @@ import type {
 } from '../../interfaces/storage';
 
 export default {
-    version: 1,
+    version: 1.1,
     units: UNITS.metric,
     theme: 'default',
     location: null,
@@ -20,6 +20,10 @@ export default {
             },
             {
                 type: FORECAST_SECTION.dailyForecast,
+                visible: true
+            },
+            {
+                type: FORECAST_SECTION.tides,
                 visible: true
             },
             {
