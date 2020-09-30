@@ -38,6 +38,7 @@ I set out to create Ocula as a replacement for my favourite weather app - Pocket
 - Daily forecast for up to 8 days
 - Hourly forecast data for up to 24 hours
 - Trend charts for hourly temp, rainfall and wind
+- Ocean tide information with tide height trend chart
 - Interactive weather maps with 6 different map types (radar, precipitation, temp, cloud, wind, pressure)
 - Frame-by-frame playback for radar images to visualise incoming rain
 - Dark/Light Themes. Default theme changes based on current time of day
