@@ -5,11 +5,27 @@ import {
     stringUniqueId
 } from '@ocula/utilities';
 
-export default abstract class Chart {
+export interface IChartOptions {
+    padding?: {
+        top?: number;
+        bottom?: number;
+        left?: number;
+        right?: number;
+    },
+    classes?: {
+        svg?: string;
+        canvas?: string;
+    },
+    animation?: {
+        duration?: number;
+    }
+}
+
+export default abstract class Chart<T extends IChartOptions = IChartOptions> {
 
     protected id: string;
     protected element: Element;
-    protected options: any;
+    protected options: T;
     protected rendering: boolean;
 
     protected width: number;
@@ -35,7 +51,7 @@ export default abstract class Chart {
         this.canvas = this.svg.append('g');
     }
 
-    protected get defaultOptions() {
+    protected get defaultOptions(): IChartOptions {
         return {
             classes: {
                 svg: 'chart',
@@ -53,7 +69,7 @@ export default abstract class Chart {
         };
     }
 
-    protected bootstrap(options) {
+    protected bootstrap(options: T) {
         this.options = objectMerge(this.defaultOptions, options);
 
         const {

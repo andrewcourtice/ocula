@@ -1,4 +1,4 @@
-export enum SCALE {
+const enum SCALE {
     linear = 'linear',
     point = 'point',
     time = 'time'

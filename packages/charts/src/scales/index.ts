@@ -1,4 +1,4 @@
-import SCALE from '../constants/scale';
+import SCALE from '../enums/scale';
 
 import linear from './linear';
 import point from './point';

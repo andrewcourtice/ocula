@@ -15,6 +15,9 @@
                     :title="section.label">
                     <component :is="section.component"/>
                 </block>
+                <block class="forecast-index__block" title="Tides">
+                    <forecast-tides></forecast-tides>
+                </block>
             </container>
         </div>
     </div>
@@ -25,6 +28,7 @@ import FORECAST_SECTIONS from '../../constants/forecast/sections';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import ForecastSummary from '../../components/forecast/summary.vue';
+import ForecastTides from '../../components/forecast/tides.vue';
 
 import setThemeMeta from '../../helpers/set-theme-meta';
 
@@ -44,7 +48,8 @@ export default defineComponent({
 
     components: {
         WeatherActions,
-        ForecastSummary
+        ForecastSummary,
+        ForecastTides
     },
     
     setup() {

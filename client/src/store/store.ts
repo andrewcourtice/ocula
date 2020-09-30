@@ -1,9 +1,9 @@
 import createStore from '@ocula/state';
 
-import _state from './state/index';
+import _state from './state';
 
 export const {
     state,
     getter,
     mutate
-} = createStore(_state);
+} = createStore('ocula', _state);

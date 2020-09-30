@@ -5,6 +5,7 @@ import FORMATTERS, {
 } from './formatters';
 
 import {
+    objectMerge,
     objectTransform
 } from '@ocula/utilities';
 
@@ -27,22 +28,46 @@ function weatherTransform(value: IForecastWeather[]): Record<string, any> {
     }, defaultFormatter);
 }
 
+const BASE_FORMATS = {
+    current: {
+        dt: general.datetime,
+        sunrise: general.datetime,
+        sunset: general.datetime,
+        humidity: general.percentage,
+        clouds: general.percentage,
+        windDeg: direction.bearing,
+        weather: weatherTransform
+    },
+    tides: {
+        heights: [
+            {
+                dt: general.datetime,
+                height: distance.metres
+            }
+        ],
+        extremes: [
+            {
+                dt: general.datetime,
+                height: distance.metres
+            }
+        ]
+    },
+    radar: {
+        timestamps: [
+            general.datetime
+        ]
+    }
+};
+
 export default {
-    [UNITS.metric]: {
+    [UNITS.metric]: objectMerge(BASE_FORMATS, {
         current: {
-            dt: general.datetime,
-            sunrise: general.datetime,
-            sunset: general.datetime,
             temp: temperature.celcius,
             feelsLike: temperature.celcius,
             pressure: pressure.hectopascals,
-            humidity: general.percentage,
             dewPoint: temperature.celcius,
-            clouds: general.percentage,
             visibility: distance.metres,
             windSpeed: speed.metresPerSecond,
-            windDeg: direction.bearing,
-            weather: weatherTransform
         },
         daily: [
             {
@@ -89,28 +114,16 @@ export default {
                 pop: general.fractional,
                 weather: weatherTransform,
             }
-        ],
-        radar: {
-            timestamps: [
-                general.datetime
-            ]
-        }
-    },
-    [UNITS.imperial]: {
+        ]
+    }),
+    [UNITS.imperial]: objectMerge(BASE_FORMATS, {
         current: {
-            dt: general.datetime,
-            sunrise: general.datetime,
-            sunset: general.datetime,
             temp: temperature.fahrenheit,
             feelsLike: temperature.fahrenheit,
             pressure: pressure.millibars,
-            humidity: general.percentage,
             dewPoint: temperature.fahrenheit,
-            clouds: general.percentage,
             visibility: distance.miles,
             windSpeed: speed.milesPerHour,
-            windDeg: direction.bearing,
-            weather: weatherTransform
         },
         daily: [
             {
@@ -157,11 +170,6 @@ export default {
                 pop: general.fractional,
                 weather: weatherTransform
             }
-        ],
-        radar: {
-            timestamps: [
-                general.datetime
-            ]
-        }
-    }
+        ]
+    })
 }

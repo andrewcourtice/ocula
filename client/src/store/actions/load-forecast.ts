@@ -14,5 +14,5 @@ export default async function loadForecast(latitude: number, longitude: number) 
 
     const forecast = await getForecast(latitude, longitude, units);
 
-    mutate(state => state.forecast = forecast);
+    mutate('set-forecast', state => state.forecast = forecast);
 }

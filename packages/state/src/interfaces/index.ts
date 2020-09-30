@@ -8,5 +8,6 @@ export type Mutation<T> = (state: T) => void;
 export interface IStore<T> {
     state: T;
     getter<U>(getter: Getter<T, U>): ComputedRef<U>;
-    mutate(mutation: Mutation<T>, name?: string): void;
+    mutate(name:string, mutation: Mutation<T>): void;
+    destroy(): void;
 };
