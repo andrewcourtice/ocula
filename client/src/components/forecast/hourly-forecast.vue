@@ -14,39 +14,21 @@
                 </icon-button>
             </div>
         </div>
-        <div class="forecast-hourly__body-wrapper">
-            <div class="forecast-hourly__body" :style="bodyStyle">
-                <line-chart class="forecast-hourly__chart" :data="hours" :options="trend.chartOptions" />
-
-                <div class="forecast-hourly__now" layout="column center-left">
-                    <span class="forecast-hourly__now-label">Now</span>
-                </div>
-                <template v-for="hour in hours.slice(1, -1)" :key="hour.dt.raw">
-                    <div class="forecast-hourly__column text--no-wrap">
-                        <small>{{ getTime(hour) }}</small>
-                    </div>
-                    <template v-if="type === 'wind'">
-                        <div class="forecast-hourly__column">
-                            <icon name="arrow-up-line" :style="getWindIconStyle(hour)"/>
-                        </div>
-                        <div class="forecast-hourly__column">
-                            <small class="text--x-small">{{ hour.windDeg.formatted }}</small>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div class="forecast-hourly__column">
-                            <icon :name="getIcon(hour.weather.id.raw, hour.dt.raw)"/>
-                        </div>
-                        <div class="forecast-hourly__column">
-                            <small class="text--x-small">{{ hour.weather.description.formatted }}</small>
-                        </div>
-                    </template>
+        <trends :data="hours" :options="trend.chartOptions" :key-by="hour => hour.dt.raw" :secondary-rows="2">
+            <template #primary-column="column">
+                <small>{{ getTime(column.value) }}</small>
+            </template>
+            <template #secondary-column="column">
+                <template v-if="type === 'wind'">
+                    <icon name="arrow-up-line" :style="getWindIconStyle(column.value)" v-if="column.row === 1"/>
+                    <small class="text--x-small" v-else>{{ column.value.windDeg.formatted }}</small>
                 </template>
-                <div class="forecast-hourly__later" layout="column center-right">
-                    <span class="forecast-hourly__later-label">Later</span>
-                </div>
-            </div>
-        </div>
+                <template v-else>
+                    <icon :name="getIcon(column.value.weather.id.raw, column.value.dt.raw)" v-if="column.row === 1"/>
+                    <small class="text--x-small" v-else>{{ column.value.weather.description.formatted }}</small>
+                </template>
+            </template>
+        </trends>
     </div>
 </template>
 
@@ -54,16 +36,9 @@
 import TREND from '../../enums/forecast/trend';
 import TRENDS from '../../constants/forecast/trends';
 
-import LineChart from '../charts/line.vue';
+import Trends from '../charts/trends.vue';
 
 import getIcon from '../../helpers/get-icon';
-
-import {
-    dateFromUnix,
-    dateFormat,
-    objectMerge,
-    numberRound
-} from '@ocula/utilities';
 
 import {
     defineComponent,
@@ -77,10 +52,6 @@ import {
     unitOfMeasure
 } from '../../store';
 
-import {
-    LINE_TYPE
-} from '@ocula/charts';
-
 import type {
     Formatted,
     IMappedForecastHour
@@ -89,7 +60,7 @@ import type {
 export default defineComponent({
     
     components: {
-        LineChart
+        Trends
     },
 
     setup(props) {
@@ -120,14 +91,6 @@ export default defineComponent({
             };
         });
 
-        const bodyStyle = computed(() => ({
-            gridTemplateColumns: `2rem repeat(${hours.value.length - 2}, 4rem) 2rem`
-        }));
-
-        function getKey(hour: Formatted<IMappedForecastHour>, key: string): string {
-            return `${key}-${hour.dt.raw}`;
-        }
-
         function getTime(hour: Formatted<IMappedForecastHour>): string {
             return format.value.time(hour.dt.formatted as any, 'h a');
         }
@@ -152,8 +115,6 @@ export default defineComponent({
             hours,
             trends,
             trend,
-            bodyStyle,
-            getKey,
             getTime,
             getIcon,
             getWindIconStyle,
@@ -174,52 +135,6 @@ export default defineComponent({
 
     .forecast-hourly__options {
         width: auto;
-    }
-
-    .forecast-hourly__body-wrapper {
-        overflow: hidden;
-        overflow-x: auto;
-    }
-
-    .forecast-hourly__body {
-        display: inline-grid;
-        padding-bottom: var(--spacing__small);
-        grid-template-rows: repeat(4, auto);
-        grid-auto-flow: column;
-        row-gap: var(--spacing__x-small);
-        width: auto;
-    }
-
-    .forecast-hourly__chart {
-        grid-column: 1 / -1;
-        height: 196px;
-    }
-
-    .forecast-hourly__column {
-        @include text-truncate;
-        padding: 0 var(--spacing__xx-small);
-        text-align: center;
-    }
-
-    .forecast-hourly__now,
-    .forecast-hourly__later {
-        grid-row: 2 / -1;      
-    }
-
-    .forecast-hourly__now-label,
-    .forecast-hourly__later-label {
-        color: var(--font__colour--meta);
-        font-size: var(--font__size--x-small);
-        text-transform: uppercase;
-        transform-origin: center;
-    }
-
-    .forecast-hourly__now-label {
-        transform: rotate(90deg);
-    }
-    
-    .forecast-hourly__later-label {
-        transform: rotate(-90deg);
     }
 
 </style>

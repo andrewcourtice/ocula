@@ -16,15 +16,18 @@ export default async function (request: NowRequest, response: NowResponse) {
 
     units = units || 'metric';
 
-    const apiKey = process.env.OWM_API_KEY;
+    const owmApiKey = process.env.OWM_API_KEY;
+    const worldtidesApiKey = process.env.WORLDTIDES_API_KEY;
 
     const responses = await Promise.all([
-        fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${latitude}&lon=${longitude}&units=${units}&exclude=minutely`),
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${owmApiKey}&lat=${latitude}&lon=${longitude}&units=${units}&exclude=minutely`),
+        fetch(`https://www.worldtides.info/api/v2?heights&extremes&date=today&days=1&step=3600&lat=${latitude}&lon=${longitude}&key=${worldtidesApiKey}`),
         fetch('https://tilecache.rainviewer.com/api/maps.json')
     ]);
 
     let [
         forecast,
+        tides,
         timestamps
     ] = await Promise.all(responses.map(response => response.json()));
 
@@ -32,6 +35,7 @@ export default async function (request: NowRequest, response: NowResponse) {
 
     return response.json({
         ...forecast,
+        tides,
         radar: {
             timestamps
         }

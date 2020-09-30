@@ -1,7 +1,7 @@
 import LINE_TYPE from './enums/line-type';
 import MARKER_TYPE from './enums/marker-type';
 
-import SCALE from '../../constants/scale';
+import SCALE from '../../enums/scale';
 import CURVE from './constants/curve';
 
 import Chart from '../_base/chart';
@@ -16,13 +16,10 @@ import {
     valueGetAccessor
 } from '@ocula/utilities';
 
-interface ILinePoint {
-    xValue: number,
-    yValue: number,
-    x: number,
-    y0: number,
-    y1: number
-};
+import type {
+    ILineOptions,
+    ILinePoint
+} from './interfaces';
 
 const lineGenerator = d3.line<ILinePoint>()
     .defined(data => !!data.y1)
@@ -35,7 +32,7 @@ const areaGenerator = d3.area<ILinePoint>()
     .y0(data => data.y0)
     .y1(data => data.y1);
 
-export default class LineChart extends Chart {
+export default class LineChart extends Chart<ILineOptions> {
 
     private lineGroup: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
     private markerGroup: d3.Selection<SVGGElement, ILinePoint[], null, undefined>;
@@ -54,7 +51,7 @@ export default class LineChart extends Chart {
         this.yAxis = this.axisGroup.append('g');
     }
 
-    protected get defaultOptions() {
+    protected get defaultOptions(): ILineOptions {
         return {
             ...super.defaultOptions,
 
@@ -77,11 +74,11 @@ export default class LineChart extends Chart {
             },
             labels: {
                 visible: true,
-                content: value => value
+                content: value => value.yValue
             },
             padding: {
                 top: 32,
-                bottom: 0,
+                bottom: 32,
                 left: 0,
                 right: 0
             },
@@ -104,7 +101,7 @@ export default class LineChart extends Chart {
         };
     }
 
-    protected bootstrap(options) {
+    protected bootstrap(options: ILineOptions) {
         super.bootstrap(options);
 
         const {
@@ -143,6 +140,7 @@ export default class LineChart extends Chart {
 
         entries.append('text')
             .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
             .style('fill', 'var(--font__colour)')
             .style('font-size', 'var(--font__size--small)');
 
@@ -155,7 +153,7 @@ export default class LineChart extends Chart {
             .attr('fill', colours.marker);
 
         merges.select('text')
-            .text((data, index) => getLabel(data.yValue, index))
+            .text((data, index) => getLabel(data, index))
             .attr('dy', data => Math.sign(data.yValue) * -16);
 
         return updates.transition()
@@ -303,11 +301,12 @@ export default class LineChart extends Chart {
         const xAxis = this.getAxis(d3.axisBottom, xScale, xOptions);
         const yAxis = this.getAxis(d3.axisRight, yScale, yOptions);
 
-        const points = data.map(item => {
-            const xValue = xOptions.value(item);
-            const yValue = yOptions.value(item);
+        const points = data.map(value => {
+            const xValue = xOptions.value(value);
+            const yValue = yOptions.value(value);
     
             return {
+                value,
                 xValue,
                 yValue,
                 x: xScale(xValue),
@@ -325,7 +324,7 @@ export default class LineChart extends Chart {
         this.markerGroup.datum(points);
     }
 
-    public async render<T>(data: T[], options) {
+    public async render<T>(data: T[], options: ILineOptions) {
         if (this.rendering) {
             this.reset();
         }

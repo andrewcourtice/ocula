@@ -6,6 +6,7 @@ export interface IForecast {
     current: IForecastCurrent;
     hourly: IForecastHour[];
     daily: IForecastDay[];
+    tides: IForecastTides;
     radar: IForecastRadar;
 }
 
@@ -88,6 +89,30 @@ export interface IForecastDay {
     uvi: number;
     rain?: Record<string, number>;
     snow?: Record<string, number>;
+}
+
+export interface IForecastTideHeight {
+    dt:     number;
+    date:   string;
+    height: number;
+}
+
+export interface IForecastTideExtreme extends IForecastTideHeight {
+    type?:  string;
+}
+
+export interface IForecastTides {
+    status:      number;
+    callCount:   number;
+    copyright:   string;
+    requestLat:  number;
+    requestLon:  number;
+    responseLat: number;
+    responseLon: number;
+    atlas:       string;
+    station:     string;
+    heights:     IForecastTideHeight[];
+    extremes:    IForecastTideExtreme[];
 }
 
 export interface IForecastRadar {

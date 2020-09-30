@@ -25,6 +25,7 @@ import FORECAST_SECTIONS from '../../constants/forecast/sections';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import ForecastSummary from '../../components/forecast/summary.vue';
+import ForecastTides from '../../components/forecast/tides.vue';
 
 import setThemeMeta from '../../helpers/set-theme-meta';
 
@@ -44,12 +45,19 @@ export default defineComponent({
 
     components: {
         WeatherActions,
-        ForecastSummary
+        ForecastSummary,
+        ForecastTides
     },
     
     setup() {
         const sections = computed(() => {
-            const visibleSections = state.settings.forecast.sections.filter(({ visible }) => !!visible);
+            const visibleSections = state.settings.forecast.sections.filter(({ type,  visible }) => {
+                const {
+                    condition
+                } = FORECAST_SECTIONS[type]; 
+
+                return !!visible && (!condition || condition(forecast.value))
+            });
 
             return visibleSections.map(({ type }) => ({
                 id: type,
@@ -105,7 +113,8 @@ export default defineComponent({
         }
     }
 
-    .forecast-index__block--hourly-forecast {
+    .forecast-index__block--hourly-forecast,
+    .forecast-index__block--tides {
 
         & .block__body {
             padding-left: 0;

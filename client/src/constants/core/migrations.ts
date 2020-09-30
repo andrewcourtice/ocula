@@ -1,4 +1,13 @@
-import { ISettings } from '../../interfaces/storage';
+import SETTINGS from '../core/settings';
+
+import {
+    arrayUnionWith,
+    objectTransform
+} from '@ocula/utilities';
+
+import type {
+    ISettings
+} from '../../interfaces/storage';
 
 type Migration = (settings: ISettings) => ISettings;
 
@@ -15,5 +24,9 @@ For example, removing a section using the object transformer:
 */
 
 export default {
-
+    '1': settings => objectTransform(settings, {
+        forecast: {
+            sections: sections => arrayUnionWith(sections, SETTINGS.forecast.sections, (a, b) => a.type === b.type)
+        }
+    })
 } as Record<number, Migration>

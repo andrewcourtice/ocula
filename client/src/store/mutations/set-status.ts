@@ -5,5 +5,5 @@ import {
 } from '../store';
 
 export default function setStatus(status: STATUS = null): void {
-    mutate(state => state.status = status);
+    mutate('set-status', state => state.status = status);
 }

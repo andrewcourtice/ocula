@@ -17,6 +17,6 @@ export default function setSettings(value: Partial<ISettings>) {
         ...value
     };
 
-    mutate(state => state.settings = settings);
+    mutate('set-settings', state => state.settings = settings);
     saveSettings(settings);
 }

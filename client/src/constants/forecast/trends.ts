@@ -2,7 +2,9 @@ import TREND from '../../enums/forecast/trend';
 import OBSERVATION from '../../enums/forecast/observation';
 
 import {
-    LINE_TYPE
+    LINE_TYPE,
+    SCALE_TYPE,
+    ILineOptions
 } from '@ocula/charts';
 
 import {
@@ -11,33 +13,45 @@ import {
     numberPercentage
 } from '@ocula/utilities';
 
+import type {
+    IForecastHour
+} from '../../interfaces/weather';
+
+import {
+    Formatted
+} from '../../interfaces/state';
+
+type ChartOptions = ILineOptions<Formatted<IForecastHour>>;
+
 interface ITrend {
     icon: string;
     label: string;
     observation: OBSERVATION;
-    chartOptions: any;
+    chartOptions: ChartOptions;
 }
 
 const BASE_OPTIONS = {
     type: LINE_TYPE.spline,
     scales: {
         x: {
-            type: 'time',
+            type: SCALE_TYPE.time,
             value: ({ dt }) => dateFromUnix(dt.raw)
         },
         y: {
-            type: 'linear',
+            type: SCALE_TYPE.linear,
             ticks: 5
         }
     },
     labels: {
-        content: (value, index) => index ? Math.round(value) : null
+        content: (point, index) => index ? Math.round(point.yValue) : null
     },
     colours: {
-        axis: false,
         tick: '#AAA'
+    },
+    padding: {
+        bottom: 0
     }
-};
+} as ChartOptions;
 
 export default {
     [TREND.temperature]: {
@@ -68,7 +82,7 @@ export default {
                 }
             },
             labels: {
-                content: (value, index) => index ? numberPercentage(value, 1) : null
+                content: (point, index) => index ? numberPercentage(point.yValue, 1) : null
             },
             colours: {
                 line: '#47B1FA',

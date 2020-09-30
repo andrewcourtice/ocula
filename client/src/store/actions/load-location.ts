@@ -37,7 +37,7 @@ export default async function loadLocation(): Promise<ILocation> {
         location = await getLocation(latitude, longitude);
     } 
 
-    mutate(state => state.location = location as ILocation);
+    mutate('set-location', state => state.location = location as ILocation);
 
     return location;
 } 
