@@ -51,7 +51,13 @@ export default defineComponent({
     
     setup() {
         const sections = computed(() => {
-            const visibleSections = state.settings.forecast.sections.filter(({ visible }) => !!visible);
+            const visibleSections = state.settings.forecast.sections.filter(({ type,  visible }) => {
+                const {
+                    condition
+                } = FORECAST_SECTIONS[type]; 
+
+                return !!visible && (!condition || condition(forecast.value))
+            });
 
             return visibleSections.map(({ type }) => ({
                 id: type,

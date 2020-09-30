@@ -6,9 +6,15 @@ import Today from '../../components/forecast/today.vue';
 import UvIndex from '../../components/forecast/uv-index.vue';
 import Tides from '../../components/forecast/tides.vue';
 
+import type {
+    Formatted,
+    IMappedForecast
+} from '../../interfaces/state';
+
 interface IForecastSection {
     label: string;
-    component: typeof DailyForecast
+    component: typeof DailyForecast,
+    condition?(forecast: Formatted<IMappedForecast>): boolean;
 }
 
 export default {
@@ -30,6 +36,7 @@ export default {
     },
     [FORECAST_SECTION.tides]: {
         label: 'Tides',
-        component: Tides
+        component: Tides,
+        condition: forecast => forecast.tides && forecast.tides.status.raw === 200
     }
 } as Record<FORECAST_SECTION, IForecastSection>;
