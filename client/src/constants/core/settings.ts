@@ -23,15 +23,15 @@ export default {
                 visible: true
             },
             {
-                type: FORECAST_SECTION.tides,
-                visible: true
-            },
-            {
                 type: FORECAST_SECTION.hourlyForecast,
                 visible: true
             },
             {
                 type: FORECAST_SECTION.uvIndex,
+                visible: true
+            },
+            {
+                type: FORECAST_SECTION.tides,
                 visible: true
             }
         ]
