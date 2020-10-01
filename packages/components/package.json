@@ -14,6 +14,6 @@
         "vue": "3.0.0"
     },
     "devDependencies": {
-        "@types/mapbox-gl": "^1.12.0"
+        "@types/mapbox-gl": "^1.12.2"
     }
 }
