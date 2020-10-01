@@ -20,7 +20,7 @@
         "@ocula/router": "1.0.0",
         "@ocula/state": "1.0.0",
         "@ocula/utilities": "1.0.0",
-        "@sentry/browser": "^5.23.0",
+        "@sentry/browser": "^5.24.2",
         "@sentry/integrations": "^5.23.0",
         "core-js": "3.6.5",
         "regenerator-runtime": "^0.13.7",
