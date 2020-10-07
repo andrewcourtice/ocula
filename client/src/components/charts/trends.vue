@@ -4,7 +4,7 @@
             <line-chart class="trends-chart__chart" :data="data" :options="options" />
             <div class="trends-chart__now" layout="column center-left">
                 <span class="trends-chart__now-label">
-                    <slot name="start-label">Now</slot>
+                    <slot name="start-label" :value="data[0]">Now</slot>
                 </span>
             </div>
             <template v-for="value in data.slice(1, -1)" :key="keyBy(value)">
@@ -17,7 +17,7 @@
             </template>
             <div class="trends-chart__later" layout="column center-right">
                 <span class="trends-chart__later-label">
-                    <slot name="end-label">Later</slot>
+                    <slot name="end-label" :value="data[data.length - 1]">Later</slot>
                 </span>
             </div>
         </div>

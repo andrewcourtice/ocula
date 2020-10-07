@@ -12,11 +12,11 @@
             </div>
         </div>
         <trends class="forecast-tides__trends" :data="tides.heights" :options="chartOptions" :key-by="entry => entry.dt.raw">
-            <template #start-label>12 AM</template>
+            <template #start-label="data">{{ getTime(data.value) }}</template>
             <template #primary-column="column">
                 <small>{{ getTime(column.value) }}</small>
             </template>
-            <template #end-label>12 AM</template>
+            <template #end-label="data">{{ getTime(data.value) }}</template>
         </trends>
         <div class="forecast-tides__disclaimer">
             <small class="text--meta">All tide measurements are displayed in metres (m)</small>
