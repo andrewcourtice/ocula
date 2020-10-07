@@ -1,7 +1,5 @@
 {
     "name": "@ocula/app",
-    "version": "1.0.0",
-    "main": "index.js",
     "repository": "https://github.com/andrewcourtice/ocula.git",
     "author": "Andrew Courtice",
     "description": "The free and open-source progressive weather app",
