@@ -1,7 +1,7 @@
 {
     "name": "@ocula/client",
     "title": "Ocula",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "./src/index.ts",
     "repository": "https://github.com/andrewcourtice/ocula.git",
     "author": "Andrew Courtice",
