@@ -53,7 +53,6 @@ export default defineComponent({
         padding: var(--spacing__x-small);
         background: none;
         border-radius: var(--border__radius);
-        overflow: hidden;
         z-index: 1;
     }
 
