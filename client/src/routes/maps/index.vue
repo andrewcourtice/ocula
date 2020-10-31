@@ -30,6 +30,14 @@
                     @moveend="onMoveEnd"
                     @idle="onIdle"
                     @sourcedataloading="onSourceDataLoading">
+                    <mapbox-legend v-if="map.legend">
+                        <div class="maps-index__legend">
+                            <template v-for="key in map.legend" :key="key.colour">
+                                <div class="maps-index__legend-colour" :style="{ background: key.colour }"></div>
+                                <div class="maps-index__legend-label">{{ key.label }}</div>
+                            </template>
+                        </div>
+                    </mapbox-legend>
                     <mapbox-raster-layer v-for="layer in layers"
                         class="maps-index__map-layer"
                         :key="layer.id"
@@ -275,6 +283,19 @@ export default defineComponent({
 
     .maps-index__body {
         position: relative;
+    }
+
+    .maps-index__legend {
+        display: grid;
+        grid-template-columns: auto max-content;
+        gap: var(--spacing__xx-small) var(--spacing__x-small);
+        align-items: center;
+    }
+
+    .maps-index__legend-colour {
+        width: 1em;
+        height: 1em;
+        border-radius: 2px;
     }
 
     .maps-index__drawer {
