@@ -5,11 +5,11 @@
     "license": "MIT",
     "dependencies": {
         "date-fns": "^2.16.1",
-        "date-fns-tz": "^1.0.10",
+        "date-fns-tz": "^1.0.12",
         "lodash": "^4.17.20",
-        "nanoid": "^3.1.12"
+        "nanoid": "^3.1.16"
     },
     "devDependencies": {
-        "@types/lodash": "^4.14.161"
+        "@types/lodash": "^4.14.164"
     }
 }
