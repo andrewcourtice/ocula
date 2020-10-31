@@ -5,11 +5,11 @@
     "license": "MIT",
     "dependencies": {
         "@ocula/utilities": "1.0.0",
-        "d3-array": "^2.7.1",
+        "d3-array": "^2.8.0",
         "d3-axis": "^2.0.0",
         "d3-ease": "^2.0.0",
         "d3-path": "^2.0.0",
-        "d3-scale": "^3.2.2",
+        "d3-scale": "^3.2.3",
         "d3-selection": "^2.0.0",
         "d3-shape": "^2.0.0",
         "d3-transition": "^2.0.0"

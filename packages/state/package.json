@@ -4,7 +4,7 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "peerDependencies": {
-        "vue": "3.0.0"
+        "vue": "3.0.2"
     },
     "dependencies": {
         "@ocula/utilities": "1.0.0",

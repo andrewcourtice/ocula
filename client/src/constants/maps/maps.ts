@@ -6,11 +6,29 @@ import type {
     IMappedForecast
 } from '../../interfaces/state';
 
+interface IMapLegend {
+    colour: string;
+    label: string;
+}
+
+interface IMapLayer {
+    id: string;
+    url: string;
+    label?: string;
+}
+
+interface IMap {
+    label: string;
+    icon: string;
+    layers: IMapLayer[] | (() => IMapLayer[]);
+    legend?: IMapLegend[];
+}
+
 function getOwmTileUrl(layer: string): string {
     return `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${process.env.OWM_API_KEY}`;
 }
 
-function getRadarLayers(forecast: Formatted<IMappedForecast>, format: IFormatter, smooth: boolean = true, snow: boolean = true) {
+function getRadarLayers(forecast: Formatted<IMappedForecast>, format: IFormatter, smooth: boolean = true, snow: boolean = true): IMapLayer[] {
     let timestamps = forecast.radar.timestamps;
 
     return timestamps.map(({ raw, formatted }) => ({
@@ -24,7 +42,57 @@ export default {
     [MAP.radar]: {
         label: 'Radar',
         icon: 'radar-line',
-        layers: getRadarLayers
+        layers: getRadarLayers,
+        legend: [
+            {
+                colour: '#8EE',
+                label: 'Light Drizzle'
+            },
+            {
+                colour: '#09C',
+                label: 'Drizzle'
+            },
+            {
+                colour: '#07A',
+                label: 'Light Rain'
+            },
+            {
+                colour: '#058',
+                label: 'Light Rain'
+            },
+            {
+                colour: '#FE0',
+                label: 'Rain'
+            },
+            {
+                colour: '#FA0',
+                label: 'Rain'
+            },
+            {
+                colour: '#F70',
+                label: 'Heavy Rain'
+            },
+            {
+                colour: '#F40',
+                label: 'Heavy Rain'
+            },
+            {
+                colour: '#E00',
+                label: 'Thunderstorm'
+            },
+            {
+                colour: '#900',
+                label: 'Thunderstorm'
+            },
+            {
+                colour: '#FAF',
+                label: 'Hail'
+            },
+            {
+                colour: '#F7F',
+                label: 'Hail'
+            }
+        ]
     },
     [MAP.precipitation]: {
         label: 'Precipitation',
@@ -76,4 +144,4 @@ export default {
             }
         ]
     }
-} as const;
+} as Record<MAP, IMap>;
