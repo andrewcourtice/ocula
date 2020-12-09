@@ -9,7 +9,7 @@ import {
 
 import type {
     IFormatter
-} from '../../interfaces/state';
+} from '../../types/state';
 
 export default getter<IFormatter>(({ forecast }) => {
     let options;

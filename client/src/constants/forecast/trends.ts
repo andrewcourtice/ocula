@@ -15,11 +15,11 @@ import {
 
 import type {
     IForecastHour
-} from '../../interfaces/weather';
+} from '../../types/weather';
 
 import {
     Formatted
-} from '../../interfaces/state';
+} from '../../types/state';
 
 type ChartOptions = ILineOptions<Formatted<IForecastHour>>;
 

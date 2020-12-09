@@ -1,6 +1,6 @@
 import {
     ILocation
-} from '../interfaces/location';
+} from '../types/location';
 
 export async function searchLocations(query: string): Promise<ILocation[]> {
     const response = await fetch(`/api/location/search?query=${query}`);

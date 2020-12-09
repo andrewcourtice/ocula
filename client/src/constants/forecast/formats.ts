@@ -11,7 +11,7 @@ import {
 
 import type {
     IForecastWeather
-} from '../../interfaces/weather';
+} from '../../types/weather';
 
 const {
     general,

@@ -9,7 +9,7 @@ import Tides from '../../components/forecast/tides.vue';
 import type {
     Formatted,
     IMappedForecast
-} from '../../interfaces/state';
+} from '../../types/state';
 
 interface IForecastSection {
     label: string;

@@ -15,4 +15,4 @@ export default [
         props: true,
         component: defineAsyncComponent(() => import(/* webpackChunkName: 'maps' */ './index.vue'))
     }
-];
+] as RouteRecordRaw[];

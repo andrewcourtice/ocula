@@ -4,7 +4,7 @@ import type {
     Formatted,
     IFormatter,
     IMappedForecast
-} from '../../interfaces/state';
+} from '../../types/state';
 
 interface IMapLegend {
     colour: string;

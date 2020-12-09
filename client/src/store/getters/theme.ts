@@ -13,7 +13,7 @@ import {
 
 import type {
     ITheme
-} from '../../interfaces/themes';
+} from '../../types/themes';
 
 import {
     typeIsPlainObject

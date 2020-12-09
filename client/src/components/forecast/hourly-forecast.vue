@@ -55,7 +55,7 @@ import {
 import type {
     Formatted,
     IMappedForecastHour
-} from '../../interfaces/state';
+} from '../../types/state';
 
 export default defineComponent({
     

@@ -1,6 +1,6 @@
 import ROUTES from '../constants/core/routes';
 
-import routes from '../routes/index';
+import routes from '../routes';
 
 import setThemeMeta from '../helpers/set-theme-meta';
 

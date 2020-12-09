@@ -15,7 +15,7 @@ import {
 
 import type {
     ILocation
-} from '../../interfaces/location';
+} from '../../types/location';
 
 export default async function loadLocation(): Promise<ILocation> {
     const {

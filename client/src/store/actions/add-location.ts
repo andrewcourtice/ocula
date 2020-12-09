@@ -3,7 +3,7 @@ import setLocation from './set-location';
 
 import type {
     ILocation
-} from '../../interfaces/location';
+} from '../../types/location';
 
 import {
     state

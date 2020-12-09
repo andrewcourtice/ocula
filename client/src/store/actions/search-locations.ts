@@ -4,7 +4,7 @@ import {
 
 import type {
     ILocation
-} from '../../interfaces/location';
+} from '../../types/location';
 
 export default async function (query: string): Promise<ILocation[]> {
     return searchLocations(query);

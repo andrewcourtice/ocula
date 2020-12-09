@@ -1,7 +1,7 @@
 import '@ocula/style/src/index.scss';
 
-import directives from './directives/index';
-import components from './components/index';
+import directives from './directives';
+import components from './components';
 
 import type {
     App

@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/core/routes';
+import ROUTES from '../../../constants/core/routes';
 
-import SettingsLayout from '../../components/layouts/settings.vue';
+import SettingsLayout from '../../../components/layouts/settings.vue';
 
 import {
     defineComponent,
@@ -24,7 +24,7 @@ import {
 import {
     state,
     removeLocation
-} from '../../store';
+} from '../../../store';
 
 export default defineComponent({
     

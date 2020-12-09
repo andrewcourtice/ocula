@@ -25,6 +25,8 @@
                     :key="theme.core.mapStyle"
                     :latitude="forecast.lat.raw"
                     :longitude="forecast.lon.raw"
+                    :zoom="settings.maps.zoom"
+                    :pitch="settings.maps.pitch"
                     :style="theme.core.mapStyle"
                     @movestart="onMoveStart"
                     @moveend="onMoveEnd"
@@ -124,6 +126,8 @@ export default defineComponent({
         });
 
         let layerIndex = ref(0);
+
+        const settings = computed(() => state.settings);
 
         const map = computed(() => {
             let {
@@ -248,6 +252,7 @@ export default defineComponent({
         return {
             theme,
             forecast,
+            settings,
             map,
             status,
             layers,

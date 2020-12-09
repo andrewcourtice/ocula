@@ -1,6 +1,6 @@
 import type {
     ICoordinate
-} from '../../interfaces/location';
+} from '../../types/location';
 
 export async function getPosition(): Promise<ICoordinate> {
     const position: Position = await new Promise((resolve, reject) => {

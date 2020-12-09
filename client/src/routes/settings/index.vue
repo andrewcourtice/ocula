@@ -8,10 +8,10 @@
                             <option v-for="(value, key) in unitOptions" :key="key" :value="key">{{ value.label }}</option>
                         </select>
                     </settings-item>
-                    <router-link class="link--inherit" :to="routes.locations">
+                    <router-link class="link--inherit" :to="routes.forecast.locations">
                         <settings-item class="menu-item" label="Locations" :value="locationsLabel"></settings-item>
                     </router-link>
-                    <router-link class="link--inherit" :to="routes.sections">
+                    <router-link class="link--inherit" :to="routes.forecast.sections">
                         <settings-item class="menu-item" label="Sections"></settings-item>
                     </router-link>
                 </div>
@@ -23,11 +23,14 @@
                             <option v-for="(value, key) in mapOptions" :key="key" :value="key">{{ value.label }}</option>
                         </select>
                     </settings-item>
+                    <router-link class="link--inherit" :to="routes.maps.display">
+                        <settings-item class="menu-item" label="Display"></settings-item>
+                    </router-link>
                 </div>
             </block>
             <block class="settings-index__block" title="General">
                 <div class="menu">
-                    <router-link class="link--inherit" :to="routes.theme">
+                    <router-link class="link--inherit" :to="routes.general.theme">
                         <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
                     </router-link>
                     <settings-item class="menu-item" label="Update" @click.native="updateApplication">
@@ -36,7 +39,7 @@
                         </template>
                     </settings-item>
                     <settings-item class="menu-item" label="Reset" @click.native="reset"></settings-item>
-                    <router-link class="link--inherit" :to="routes.about">
+                    <router-link class="link--inherit" :to="routes.general.about">
                         <settings-item class="menu-item" label="About"></settings-item>
                     </router-link>
                 </div>
@@ -47,7 +50,6 @@
 
 <script lang="ts">
 import UNITS from '../../constants/forecast/units';
-
 import ROUTES from '../../constants/core/routes';
 import MAPS from '../../constants/maps/maps';
 
@@ -87,17 +89,26 @@ export default defineComponent({
         const updating = ref(false);
 
         const routes = {
-            locations: {
-                name: ROUTES.settings.locations
+            forecast: {
+                locations: {
+                    name: ROUTES.settings.forecast.locations
+                },
+                sections: {
+                    name: ROUTES.settings.forecast.sections
+                }
             },
-            sections: {
-                name: ROUTES.settings.sections
+            maps: {
+                display: {
+                    name: ROUTES.settings.maps.display
+                }
             },
-            theme: {
-                name: ROUTES.settings.themes
-            },
-            about: {
-                name: ROUTES.settings.about
+            general: {
+                theme: {
+                    name: ROUTES.settings.general.theme
+                },
+                about: {
+                    name: ROUTES.settings.general.about
+                }
             }
         };
 

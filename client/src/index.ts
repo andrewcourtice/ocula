@@ -1,3 +1,3 @@
-import start from './startup/index';
+import start from './startup';
 
 export default start();

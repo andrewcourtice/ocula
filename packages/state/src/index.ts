@@ -18,7 +18,7 @@ import type {
     Getter,
     Mutation,
     IStore
-} from './interfaces/index';
+} from './types';
 
 type StoreAccessor = () => object;
 

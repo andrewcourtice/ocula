@@ -1,4 +1,4 @@
-import figures from '../../assets/images/figures/index';
+import figures from '../../assets/images/figures';
 import PHASE from '../../enums/forecast/phase';
 
 interface IFigure extends Record<number, string> {};

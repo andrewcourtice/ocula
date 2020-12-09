@@ -1,10 +1,10 @@
 import MODALS from '../constants/modals';
 
-import eventEmitter from '../event-emitter/index';
+import eventEmitter from '../event-emitter';
 
 import type {
     IConfirmModalPayload
-} from '../interfaces';
+} from '../types';
 
 class ComponentsController {
 

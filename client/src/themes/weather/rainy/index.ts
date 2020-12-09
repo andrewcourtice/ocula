@@ -2,7 +2,7 @@ import './index.scss';
 
 import type {
     ITheme
-} from '../../../interfaces/themes';
+} from '../../../types/themes';
 
 export default {
     id: 'weather-rainy',
