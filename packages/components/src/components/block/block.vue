@@ -1,8 +1,11 @@
 <template>
     <section class="block">
-        <div class="block__header" v-if="$slots.title || title">
+        <div class="block__header" layout="row center-justify" v-if="$slots.title || title">
             <div class="block__title">
                 <slot name="title">{{ title }}</slot>
+            </div>
+            <div class="block__secondary" v-if="$slots.secondary">
+                <slot name="secondary"></slot>
             </div>
         </div>
         <div class="block__body">

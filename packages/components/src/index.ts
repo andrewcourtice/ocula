@@ -2,7 +2,6 @@ import '@ocula/style/src/index.scss';
 
 import directives from './directives/index';
 import components from './components/index';
-import transitions from './transitions/index';
 
 import type {
     App
@@ -27,7 +26,6 @@ export default {
     install(application: App) {
         register(application, 'directive', directives);
         register(application, 'component', components);
-        register(application, 'component', transitions);
     }
 
 };

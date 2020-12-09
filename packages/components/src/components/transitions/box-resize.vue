@@ -1,5 +1,7 @@
 <template>
-    <div class="transition-box-resize" ref="element" @transitionend.self.passive="onTransitionEnd">
+    <div ref="element"
+        class="transition-box-resize"
+        @transitionend.self.passive="reset">
         <slot></slot>
     </div>
 </template>
@@ -9,7 +11,7 @@ import {
     defineComponent,
     ref,
     onBeforeUpdate,
-    onUpdated
+    computed
 } from 'vue';
 
 interface IBox {
@@ -24,24 +26,25 @@ const CLASSES = {
     leaveActive: 'transition-box-resize-leave-active'
 };
 
+function isSameBox(a: IBox, b: IBox): boolean {
+    return a.width === b.width && a.height === b.height;
+}
+
 export default defineComponent({
    
-    setup() {
+    setup(props) {
+        let isUpdating = false;
+
         const element = ref<HTMLElement>(null);
 
         let before: IBox,
             after: IBox;
 
-        function setStyle(property: string, value: any): void {
-            element.value.style[property] = value;
+        function setStyle(property: keyof CSSStyleDeclaration, value: any): void {
+            element.value.style[property as string] = value;
         }
 
-        function reset(): void {           
-            setStyle('width', null);
-            setStyle('height', null);
-        }
-
-        function onTransitionEnd(): void {
+        function reset(): void {
             element.value.classList.remove(
                 CLASSES.enter,
                 CLASSES.leave,
@@ -49,7 +52,10 @@ export default defineComponent({
                 CLASSES.leaveActive,
             );
 
-            reset();
+            setStyle('width', null);
+            setStyle('height', null);
+            
+            isUpdating = false;
         }
 
         function getSnapshot(): IBox {
@@ -65,6 +71,10 @@ export default defineComponent({
             element.value.classList.add(CLASSES.enter, CLASSES.leave);
             
             after = getSnapshot();
+
+            if (isSameBox(before, after)) {
+                return reset();
+            }
             
             setStyle('width', `${before.width}px`);
             setStyle('height', `${before.height}px`);
@@ -77,14 +87,23 @@ export default defineComponent({
             });
         }
 
-        onBeforeUpdate(() => {
+        function beforeUpdate(): void {
+            if (isUpdating) {
+                return;
+            }
+
+            isUpdating = true;
+
             before = getSnapshot();
             requestAnimationFrame(update);
-        });
+        }
+
+        onBeforeUpdate(beforeUpdate);
 
         return {
             element,
-            onTransitionEnd
+            reset,
+            onBeforeUpdate: beforeUpdate
         };
     }
 
