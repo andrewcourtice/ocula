@@ -77,12 +77,16 @@ export default {
     },
 
     plugins: [
+        
         new webpack.EnvironmentPlugin({
             'MAPBOX_API_KEY': '',
             'WORLDTIDES_API_KEY': '',
             'OWM_API_KEY': '',
             'GA_TRACKING_ID': '',
             'SENTRY_DSN': '',
+        }),
+        
+        new webpack.DefinePlugin({
             '__VUE_OPTIONS_API__': false, 
             '__VUE_PROD_DEVTOOLS__': false 
         }),
