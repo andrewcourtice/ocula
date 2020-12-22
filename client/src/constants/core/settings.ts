@@ -39,6 +39,7 @@ export default {
     maps: {
         default: MAP.radar,
         zoom: 7,
-        pitch: 45
+        pitch: 45,
+        framerate: 500
     }
 } as ISettings;

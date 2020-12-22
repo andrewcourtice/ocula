@@ -25,6 +25,7 @@ export interface IMapSettings {
     default: MAP;
     zoom: number;
     pitch: number;
+    framerate: number;
 }
 
 export interface ISettings {

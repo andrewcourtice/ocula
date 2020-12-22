@@ -26,6 +26,11 @@
                     <router-link class="link--inherit" :to="routes.maps.display">
                         <settings-item class="menu-item" label="Display"></settings-item>
                     </router-link>
+                    <settings-item class="menu-item" label="Framerate" :value="framerate">
+                        <select name="framerate" v-model="framerate">
+                            <option v-for="value in framerates" :key="value" :value="value">{{ value }}ms</option>
+                        </select>
+                    </settings-item>
                 </div>
             </block>
             <block class="settings-index__block" title="General">
@@ -129,6 +134,18 @@ export default defineComponent({
                 }
             })
         });
+
+        const framerate = computed({
+            get: () => state.settings.maps.framerate,
+            set: value => updateSettings({
+                maps: {
+                    ...state.settings.maps, 
+                    framerate: value
+                }
+            })
+        });
+
+        const framerates = Array.from({ length: 6 }, (_, index) => ++index * 500);
         
         const unit = computed(() => UNITS[state.settings.units]);
         const map = computed(() => MAPS[state.settings.maps.default]);
@@ -169,6 +186,8 @@ export default defineComponent({
             units,
             unit,
             defaultMap,
+            framerate,
+            framerates,
             map,
             locationsLabel,
             theme,
