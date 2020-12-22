@@ -200,7 +200,7 @@ export default defineComponent({
         function runLoop() {
             intervalHandle = window.setInterval(() => {
                 layerIndex.value = layerIndex.value === layers.value.length - 1 ? 0 : layerIndex.value + 1;
-            }, 1000);
+            }, 500);
         }
 
         function startPlaying() {
