@@ -11,7 +11,7 @@
         "mapbox-gl": "^2.0.0"
     },
     "peerDependencies": {
-        "vue": "3.0.4"
+        "vue": "3.0.5"
     },
     "devDependencies": {
         "@types/mapbox-gl": "^1.12.9"

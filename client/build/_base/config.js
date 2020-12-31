@@ -33,7 +33,7 @@ export default {
     },
 
     resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
+        extensions: ['.ts', '.js'],
 
         alias: {           
             'components': path.resolve(__dirname, '../src/components'),

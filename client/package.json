@@ -24,7 +24,7 @@
         "@sentry/integrations": "^5.29.0",
         "core-js": "3.8.1",
         "regenerator-runtime": "^0.13.7",
-        "vue": "3.0.4",
+        "vue": "3.0.5",
         "workbox-window": "^6.0.2"
     },
     "devDependencies": {
@@ -35,7 +35,7 @@
         "@babel/preset-typescript": "^7.12.7",
         "@babel/register": "^7.12.1",
         "@types/d3": "^6.2.0",
-        "@vue/compiler-sfc": "3.0.4",
+        "@vue/compiler-sfc": "3.0.5",
         "autoprefixer": "^9.8.6",
         "babel-loader": "^8.1.0",
         "babel-plugin-const-enum": "^1.0.1",
