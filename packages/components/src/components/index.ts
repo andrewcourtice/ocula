@@ -13,6 +13,7 @@ import Layout from './layout/layout.vue';
 import Loader from './loader/loader.vue';
 import Modal from './modal/modal.vue';
 import SearchBox from './search-box/search-box.vue';
+import TransitionBoxResize from './transitions/box-resize.vue';
 
 import CoreComponents from './core/index.vue';
 
@@ -32,5 +33,6 @@ export default {
     Loader,
     Modal,
     SearchBox,
+    TransitionBoxResize,
     CoreComponents
 };

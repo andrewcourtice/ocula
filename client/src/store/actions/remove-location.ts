@@ -2,7 +2,7 @@ import updateSettings from './update-settings';
 
 import type {
     ILocation
-} from '../../interfaces/location';
+} from '../../types/location';
 
 import {
     state

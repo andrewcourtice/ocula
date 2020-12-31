@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/core/routes';
+import ROUTES from '../../../constants/core/routes';
 
-import SettingsLayout from '../../components/layouts/settings.vue';
+import SettingsLayout from '../../../components/layouts/settings.vue';
 
 import {
     defineComponent,
@@ -32,11 +32,11 @@ import {
     state,
     theme,
     updateSettings
-} from '../../store';
+} from '../../../store';
 
 import {
     core as themes
-} from '../../themes';
+} from '../../../themes';
 
 export default defineComponent({
 

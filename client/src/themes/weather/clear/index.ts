@@ -4,7 +4,7 @@ import PHASE from '../../../enums/forecast/phase';
 
 import type {
     ITheme
-} from '../../../interfaces/themes';
+} from '../../../types/themes';
 
 export default {
     id: 'weather-clear',

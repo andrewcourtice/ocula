@@ -10,7 +10,7 @@ import {
 import type {
     ISettings,
     IStoredData
-} from '../../interfaces/storage';
+} from '../../types/storage';
 
 export function getSettings(): ISettings {
     const storedSettings = localStorage.getItem(STORAGE_KEYS.settings);

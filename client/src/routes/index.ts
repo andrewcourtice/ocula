@@ -3,10 +3,10 @@ import Maps from './maps.vue';
 import Settings from './settings.vue';
 import Error from './error.vue';
 
-import forecast from './forecast/index';
-import maps from './maps/index';
-import settings from './settings/index';
-import error from './error/index';
+import forecast from './forecast';
+import maps from './maps';
+import settings from './settings';
+import error from './error';
 
 import type {
     RouteRecordRaw

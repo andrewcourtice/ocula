@@ -1,4 +1,4 @@
-import eventEmitter from '../event-emitter/index';
+import eventEmitter from '../event-emitter';
 
 import {
     ref,
@@ -8,7 +8,7 @@ import {
 
 import type {
     IPromisePayload
-} from '../interfaces';
+} from '../types';
 
 import type {
     IListener

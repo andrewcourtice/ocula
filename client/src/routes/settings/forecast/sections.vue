@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/core/routes';
-import FORECAST_SECTIONS from '../../constants/forecast/sections';
+import ROUTES from '../../../constants/core/routes';
+import FORECAST_SECTIONS from '../../../constants/forecast/sections';
 
-import SettingsLayout from '../../components/layouts/settings.vue';
+import SettingsLayout from '../../../components/layouts/settings.vue';
 
 import {
     defineComponent,
@@ -26,7 +26,7 @@ import {
     state,
     moveSection,
     setSectionVisibility
-} from '../../store';
+} from '../../../store';
 
 export default defineComponent({
     

@@ -7,7 +7,7 @@ import {
 
 import type {
     ISettings
-} from '../../interfaces/storage';
+} from '../../types/storage';
 
 type Migration = (settings: ISettings) => ISettings;
 

@@ -10,11 +10,11 @@ import {
 
 import type {
     Formatted
-} from '../../interfaces/state';
+} from '../../types/state';
 
 import type {
     IForecastTideHeight
-} from '../../interfaces/weather';
+} from '../../types/weather';
 
 type ChartOptions = ILineOptions<Formatted<IForecastTideHeight>>;
 

@@ -17,18 +17,25 @@ interface ISection {
     options: any;
 }
 
+export interface IForecastSettings {
+    sections: ISection[];
+}
+
+export interface IMapSettings {
+    default: MAP;
+    zoom: number;
+    pitch: number;
+    framerate: number;
+}
+
 export interface ISettings {
     version: number;
     units: UNITS;
     theme: string;
     location?: ILocation | LOCATION;
     locations?: ILocation[];
-    forecast: {
-        sections: ISection[];
-    },
-    maps: {
-        default: MAP;
-    }
+    forecast: IForecastSettings;
+    maps: IMapSettings;
 };
 
 export interface IStoredData {

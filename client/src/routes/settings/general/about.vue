@@ -45,12 +45,12 @@
 </template>
 
 <script lang="ts">
-import ROUTES from '../../constants/core/routes';
+import ROUTES from '../../../constants/core/routes';
 
-import SettingsLayout from '../../components/layouts/settings.vue';
+import SettingsLayout from '../../../components/layouts/settings.vue';
 
-import manifest from '../../../package.json';
-import logo from '../../assets/images/logo/logo-192.svg';
+import manifest from '../../../../package.json';
+import logo from '../../../assets/images/logo/logo-192.svg';
 
 import {
     defineComponent

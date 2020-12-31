@@ -4,7 +4,7 @@ import FORECAST_SECTION from '../../enums/forecast/section';
 
 import type {
     ISettings
-} from '../../interfaces/storage';
+} from '../../types/storage';
 
 export default {
     version: 1.1,
@@ -38,5 +38,8 @@ export default {
     },
     maps: {
         default: MAP.radar,
+        zoom: 6,
+        pitch: 0,
+        framerate: 500
     }
 } as ISettings;

@@ -16,11 +16,11 @@ import {
 import type {
     Formatted,
     IMappedForecast
-} from '../../interfaces/state';
+} from '../../types/state';
 
 import type {
     IForecast
-} from '../../interfaces/weather';
+} from '../../types/weather';
 
 export default getter<Formatted<IMappedForecast>>(state => {
     const {

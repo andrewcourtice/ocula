@@ -13,7 +13,7 @@ import {
 
 import type {
     ILocation
-} from '../../interfaces/location';
+} from '../../types/location';
 
 export default function setLocation(location: ILocation | LOCATION): void {
     if (typeIsNil(location)) {

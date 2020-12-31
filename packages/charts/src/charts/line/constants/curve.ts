@@ -1,6 +1,6 @@
 import LINE_TYPE from '../enums/line-type';
 
-import * as d3 from '../../../d3/index';
+import * as d3 from '../../../d3';
 
 export default {
     [LINE_TYPE.line]: d3.curveLinear,

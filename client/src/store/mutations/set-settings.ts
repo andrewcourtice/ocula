@@ -9,7 +9,7 @@ import {
 
 import type {
     ISettings
-} from '../../interfaces/storage';
+} from '../../types/storage';
 
 export default function setSettings(value: Partial<ISettings>) {
     const settings = {

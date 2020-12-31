@@ -12,7 +12,7 @@ import {
 
 import type {
     IInteractiveMap
-} from '../interfaces';
+} from '../types';
 
 import type {
     Layer,

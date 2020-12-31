@@ -6,11 +6,11 @@ import CURVE from './constants/curve';
 
 import Chart from '../_base/chart';
 
-import * as d3 from '../../d3/index';
+import * as d3 from '../../d3';
 
 import {
     getScale
-} from '../../scales/index';
+} from '../../scales';
 
 import {
     valueGetAccessor
@@ -19,7 +19,7 @@ import {
 import type {
     ILineOptions,
     ILinePoint
-} from './interfaces';
+} from './types';
 
 const lineGenerator = d3.line<ILinePoint>()
     .defined(data => !!data.y1)

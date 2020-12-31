@@ -73,7 +73,7 @@ import {
 import type {
     Formatted,
     IMappedForecastDay
-} from '../../interfaces/state';
+} from '../../types/state';
 
 export default defineComponent({
 

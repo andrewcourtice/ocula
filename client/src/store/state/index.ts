@@ -5,7 +5,7 @@ import {
 
 import {
     IState
-} from '../../interfaces/state';
+} from '../../types/state';
 
 function getState(): IState {
     const settings = getSettings();

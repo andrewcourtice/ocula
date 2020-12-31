@@ -22,7 +22,7 @@ import {
 
 import type {
     IConfirmModalPayload
-} from '../../interfaces/index';
+} from '../../types';
 
 export default defineComponent({
 

@@ -1,19 +1,26 @@
 export default {
     forecast: {
-        index: 'forecast-index',
+        index: 'forecast:index',
     },
     maps: {
-        index: 'maps-index'
+        index: 'maps:index'
     },
     settings: {
-        index: 'settings-index',
-        locations: 'settings-locations',
-        sections: 'settings-sections',
-        themes: 'settings-themes',
-        about: 'settings-about'
+        index: 'settings:index',
+        forecast: {
+            locations: 'settings:forecast:locations',
+            sections: 'settings:forecast:sections',
+        },
+        maps: {
+            display: 'settings:maps:display'
+        },
+        general: {
+            theme: 'settings:general:theme',
+            about: 'settings:general:about'
+        }
     },
     error: {
-        index: 'error-index',
-        notFound: 'error-not-found'
+        index: 'error:index',
+        notFound: 'error:not:found'
     }
 } as const;

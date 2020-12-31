@@ -66,8 +66,13 @@ export default defineComponent({
             default: 6
         },
 
+        pitch: {
+            type: Number,
+            default: 0
+        },
+
         style: {
-            type: String,
+            type: String as PropType<keyof typeof STYLE>,
             default: 'light',
             //validator: value => value in STYLE
         },
@@ -188,6 +193,7 @@ export default defineComponent({
 
             map.easeTo({
                 zoom: props.zoom,
+                pitch: props.pitch,
                 center: [
                     props.longitude,
                     props.latitude
@@ -209,6 +215,7 @@ export default defineComponent({
                 container: element.value,
                 style: `mapbox://styles/mapbox/${STYLE[props.style]}`,
                 zoom: props.zoom,
+                pitch: props.pitch,
                 interactive: props.interactive,
                 center: [
                     props.longitude,
@@ -232,7 +239,8 @@ export default defineComponent({
         watch([
             () => props.latitude,
             () => props.longitude,
-            () => props.zoom
+            () => props.zoom,
+            () => props.pitch
         ], updateLocation);
 
         watch(() => props.style, updateStyle);
