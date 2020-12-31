@@ -7,7 +7,7 @@
             </block>
             <block class="margin__top--large" title="Pitch">
                 <template #secondary>{{ pitch }} &deg;</template>
-                <input class="settings-maps-display__slider" type="range" min="0" max="85" step="1" v-model.number="pitch">
+                <input class="settings-maps-display__slider" type="range" min="0" max="85" step="5" v-model.number="pitch">
             </block>
             <block class="margin__top--large" title="Preview">
                 <mapbox-map class="settings-maps-display__map"
