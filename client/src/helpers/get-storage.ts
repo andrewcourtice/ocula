@@ -1,16 +1,18 @@
-import DATA from '../../constants/core/data';
-import SETTINGS from '../../constants/core/settings';
-import MIGRATIONS from '../../constants/core/migrations';
-import STORAGE_KEYS from '../../constants/core/storage-keys';
+import DATA from '../constants/core/data';
+import SETTINGS from '../constants/core/settings';
+import MIGRATIONS from '../constants/core/migrations';
+import STORAGE_KEYS from '../constants/core/storage-keys';
 
 import {
-    objectMerge, objectMergeWith, typeIsArray
+    objectMerge,
+    objectMergeWith,
+    typeIsArray
 } from '@ocula/utilities';
 
 import type {
     ISettings,
     IData
-} from '../../types/storage';
+} from '../types/storage';
 
 export function getSettings(): ISettings {
     const storedSettings = localStorage.getItem(STORAGE_KEYS.settings);
@@ -31,8 +33,6 @@ export function getSettings(): ISettings {
         try {
             settings = MIGRATIONS[settings.version.toString()](settings);
             settings.version = SETTINGS.version;
-
-            saveSettings(settings);
         } catch (error) {
             console.warn('Failed to migrate settings');
         }
@@ -53,20 +53,4 @@ export function getData(): IData {
     data.lastUpdated = new Date(data.lastUpdated);
 
     return objectMerge(DATA, data);
-}
-
-export function saveSettings(settings: ISettings): void {
-    localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
-}
-
-export function saveData({ lastUpdated, location, forecast }: IData): void {
-    localStorage.setItem(STORAGE_KEYS.data, JSON.stringify({
-        location,
-        forecast,
-        lastUpdated
-    }));
-}
-
-export function clearData(): void {
-    localStorage.removeItem(STORAGE_KEYS.data);
 }

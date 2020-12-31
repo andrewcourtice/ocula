@@ -11,10 +11,12 @@ import type {
     IForecast
 } from './weather';
 
+export type Status = 'idle' | 'running' | 'error';
+
 interface ISection {
     type: FORECAST_SECTION;
     visible: boolean;
-    options: any;
+    options?: any;
 }
 
 export interface IForecastSettings {
@@ -38,8 +40,9 @@ export interface ISettings {
     maps: IMapSettings;
 };
 
-export interface IStoredData {
-    lastUpdated: Date;
-    location: ILocation;
-    forecast: IForecast;
+export interface IData {
+    status: Status;
+    lastUpdated: Date | null;
+    location: ILocation | null;
+    forecast: IForecast | null;
 }
