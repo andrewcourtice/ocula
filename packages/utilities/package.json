@@ -10,6 +10,6 @@
         "nanoid": "^3.1.20"
     },
     "devDependencies": {
-        "@types/lodash": "^4.14.165"
+        "@types/lodash": "^4.14.166"
     }
 }
