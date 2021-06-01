@@ -5,7 +5,7 @@
     "license": "MIT",
     "dependencies": {
         "date-fns": "^2.16.1",
-        "date-fns-tz": "^1.0.12",
+        "date-fns-tz": "^1.1.4",
         "lodash": "^4.17.20",
         "nanoid": "^3.1.20"
     },
