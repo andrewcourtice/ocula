@@ -1515,14 +1515,14 @@
     "@sentry/utils" "5.29.0"
     tslib "^1.9.3"
 
-"@sentry/integrations@^5.29.0":
-  version "5.29.0"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.29.0.tgz#65523b3e01c4ae6ebacf5f0a882811661bb3db0b"
-  integrity sha512-SGqpi1Qd1a7gGL6aYrJnKqU/DNJcHvnhD3qOgow23ivEpaJv1BtQSKxv17IbO/CIFn3A0o1a18wY6xef9isKEQ==
+"@sentry/integrations@^6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-6.12.0.tgz#d900e89c588fbe6ce1b89ce74c042574daf638bb"
+  integrity sha512-M9gsVdWZp5fAFFpTjK2IBuWzW4SBxGAI3tVbYZvVx16S/BY0GsPC1dYpjJx9OTBS/8CmCWdGxnUmjACo/8w1LA==
   dependencies:
-    "@sentry/types" "5.29.0"
-    "@sentry/utils" "5.29.0"
-    localforage "1.8.1"
+    "@sentry/types" "6.12.0"
+    "@sentry/utils" "6.12.0"
+    localforage "^1.8.1"
     tslib "^1.9.3"
 
 "@sentry/minimal@5.29.0":
@@ -1539,12 +1539,25 @@
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.29.0.tgz#af5cec98cde54316c14df3121f0e8106e56b578e"
   integrity sha512-iDkxT/9sT3UF+Xb+JyLjZ5caMXsgLfRyV9VXQEiR2J6mgpMielj184d9jeF3bm/VMuAf/VFFqrHlcVsVgmrrMw==
 
+"@sentry/types@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-6.12.0.tgz#b7395688a79403c6df8d8bb8d81deb8222519853"
+  integrity sha512-urtgLzE4EDMAYQHYdkgC0Ei9QvLajodK1ntg71bGn0Pm84QUpaqpPDfHRU+i6jLeteyC7kWwa5O5W1m/jrjGXA==
+
 "@sentry/utils@5.29.0":
   version "5.29.0"
   resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.29.0.tgz#b4c1223ba362a94cf4850e9ca2cb24655b006b53"
   integrity sha512-b2B1gshw2u3EHlAi84PuI5sfmLKXW1z9enMMhNuuNT/CoRp+g5kMAcUv/qYTws7UNnYSvTuVGuZG30v1e0hP9A==
   dependencies:
     "@sentry/types" "5.29.0"
+    tslib "^1.9.3"
+
+"@sentry/utils@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-6.12.0.tgz#3de261e8d11bdfdc7add64a3065d43517802e975"
+  integrity sha512-oRHQ7TH5TSsJqoP9Gqq25Jvn9LKexXfAh/OoKwjMhYCGKGhqpDNUIZVgl9DWsGw5A5N5xnQyLOxDfyRV5RshdA==
+  dependencies:
+    "@sentry/types" "6.12.0"
     tslib "^1.9.3"
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
@@ -6061,10 +6074,10 @@ loader-utils@^2.0.0:
     emojis-list "^3.0.0"
     json5 "^2.1.2"
 
-localforage@1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.8.1.tgz#f6c0a24b41ab33b10e4dc84342dd696f6f3e3433"
-  integrity sha512-azSSJJfc7h4bVpi0PGi+SmLQKJl2/8NErI+LhJsrORNikMZnhaQ7rv9fHj+ofwgSHrKRlsDCL/639a6nECIKuQ==
+localforage@^1.8.1:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.10.0.tgz#5c465dc5f62b2807c3a84c0c6a1b1b3212781dd4"
+  integrity sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==
   dependencies:
     lie "3.1.1"
 
