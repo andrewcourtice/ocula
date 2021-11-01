@@ -33,7 +33,7 @@
         "@babel/plugin-transform-typescript": "^7.12.1",
         "@babel/preset-env": "^7.12.7",
         "@babel/preset-typescript": "^7.12.7",
-        "@babel/register": "^7.12.1",
+        "@babel/register": "^7.16.0",
         "@types/d3": "^6.2.0",
         "@vue/compiler-sfc": "3.0.5",
         "autoprefixer": "^9.8.6",
