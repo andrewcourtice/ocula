@@ -37,7 +37,7 @@
         "@types/d3": "^6.2.0",
         "@vue/compiler-sfc": "3.0.5",
         "autoprefixer": "^9.8.6",
-        "babel-loader": "^8.1.0",
+        "babel-loader": "^8.2.3",
         "babel-plugin-const-enum": "^1.0.1",
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^5.1.1",
