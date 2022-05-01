@@ -24,7 +24,7 @@
         "@sentry/integrations": "^5.29.0",
         "core-js": "3.8.1",
         "regenerator-runtime": "^0.13.7",
-        "vue": "3.0.5",
+        "vue": "3.2.33",
         "workbox-window": "^6.0.2"
     },
     "devDependencies": {
