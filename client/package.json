@@ -22,7 +22,7 @@
         "@ocula/utilities": "1.0.0",
         "@sentry/browser": "^5.29.0",
         "@sentry/integrations": "^5.29.0",
-        "core-js": "3.8.1",
+        "core-js": "3.27.1",
         "regenerator-runtime": "^0.13.7",
         "vue": "3.0.5",
         "workbox-window": "^6.0.2"
